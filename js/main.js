@@ -1,13 +1,16 @@
-import * as CANNON from './libs/cannon.js';
-import './libs/OBJLoader.js';
+import * as CANNON from './libs/cannon';
+import './libs/OBJLoader';
 
-import './libs/cannonDebugRenderer.js';
-import './libs/OrbitControls.js';
+import Speeder from './modules/speeder';
+
+import './libs/cannonDebugRenderer';
+import './libs/OrbitControls';
 
 let scene, renderer, camera, car, road, turnRoad, world, controls, cannonDebugRenderer, ground, groundBody;
 
 const ctx = canvas.getContext('webgl', { antialias: true, preserveDrawingBuffer: true });
 
+// 模型变量
 let carBodys;
 let roadArr = [];
 let roadBodys = [];
@@ -15,21 +18,41 @@ let roadCollisions = [];
 
 const timeStep = 1 / 60;
 
+// 当前旋转向量
+let currentW = 0;
+
+// 得分
+let score = 0;
+let lastScore = 0;
+
 // 动画变量
 let key = 0;
 let maxKey = 10;
 let movekey = 'z';
+let clickKey = true;
 let startKey = false;
 
+// 路面回收锁
+let removeKey = false;
+
+// 道理旋转角度
 const rotating = new CANNON.Quaternion();
 rotating.setFromAxisAngle(new CANNON.Vec3(0, 1, 0), -4.73);
 
+// 道路渲染序列
 const loopRoadConfig = {
     r1: ['r1', 'r3'],
     r2: ['r2', 'r4'],
     r3: ['r2', 'r4'],
     r4: ['r1', 'r3']
 };
+
+// 速度变量
+let speed = 1;
+const speedMax = 2;
+const speedStep = 0.01;
+const speedStepMax = 0.08;
+const levelSpeed = [10, 20, 30, 40, 50, 60, 70, 80];
 
 /**
  * 游戏主函数
@@ -55,23 +78,14 @@ export default class Main {
 
         setTimeout(() => {
             startKey = true;
-            this.updateMaxKey();
         }, 3000);
-    }
-
-    updateMaxKey() {
-        if (!startKey) return false;
-        maxKey += 1;
-        setTimeout(() => {
-            this.updateMaxKey();
-        }, 1000);
     }
 
     /**
      * 初始化3D世界
      * */
     initThree() {
-        scene = new THREE.Scene()
+        scene = new THREE.Scene();
         renderer = new THREE.WebGLRenderer({ context: ctx, canvas: canvas });
 
         const winWidth = window.innerWidth;
@@ -84,7 +98,7 @@ export default class Main {
         console.log("屏幕尺寸: " + winWidth + " x " + winHeight);
 
         camera = new THREE.PerspectiveCamera(75, cameraAspect, .1, 10000000);
-        camera.position.set(-16.738086885462103, 40.533387653514225, 28.513221776822927);
+        camera.position.set(-16.738086885462103, 60.533387653514225, 28.513221776822927);
         camera.rotation.set(-0.9577585082113045, -0.3257201862210706, -0.42691147594250245);
 
         // 添加环境光
@@ -97,7 +111,7 @@ export default class Main {
         scene.add(directionalLight);
 
         // 摄像机调试
-        controls = new THREE.OrbitControls(camera);
+        // controls = new THREE.OrbitControls(camera);
     }
 
     /**
@@ -113,24 +127,24 @@ export default class Main {
         world.broadphase = new CANNON.NaiveBroadphase();
 
         // 显示物理世界
-        cannonDebugRenderer = new THREE.CannonDebugRenderer(scene, world);
+        // cannonDebugRenderer = new THREE.CannonDebugRenderer(scene, world);
     }
 
     /**
      * 创建地板
      * */
     createGroundBody() {
-        const metal_texture = new THREE.TextureLoader().load("images/metal.jpg")
+        const metal_texture = new THREE.TextureLoader().load("images/metal.jpg");
         metal_texture.wrapS = THREE.RepeatWrapping;
         metal_texture.wrapT = THREE.RepeatWrapping;
         metal_texture.repeat.set(1,1);
 
         // 地面
-        const ground_material = new THREE.MeshBasicMaterial({ map: metal_texture })
-        ground = new THREE.Mesh(new THREE.BoxGeometry(30000, 1, 30000), ground_material)
+        const ground_material = new THREE.MeshBasicMaterial({ map: metal_texture });
+        ground = new THREE.Mesh(new THREE.BoxGeometry(30000, 1, 30000), ground_material);
         ground.receiveShadow = true;
         ground.castShadow = true;
-        scene.add(ground);
+        // scene.add(ground);
 
         const groundShape = new CANNON.Plane();
         groundBody = new CANNON.Body({ mass: 0 });
@@ -152,19 +166,13 @@ export default class Main {
             car = obj;
 
             car.scale.set(1, 1, 1);
-
             car.position.set(13, 15, 0);
-            // car.position.x = 40;
-            // car.position.z = 5;
+            // car.position.set(-2, 10, 10);
 
-            // Create boxes
-            var mass = 5;
-            var boxShape = new CANNON.Box(new CANNON.Vec3(3, 3, 5));
-
-            let metal_texture = new THREE.TextureLoader().load("images/metal.jpg")
+            const boxShape = new CANNON.Box(new CANNON.Vec3(3, 3, 3));
 
             carBodys = new CANNON.Body({ mass: 2, shape: boxShape });
-            carBodys.position.set(car.position.x, car.position.y, 0);
+            carBodys.position.set(car.position.x, car.position.y, car.position.z);
 
             world.add(carBodys);
 
@@ -267,9 +275,36 @@ export default class Main {
     }
 
     /**
+     * 撞墙后触发
+     * */
+    collide() {
+        startKey = false;
+        console.log('---结束游戏---');
+    }
+
+    /**
+     * 得分
+     * */
+    getScore(key) {
+        // 限制重复触发
+        if (lastScore >= key) {
+            return false;
+        }
+
+        if (key > 3) {
+            removeKey = true;
+        }
+
+        maxKey++;
+        score++;
+        lastScore = key;
+        console.log('目前得分: ', lastScore)
+    }
+
+    /**
      * 返回r模型(直路)
      */
-    r() {
+    r(key) {
         const roadObj = road.clone();
 
         const roadBodyShape = new CANNON.Box(new CANNON.Vec3(17, 1.5, 12.5));
@@ -281,9 +316,11 @@ export default class Main {
         roadBoths.addShape(roadLeftShape, new CANNON.Vec3(-18.5, 0, 0));
         roadBoths.addShape(roadRightShape, new CANNON.Vec3(17, 0, 0));
 
-        roadBoths.addEventListener("collide", function (e) {
-            startKey = false;
-            console.log('boom!');
+        // 撞墙
+        roadBoths.addEventListener("collide", this.collide);
+        // 得分
+        roadBody.addEventListener("collide", () => {
+            this.getScore(key)
         });
 
         world.add(roadBody);
@@ -307,7 +344,7 @@ export default class Main {
     /**
      * 返回t模型(弯路)
      */
-    t() {
+    t(key) {
         const roadObj = turnRoad.clone();
 
         const roadBody1Shape = new CANNON.Box(new CANNON.Vec3(17, 1.5, 37));
@@ -328,9 +365,12 @@ export default class Main {
         roadBoths.addShape(collide3Shape, new CANNON.Vec3(43, 0, -14), rotating);
         roadBoths.addShape(collide4Shape, new CANNON.Vec3(25, 0, -50), rotating);
 
-        roadBoths.addEventListener("collide", function (e) {
-            startKey = false;
-            console.log('boom!');
+        // 撞墙
+        roadBoths.addEventListener("collide", this.collide);
+
+        // 得分
+        roadBody.addEventListener("collide", () => {
+            this.getScore(key)
         });
 
         world.add(roadBody);
@@ -356,7 +396,7 @@ export default class Main {
      */
     r1(key) {
         const { size, position, rang, boxType } = this.getLastRoad();
-        const { body, physical: { floor, boths } } = this.r();
+        const { body, physical: { floor, boths } } = this.r(key);
 
         // 模型原点偏移量
         body.rang = { x: 15, z: -7 };
@@ -380,12 +420,10 @@ export default class Main {
      */
     r2(key) {
         const { size, position, rang, boxType } = this.getLastRoad();
-        const { body, physical: { floor, boths } } = this.r();
+        const { body, physical: { floor, boths } } = this.r(key);
         body.size = { width: 25, height: 38.5 };
         body.rang = { x: 7, z: -13.5 };
         body.boxType = 'r2';
-
-        // console.log(size, position, rang, boxType);
 
         const x = position.x - rang.x + body.rang.x - body.size.width + size.width + body.size.width;
         const z = body.rang.z + body.size.height + position.z - rang.z - size.height;
@@ -405,9 +443,7 @@ export default class Main {
      */
     r3(key) {
         const { size, position, rang, boxType } = this.getLastRoad();
-        const { body, physical: { floor, boths } } = this.t();
-
-        // console.log(size, position, rang, boxType);
+        const { body, physical: { floor, boths } } = this.t(key);
 
         body.size = { width: 89, height: 76 };
         body.rang = { x: 15, z: -20 };
@@ -428,12 +464,10 @@ export default class Main {
      */
     r4(key) {
         const { size, position, rang, boxType } = this.getLastRoad();
-        const { body, physical: { floor, boths } } = this.t();
+        const { body, physical: { floor, boths } } = this.t(key);
         body.size = { width: 89, width2: 39, height: 76, height2: 38 };
         body.rang = { x: 64, z: -46 };
         body.boxType = 'r4';
-
-        // console.log(key, size, position, rang, boxType);
 
         body.rotation.set(0, 3.14, 0);
 
@@ -457,7 +491,12 @@ export default class Main {
             const { boxType } = this.getLastRoad();
             const currentRoadConfig = loopRoadConfig[boxType];
             const random = Math.round(Math.random(0, 1));
-            this[currentRoadConfig[random]](key);
+
+            if (key < 5) {
+                this.r1(key);
+            } else {
+                this[currentRoadConfig[random]](key);
+            }
 
             // if (key < 1) {
             //     this.r3(key);
@@ -490,12 +529,37 @@ export default class Main {
      */
     handleMouseStart() {
         if (startKey) {
-            if (movekey === 'x') {
-                carBodys.quaternion.setFromAxisAngle(new CANNON.Vec3(0, 1, 0), 0);
-                movekey = 'z';
+            const localW = currentW;
+            if (!clickKey) {
+                Speeder((percent, status) => {
+                    currentW = localW - percent * localW;
+
+                    carBodys.quaternion.setFromAxisAngle(new CANNON.Vec3(0, 1, 0), currentW);
+
+                    if (percent >= 1.1) {
+                        movekey = 'z';
+                    }
+
+                    if (status === 'done') {
+                        currentW = 0;
+                    }
+                });
+                clickKey = true;
             } else {
-                carBodys.quaternion.setFromAxisAngle(new CANNON.Vec3(0, 1, 0), 4.73);
-                movekey = 'x';
+                Speeder((percent, status) => {
+                    currentW = localW + percent * (-1.57 - localW);
+
+                    carBodys.quaternion.setFromAxisAngle(new CANNON.Vec3(0, 1, 0), currentW);
+
+                    if (percent >= 1.1) {
+                        movekey = 'x';
+                    }
+
+                    if (status === 'done') {
+                        currentW = -1.57;
+                    }
+                });
+                clickKey = false;
             }
         }
     }
@@ -506,40 +570,87 @@ export default class Main {
     updateAnimation() {
         if (startKey) {
             if (movekey === 'x') {
-                car.position.x += 0.5;
-                carBodys.position.x += 0.5;
-                camera.position.x += 0.5;
+                car.position.x += speed;
+                carBodys.position.x += speed;
+                camera.position.x += speed;
             } else {
-                car.position.z -= 0.5;
-                carBodys.position.z -= 0.5;
-                camera.position.z -= 0.5;
+                car.position.z -= speed;
+                carBodys.position.z -= speed;
+                camera.position.z -= speed;
             }
-
-            // carBodys.position.x += 1;
         }
 
-        cannonDebugRenderer.update();
+        cannonDebugRenderer && cannonDebugRenderer.update();
 
         renderer.setClearColor('#428bca', 1.0);
         renderer.render(scene, camera)
     }
 
+    /**
+     * 更新物理世界
+     * */
     updateWorld() {
         world.step(timeStep);
         // ground.position.copy(groundBody.position);
         // ground.quaternion.copy(groundBody.quaternion);
         if (car) {
-            // console.log(car.position, carBodys.position);
             car.position.copy(carBodys.position);
             car.quaternion.copy(carBodys.quaternion);
         }
     }
 
+    /**
+     * 加速函数
+     * */
+    updateLevelSpeed(s = 0) {
+        if (s >= speedStepMax) return false;
+        s += speedStep;
+        speed += s;
+        setTimeout(() => {
+            this.updateLevelSpeed(s);
+        }, 100)
+    }
+
+    /**
+     * 回收路面
+     * */
+    removeObj() {
+        if (!removeKey) return false;
+
+        world.remove(roadBodys.shift());
+        world.remove(roadCollisions.shift());
+
+        scene.remove(roadArr.shift());
+
+        removeKey = false;
+    }
+
+    /**
+     * 判断是否加速
+     * */
+    updateSpeed() {
+        if (startKey && speed <= speedMax) {
+            const levelScore = levelSpeed[0];
+            if (score >= levelScore) {
+                levelSpeed.splice(0, 1);
+                this.updateLevelSpeed();
+                console.log('---加速---');
+            }
+        }
+    }
+
     // 实现帧循环
     loop() {
+        // 更新物理世界
         this.updateWorld();
+        // 生成路面
         this.updateRoad();
+        // 更新汽车动画
         this.updateAnimation();
+        // 加速
+        this.updateSpeed();
+        // 回收路面
+        this.removeObj();
 
         requestAnimationFrame(this.loop.bind(this), canvas);
     }

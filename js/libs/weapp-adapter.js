@@ -1,4 +1,4 @@
-import * as THREE from './three.js';
+import * as THREE from './three.min';
 
 /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache

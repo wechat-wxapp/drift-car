@@ -13,7 +13,7 @@
 //    Zoom - middle mouse, or mousewheel / touch: two-finger spread or squish
 //    Pan - right mouse, or arrow keys / touch: two-finger move
 
-import * as THREE from './three'
+import * as THREE from './three.min'
 
 THREE.OrbitControls = function (object, domElement) {
 
