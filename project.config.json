@@ -8,7 +8,7 @@
 		"newFeature": true
 	},
 	"compileType": "game",
-	"libVersion": "game",
+	"libVersion": "2.1.0",
 	"appid": "wx90c48119df1eacd8",
 	"projectname": "drift-car",
 	"isGameTourist": true,

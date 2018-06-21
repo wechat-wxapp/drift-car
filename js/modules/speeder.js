@@ -17,7 +17,7 @@ let b = 0,
  * */
 const runSpeed = (cb) => {
     const result = Math.ceil(Tween.Back.easeOut(t, b, c, d));
-    if(t < d){
+    if (t < d) {
         t++;
         window.speeder = setTimeout(() => {
             cb(result / 100, 'progress');
@@ -35,7 +35,7 @@ const speeder = (cb) => {
     if (window.speeder) {
         clearTimeout(window.speeder);
     }
-    b = 0, c = 100, d = 100, t = 0;
+    b = 0, c = 100, d = 30, t = 0;
 
     runSpeed(cb);
 };
