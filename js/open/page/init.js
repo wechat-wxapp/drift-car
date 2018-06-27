@@ -3,7 +3,6 @@
  */
 export default class Index {
     constructor() {
-        console.log(this);
         this.winWidth = wx.getSystemInfoSync().screenWidth;
         this.winHeight = wx.getSystemInfoSync().screenHeight;
 

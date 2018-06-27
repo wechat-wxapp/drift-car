@@ -50,10 +50,9 @@ export default class Start extends UTIL {
                 // 实例化游戏页面
                 gamePage = new pageGame();
 
-                this.restart();
+                $wx.sendMessage('end');
 
-                // 开始播放音效
-                // this.readyMusic();
+                // this.restart();
 
                 // 设置页面target
                 currentPage = 'gamePage';
