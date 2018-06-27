@@ -1,5 +1,4 @@
 import UTIL from './util';
-import TurnRoad from "./turn_road";
 
 
 /**
@@ -8,21 +7,29 @@ import TurnRoad from "./turn_road";
 export default class Road extends UTIL {
     constructor() {
         super();
-        this.createRoad();
-        this.turnRoad = new TurnRoad();
+    }
+
+    build() {
+        return Promise.all([this.createRoad()]);
     }
 
     /**
      * 创建直线道路
      */
     createRoad() {
-        const material = "https://static.cdn.24haowan.com/24haowan/test/js/roadnnn3.png";
-        const model = 'https://static.cdn.24haowan.com/24haowan/test/js/r.obj';
+        const material = "https://static.cdn.24haowan.com/24haowan/test/js/newroad001.png";
+        const model = 'https://static.cdn.24haowan.com/24haowan/test/js/newroad001.obj';
+        // const material = "https://static.cdn.24haowan.com/24haowan/test/js/roadnnn3.png";
+        // const model = 'https://static.cdn.24haowan.com/24haowan/test/js/r.obj';
 
-        this.createObj(model, material, (obj) => {
-            road = obj;
+        return new Promise((res, rej) => {
+            this.createObj(model, material, (obj) => {
+                road = obj;
 
-            road.scale.set(3, 3, 3);
+                road.scale.set(2, 2, 2);
+
+                res();
+            });
         });
     }
 
@@ -34,20 +41,21 @@ export default class Road extends UTIL {
         const roadObj = road.clone();
         roadObj.key = key + 1;
 
-        const roadBodyShape = new CANNON.Box(new CANNON.Vec3(17, 1.5, 12));
-        const roadLeftShape = new CANNON.Box(new CANNON.Vec3(1.5, 3, 12));
-        const roadRightShape = new CANNON.Box(new CANNON.Vec3(1.5, 3, 12));
+        const roadBodyShape = new CANNON.Box(new CANNON.Vec3(28, 1, 30));
+        const roadLeftShape = new CANNON.Box(new CANNON.Vec3(1, 2, 30));
+        const roadRightShape = new CANNON.Box(new CANNON.Vec3(1, 2, 30));
 
-        const roadBody = new CANNON.Body({ mass: 0, shape: roadBodyShape, position: new CANNON.Vec3(roadObj.position.x, 1.5, roadObj.position.z) });
-        const roadBoths = new CANNON.Body({ mass: 0, position: new CANNON.Vec3(roadObj.position.x, 3, roadObj.position.z) });
-        roadBoths.addShape(roadLeftShape, new CANNON.Vec3(-18.7, 0, 0));
-        roadBoths.addShape(roadRightShape, new CANNON.Vec3(17.5, 0, 0));
+        const roadBody = new CANNON.Body({ mass: 0, shape: roadBodyShape, position: new CANNON.Vec3(roadObj.position.x, 1, roadObj.position.z) });
+        const roadBoths = new CANNON.Body({ mass: 0, position: new CANNON.Vec3(roadObj.position.x, 2, roadObj.position.z) });
+        roadBoths.addShape(roadLeftShape, new CANNON.Vec3(-29, 0, 0));
+        roadBoths.addShape(roadRightShape, new CANNON.Vec3(29, 0, 0));
+
 
         // 撞墙
         roadBoths.addEventListener("collide", this.collide.bind(this));
         // 得分
         roadBody.addEventListener("collide", () => {
-            this.getScore(key, type)
+            this.getScore(key, type);
         });
 
         world.add(roadBody);
@@ -76,14 +84,18 @@ export default class Road extends UTIL {
         const { body, physical: { floor, boths } } = this.r(params);
 
         // 模型原点偏移量
-        body.rang = { x: 15.1, z: -6.8 };
+        body.rang = { x: 25, z: -25 };
         // 模型尺寸(根据原点位置)
-        body.size = { width: 39, height: 24 };
+        body.size = { width: 60, height: 60 };
 
         let x = position.x - rang.x + body.rang.x - body.size.width;
         let z = position.z - rang.z + body.rang.z - size.height;
 
         x += key === 0 ? body.size.width : size.width;
+
+        if (key === 0) {
+            z += body.size.height * 2;
+        }
 
         body.position.set(x, 0, z);
         floor.position.set(x, floor.position.y, z);
@@ -105,14 +117,15 @@ export default class Road extends UTIL {
     r2(params) {
         const { size, position, rang } = this.getLastRoad();
         const { body, physical: { floor, boths } } = this.r(params);
-        body.size = { width: 24, height: 39 };
-        body.rang = { x: 6.9, z: -13.7 };
+        body.size = { width: 60, height: 60 };
+        body.rang = { x: 25, z: -25 };
         body.boxType = 'r2';
 
         const x = position.x - rang.x + body.rang.x - body.size.width + size.width + body.size.width;
         const z = body.rang.z + body.size.height + position.z - rang.z - size.height;
 
         body.position.set(x, 0, z);
+
         body.rotation.set(0, -1.57, 0);
 
         floor.position.set(x, floor.position.y, z);
@@ -130,77 +143,113 @@ export default class Road extends UTIL {
         }
     }
 
+    getRandomInt(min, max) {
+        min = Math.ceil(min);
+        max = Math.floor(max);
+        return Math.floor(Math.random() * (max - min)) + min;
+    }
+
+    getRandomScenery() {
+        return sceneryListArr[this.getRandomInt(0, sceneryListArr.length)];
+    }
+
     r3() {
         const { body } = this.r1();
-        this.r1();
-        this.r1();
-        this.r1();
-        const { body: body2 } = this.turnRoad.r3();
-        this.r2();
-        this.r2();
-        this.r2();
-        this.r2({ type: 'remove' });
+        const { body: body2 } = turnRoadClass.r3({ type: 'remove' });
 
         lastBoxType = 'r5';
 
-        const { size, rang } = scenery1;
-        const scenery_1 = scenery1.clone();
-        const scenery_2 = scenery1.clone();
-        const scenery_3 = scenery1.clone();
+        const { size, rang } = this.getRandomScenery();
+        const scenery_1 = this.getRandomScenery().clone();
+        const scenery_2 = this.getRandomScenery().clone();
+        const scenery_3 = this.getRandomScenery().clone();
+        const scenery_4 = this.getRandomScenery().clone();
 
-        const x1 = body.position.x - body.rang.x + rang.x - size.width + body.size.width + size.width - body.size.width - size.width;
-        const z1 = rang.z + size.height + body.position.z - body.rang.z - body.size.height + body.size.height - size.height;
+        const x1 = body.position.x - body.rang.x + rang.x - size.width;
+        const z1 = rang.z + body.position.z - body.rang.z - body.size.height;
 
         const x2 = x1 + body.size.width + size.width;
+        const z2 = z1 + body.size.height;
 
-        const x3 = body2.position.x - body2.rang.x + rang.x - size.width + body2.size.width + size.width - body2.size.width;
-        const z3 = rang.z + size.height + body2.position.z - body2.rang.z - body2.size.height + body2.size.height - size.height - body2.size.height;
+        const x3 = body2.position.x - body2.rang.x + rang.x;
+        const z3 = rang.z + body2.position.z - body2.rang.z - body2.size.height;
+
+        const z4 = z1 - size.height;
 
         scenery_1.position.set(x1, 0, z1);
-        scenery_2.position.set(x2, 0, z1);
+        scenery_2.position.set(x2, 0, z2);
         scenery_3.position.set(x3, 0, z3);
+        scenery_4.position.set(x1, 0, z4);
 
         scene.add(scenery_1);
         scene.add(scenery_2);
         scene.add(scenery_3);
+        scene.add(scenery_4);
 
-        sceneryArr.push([scenery_1, scenery_2, scenery_3]);
+        sceneryArr.push([scenery_1, scenery_2, scenery_3, scenery_4]);
     }
 
     r4() {
         const { body } = this.r2();
-        this.r2();
-        this.r2();
-        this.r2();
-        const { body: body2 } = this.turnRoad.r4();
-        this.r1();
-        this.r1();
-        this.r1();
-        this.r1({ type: 'remove' });
+        const { body: body2 } = turnRoadClass.r4({ type: 'remove' });
 
         lastBoxType = 'r6';
 
-        const { size, rang } = scenery1;
-        const scenery_1 = scenery1.clone();
-        const scenery_2 = scenery1.clone();
-        const scenery_3 = scenery1.clone();
+        const { size, rang } = this.getRandomScenery();
+        const scenery_1 = this.getRandomScenery().clone();
+        const scenery_2 = this.getRandomScenery().clone();
+        const scenery_3 = this.getRandomScenery().clone();
+        const scenery_4 = this.getRandomScenery().clone();
 
-        const x1 = body.position.x - body.rang.x + rang.x - size.width + body.size.width + size.width - body.size.width;
-        const z1 = rang.z + size.height + body.position.z - body.rang.z - body.size.height + body.size.height;
+        const x1 = body.position.x - body.rang.x + rang.x + body.size.width;
+        const z1 = rang.z + size.height + body.position.z - body.rang.z;
 
+        const x2 = x1 - body.size.width;
         const z2 = z1 - body.size.height - size.height;
 
-        const x3 = body2.position.x - body2.rang.x + rang.x - size.width + body2.size.width + size.width;
-        const z3 = rang.z + size.height + body2.position.z - body2.rang.z - body2.size.height + body2.size.height - size.height;
+        const x3 = body2.position.x - body2.rang.x + rang.x + body2.size.width;
+        const z3 = rang.z + body2.position.z - body2.rang.z;
+
+        const x4 = x1 + size.width;
 
         scenery_1.position.set(x1, 0, z1);
-        scenery_2.position.set(x1, 0, z2);
+        scenery_2.position.set(x2, 0, z2);
         scenery_3.position.set(x3, 0, z3);
+        scenery_4.position.set(x4, 0, z1);
 
         scene.add(scenery_1);
         scene.add(scenery_2);
         scene.add(scenery_3);
+        scene.add(scenery_4);
 
-        sceneryArr.push([scenery_1, scenery_2, scenery_3]);
+        sceneryArr.push([scenery_1, scenery_2, scenery_3, scenery_4]);
+    }
+
+    /**
+     * 开始前置道路
+     * */
+    r5() {
+        const { body } = this.r1();
+        this.r1();
+
+        lastBoxType = 'r6';
+
+        const { size, rang } = this.getRandomScenery();
+        const scenery_1 = this.getRandomScenery().clone();
+        const scenery_2 = this.getRandomScenery().clone();
+
+        const x1 = body.position.x - body.rang.x + rang.x - size.width;
+        const z1 = rang.z + body.position.z - body.rang.z - body.size.height;
+
+        const x2 = x1 + body.size.width + size.width;
+        const z2 = z1 + body.size.height;
+
+        scenery_1.position.set(x1, 0, z1);
+        scenery_2.position.set(x2, 0, z2);
+
+        scene.add(scenery_1);
+        scene.add(scenery_2);
+
+        sceneryArr.push([scenery_1, scenery_2]);
     }
 }

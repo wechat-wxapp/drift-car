@@ -10,7 +10,7 @@ export default class Ground {
      * 创建地板
      * */
     createGroundBody() {
-        const metal_texture = new THREE.TextureLoader().load("https://static.cdn.24haowan.com/24haowan/test/js/floor.png");
+        const metal_texture = new THREE.TextureLoader().load("https://static.cdn.24haowan.com/24haowan/test/js/floor.jpg");
         metal_texture.wrapS = THREE.RepeatWrapping;
         metal_texture.wrapT = THREE.RepeatWrapping;
         metal_texture.repeat.set(300, 300);

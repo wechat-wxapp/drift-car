@@ -8,7 +8,7 @@
 		"newFeature": true
 	},
 	"compileType": "game",
-	"libVersion": "2.1.0",
+	"libVersion": "2.1.1",
 	"appid": "wx90c48119df1eacd8",
 	"projectname": "drift-car",
 	"isGameTourist": true,
@@ -21,9 +21,25 @@
 			"current": -1,
 			"list": []
 		},
-		"game": {
-			"currentL": -1,
+		"plugin": {
+			"current": -1,
 			"list": []
+		},
+		"game": {
+			"current": 0,
+			"list": [
+				{
+					"id": 0,
+					"name": "从群组进入",
+					"query": "",
+					"scene": "1044",
+					"shareInfo": {
+						"groupName": "测试模拟群3",
+						"shareName": "LEZBEWLYwfQoS0ybmI61YJonOnMITr4LinttnR8FDxc@cr4dev",
+						"shareKey": "uTfF4aajouav7vtdqz12cAraYEjuMblISKv2otR4EeaDd3PbiGmoTx10VC0i7Iq5LG7xw9N_aRxVoZkaUDfhQw~~"
+					}
+				}
+			]
 		},
 		"miniprogram": {
 			"current": -1,

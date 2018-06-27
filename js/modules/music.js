@@ -12,7 +12,7 @@ export default class Music {
 
         this.bgmAudio = new Audio();
         this.bgmAudio.loop = true;
-        this.bgmAudio.src  = 'sound/BGM.mp3';
+        this.bgmAudio.src  = 'sound/BGM2.mp3';
 
         this.driftAudio = new Audio();
         this.driftAudio.src = 'sound/drift.mp3';
@@ -30,9 +30,15 @@ export default class Music {
         this.go2Audio.src = 'sound/go2.mp3';
     }
 
+    playMusic(music) {
+        if (!musicKey) return false;
+
+        music.play();
+    }
+
     playBgm() {
         this.bgmAudio.currentTime = 0;
-        this.bgmAudio.play();
+        this.playMusic(this.bgmAudio);
     }
 
     pauseBgm() {
@@ -41,26 +47,26 @@ export default class Music {
 
     playDrift() {
         this.driftAudio.currentTime = 0;
-        this.driftAudio.play();
+        this.playMusic(this.driftAudio);
     }
 
     playExplosion() {
         this.boomAudio.currentTime = 0;
-        this.boomAudio.play();
+        this.playMusic(this.boomAudio);
     }
 
     playReady() {
         this.readyAudio.currentTime = 0;
-        this.readyAudio.play();
+        this.playMusic(this.readyAudio);
     }
 
     playGo() {
         this.goAudio.currentTime = 0;
-        this.goAudio.play();
+        this.playMusic(this.goAudio);
     }
 
     playGo2() {
         this.go2Audio.currentTime = 0;
-        this.go2Audio.play();
+        this.playMusic(this.go2Audio);
     }
 }

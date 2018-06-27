@@ -6,19 +6,20 @@ export default class UTIL {
      * 创建模型
      */
     createObj(model, material, callback) {
-        // const manager = new THREE.LoadingManager();
-        // manager.onProgress = (item, loaded, total) => {
-        //   console.log(item, loaded, total);
-        // };
+        const manager = new THREE.LoadingManager();
+        manager.onProgress = (item, loaded, total) => {
+            // console.log(item, loaded, total);
+        };
 
-        // const texture = new THREE.Texture();
-        // const imgLoader = new THREE.ImageLoader(manager);
-        // imgLoader.load(material, (image) => {
-        //   texture.image = image;
-        //   texture.needsUpdate = true;
-        // });
+        const texture = new THREE.Texture();
+        texture.minFilter = THREE.LinearFilter;
+        const imgLoader = new THREE.ImageLoader(manager);
+        imgLoader.load(material, (image) => {
+            texture.image = image;
+            texture.needsUpdate = true;
+        });
 
-        var texture = THREE.ImageUtils.loadTexture(material);
+        // var texture = THREE.ImageUtils.loadTexture(material);
 
         const objLoader = new THREE.OBJLoader();
         objLoader.load(model, (obj) => {
@@ -82,59 +83,75 @@ export default class UTIL {
         // 重启游戏
         // this.restart();
 
+        // 显示结束页
+        this.showEndPage();
+
         console.log('---结束游戏---');
     };
+
+    showEndPage() {
+        this.clear2d();
+
+        $wx.sendMessage('end');
+        currentPage = 'endPage';
+
+        sharedCanvasSprite.position.x += speedRecord.x;
+        sharedCanvasSprite.position.z -= speedRecord.z;
+    }
 
     /**
      * 得分
      * */
     getScore(key, type) {
-        // 限制重复触发
-        if (lastScore >= key) {
+        const realKey = key - 2;
+
+        // 限制重复触发(因为要补2格防止刚开始后面镜头出现断路,所以判断时候需要 -2 )
+        if (lastScore >= realKey) {
             return false;
         }
 
-        if (key > 3) {
+        if (realKey > 3) {
             removeKey = true;
+            sceneryRemoveKey = true;
         }
 
-        if (type === 'remove') {
-            sceneryArr.shift().map(v => scene.remove(v));
+        if (type === 'remove' && sceneryRemoveKey && sceneryArr.length > 0) {
+             sceneryArr.shift().map(v => scene.remove(v));
         }
 
-        if (!(key % 10)) {
+        if (!(realKey % 2)) {
             maxKey++;
-            console.log('---创建道路---');
         }
         score++;
-        lastScore = key;
-        console.log('目前得分: ', score)
+        lastScore = realKey;
+
+        // 更新页面分数
+        gamePage.page();
     }
 
     /**
      * 重置游戏
      * */
     restart() {
-        setTimeout(() => {
-            this.clearWorld();
-            this.initVar();
+        this.clearWorld();
 
-            // 复活
-            // this.revival();
+        // 设置分数
+        $wx.setWxScore();
 
-            // 失败重新开始
-            this.end();
+        // 重置变量
+        $bus.reset();
 
-            carBodys.position.set(13, 15, -10);
-            carBodys.quaternion.setFromAxisAngle(new CANNON.Vec3(0, 1, 0), 0);
+        // 复活
+        // this.revival();
 
-            camera.position.set(-16.738086885462103, 120.533387653514225, 28.513221776822927);
-            camera.rotation.set(-0.9577585082113045, -0.3257201862210706, -0.42691147594250245);
+        // 失败重新开始
+        this.end();
 
-            setTimeout(() => {
-                startKey = true;
-            }, 3000);
-        }, 2000);
+        // 重置页面分数
+        gamePage.page();
+
+        // 重置背景音乐
+        this.readyMusic();
     }
 
     /**
@@ -163,10 +180,7 @@ export default class UTIL {
         level = 0;
 
         // 重置速度
-        speed = 1.5;
-
-        // 重置背景音乐
-        this.readyMusic();
+        speed = 2.5;
     }
 
     /**
@@ -175,34 +189,7 @@ export default class UTIL {
     revival() {
         lastScore = 0;
 
-        // 重置背景音乐
-        this.readyMusic();
-
         console.log(`---成功复活 当前分数: ${score} 当前速度: ${speed}---`);
-    }
-
-    /**
-     * 重置变量
-     * */
-    initVar() {
-        roadArr = [];
-        roadBodys = [];
-        roadCollisions = [];
-        sceneryArr = [];
-
-        currentW = 0;
-
-        key = 0;
-        maxKey = 20;
-        movekey = 'z';
-        clickKey = true;
-        startKey = false;
-
-        removeKey = false;
-
-        collideKey = false;
-
-        lastBoxType = 'r6';
     }
 
     /**
@@ -215,13 +202,44 @@ export default class UTIL {
                 if (key >= 2) {
                     music.playBgm();
                     music.playGo();
+
+                    // 设置开启key
+                    startKey = true;
+
+                    // 清空倒计时
+                    gamePage.page();
+
                     return false;
                 } else {
+                    // 倒计时
+                    gamePage.page(2 - key);
+
                     music.playReady();
                 }
                 playMusic(++key);
             }, 1000);
         };
+        // 倒计时
+        gamePage.page(3);
         playMusic();
+    }
+
+    /**
+     * 清空2d画布
+     * */
+    clear2d() {
+        offCanvas2d.clearRect(0, 0, winWidth, winHeight);
+        texture2d.needsUpdate = true;
+    }
+
+    /**
+     * 计算当前屏幕相对于 414 * 736 的结果
+     * */
+    computedSizeW(size) {
+        return size * winWidth / 414;
+    }
+
+    computedSizeH(size) {
+        return size * winHeight / 736;
     }
 }

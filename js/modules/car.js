@@ -1,5 +1,6 @@
 import UTIL from './util';
 import Speeder from "./speeder";
+import pageGame from "./pages/game";
 
 /**
  * 汽车函数
@@ -7,11 +8,19 @@ import Speeder from "./speeder";
 export default class Car extends UTIL {
     constructor() {
         super();
-        this.createCar();
 
-        events.click('playGame', () => {
-            this.drift();
+        events.click({
+            name: 'playGame',
+            pageName: 'gamePage',
+            point: [0, 0, winWidth, winHeight],
+            cb: () => {
+                this.drift();
+            }
         });
+    }
+
+    build() {
+        return Promise.all([this.createCar()]);
     }
 
     /**
@@ -21,21 +30,24 @@ export default class Car extends UTIL {
         const material = "https://static.cdn.24haowan.com/24haowan/test/js/car2.png";
         const model = 'https://static.cdn.24haowan.com/24haowan/test/js/car4.obj';
 
-        this.createObj(model, material, (obj) => {
-            car = obj;
+        return new Promise((res, rej) => {
+            this.createObj(model, material, (obj) => {
+                car = obj;
 
-            car.scale.set(2, 2, 2);
-            car.position.set(13, 15, -10);
-            // car.position.set(-2, 10, 10);
+                car.scale.set(2, 2, 2);
+                car.position.set(25, 15, -10);
 
-            const boxShape = new CANNON.Box(new CANNON.Vec3(5.5, 4, 5.5));
+                const boxShape = new CANNON.Box(new CANNON.Vec3(4, 4, 4));
 
-            carBodys = new CANNON.Body({ mass: 2, shape: boxShape });
-            carBodys.position.set(car.position.x, car.position.y, car.position.z);
+                carBodys = new CANNON.Body({ mass: 2, shape: boxShape });
+                carBodys.position.set(car.position.x, car.position.y, car.position.z);
 
-            world.add(carBodys);
+                world.add(carBodys);
 
-            scene.add(car);
+                scene.add(car);
+
+                res();
+            });
         });
     }
 
@@ -54,7 +66,7 @@ export default class Car extends UTIL {
 
                     carBodys.quaternion.setFromAxisAngle(new CANNON.Vec3(0, 1, 0), currentW);
 
-                    if (percent >= 1.1) {
+                    if (percent >= 1) {
                         movekey = 'z';
                     }
 
@@ -68,7 +80,7 @@ export default class Car extends UTIL {
                     currentW = localW + percent * (-1.57 - localW);
 
                     carBodys.quaternion.setFromAxisAngle(new CANNON.Vec3(0, 1, 0), currentW);
-                    if (percent >= 1.1) {
+                    if (percent >= 1) {
                         movekey = 'x';
                     }
 
