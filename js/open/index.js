@@ -10,15 +10,21 @@
 // cvs.fillRect(0, 0, 500, 500)
 
 import EndPage from './page/end';
+import ReseurPage from './page/resurgence.js';
+import RankPage from './page/rank';
 import Init from './page/init';
 
 const endPage = new EndPage();
+const reseurPage = new ReseurPage();
+const rankPage = new RankPage();
 const init = new Init();
 
 wx.onMessage(({ command, data }) => {
     switch (command) {
         case 'end':
-            endPage.setTexture();
+            // endPage.setTexture();
+            // reseurPage.setTexture();
+            rankPage.setTexture();
             break;
         case 'clear':
             init.clearCvs();
