@@ -12,10 +12,12 @@
 import EndPage from './page/end';
 import ReseurPage from './page/resurgence.js';
 import RankPage from './page/rank';
+import CarportPage from './page/carport';
 import Init from './page/init';
 
 const endPage = new EndPage();
 const reseurPage = new ReseurPage();
+const carportPage = new CarportPage();
 const rankPage = new RankPage();
 const init = new Init();
 
@@ -24,7 +26,8 @@ wx.onMessage(({ command, data }) => {
         case 'end':
             // endPage.setTexture();
             // reseurPage.setTexture();
-            rankPage.setTexture();
+            // rankPage.setTexture();
+            carportPage.setTexture();
             break;
         case 'clear':
             init.clearCvs();

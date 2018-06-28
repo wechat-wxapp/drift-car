@@ -109,6 +109,10 @@ const basicData = {
     // 预加载图片列表
     imgList: {
         btn: 'images/btn.png',
+        backIcon: `images/back-icon.png`,
+        carPane: `images/car-pane.png`,
+        carportPane: `images/carport-pane.png`,
+        selectedIcon: `images/selected-icon.png`,
 
         //loading页
         logo: 'images/logo.png',

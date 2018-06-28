@@ -3,7 +3,7 @@ import Init from './init';
 /**
  * 开始页函数
  */
-export default class Loader extends Init {
+export default class Rank extends Init {
   constructor() {
     super();
   }
@@ -13,41 +13,116 @@ export default class Loader extends Init {
    * */
   setTexture(data) {
     this.clearCvs();
-    this.cvs.fillStyle = "rgba(0, 0, 0, .8)";
-    this.cvs.fillRect(0, 0, this.winWidth, this.winHeight);
 
-    // this.drawRoundRect(this.cvs, this.winWidth / 2 - this.computedSizeW(54), this.computedSizeH(81), this.computedSizeW(108), this.computedSizeH(35), this.computedSizeW(17.5) ,'rgba(73,116,235,1)');
-    // this.cvs.fillText('群排行榜', this.winWidth / 2, this.computedSizeH(104));
+    /**
+     * 好友排名
+     * */
+    // this.friendRank();
 
-    this.drawRoundRect(this.cvs, this.computedSizeW(60.5), this.computedSizeH(81), this.computedSizeW(108), this.computedSizeH(35), this.computedSizeW(17.5) ,'rgba(73,116,235,1)');
-    this.drawRoundRect(this.cvs, this.computedSizeW(242), this.computedSizeH(81), this.computedSizeW(108), this.computedSizeH(35), this.computedSizeW(17.5) ,'#fff', 2);
-    this.cvs.fillStyle = "#fff";
-    this.cvs.font = `bold ${this.computedSizeW(16)}px Arial`;
-    this.cvs.textAlign = "center";
-    this.cvs.fillText('好友排行', this.winWidth / 2 -  this.computedSizeW(91), this.computedSizeH(104));
-    this.cvs.fillText('世界排行', this.winWidth / 2 +  this.computedSizeW(91), this.computedSizeH(104));
+    //世界
+    this.worldRank();
+    
+    /**
+     * 群排名
+     * */
+    // this.groupRank();
 
     this.cvs.fillStyle = "#e7e7e7";
-    this.cvs.fillRect(this.winWidth / 2 - this.computedSizeW(291) / 2, this.computedSizeH(135), this.computedSizeW(291), this.computedSizeH(25));
+    this.cvs.fillRect(this.winWidth / 2 - this.computedSizeW(582) / 2, this.computedSizeH(272), this.computedSizeW(582), this.computedSizeH(50));
     this.cvs.fillStyle = "#808080";
-    this.cvs.font = `${this.computedSizeW(10)}px Arial`;
+    this.cvs.font = `${this.computedSizeW(20)}px Arial`;
     this.cvs.textAlign = "left";
-    this.cvs.fillText('排行榜：每周一凌晨更新', this.computedSizeW(75), this.computedSizeH(152));
-    
-    this.cvs.fillStyle = "#fff";
-    this.cvs.fillRect(this.winWidth / 2 - this.computedSizeW(291) / 2, this.computedSizeH(160), this.computedSizeW(291), this.computedSizeH(310));
+    this.cvs.fillText('排行榜：每周一凌晨更新', this.computedSizeW(130), this.computedSizeH(306));
 
+    this.cvs.fillStyle = "#fff";
+    this.cvs.fillRect(this.winWidth / 2 - this.computedSizeW(582) / 2, this.computedSizeH(322), this.computedSizeW(582), this.computedSizeH(620));
+
+    //分割线
+    this.cvs.lineWidth = '1';
+    this.cvs.strokeStyle = '#ededed';
+    for (let i = 0; i < 5; i++) {
+      this.cvs.moveTo(this.computedSizeW(130), this.computedSizeH(445 + i * 96));
+      this.cvs.lineTo(this.computedSizeW(608), this.computedSizeH(445 + i * 96));
+    }
+    this.cvs.stroke();
+
+    //排名
+    this.cvs.beginPath();
     this.cvs.fillStyle = this.themeBule;
-    this.cvs.fillRect(this.winWidth / 2 - this.computedSizeW(291) / 2, this.computedSizeH(482.5), this.computedSizeW(291), this.computedSizeH(51));
+    for(let i = 0;i < 6;i++) {
+      if(i == 3) this.cvs.fillStyle = '#a8a8a8';
+      this.cvs.fillText(i + 1, this.computedSizeW(132), this.computedSizeH(402 + i * 96));
+      this.cvs.arc(this.computedSizeW(234), this.computedSizeH(394 + i * 97), this.computedSizeW(31), 0, 2 * Math.PI);
+    }
+    this.cvs.fill();
+
+    this.cvs.fillStyle = '#666';
+    for(let i = 0; i < 6; i++){
+      this.cvs.fillText(`Youche${i}`, this.computedSizeW(286), this.computedSizeH(402 + i * 96), this.computedSizeW(146));
+    }
+    
+    this.cvs.font = `bold`;
+    this.cvs.fillStyle = '#000';
+    for(let i = 0; i < 6; i++){
+      this.cvs.fillText(`465`, this.computedSizeW(538), this.computedSizeH(402 + i * 96));
+    }
+
+    //blue part
+    this.cvs.fillStyle = this.themeBule;
+    this.cvs.fillRect(this.winWidth / 2 - this.computedSizeW(582) / 2, this.computedSizeH(965), this.computedSizeW(582), this.computedSizeH(102));
+    this.cvs.fillStyle = `#ffd81f`;
+    this.cvs.font = 'noraml';
+    this.cvs.fillText(`2`, this.computedSizeW(132), this.computedSizeH(1028));
+    this.cvs.arc(this.computedSizeW(234), this.computedSizeH(1018), this.computedSizeW(31), 0, 2 * Math.PI);
+    this.cvs.fill();
+    this.cvs.fillStyle = `#fff`;
+    this.cvs.fillText(`Youche2`, this.computedSizeW(286), this.computedSizeH(1028), this.computedSizeW(146));
+    this.cvs.font = `bold`;
+    this.cvs.fillText(`465`, this.computedSizeW(538), this.computedSizeH(1028));
+
+    const backIcon1 = wx.createImage();
+    backIcon1.src = `images/back-icon.png`;
+    this.cvs.drawImage(backIcon1, 0, 0, backIcon1.width, backIcon1.height, this.computedSizeW(84), this.computedSizeH(1150), this.computedSizeW(62), this.computedSizeH(62));
 
     const btn = wx.createImage();
     btn.src = 'images/btn.png';
-    this.cvs.drawImage(btn, 0, 0, btn.width, btn.height, this.computedSizeW(245), this.computedSizeH(580), this.computedSizeW(106.5), this.computedSizeH(43.5));
+    this.cvs.drawImage(btn, 0, 0, btn.width, btn.height, this.computedSizeW(445), this.computedSizeH(1150), this.computedSizeW(216), this.computedSizeH(80));
 
     this.cvs.fillStyle = "#fff";
+    this.cvs.font = `bold ${this.computedSizeW(30)}px Arial`;
+    this.cvs.fillText('查看群排行', this.computedSizeW(480), this.computedSizeH(1194));
+
+
+  }
+
+  friendRank(){
+    this.drawRoundRect(this.cvs, this.computedSizeW(85), this.computedSizeH(160), this.computedSizeW(216), this.computedSizeH(70), this.computedSizeW(35), 'rgba(73,116,235,1)');
+    this.drawRoundRect(this.cvs, this.computedSizeW(442), this.computedSizeH(160), this.computedSizeW(216), this.computedSizeH(70), this.computedSizeW(35), '#fff', 2);
+    this.cvs.fillStyle = "#fff";
+    this.cvs.font = `bold ${this.computedSizeW(30)}px Arial`;
+    this.cvs.textAlign = "left";
+    this.cvs.fillText('好友排行', this.computedSizeW(134), this.computedSizeH(205));
+    this.cvs.fillText('世界排行', this.computedSizeW(490), this.computedSizeH(205));
+  }
+
+  worldRank(){
+    this.drawRoundRect(this.cvs, this.computedSizeW(85), this.computedSizeH(160), this.computedSizeW(216), this.computedSizeH(70), this.computedSizeW(35), '#fff', 2);
+    this.drawRoundRect(this.cvs, this.computedSizeW(442), this.computedSizeH(160), this.computedSizeW(216), this.computedSizeH(70), this.computedSizeW(35), 'rgba(73,116,235,1)');
+    this.cvs.beginPath();
+    this.cvs.fillStyle = "#fff";
+    this.cvs.font = `bold ${this.computedSizeW(30)}px Arial`;
+    this.cvs.textAlign = "left";
+    this.cvs.fillText('好友排行', this.computedSizeW(134), this.computedSizeH(205));
+    this.cvs.fillText('世界排行', this.computedSizeW(490), this.computedSizeH(205));
+  }
+
+  groupRank(){
+    this.drawRoundRect(this.cvs, (this.winWidth - this.computedSizeW(216)) / 2, this.computedSizeH(160), this.computedSizeW(216), this.computedSizeH(70), this.computedSizeW(35), 'rgba(73,116,235,1)');
+    this.cvs.beginPath();
+    this.cvs.fillStyle = "#fff";
     this.cvs.textAlign = "center";
-    this.cvs.font = `bold ${this.computedSizeW(16)}px Arial`;
-    this.cvs.fillText('再玩一局', this.computedSizeW(298), this.computedSizeH(604));
+    this.cvs.font = `bold ${this.computedSizeW(30)}px Arial`;
+    this.cvs.fillText('群排行榜', this.winWidth / 2, this.computedSizeH(206));
   }
 
 }
