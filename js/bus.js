@@ -113,6 +113,13 @@ const basicData = {
         carPane: `images/car-pane.png`,
         carportPane: `images/carport-pane.png`,
         selectedIcon: `images/selected-icon.png`,
+        unlockPane: 'images/unlock-pane.png',
+        unlockGame: 'images/unlock-game.png',
+        unlockCn: 'images/unlock-cn.png',
+        unlockBtn: 'images/unlock-btn.png',
+        gift100: 'images/gift-100.png',
+        gift200: 'images/gift-200.png',
+        curve: 'images/curve.png',
 
         //loading页
         logo: 'images/logo.png',
@@ -129,7 +136,17 @@ const basicData = {
         startBottomBtn4: 'images/start-bottom-btn-4.png',
 
         // 游戏页
-        scoreBg: 'images/score-bg.png'
+        scoreBg: 'images/score-bg.png',
+
+        // 公众号
+        point: 'images/point.png',
+        guide: 'images/guide.png',
+
+        // 二维码
+        qrLamp: 'images/qr-lamp.png',
+        qrBtn: 'images/qr-btn.png',
+        qrcode: 'images/qrcode.png'
+
     }
 };
 
