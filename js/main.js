@@ -85,7 +85,7 @@ export default class Main extends UTIL {
         scene.add(directionalLight);
 
         // 摄像机调试
-        controls = new THREE.OrbitControls(camera);
+        // controls = new THREE.OrbitControls(camera);
     }
 
     /**
@@ -101,7 +101,7 @@ export default class Main extends UTIL {
         world.broadphase = new CANNON.NaiveBroadphase();
 
         // 显示物理世界
-        cannonDebugRenderer = new THREE.CannonDebugRenderer(scene, world);
+        // cannonDebugRenderer = new THREE.CannonDebugRenderer(scene, world);
     }
 
     /**
@@ -186,6 +186,7 @@ export default class Main extends UTIL {
                 // 2d canvas
                 // offCanvasSprite.position.x += speed;
                 scoreCanvasSprite.position.x += speed;
+                beyondCanvasSprite.position.x += speed;
                 // sharedCanvasSprite.position.x += speed;
             } else {
                 car.position.z -= speed;
@@ -197,6 +198,7 @@ export default class Main extends UTIL {
                 // 2d canvas
                 // offCanvasSprite.position.z -= speed;
                 scoreCanvasSprite.position.z -= speed;
+                beyondCanvasSprite.position.z -= speed;
                 // sharedCanvasSprite.position.z -= speed;
             }
         }

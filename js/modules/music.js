@@ -12,22 +12,22 @@ export default class Music {
 
         this.bgmAudio = new Audio();
         this.bgmAudio.loop = true;
-        this.bgmAudio.src  = 'sound/BGM2.mp3';
+        this.bgmAudio.src  = 'https://static.cdn.24haowan.com/24haowan/test/js/BGM2.mp3';
 
         this.driftAudio = new Audio();
-        this.driftAudio.src = 'sound/drift.mp3';
+        this.driftAudio.src = 'https://static.cdn.24haowan.com/24haowan/test/js/drift.mp3';
 
         this.boomAudio = new Audio();
-        this.boomAudio.src = 'sound/boom.mp3';
+        this.boomAudio.src = 'https://static.cdn.24haowan.com/24haowan/test/js/boom.mp3';
 
         this.readyAudio = new Audio();
-        this.readyAudio.src = 'sound/ready.mp3';
+        this.readyAudio.src = 'https://static.cdn.24haowan.com/24haowan/test/js/ready.mp3';
 
         this.goAudio = new Audio();
-        this.goAudio.src = 'sound/go.mp3';
+        this.goAudio.src = 'https://static.cdn.24haowan.com/24haowan/test/js/go.mp3';
 
         this.go2Audio = new Audio();
-        this.go2Audio.src = 'sound/go2.mp3';
+        this.go2Audio.src = 'https://static.cdn.24haowan.com/24haowan/test/js/go2.mp3';
     }
 
     playMusic(music) {

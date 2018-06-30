@@ -90,8 +90,6 @@ export default class UTIL {
     };
 
     showEndPage() {
-        // this.clear2d();
-
         sharedClass.endPage();
         currentPage = 'endPage';
     }
@@ -141,6 +139,9 @@ export default class UTIL {
 
         // 失败重新开始
         this.end();
+
+        // 重置页面分数
+        scorePage.setTexture();
 
         // 重置背景音乐
         this.readyMusic();
@@ -194,8 +195,11 @@ export default class UTIL {
     updateScore() {
         setTimeout(() => {
             if (!startKey) return false;
-
             score++;
+
+            // 检查是否超越好友
+            BeyondClass.beyondPage();
+
             scorePage.setTexture();
 
             this.updateScore();

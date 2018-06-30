@@ -9,7 +9,7 @@ export default class Index {
         const sharedCanvas = wx.getSharedCanvas();
         this.cvs = sharedCanvas.getContext('2d');
 
-        this.themeBule = `rgba(73,116,235,1)`;
+        this.themeBule = 'rgba(73,116,235,1)';
     }
 
     /**
@@ -29,7 +29,7 @@ export default class Index {
     clearCvs(noTransBg) {
         this.cvs.clearRect(0, 0, this.winWidth, this.winHeight);
         if(noTransBg) return;
-        this.cvs.fillStyle = "rgba(0, 0, 0, .8)";
+        this.cvs.fillStyle = 'rgba(0, 0, 0, .8)';
         this.cvs.fillRect(0, 0, this.winWidth, this.winHeight);
     }
 
@@ -52,8 +52,20 @@ export default class Index {
         } else {
             cxt.strokeStyle = color;
             cxt.lineWidth = lineWidth;
-            cxt.stroke()
+            cxt.stroke();
         }
         cxt.closePath();
+    }
+
+    /**
+     * 获取朋友排行榜
+     * */
+    getFriendsScore() {
+        wx.getFriendCloudStorage({
+            keyList: ['score'],
+            success: res => {
+                let data = res.data;
+            }
+        })
     }
 }

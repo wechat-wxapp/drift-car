@@ -102,6 +102,8 @@ const basicData = {
     scoreClass: '',
     // 开放域类
     sharedClass: '',
+    // 超越好友开放域类
+    BeyondClass: '',
 
     // 等待页对象
     loadingPage: '',
@@ -114,8 +116,12 @@ const basicData = {
 
     // 微信公开域画布
     openDataContext: '',
+    sharedCanvas: '',
     sharedTexture2d: '',
     sharedCanvasSprite: '',
+    // 超越好友公开域画布
+    beyondTexture2d: '',
+    beyondCanvasSprite: '',
     // 微信特有离屏画布
     offCanvas2d: '',
     texture2d: '',
@@ -248,7 +254,12 @@ export default class Bus{
         carBodys.position.set(25, 15, -10);
         carBodys.quaternion.setFromAxisAngle(new CANNON.Vec3(0, 1, 0), 0);
 
+        // 普通画布
         offCanvasSprite.position.set(-11.75, 78.44, 20);
+        // 分数
+        scoreCanvasSprite.position.set(-10, 82.8, 9);
+        // 超越好友
+        beyondCanvasSprite.position.set(-11.75, 78.44, 20);
         // sharedCanvasSprite.position.set(-11.75, 78.44, 20);
 
         camera.position.set(-16.738086885462103, 90.533387653514225, 28.513221776822927);

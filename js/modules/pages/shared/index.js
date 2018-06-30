@@ -9,6 +9,11 @@ export default class Shared extends UTIL {
         z: 0
     };
 
+    size = {
+        width: winWidth,
+        height: winHeight
+    };
+
     constructor() {
         super();
         this.page();
@@ -53,7 +58,7 @@ export default class Shared extends UTIL {
             pageName: 'endPage',
             point: [x1, y1, x2, y2],
             cb: () => {
-                scoreClass.clear2d();
+                this.clear2d();
 
                 offCanvasSprite.position.x += speedRecord.x;
                 offCanvasSprite.position.z -= speedRecord.z;
@@ -68,16 +73,16 @@ export default class Shared extends UTIL {
      * 创建2d画布
      */
     page() {
-        const sharedCanvas = openDataContext.canvas;
+        this.sharedCanvas = openDataContext.canvas;
 
-        sharedCanvas.height = winHeight * window.devicePixelRatio;
-        sharedCanvas.width = winWidth * window.devicePixelRatio;
+        this.sharedCanvas.height = winHeight * window.devicePixelRatio;
+        this.sharedCanvas.width = winWidth * window.devicePixelRatio;
 
-        const sharedCanvas2d = sharedCanvas.getContext("2d");
+        const sharedCanvas2d = this.sharedCanvas.getContext("2d");
 
         sharedCanvas2d.scale(window.devicePixelRatio, window.devicePixelRatio);
 
-        sharedTexture2d = new THREE.Texture(sharedCanvas);
+        sharedTexture2d = new THREE.Texture(this.sharedCanvas);
         sharedTexture2d.minFilter = THREE.LinearFilter;
 
         const spriteMaterial = new THREE.SpriteMaterial({
@@ -95,6 +100,14 @@ export default class Shared extends UTIL {
     }
 
     endPage() {
+        // $wx.setSize(this.size);
+        this.sharedCanvas.width = winWidth * window.devicePixelRatio;
+        this.sharedCanvas.height = winHeight * window.devicePixelRatio;
+
+        const sharedCanvas2d = this.sharedCanvas.getContext("2d");
+
+        sharedCanvas2d.scale(window.devicePixelRatio, window.devicePixelRatio);
+
         $wx.sendMessage('end');
 
         this.setPosition();

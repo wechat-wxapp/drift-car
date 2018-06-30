@@ -15,6 +15,7 @@ import RankPage from './page/rank';
 import CarportPage from './page/carport';
 import WechatMPPage from './page/wechatMP';
 import QrPage from './page/qr';
+import Beyond from './page/beyond';
 import Init from './page/init';
 
 const endPage = new EndPage();
@@ -23,7 +24,10 @@ const rankPage = new RankPage();
 const carportPage = new CarportPage();
 const wechatMPPage = new WechatMPPage();
 const qrPage = new QrPage();
+const BeyondPage = new Beyond();
 const init = new Init();
+
+init.getFriendsScore();
 
 wx.onMessage(({ command, data }) => {
     switch (command) {
@@ -47,6 +51,9 @@ wx.onMessage(({ command, data }) => {
             break;
         case 'clear':
             init.clearCvs(true);
+            break;
+        case 'beyond':
+            BeyondPage.setTexture(data);
             break;
     }
 });
