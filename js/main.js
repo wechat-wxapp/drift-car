@@ -136,39 +136,42 @@ export default class Main extends UTIL {
      * 更新路路面
      */
     updateRoad() {
-        // if (key < maxKey) {
-            if (key < 2) {
+        if (key < maxKey) {
+            // if (key < 2) {
 
-            // if (key === 0) {
-            //     this.r7();
-            // } else {
-            //     const currentRoadConfig = loopRoadConfig[lastBoxType];
-            //     const random = this.getRandomInt(0, currentRoadConfig.length);
-            //
-            //     this[currentRoadConfig[random]]();
-            // }
-
-
-            if (key < 1) {
+            if (key === 0) {
                 this.r7();
             } else if (key === 1) {
-                this.r8();
-            } else if (key === 2) {
-                this.r8();
-            } else if (key === 3) {
-                this.r8();
-            } else if (key === 4) {
                 this.r5();
-            } else if (key === 5) {
-                this.r6();
-            } else if (key === 6) {
-                this.r8();
+            } else {
+                const currentRoadConfig = loopRoadConfig[lastBoxType];
+                const random = this.getRandomInt(0, currentRoadConfig.length);
+
+                this[currentRoadConfig[random]]();
             }
+
+
+            // if (key < 1) {
+            //     this.r7();
+            // } else if (key === 1) {
+            //     this.r8();
+            // } else if (key === 2) {
+            //     this.r8();
+            // } else if (key === 3) {
+            //     this.r8();
+            // } else if (key === 4) {
+            //     this.r5();
+            // } else if (key === 5) {
+            //     this.r6();
+            // } else if (key === 6) {
+            //     this.r8();
+            // }
 
             key += 1;
         }
     }
 
+    /*
      * 更新车辆和摄像机未知
      */
     updateAnimation() {

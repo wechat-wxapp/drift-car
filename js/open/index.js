@@ -46,7 +46,7 @@ wx.onMessage(({ command, data }) => {
             qrPage.setTexture();
             break;
         case 'clear':
-            init.clearCvs();
+            init.clearCvs(true);
             break;
     }
 });

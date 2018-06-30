@@ -251,7 +251,7 @@ export default class Road extends UTIL {
         const { body } = turnRoadSmallClass.r3();
         const { body: body2 } = turnRoadSmallClass.r4();
         turnRoadSmallClass.r3();
-        turnRoadSmallClass.r4();
+        turnRoadSmallClass.r4({ type: 'remove' });
 
         this.r1();
 
