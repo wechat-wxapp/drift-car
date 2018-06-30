@@ -75,12 +75,13 @@ export default class Index {
             success: res => {
                 let tempRankData = res.data
                 // 排序
-                that.rankData = that.sort(tempRankData)
+                that.rankData = that.sort(tempRankData, 'des')
 
                 // 请求个人数据
                 that.initSelf(() => {
                     // 保存个人数据
                     that.selfData = that.normalizeSelf(that.rankData, that.self.nickName)
+                    console.log('sd', that.selfData)
 
                 })
             },
@@ -107,7 +108,7 @@ export default class Index {
     }
 
     // 排序方法
-    sort (arr) {
+    sort (arr, des) {
         if(arr.length <= 1){
             return arr;
         }
@@ -118,14 +119,25 @@ export default class Index {
         var left = [];
         var right = [];
 
-        for(var i = 0; i < arr.length; i++){
-            if(arr[i].KVDataList[0].value > middleValue){
-                left.push(arr[i]);
-            }else{
-                right.push(arr[i]);
+        if (des === 'des') {
+            for(var i = 0; i < arr.length; i++){
+                if(arr[i].KVDataList[0].value < middleValue){
+                    left.push(arr[i]);
+                }else{
+                    right.push(arr[i]);
+                }
+            }
+        } else {
+            for(var i = 0; i < arr.length; i++){
+                if(arr[i].KVDataList[0].value > middleValue){
+                    left.push(arr[i]);
+                }else{
+                    right.push(arr[i]);
+                }
             }
         }
-        return this.sort(left).concat(middleArr,this.sort(right));
+
+        return this.sort(left, des).concat(middleArr,this.sort(right, des));
     }
 
     // 获取排行中的用户数据，并添加排名

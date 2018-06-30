@@ -28,6 +28,7 @@ export default class Rank extends Init {
      * */
     // this.groupRank();
 
+    // 更新提示
     this.cvs.fillStyle = "#e7e7e7";
     this.cvs.fillRect(this.winWidth / 2 - this.computedSizeW(582) / 2, this.computedSizeH(272), this.computedSizeW(582), this.computedSizeH(50));
     this.cvs.fillStyle = "#808080";
@@ -35,6 +36,7 @@ export default class Rank extends Init {
     this.cvs.textAlign = "left";
     this.cvs.fillText('排行榜：每周一凌晨更新', this.computedSizeW(130), this.computedSizeH(306));
 
+    // this.cvs.fillText('上一页')
     this.cvs.fillStyle = "#fff";
     this.cvs.fillRect(this.winWidth / 2 - this.computedSizeW(582) / 2, this.computedSizeH(322), this.computedSizeW(582), this.computedSizeH(620));
 
