@@ -171,6 +171,7 @@ export default class Main extends UTIL {
         }
     }
 
+    /*
      * 更新车辆和摄像机未知
      */
     updateAnimation() {
