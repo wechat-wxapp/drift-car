@@ -36,7 +36,7 @@ wx.onMessage(({ command, data }) => {
             reseurPage.setTexture();
             break;
         case 'rank':
-            rankPage.setTexture();
+            rankPage.setTexture(data);
             break;
         case 'carport':
             carportPage.setTexture(data);

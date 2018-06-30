@@ -54,13 +54,13 @@ export default class Start extends UTIL {
                 scorePage.setTexture();
 
                 // this.restart();
-
+                $wx.sendMessage('rank',{ page: 1 });
                 sharedClass.endPage();
 
                 pageClass.clear2d();
 
                 // 设置页面target
-                currentPage = 'gamePage';
+                currentPage = 'rankPage';
 
                 // 请求个人数据
                 // 请求世界排行榜的数据

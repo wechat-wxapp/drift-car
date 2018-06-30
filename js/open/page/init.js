@@ -78,9 +78,7 @@ export default class Index {
             success: res => {
                 let tempRankData = res.data
                 // 排序
-                that.rankData = that.sort(tempRankData, 'des')
-                that.rankData = that.sort(tempRankData, 'des')
-                that.rankData = that.sort(tempRankData, 'des')
+                that.rankData = that.sort(tempRankData, 'aes')
 
                 // 请求个人数据
                 that.initSelf(() => {

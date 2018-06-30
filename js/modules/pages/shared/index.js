@@ -19,6 +19,7 @@ export default class Shared extends UTIL {
     bindEvent() {
         this.bindReStart();
         this.bindGoHome();
+        this.bindNextPage();
     }
 
     bindReStart() {
@@ -62,6 +63,27 @@ export default class Shared extends UTIL {
                 currentPage = 'startPage';
             }
         });
+    }
+
+    // 下一页按钮
+    bindNextPage() {
+        const x1 = this.computedSizeW(254);
+        const x2 = this.computedSizeW(291);
+        const y1 = this.computedSizeH(158);
+        const y2 = this.computedSizeH(171);
+
+        events.click({
+            name: 'nextPageBtn',
+            pageName: 'rankPage',
+            point: [x1, y1, x2, y2],
+            cb: () => {
+                // console.log('asd');
+                console.log(rankCurrentPage);
+                rankCurrentPage--;
+                $wx.sendMessage('rank',{ page: rankCurrentPage });
+            }
+        })
+
     }
 
     /**
