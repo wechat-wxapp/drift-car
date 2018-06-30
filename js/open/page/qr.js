@@ -16,15 +16,15 @@ export default class wechatMP extends Init {
 
     const qrcode = wx.createImage();
     qrcode.src = 'images/qrcode.png';
-    this.cvs.drawImage(qrcode, 0, 0, qrcode.width, qrcode.height, this.computedSizeH(95), this.computedSizeH(270), this.computedSizeW(560), this.computedSizeH(824));
+    this.cvs.drawImage(qrcode, 0, 0, qrcode.width, qrcode.height, this.computedSizeW(95), this.computedSizeH(270), this.computedSizeW(560), this.computedSizeH(824));
 
     const qrBtn = wx.createImage();
     qrBtn.src = 'images/qr-btn.png';
-    this.cvs.drawImage(qrBtn, 0, 0, qrBtn.width, qrBtn.height, this.computedSizeH(240), this.computedSizeH(976), this.computedSizeW(270), this.computedSizeH(74));
+    this.cvs.drawImage(qrBtn, 0, 0, qrBtn.width, qrBtn.height, this.computedSizeW(240), this.computedSizeH(976), this.computedSizeW(270), this.computedSizeH(74));
 
     const leftLamp = wx.createImage();
     leftLamp.src = 'images/qr-lamp.png';
-    this.cvs.drawImage(leftLamp, 0, 0, leftLamp.width, leftLamp.height, 0, this.computedSizeH(110), this.computedSizeW(250), this.computedSizeH(344));
+    this.cvs.drawImage(leftLamp, 0, 0, leftLamp.width, leftLamp.height, this.computedSizeW(20), this.computedSizeH(110), this.computedSizeW(250), this.computedSizeH(344));
 
     const backIcon1 = wx.createImage();
     backIcon1.src = `images/back-icon.png`;
@@ -35,7 +35,7 @@ export default class wechatMP extends Init {
     this.cvs.translate(this.winWidth, 0)
     this.cvs.scale(-1,1)
     righttLamp.src = 'images/qr-lamp.png';
-    this.cvs.drawImage(righttLamp, 0, 0, righttLamp.width, righttLamp.height, 0, this.computedSizeH(110), this.computedSizeW(250), this.computedSizeH(344));
+    this.cvs.drawImage(righttLamp, 0, 0, righttLamp.width, righttLamp.height, this.computedSizeW(20), this.computedSizeH(110), this.computedSizeW(250), this.computedSizeH(344));
     this.cvs.restore()
   }
   

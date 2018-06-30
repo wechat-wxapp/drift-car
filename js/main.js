@@ -41,6 +41,8 @@ export default class Main extends UTIL {
 
         // 实例化微信类
         $wx = new WX();
+        // 无法加载
+        // $wx.getFontFamily();
 
         new page();
         new Shared();
@@ -97,7 +99,7 @@ export default class Main extends UTIL {
         world.broadphase = new CANNON.NaiveBroadphase();
 
         // 显示物理世界
-        // cannonDebugRenderer = new THREE.CannonDebugRenderer(scene, world);
+        cannonDebugRenderer = new THREE.CannonDebugRenderer(scene, world);
     }
 
     r1() {
@@ -177,13 +179,13 @@ export default class Main extends UTIL {
     /**
      * 点击函数
      */
-    // handleMouseStart(e) {
-    //     // 触发绑定事件判断
-    //     // events.onClick(e);
-    //
-    //     // 触发漂移
-    //     this.drift();
-    // }
+    handleMouseStart(e) {
+        // 触发绑定事件判断
+        // events.onClick(e);
+    
+        // 触发漂移
+        this.drift();
+    }
 
     /**
      * 更新车辆和摄像机未知

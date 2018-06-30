@@ -50,7 +50,8 @@ export default class Start extends UTIL {
                 // 实例化游戏页面
                 gamePage = new pageGame();
 
-                $wx.sendMessage('end');
+                $wx.sendMessage('carport',{ show:true,success:true,choose:1 });
+                // $wx.sendMessage('qr');
 
                 // this.restart();
 
