@@ -13,9 +13,10 @@ import WX from './libs/wx';
 import UTIL from "./modules/util";
 
 // 2d画布
-import page from './modules/pages/index';
-import Shared from './modules/pages/shared';
-import pageLoading from './modules/pages/loading';
+import page from './modules/pages/main/index';
+// import Score from './modules/pages/score';
+// import Shared from './modules/pages/shared';
+// import pageLoading from './modules/pages/loading';
 
 /**
  * 游戏主函数
@@ -44,10 +45,11 @@ export default class Main extends UTIL {
         // 无法加载
         // $wx.getFontFamily();
 
-        new page();
-        new Shared();
-        // 创建loading页对象
-        loadingPage = new pageLoading();
+        pageClass = new page();
+        // new Score();
+        // new Shared();
+        // // 创建loading页对象
+        // loadingPage = new pageLoading();
 
         // 渲染
         this.loop();
@@ -69,7 +71,7 @@ export default class Main extends UTIL {
 
         console.log("屏幕尺寸: " + winWidth + " x " + winHeight);
 
-        camera = new THREE.PerspectiveCamera(75, cameraAspect, .1, 500);
+        camera = new THREE.PerspectiveCamera(75, cameraAspect, .1, 10500);
         camera.position.set(-16.738086885462103, 90.533387653514225, 28.513221776822927);
         camera.rotation.set(-0.9577585082113045, -0.3257201862210706, -0.42691147594250245);
 
@@ -83,7 +85,7 @@ export default class Main extends UTIL {
         scene.add(directionalLight);
 
         // 摄像机调试
-        // controls = new THREE.OrbitControls(camera);
+        controls = new THREE.OrbitControls(camera);
     }
 
     /**
@@ -100,10 +102,6 @@ export default class Main extends UTIL {
 
         // 显示物理世界
         cannonDebugRenderer = new THREE.CannonDebugRenderer(scene, world);
-    }
-
-    r1() {
-        roadClass.r1();
     }
 
     /**
@@ -128,66 +126,49 @@ export default class Main extends UTIL {
     }
 
     /**
-     * 弯道直向模型
+     * 直路横向模型
      */
-    r3(key) {
-        turnRoadClass.r3(key);
-    }
-
-    /**
-     * 弯道横向模型
-     */
-    r4(key) {
-        turnRoadClass.r4(key);
+    r8() {
+        roadClass.r6();
     }
 
     /**
      * 更新路路面
      */
     updateRoad() {
-        if (key < maxKey) {
-            // if (key < 1) {
+        // if (key < maxKey) {
+            if (key < 2) {
 
-            if (key === 0) {
-                this.r7();
-            } else {
-                const currentRoadConfig = loopRoadConfig[lastBoxType];
-                const random = 0;
-
-                this[currentRoadConfig[random]]();
-            }
-
-
-            // if (key < 1) {
+            // if (key === 0) {
             //     this.r7();
-            // } else if (key === 1) {
-            //     this.r5();
-            // } else if (key === 2) {
-            //     this.r6();
-            // } else if (key === 3) {
-            //     this.r5();
-            // } else if (key === 4) {
-            //     this.r6();
-            // } else if (key === 5) {
-            //     this.r5();
+            // } else {
+            //     const currentRoadConfig = loopRoadConfig[lastBoxType];
+            //     const random = this.getRandomInt(0, currentRoadConfig.length);
+            //
+            //     this[currentRoadConfig[random]]();
             // }
+
+
+            if (key < 1) {
+                this.r7();
+            } else if (key === 1) {
+                this.r8();
+            } else if (key === 2) {
+                this.r8();
+            } else if (key === 3) {
+                this.r8();
+            } else if (key === 4) {
+                this.r5();
+            } else if (key === 5) {
+                this.r6();
+            } else if (key === 6) {
+                this.r8();
+            }
 
             key += 1;
         }
     }
 
-    /**
-     * 点击函数
-     */
-    handleMouseStart(e) {
-        // 触发绑定事件判断
-        // events.onClick(e);
-    
-        // 触发漂移
-        this.drift();
-    }
-
-    /**
      * 更新车辆和摄像机未知
      */
     updateAnimation() {
@@ -196,10 +177,12 @@ export default class Main extends UTIL {
                 car.position.x += speed;
                 carBodys.position.x += speed;
                 camera.position.x += speed;
+
                 speedRecord.x += speed;
 
                 // 2d canvas
                 // offCanvasSprite.position.x += speed;
+                scoreCanvasSprite.position.x += speed;
                 // sharedCanvasSprite.position.x += speed;
             } else {
                 car.position.z -= speed;
@@ -210,6 +193,7 @@ export default class Main extends UTIL {
 
                 // 2d canvas
                 // offCanvasSprite.position.z -= speed;
+                scoreCanvasSprite.position.z -= speed;
                 // sharedCanvasSprite.position.z -= speed;
             }
         }
@@ -262,7 +246,7 @@ export default class Main extends UTIL {
     updateSpeed() {
         if (startKey && speed <= speedMax) {
             const levelScore = levelSpeed[level];
-            if (levelScore && score >= levelScore) {
+            if (levelScore && speedKey >= levelScore) {
                 level++;
                 // levelSpeed.splice(0, 1);
                 this.updateLevelSpeed();
@@ -285,8 +269,8 @@ export default class Main extends UTIL {
         this.removeObj();
 
         // texture2d.needsUpdate = true;
-        sharedTexture2d.needsUpdate = true;
+        // sharedTexture2d.needsUpdate = true;
 
-        requestAnimationFrame(this.loop.bind(this), canvas);
+        requestAnimationFrame(this.loop.bind(this));
     }
 }

@@ -15,7 +15,8 @@ export default class Scenery extends UTIL {
             this.s3(),
             this.s4(),
             this.s5(),
-            this.s6()
+            this.s6(),
+            this.s7()
         ]);
     }
 
@@ -138,6 +139,28 @@ export default class Scenery extends UTIL {
                 scenery.rang = { x: 54.8, z: -54.8 };
 
                 sceneryListArr.push(scenery);
+
+                res();
+            });
+        });
+    }
+
+    /**
+     * 风景7
+     * 小风景
+     * */
+    s7() {
+        return new Promise((res, rej) => {
+            const material = "https://static.cdn.24haowan.com/24haowan/test/js/b-small.png";
+            const model = 'https://static.cdn.24haowan.com/24haowan/test/js/b-small.obj';
+
+            this.createObj(model, material, (obj) => {
+                const scenery = obj;
+                scenery.scale.set(1.2, 1.2, 1.2);
+                scenery.size = { width: 120, height: 30 };
+                scenery.rang = { x: 54.8, z: -10 };
+
+                sceneryOtherListArr['tree'] = scenery;
 
                 res();
             });

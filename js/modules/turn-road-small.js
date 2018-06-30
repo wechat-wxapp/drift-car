@@ -16,14 +16,14 @@ export default class Road extends UTIL {
      * 创建转弯道路
      */
     createTurnRoad() {
-        const material = "https://static.cdn.24haowan.com/24haowan/test/js/newroad002.png";
-        const model = 'https://static.cdn.24haowan.com/24haowan/test/js/newroad002.obj';
+        const material = "https://static.cdn.24haowan.com/24haowan/test/js/newroad0002.png";
+        const model = 'https://static.cdn.24haowan.com/24haowan/test/js/newroad0002.obj';
         // const model = 'https://static.cdn.24haowan.com/24haowan/test/js/newroad002.obj';
 
         return new Promise((res, rej) => {
             this.createObj(model, material, (obj) => {
-                turnRoad = obj;
-                turnRoad.scale.set(2, 2, 2);
+                turnRoadSmall = obj;
+                turnRoadSmall.scale.set(2, 2, 2);
 
                 res();
             });
@@ -35,16 +35,16 @@ export default class Road extends UTIL {
      */
     t({ type } = {}) {
         const { key } = this.getLastRoad();
-        const roadObj = turnRoad.clone();
+        const roadObj = turnRoadSmall.clone();
         roadObj.key = key + 1;
 
-        const roadBody1Shape = new CANNON.Box(new CANNON.Vec3(28, 1, 60));
-        const roadBody2Shape = new CANNON.Box(new CANNON.Vec3(30, 1, 31));
+        const roadBody1Shape = new CANNON.Box(new CANNON.Vec3(28, 1, 45));
+        const roadBody2Shape = new CANNON.Box(new CANNON.Vec3(30, 1, 16));
 
-        const collide1Shape = new CANNON.Box(new CANNON.Vec3(1, 2, 60));
-        const collide2Shape = new CANNON.Box(new CANNON.Vec3(1, 2, 30));
-        const collide3Shape = new CANNON.Box(new CANNON.Vec3(1, 2, 60));
-        const collide4Shape = new CANNON.Box(new CANNON.Vec3(1, 2, 30));
+        const collide1Shape = new CANNON.Box(new CANNON.Vec3(1, 2, 45));
+        const collide2Shape = new CANNON.Box(new CANNON.Vec3(1, 2, 15));
+        const collide3Shape = new CANNON.Box(new CANNON.Vec3(1, 2, 45));
+        const collide4Shape = new CANNON.Box(new CANNON.Vec3(1, 2, 15));
 
         const roadBody = new CANNON.Body({ mass: 0, position: new CANNON.Vec3(0, 1, 0) });
         const roadBoths = new CANNON.Body({ mass: 0, position: new CANNON.Vec3(0, 2, roadObj.position.z - .5) });
@@ -52,12 +52,12 @@ export default class Road extends UTIL {
         const rotating = new CANNON.Quaternion();
         rotating.setFromAxisAngle(new CANNON.Vec3(0, 1, 0), -1.57);
 
-        roadBody.addShape(roadBody1Shape, new CANNON.Vec3(-26.5, 0, 0));
-        roadBody.addShape(roadBody2Shape, new CANNON.Vec3(32.5, 0, -30), rotating);
-        roadBoths.addShape(collide1Shape, new CANNON.Vec3(-55.3, 0, 0));
-        roadBoths.addShape(collide2Shape, new CANNON.Vec3(2.5, 0, 30));
-        roadBoths.addShape(collide3Shape, new CANNON.Vec3(3.5, 0, -59), rotating);
-        roadBoths.addShape(collide4Shape, new CANNON.Vec3(33.5, 0, -1), rotating);
+        roadBody.addShape(roadBody1Shape, new CANNON.Vec3(-26.5, 0, -15));
+        roadBody.addShape(roadBody2Shape, new CANNON.Vec3(17.5, 0, -30), rotating);
+        roadBoths.addShape(collide1Shape, new CANNON.Vec3(-55.3, 0, -15));
+        roadBoths.addShape(collide2Shape, new CANNON.Vec3(2.5, 0, 15));
+        roadBoths.addShape(collide3Shape, new CANNON.Vec3(-11.5, 0, -59), rotating);
+        roadBoths.addShape(collide4Shape, new CANNON.Vec3(18.5, 0, -1), rotating);
 
         // 撞墙
         roadBoths.addEventListener("collide", this.collide.bind(this));
@@ -92,8 +92,8 @@ export default class Road extends UTIL {
         const { size, position, rang, boxType } = this.getLastRoad();
         const { body, physical: { floor, boths } } = this.t(params);
 
-        body.size = { width: 120, height: 119.5 };
-        body.rang = { x: 51.3, z: -54.5 };
+        body.size = { width: 89, width2: 60, height: 89 };
+        body.rang = { x: 50.7, z: -24.4 };
         body.boxType = 'r3';
 
         let x = position.x - rang.x + body.rang.x;
@@ -101,7 +101,7 @@ export default class Road extends UTIL {
 
         boxType === 'r4' && (x +=  size.width - size.width2);
 
-        body.position.set(x, -0.09, z);
+        body.position.set(x, 0, z);
         floor.position.set(x, floor.position.y, z);
         boths.position.set(x, boths.position.y, z);
 
@@ -120,8 +120,8 @@ export default class Road extends UTIL {
     r4(params) {
         const { size, position, rang } = this.getLastRoad();
         const { body, physical: { floor, boths } } = this.t(params);
-        body.size = { width: 120, width2: 59.5, height: 119.5, height2: 60 };
-        body.rang = { x: 58.5, z: -55 };
+        body.size = { width: 89, width2: 60, height: 89, height2: 60 };
+        body.rang = { x: 28.2, z: -54.7 };
         body.boxType = 'r4';
 
         body.rotation.set(0, 3.14, 0);
@@ -132,7 +132,7 @@ export default class Road extends UTIL {
         floor.quaternion.setFromAxisAngle(new CANNON.Vec3(0, 1, 0), -3.14);
         boths.quaternion.setFromAxisAngle(new CANNON.Vec3(0, 1, 0), -3.14);
 
-        body.position.set(x, -0.09, z);
+        body.position.set(x, 0, z);
         floor.position.set(x, floor.position.y, z);
         boths.position.set(x, boths.position.y, z);
 
