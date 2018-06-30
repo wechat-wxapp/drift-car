@@ -9,7 +9,17 @@ export default class Index {
         const sharedCanvas = wx.getSharedCanvas();
         this.cvs = sharedCanvas.getContext('2d');
 
-        this.themeBule = 'rgba(73,116,235,1)';
+        this.themeBule = `rgba(73,116,235,1)`;
+        // 排行榜数据
+        this.rankData = null;
+        // 排行榜里面的个人成绩数据
+        this.selfData = null;
+        // 个人信息
+        this.self = null
+
+        this.initRankData();
+        // this._initSelfData();
+        // this._initSelf();
     }
 
     /**
@@ -57,15 +67,77 @@ export default class Index {
         cxt.closePath();
     }
 
-    /**
-     * 获取朋友排行榜
-     * */
-    getFriendsScore() {
+    // 初始化好友排行榜数据并排序
+    initRankData() {
+        let that = this;
         wx.getFriendCloudStorage({
             keyList: ['score'],
             success: res => {
-                let data = res.data;
+                let tempRankData = res.data
+                // 排序
+                that.rankData = that.sort(tempRankData)
+
+                // 请求个人数据
+                that.initSelf(() => {
+                    // 保存个人数据
+                    that.selfData = that.normalizeSelf(that.rankData, that.self.nickName)
+
+                })
+            },
+            fail: res => {
+                console.log('获取排行榜数据失败...')
             }
         })
     }
+
+
+    // 初始化个人信息
+    initSelf(callback) {
+        let that = this;
+        wx.getUserInfo({
+            openIdList: ['selfOpenId'],
+            success: res => {
+                that.self = res.data[0];
+                callback()
+            },
+            fail: () => {
+                console.log('请求个人信息失败...')
+            }
+        })
+    }
+
+    // 排序方法
+    sort (arr) {
+        if(arr.length <= 1){
+            return arr;
+        }
+
+        var num = Math.floor(arr.length/2);
+        var middleArr = arr.splice(num, 1);
+        var middleValue = middleArr[0].KVDataList[0].value;
+        var left = [];
+        var right = [];
+
+        for(var i = 0; i < arr.length; i++){
+            if(arr[i].KVDataList[0].value > middleValue){
+                left.push(arr[i]);
+            }else{
+                right.push(arr[i]);
+            }
+        }
+        return this.sort(left).concat(middleArr,this.sort(right));
+    }
+
+    // 获取排行中的用户数据，并添加排名
+    normalizeSelf (arr, nickname) {
+        for (var i = 0; i < arr.length; i++) {
+            if (arr[i].nickname == nickname) {
+                arr[i].rank = i + 1;
+                return arr[i]
+            }
+        }
+        console.log('没有分数记录...')
+    }
+
 }
+
