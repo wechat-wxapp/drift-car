@@ -143,12 +143,6 @@ export default class Road extends UTIL {
         }
     }
 
-    getRandomInt(min, max) {
-        min = Math.ceil(min);
-        max = Math.floor(max);
-        return Math.floor(Math.random() * (max - min)) + min;
-    }
-
     getRandomScenery() {
         return sceneryListArr[this.getRandomInt(0, sceneryListArr.length)];
     }
@@ -251,5 +245,93 @@ export default class Road extends UTIL {
         scene.add(scenery_2);
 
         sceneryArr.push([scenery_1, scenery_2]);
+    }
+
+    r6() {
+        const { body } = turnRoadSmallClass.r3();
+        const { body: body2 } = turnRoadSmallClass.r4();
+        turnRoadSmallClass.r3();
+        turnRoadSmallClass.r4();
+
+        this.r1();
+
+        lastBoxType = 'r6';
+
+        const { size, rang } = this.getRandomScenery();
+        const scenery_1 = this.getRandomScenery().clone();
+        const scenery_2 = this.getRandomScenery().clone();
+        const scenery_3 = this.getRandomScenery().clone();
+        const scenery_4 = this.getRandomScenery().clone();
+        const scenery_5 = this.getRandomScenery().clone();
+        const scenery_6 = this.getRandomScenery().clone();
+        const scenery_11 = this.getRandomScenery().clone();
+        const scenery_12 = this.getRandomScenery().clone();
+
+        const { size: treeSize } = sceneryOtherListArr.tree;
+        const scenery_7 = sceneryOtherListArr.tree.clone();
+        const scenery_8 = sceneryOtherListArr.tree.clone();
+        const scenery_9 = sceneryOtherListArr.tree.clone();
+        const scenery_10 = sceneryOtherListArr.tree.clone();
+
+        const x1 = body.position.x - body.rang.x + rang.x;
+        const z1 = rang.z + size.height + body.position.z - body.rang.z - body.size.height - size.height;
+
+        const x2 = body2.position.x - body2.rang.x + rang.x + body2.size.width;
+        const z2 = rang.z + body2.position.z - body2.rang.z;
+
+        const x3 = x1 + size.width;
+        const z3 = z1 - size.height;
+
+        const x4 = x2 + size.width;
+        const z4 = z2 - size.height;
+
+        const z5 = z1 - size.height;
+
+        const x6 = x2 + size.width;
+
+        const x11 = x1 - size.width;
+
+        const z12 = z2 + size.height;
+
+        // 树
+        const z7 = z2 + size.height / 2 + treeSize.height / 2;
+        const x7 = x1 + body.size.width2;
+
+        const z8 = z4 - size.height / 2 - treeSize.height / 2;
+
+        const z9 = z3 - size.height / 2 - treeSize.height / 2;
+
+        const x10 = x1 - treeSize.width;
+        const z10 = z1 + size.height / 2 + treeSize.height / 2;
+
+        scenery_1.position.set(x1, 0, z1);
+        scenery_2.position.set(x2, 0, z2);
+        scenery_3.position.set(x3, 0, z3);
+        scenery_4.position.set(x4, 0, z4);
+        scenery_5.position.set(x1, 0, z5);
+        scenery_6.position.set(x6, 0, z2);
+        scenery_11.position.set(x11, 0, z1);
+        scenery_12.position.set(x2, 0, z12);
+
+        scenery_7.position.set(x7, 0, z7);
+        scenery_8.position.set(x4, 0, z8);
+        scenery_9.position.set(x3, 0, z9);
+        scenery_10.position.set(x10, 0, z10);
+
+        scene.add(scenery_1);
+        scene.add(scenery_2);
+        scene.add(scenery_3);
+        scene.add(scenery_4);
+        scene.add(scenery_5);
+        scene.add(scenery_6);
+        scene.add(scenery_11);
+        scene.add(scenery_12);
+
+        scene.add(scenery_7);
+        scene.add(scenery_8);
+        scene.add(scenery_9);
+        scene.add(scenery_10);
+
+        sceneryArr.push([scenery_1, scenery_2, scenery_3, scenery_4, scenery_5, scenery_6, scenery_7, scenery_8, scenery_9, scenery_10, scenery_11, scenery_12]);
     }
 }

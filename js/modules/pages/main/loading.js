@@ -1,7 +1,10 @@
-import Scenery from '../scenery';
-import Car from '../car';
-import Road from '../road';
-import TurnRoad from "../turn-road";
+import Scenery from '../../scenery';
+import Car from '../../car';
+import Road from '../../road';
+import TurnRoad from "../../turn-road";
+import TurnRoadSmall from "../../turn-road-small";
+
+import Score from '../score/index';
 
 import pageStart from './start';
 
@@ -28,9 +31,19 @@ export default class Loader {
         }, {
             text: '正在给路涂色...',
             load: this.buildTurnRoad
+        }, {
+            text: '正在给路涂色...',
+            load: this.buildTurnRoadSmall
         }];
 
         this.loading(loader);
+    }
+
+    initCanvas2d() {
+        // 初始化其他2d画布
+        scoreClass = new Score();
+
+        startPage = new pageStart();
     }
 
     /**
@@ -70,7 +83,7 @@ export default class Loader {
                 this.loading(loader);
             } else {
                 loadKey = true;
-                startPage = new pageStart();
+                this.initCanvas2d();
             }
         })
     }
@@ -116,6 +129,17 @@ export default class Loader {
 
         return new Promise((res, rej) => {
             turnRoadClass.build().then(() => res());
+        })
+    }
+
+    /**
+     * 初始化弯路2
+     * */
+    buildTurnRoadSmall() {
+        turnRoadSmallClass = new TurnRoadSmall();
+
+        return new Promise((res, rej) => {
+            turnRoadSmallClass.build().then(() => res());
         })
     }
 
