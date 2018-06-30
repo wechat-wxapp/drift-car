@@ -20,9 +20,13 @@ export default class Index {
         this.self = null
 
         this.initRankData();
+
+        // 当前页
+        this.rankCurrentPage = 1;
+
         // this._initSelfData();
         // this._initSelf();
-        console.log(wx.request)
+        // console.log(wx.request)
     }
 
     /**
@@ -78,7 +82,8 @@ export default class Index {
             success: res => {
                 let tempRankData = res.data
                 // 排序
-                that.rankData = that.sort(tempRankData, 'aes')
+                that.rankData = that.sort(tempRankData, 'des')
+
 
                 // 请求个人数据
                 that.initSelf(() => {

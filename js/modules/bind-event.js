@@ -30,7 +30,7 @@ export default class bindEvent{
      * */
     onClick(e) {
         const { pageX, pageY } = e.changedTouches[0];
-        console.log(pageX, pageY)
+        // console.log(pageX, pageY)
         eventPoint[currentPage] && Object.entries(eventPoint[currentPage]).map(v => {
             if (pageX > v[1][0] && pageX < v[1][2] && pageY > v[1][1] && pageY < v[1][3]) {
                 typeof EVENT.click[v[0]] === 'function' && EVENT.click[v[0]]();

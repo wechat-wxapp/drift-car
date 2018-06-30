@@ -21,7 +21,29 @@ export default class Rank extends Init {
     // 总页数
     let totalPages = Math.ceil(total / counts);
     // 当前页数
-    let rankCurrentPage = data.page?data.page:1;
+    // let rankCurrentPage = 1;
+    // let rankCurrentPage = data.page >= totalPages ? totalPages : data.page;
+
+    switch (data.common) {
+      case 0 : {
+        if (this.rankCurrentPage <= 1) {
+          this.rankCurrentPage = 1;
+        } else {
+          this.rankCurrentPage--;
+        }
+      }
+      break;
+      case 1 : {
+          if (this.rankCurrentPage >= totalPages) {
+            this.rankCurrentPage = totalPages;
+          } else {
+            this.rankCurrentPage++;
+          }
+      }
+      break;
+    }
+    let rankCurrentPage = this.rankCurrentPage
+
     // 当前页面展示数量
     let current_count = (rankCurrentPage == totalPages) ? (total % counts) : counts;
 
@@ -29,12 +51,10 @@ export default class Rank extends Init {
     /**
      * 好友排名
      * */
-    // this.friendRank();
+    this.friendRank();
     
     //世界
-    this.worldRank();
-    // console.log("rankData", this.rankData)
-    console.log('rankSelf', this.selfData)
+    // this.worldRank();
     /**
      * 群排名
      * */
@@ -52,7 +72,6 @@ export default class Rank extends Init {
     this.cvs.fillStyle = "#4974ea";
     if (rankCurrentPage == 1) {
       this.cvs.fillStyle = "#808080";
-      console.log(123)
     }
     this.cvs.font = `${this.computedSizeW(20)}px xszt`;
     this.cvs.textAlign = "left";
@@ -122,11 +141,13 @@ export default class Rank extends Init {
       this.cvs.fillText(this.rankData[i].nickname, this.computedSizeW(286), this.computedSizeH(402 + (i - (rankCurrentPage - 1) * counts) * 96), this.computedSizeW(146));
     }
     
+    // console.log('this.rankData: ', this.rankData);
+
     // 分数
     this.cvs.font = `bold`;
     this.cvs.fillStyle = '#000';
-    for(let i = (current_page - 1) * counts; i < current_count + (current_page - 1) * counts; i++){
-      this.cvs.fillText(this.rankData[i].KVDataList[0].value, this.computedSizeW(538), this.computedSizeH(402 + (i - (current_page - 1) * counts) * 96));
+    for(let i = (rankCurrentPage - 1) * counts; i < current_count + (rankCurrentPage - 1) * counts; i++){
+      this.cvs.fillText(this.rankData[i].KVDataList[0].value, this.computedSizeW(538), this.computedSizeH(402 + (i - (rankCurrentPage - 1) * counts) * 96));
     }
 
     //blue part 个人成绩
