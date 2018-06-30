@@ -90,9 +90,9 @@ export default class UTIL {
     };
 
     showEndPage() {
-        this.clear2d();
+        // this.clear2d();
 
-        $wx.sendMessage('end');
+        sharedClass.end();
         currentPage = 'endPage';
 
         sharedCanvasSprite.position.x += speedRecord.x;
@@ -106,7 +106,7 @@ export default class UTIL {
         const realKey = key - 2;
 
         // 限制重复触发(因为要补2格防止刚开始后面镜头出现断路,所以判断时候需要 -2 )
-        if (lastScore >= realKey) {
+        if (lastSpeedKey >= realKey) {
             return false;
         }
 
@@ -122,11 +122,12 @@ export default class UTIL {
         if (!(realKey % 2)) {
             maxKey++;
         }
-        score++;
-        lastScore = realKey;
+        speedKey++;
+        lastSpeedKey = realKey;
 
         // 更新页面分数
-        gamePage.page();
+        // gamePage.asd();
+
     }
 
     /**
@@ -147,11 +148,14 @@ export default class UTIL {
         // 失败重新开始
         this.end();
 
-        // 重置页面分数
-        gamePage.page();
-
         // 重置背景音乐
         this.readyMusic();
+    }
+
+    getRandomInt(min, max) {
+        min = Math.ceil(min);
+        max = Math.floor(max);
+        return Math.floor(Math.random() * (max - min)) + min;
     }
 
     /**
@@ -174,22 +178,34 @@ export default class UTIL {
     end() {
         // 重置分数
         score = 0;
-        lastScore = 0;
 
         // 重置等级区间
         level = 0;
 
         // 重置速度
         speed = 2.5;
+        speedKey = 0;
+        lastSpeedKey = 0;
     }
 
     /**
      * 复活, 不清除分数
      * */
     revival() {
-        lastScore = 0;
+        lastSpeedKey = 0;
 
         console.log(`---成功复活 当前分数: ${score} 当前速度: ${speed}---`);
+    }
+
+    updateScore() {
+        setTimeout(() => {
+            if (!startKey) return false;
+
+            score++;
+            scorePage.setTexture();
+
+            this.updateScore();
+        }, 1000)
     }
 
     /**
@@ -205,6 +221,9 @@ export default class UTIL {
 
                     // 设置开启key
                     startKey = true;
+
+                    // 更新分数
+                    this.updateScore();
 
                     // 清空倒计时
                     gamePage.page();
@@ -222,14 +241,6 @@ export default class UTIL {
         // 倒计时
         gamePage.page(3);
         playMusic();
-    }
-
-    /**
-     * 清空2d画布
-     * */
-    clear2d() {
-        offCanvas2d.clearRect(0, 0, winWidth, winHeight);
-        texture2d.needsUpdate = true;
     }
 
     /**

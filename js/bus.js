@@ -8,6 +8,7 @@ const basicData = {
     car: '',
     road: '',
     turnRoad: '',
+    turnRoadSmall: '',
     world: '',
     controls: '',
     cannonDebugRenderer: '',
@@ -20,22 +21,17 @@ const basicData = {
     roadClass: '',
     // 弯路类
     turnRoadClass: '',
+    // 弯路2类
+    turnRoadSmallClass: '',
     // 地板类
     groundClass: '',
-
-    // 2d canvas 模型
-    offCanvasSprite: '',
-    // 等待页对象
-    loadingPage: '',
-    // 开始页对象
-    startPage: '',
-    // 2d游戏页对象
-    gamePage: '',
 
     // 风景对象
     scenery: '',
     // 风景列表
     sceneryListArr: [],
+    // 额外风景列表
+    sceneryOtherListArr: {},
 
     // 全局容器尺寸
     winWidth: window.innerWidth,
@@ -62,11 +58,13 @@ const basicData = {
     // lastBoxType: 'r6',
     loopRoadConfig: {
         r5: ['r6'],
-        r6: ['r5']
+        r6: ['r5', 'r8']
     },
 
     // 速度变量
     speed: 2.5,
+    speedKey: 0,
+    lastSpeedKey: 0,
     speedMax: 5,
     speedStep: 0.01,
     speedStepMax: 0.08,
@@ -98,13 +96,34 @@ const basicData = {
     // 当前页面标识(默认为开始页)
     currentPage: 'startPage',
 
+    // 主页类
+    pageClass: '',
+    // 分数类
+    scoreClass: '',
+    // 开放域类
+    sharedClass: '',
+
+    // 等待页对象
+    loadingPage: '',
+    // 开始页对象
+    startPage: '',
+    // 游戏页对象
+    gamePage: '',
+    // 分数栏对象
+    scorePage: '',
+
     // 微信公开域画布
     openDataContext: '',
-    sharedCanvasSprite: '',
     sharedTexture2d: '',
+    sharedCanvasSprite: '',
     // 微信特有离屏画布
     offCanvas2d: '',
     texture2d: '',
+    offCanvasSprite: '',
+    // 分数画布
+    scoreCanvas2d: '',
+    scoreTexture2d: '',
+    scoreCanvasSprite: '',
 
     // 预加载图片列表
     imgList: {
@@ -209,7 +228,7 @@ export default class Bus{
         carBodys.quaternion.setFromAxisAngle(new CANNON.Vec3(0, 1, 0), 0);
 
         offCanvasSprite.position.set(-11.75, 78.44, 20);
-        sharedCanvasSprite.position.set(-11.75, 78.44, 20);
+        // sharedCanvasSprite.position.set(-11.75, 78.44, 20);
 
         camera.position.set(-16.738086885462103, 90.533387653514225, 28.513221776822927);
         camera.rotation.set(-0.9577585082113045, -0.3257201862210706, -0.42691147594250245);

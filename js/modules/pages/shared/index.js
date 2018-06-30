@@ -1,4 +1,4 @@
-import UTIL from "../util";
+import UTIL from "../../util";
 
 /**
  * 2d canvas函数
@@ -48,7 +48,7 @@ export default class Shared extends UTIL {
             pageName: 'endPage',
             point: [x1, y1, x2, y2],
             cb: () => {
-                $wx.sendMessage('clear');
+                scoreClass.clear2d();
 
                 offCanvasSprite.position.x += speedRecord.x;
                 offCanvasSprite.position.z -= speedRecord.z;
@@ -94,5 +94,15 @@ export default class Shared extends UTIL {
         sharedCanvasSprite.scale.set(scaleX, 23.95, 1);
 
         scene.add(sharedCanvasSprite);
+    }
+
+    end() {
+        $wx.sendMessage('end');
+        sharedTexture2d.needsUpdate = true;
+    }
+
+    clear2d() {
+        $wx.sendMessage('clear');
+        sharedTexture2d.needsUpdate = true;
     }
 }
