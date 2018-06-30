@@ -22,6 +22,7 @@ export default class Index {
         this.initRankData();
         // this._initSelfData();
         // this._initSelf();
+        console.log(wx.request)
     }
 
     /**
@@ -78,12 +79,13 @@ export default class Index {
                 let tempRankData = res.data
                 // 排序
                 that.rankData = that.sort(tempRankData, 'des')
+                that.rankData = that.sort(tempRankData, 'des')
+                that.rankData = that.sort(tempRankData, 'des')
 
                 // 请求个人数据
                 that.initSelf(() => {
                     // 保存个人数据
                     that.selfData = that.normalizeSelf(that.rankData, that.self.nickName)
-                    console.log('sd', that.selfData)
 
                 })
             },
@@ -110,7 +112,8 @@ export default class Index {
     }
 
     // 排序方法
-    sort (arr, des) {
+    sort (arrP, des) {
+        let [ ...arr ] = arrP
         if(arr.length <= 1){
             return arr;
         }
