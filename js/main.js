@@ -42,6 +42,8 @@ export default class Main extends UTIL {
 
         // 实例化微信类
         $wx = new WX();
+        // 无法加载
+        // $wx.getFontFamily();
 
         pageClass = new page();
         // new Score();
@@ -167,7 +169,6 @@ export default class Main extends UTIL {
         }
     }
 
-    /**
      * 更新车辆和摄像机未知
      */
     updateAnimation() {
