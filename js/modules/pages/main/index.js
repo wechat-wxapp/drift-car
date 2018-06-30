@@ -1,4 +1,7 @@
-import UTIL from "../util";
+import UTIL from "../../util";
+
+import pageLoading from './loading';
+import Shared from '../shared/index';
 
 /**
  * 2d canvas函数
@@ -7,6 +10,9 @@ export default class Page extends UTIL {
     constructor() {
         super();
         this.page();
+
+        sharedClass = new Shared();
+        loadingPage = new pageLoading();
     }
 
     /**
@@ -14,13 +20,6 @@ export default class Page extends UTIL {
      */
     page() {
         const offCanvas = wx.createCanvas();
-
-        // const offCanvas = openDataContext.canvas;
-
-        // offCanvas.style.width = winWidth;
-        // offCanvas.style.height = winHeight;
-
-
 
         offCanvas.height = winHeight * window.devicePixelRatio;
         offCanvas.width = winWidth * window.devicePixelRatio;
@@ -31,8 +30,6 @@ export default class Page extends UTIL {
 
         texture2d = new THREE.Texture(offCanvas);
         texture2d.minFilter = THREE.LinearFilter;
-
-        texture2d.needsUpdate = true;
 
         const spriteMaterial = new THREE.SpriteMaterial({
             map: texture2d
@@ -46,15 +43,13 @@ export default class Page extends UTIL {
         offCanvasSprite.scale.set(scaleX, 23.95, 1);
 
         scene.add(offCanvasSprite);
+    }
 
-        // // var geometry = new THREE.PlaneGeometry(42, 75)
-        // var geometry = new THREE.PlaneGeometry(this.computedSize(42), 75)
-        // var material = new THREE.MeshBasicMaterial({
-        //     map: texture2d
-        // })
-        // offCanvasSprite = new THREE.Mesh(geometry, material);
-        // offCanvasSprite.position.set(-1.1, 52.8, 2)
-        // offCanvasSprite.rotation.set(-0.9577585082113045, -0.3257201862210706, -0.42691147594250245);
-        // scene.add(offCanvasSprite);
+    /**
+     * 清空2d画布
+     * */
+    clear2d() {
+        offCanvas2d.clearRect(0, 0, winWidth, winHeight);
+        texture2d.needsUpdate = true;
     }
 }

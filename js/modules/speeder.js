@@ -152,7 +152,7 @@ let b = 0,
  * 速度计算函数
  * */
 const runSpeed = (cb) => {
-    const result = Math.ceil(Tween.Cubic.easeOut(t, b, c, d));
+    const result = Math.ceil(Tween.Quart.easeOut(t, b, c, d));
     if (t < d) {
         t++;
         window.speeder = setTimeout(() => {

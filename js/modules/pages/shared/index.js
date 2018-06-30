@@ -1,9 +1,14 @@
-import UTIL from "../util";
+import UTIL from "../../util";
 
 /**
  * 2d canvas函数
  */
 export default class Shared extends UTIL {
+    currentSpeedRecord = {
+        x: 0,
+        z: 0
+    };
+
     constructor() {
         super();
         this.page();
@@ -14,6 +19,8 @@ export default class Shared extends UTIL {
     bindEvent() {
         this.bindReStart();
         this.bindGoHome();
+        this.bindPrePage();
+        this.bindNextPage();
     }
 
     bindReStart() {
@@ -27,8 +34,8 @@ export default class Shared extends UTIL {
             pageName: 'endPage',
             point: [x1, y1, x2, y2],
             cb: () => {
-                $wx.sendMessage('clear');
-
+                // $wx.sendMessage('clear');
+                this.clear2d();
                 // 重启游戏
                 this.restart();
 
@@ -48,7 +55,7 @@ export default class Shared extends UTIL {
             pageName: 'endPage',
             point: [x1, y1, x2, y2],
             cb: () => {
-                $wx.sendMessage('clear');
+                scoreClass.clear2d();
 
                 offCanvasSprite.position.x += speedRecord.x;
                 offCanvasSprite.position.z -= speedRecord.z;
@@ -59,16 +66,49 @@ export default class Shared extends UTIL {
         });
     }
 
+    // 上一页按钮
+    bindPrePage() {
+        const x1 = this.computedSizeW(254);
+        const x2 = this.computedSizeW(291);
+        const y1 = this.computedSizeH(158);
+        const y2 = this.computedSizeH(171);
+
+        events.click({
+            name: 'prePageBtn',
+            pageName: 'rankPage',
+            point: [x1, y1, x2, y2],
+            cb: () => {
+                // rankCurrentPage = rankCurrentPage <= 1 ? 1 : rankCurrentPage--;
+                $wx.sendMessage('rank',{ page: rankCurrentPage, common: 0 });
+                sharedTexture2d.needsUpdate = true;
+            }
+        })
+    }
+
+    // 下一页按钮
+    bindNextPage() {
+        const x1 = this.computedSizeW(311);
+        const x2 = this.computedSizeW(363);
+        const y1 = this.computedSizeH(157);
+        const y2 = this.computedSizeH(172);
+
+        events.click({
+            name: 'nextPageBtn',
+            pageName: 'rankPage',
+            point: [x1, y1, x2, y2],
+            cb: () => {
+                // rankCurrentPage = rankCurrentPage + 1;
+                $wx.sendMessage('rank',{ page: rankCurrentPage, common: 1 });
+                sharedTexture2d.needsUpdate = true;
+            }
+        })
+    }
+
     /**
      * 创建2d画布
      */
     page() {
-        // const offCanvas = wx.createCanvas();
-
         const sharedCanvas = openDataContext.canvas;
-
-        // offCanvas.style.width = winWidth;
-        // offCanvas.style.height = winHeight;
 
         sharedCanvas.height = winHeight * window.devicePixelRatio;
         sharedCanvas.width = winWidth * window.devicePixelRatio;
@@ -79,8 +119,6 @@ export default class Shared extends UTIL {
 
         sharedTexture2d = new THREE.Texture(sharedCanvas);
         sharedTexture2d.minFilter = THREE.LinearFilter;
-
-        // texture2d.needsUpdate = true;
 
         const spriteMaterial = new THREE.SpriteMaterial({
             map: sharedTexture2d
@@ -94,5 +132,25 @@ export default class Shared extends UTIL {
         sharedCanvasSprite.scale.set(scaleX, 23.95, 1);
 
         scene.add(sharedCanvasSprite);
+    }
+
+    endPage() {
+        $wx.sendMessage('end',{ page: 1 });
+
+        this.setPosition();
+
+        sharedTexture2d.needsUpdate = true;
+    }
+
+    clear2d() {
+        $wx.sendMessage('clear');
+        sharedTexture2d.needsUpdate = true;
+    }
+
+    setPosition() {
+        sharedCanvasSprite.position.x += speedRecord.x - this.currentSpeedRecord.x;
+        sharedCanvasSprite.position.z -= speedRecord.z - this.currentSpeedRecord.z;
+
+        this.currentSpeedRecord = speedRecord;
     }
 }

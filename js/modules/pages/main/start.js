@@ -1,6 +1,7 @@
 import pageGame from './game';
+// import pageS from './s';
 
-import UTIL from '../util';
+import UTIL from '../../util';
 
 /**
  * 开始页函数
@@ -50,12 +51,17 @@ export default class Start extends UTIL {
                 // 实例化游戏页面
                 gamePage = new pageGame();
 
-                $wx.sendMessage('end');
+                scorePage.setTexture();
 
-                // this.restart();
+                $wx.sendMessage('rank',{ page: rankCurrentPage });
+                sharedTexture2d.needsUpdate = true;
+
+                pageClass.clear2d();
 
                 // 设置页面target
-                currentPage = 'gamePage';
+                currentPage = 'rankPage';
+
+
             }
         });
     }
@@ -103,3 +109,7 @@ export default class Start extends UTIL {
         texture2d.needsUpdate = true;
     }
 }
+
+
+
+
