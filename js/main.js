@@ -85,7 +85,7 @@ export default class Main extends UTIL {
         scene.add(directionalLight);
 
         // 摄像机调试
-        controls = new THREE.OrbitControls(camera);
+        // controls = new THREE.OrbitControls(camera);
     }
 
     /**
@@ -101,7 +101,7 @@ export default class Main extends UTIL {
         world.broadphase = new CANNON.NaiveBroadphase();
 
         // 显示物理世界
-        cannonDebugRenderer = new THREE.CannonDebugRenderer(scene, world);
+        // cannonDebugRenderer = new THREE.CannonDebugRenderer(scene, world);
     }
 
     /**

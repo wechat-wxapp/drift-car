@@ -53,12 +53,18 @@ export default class Start extends UTIL {
 
                 scorePage.setTexture();
 
-                this.restart();
+                // this.restart();
 
-                // pageClass.clear2d();
+                sharedClass.endPage();
+
+                pageClass.clear2d();
 
                 // 设置页面target
                 currentPage = 'gamePage';
+
+                // 请求个人数据
+                // 请求世界排行榜的数据
+
             }
         });
     }
@@ -106,3 +112,27 @@ export default class Start extends UTIL {
         texture2d.needsUpdate = true;
     }
 }
+
+
+
+
+// 世界排行榜数据
+function _initWorldRank() {
+    let that = this;
+    wx.request({
+        url: '192.168.6.49:3003/',
+        data: {
+            openid: that.selfData.openid,
+            offset: "0",
+            limit: "6"
+        },
+        method: 'POST',
+        success: res => {
+            console.log(res.data)
+        },
+        fail: () => {
+            console.log('获取世界排行失败...')
+        }
+    })
+}
+
