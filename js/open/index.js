@@ -25,21 +25,19 @@ const wechatMPPage = new WechatMPPage();
 const qrPage = new QrPage();
 const init = new Init();
 
-// init.getFriendsScore();
-
 wx.onMessage(({ command, data }) => {
     switch (command) {
         case 'end':
-            endPage.setTexture();
+            // endPage.setTexture();
 
-            // qrPage.setTexture();
-            // rankPage.setTexture();
+            console.log('data', data)
+            rankPage.setTexture(data);
             break;
         case 'reseur':
             reseurPage.setTexture();
             break;
         case 'rank':
-            rankPage.setTexture();
+            rankPage.setTexture(data);
             break;
         case 'carport':
             carportPage.setTexture(data);

@@ -14,15 +14,47 @@ export default class Rank extends Init {
   setTexture(data) {
     this.clearCvs();
 
+    // 数据总数
+    let total = this.rankData.length;
+    // 每页展示数
+    let counts = 3;
+    // 总页数
+    let totalPages = Math.ceil(total / counts);
+    // 当前页数
+    // let rankCurrentPage = 1;
+    // let rankCurrentPage = data.page >= totalPages ? totalPages : data.page;
+
+    switch (data.common) {
+      case 0 : {
+        if (this.rankCurrentPage <= 1) {
+          this.rankCurrentPage = 1;
+        } else {
+          this.rankCurrentPage--;
+        }
+      }
+      break;
+      case 1 : {
+          if (this.rankCurrentPage >= totalPages) {
+            this.rankCurrentPage = totalPages;
+          } else {
+            this.rankCurrentPage++;
+          }
+      }
+      break;
+    }
+    let rankCurrentPage = this.rankCurrentPage
+
+    // 当前页面展示数量
+    let current_count = (rankCurrentPage == totalPages) ? (total % counts) : counts;
+
+
     /**
      * 好友排名
      * */
-    // this.friendRank();
+    this.friendRank();
     
     //世界
-    this.worldRank();
-    // console.log("rankData", this.rankData)
-    console.log('rankSelf', this.selfData)
+    // this.worldRank();
     /**
      * 群排名
      * */
@@ -36,7 +68,33 @@ export default class Rank extends Init {
     this.cvs.textAlign = "left";
     this.cvs.fillText('排行榜：每周一凌晨更新', this.computedSizeW(130), this.computedSizeH(306));
 
-    // this.cvs.fillText('上一页')
+
+    this.cvs.fillStyle = "#4974ea";
+    if (rankCurrentPage == 1) {
+      this.cvs.fillStyle = "#808080";
+    }
+    this.cvs.font = `${this.computedSizeW(20)}px xszt`;
+    this.cvs.textAlign = "left";
+    this.cvs.fillText('上一页', this.computedSizeW(460), this.computedSizeW(306))
+
+    this.cvs.fillStyle = "#4974ea";
+    if (rankCurrentPage === 1 || rankCurrentPage === totalPages) {
+      this.cvs.fillStyle = "#808080";
+    }
+    this.cvs.font = `${this.computedSizeW(20)}px xszt`;
+    this.cvs.textAlign = "left";
+    this.cvs.fillText('|', this.computedSizeW(550), this.computedSizeW(306))
+
+    this.cvs.fillStyle = "#4974ea";
+    if (rankCurrentPage === totalPages) {
+      this.cvs.fillStyle = "#808080";
+    }
+    this.cvs.font = `${this.computedSizeW(20)}px xszt`;
+    this.cvs.textAlign = "left";
+    this.cvs.fillText('下一页', this.computedSizeW(570), this.computedSizeW(306))
+
+
+
     this.cvs.fillStyle = "#fff";
     this.cvs.fillRect(this.winWidth / 2 - this.computedSizeW(582) / 2, this.computedSizeH(322), this.computedSizeW(582), this.computedSizeH(620));
 
@@ -49,13 +107,16 @@ export default class Rank extends Init {
     }
     this.cvs.stroke();
 
-    //排名
+    // 排名
     this.cvs.beginPath();
     this.cvs.fillStyle = this.themeBule;
-    for(let i = 0;i < this.rankData.length;i++) {
+
+
+
+    for(let i = (rankCurrentPage - 1) * counts; i < current_count + (rankCurrentPage - 1) * counts; i++) {
       if(i == 3) this.cvs.fillStyle = '#a8a8a8';
       // 排名
-      this.cvs.fillText(i + 1, this.computedSizeW(132), this.computedSizeH(402 + i * 96));
+      this.cvs.fillText(i + 1, this.computedSizeW(132), this.computedSizeH(402 + (i - (rankCurrentPage - 1) * counts) * 96));
       // 头像
       let avatar = wx.createImage();
       avatar.src = this.rankData[i].avatarUrl;
@@ -64,7 +125,7 @@ export default class Rank extends Init {
         // this.cvs.arc(this.computedSizeW(234), this.computedSizeH(394 + i * 97), this.computedSizeW(31), 0, 2 * Math.PI);
         // this.drawRoundRect(this.cvs, this.computedSizeW(234), this.computedSizeH(394 + i * 97), this.computedSizeW(31), this.computedSizeW(31), this.computedSizeW(31 / 2), 'red')
         // this.cvs.fill()
-        this.cvs.drawImage(avatar, this.computedSizeW(234), this.computedSizeH(394 + i * 97), this.computedSizeW(31), this.computedSizeW(31));
+        this.cvs.drawImage(avatar, this.computedSizeW(234), this.computedSizeH(394 + (i - (rankCurrentPage - 1) * counts) * 97), this.computedSizeW(31), this.computedSizeW(31));
 
       }
 
@@ -75,16 +136,18 @@ export default class Rank extends Init {
     }
 
     // 名字
-    for(let i = 0; i < this.rankData.length; i++){
+    for(let i = (rankCurrentPage - 1) * counts; i < current_count + (rankCurrentPage - 1) * counts; i++){
       this.cvs.fillStyle = '#666';
-      this.cvs.fillText(this.rankData[i].nickname, this.computedSizeW(286), this.computedSizeH(402 + i * 96), this.computedSizeW(146));
+      this.cvs.fillText(this.rankData[i].nickname, this.computedSizeW(286), this.computedSizeH(402 + (i - (rankCurrentPage - 1) * counts) * 96), this.computedSizeW(146));
     }
     
+    // console.log('this.rankData: ', this.rankData);
+
     // 分数
     this.cvs.font = `bold`;
     this.cvs.fillStyle = '#000';
-    for(let i = 0; i < this.rankData.length; i++){
-      this.cvs.fillText(this.rankData[i].KVDataList[0].value, this.computedSizeW(538), this.computedSizeH(402 + i * 96));
+    for(let i = (rankCurrentPage - 1) * counts; i < current_count + (rankCurrentPage - 1) * counts; i++){
+      this.cvs.fillText(this.rankData[i].KVDataList[0].value, this.computedSizeW(538), this.computedSizeH(402 + (i - (rankCurrentPage - 1) * counts) * 96));
     }
 
     //blue part 个人成绩

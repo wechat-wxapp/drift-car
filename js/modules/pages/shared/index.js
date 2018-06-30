@@ -24,6 +24,8 @@ export default class Shared extends UTIL {
     bindEvent() {
         this.bindReStart();
         this.bindGoHome();
+        this.bindPrePage();
+        this.bindNextPage();
     }
 
     bindReStart() {
@@ -69,6 +71,44 @@ export default class Shared extends UTIL {
         });
     }
 
+    // 上一页按钮
+    bindPrePage() {
+        const x1 = this.computedSizeW(254);
+        const x2 = this.computedSizeW(291);
+        const y1 = this.computedSizeH(158);
+        const y2 = this.computedSizeH(171);
+
+        events.click({
+            name: 'prePageBtn',
+            pageName: 'rankPage',
+            point: [x1, y1, x2, y2],
+            cb: () => {
+                // rankCurrentPage = rankCurrentPage <= 1 ? 1 : rankCurrentPage--;
+                $wx.sendMessage('rank',{ page: rankCurrentPage, common: 0 });
+                sharedTexture2d.needsUpdate = true;
+            }
+        })
+    }
+
+    // 下一页按钮
+    bindNextPage() {
+        const x1 = this.computedSizeW(311);
+        const x2 = this.computedSizeW(363);
+        const y1 = this.computedSizeH(157);
+        const y2 = this.computedSizeH(172);
+
+        events.click({
+            name: 'nextPageBtn',
+            pageName: 'rankPage',
+            point: [x1, y1, x2, y2],
+            cb: () => {
+                // rankCurrentPage = rankCurrentPage + 1;
+                $wx.sendMessage('rank',{ page: rankCurrentPage, common: 1 });
+                sharedTexture2d.needsUpdate = true;
+            }
+        })
+    }
+
     /**
      * 创建2d画布
      */
@@ -100,7 +140,7 @@ export default class Shared extends UTIL {
     }
 
     endPage() {
-        $wx.sendMessage('end');
+        $wx.sendMessage('end',{ page: 1 });
 
         this.setPosition();
 

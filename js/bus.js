@@ -171,6 +171,9 @@ const basicData = {
 
 // 变量
 const varData = {
+    // 排行榜当前页数
+    rankCurrentPage: 1,
+    
     // 模型变量
     roadArr: [],
     roadBodys: [],
