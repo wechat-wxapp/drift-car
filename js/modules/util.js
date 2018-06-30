@@ -92,11 +92,8 @@ export default class UTIL {
     showEndPage() {
         // this.clear2d();
 
-        sharedClass.end();
+        sharedClass.endPage();
         currentPage = 'endPage';
-
-        sharedCanvasSprite.position.x += speedRecord.x;
-        sharedCanvasSprite.position.z -= speedRecord.z;
     }
 
     /**
@@ -124,9 +121,6 @@ export default class UTIL {
         }
         speedKey++;
         lastSpeedKey = realKey;
-
-        // 更新页面分数
-        // gamePage.asd();
 
     }
 

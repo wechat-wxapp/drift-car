@@ -28,7 +28,7 @@ const init = new Init();
 wx.onMessage(({ command, data }) => {
     switch (command) {
         case 'end':
-            // endPage.setTexture();
+            endPage.setTexture();
             // reseurPage.setTexture();
             // rankPage.setTexture();
             // carportPage.setTexture();
@@ -36,7 +36,7 @@ wx.onMessage(({ command, data }) => {
             // qrPage.setTexture();
             break;
         case 'clear':
-            init.clearCvs();
+            init.clearCvs(true);
             break;
     }
 });
@@ -53,6 +53,7 @@ wx.onMessage(({ command, data }) => {
 //     keyList: ['score'],
 //     success: res => {
 //         let data = res.data
-//         drawRankList(data)
+//         console.log(data);
+//         // drawRankList(data)
 //     }
 // })

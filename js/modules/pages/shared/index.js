@@ -4,6 +4,11 @@ import UTIL from "../../util";
  * 2d canvas函数
  */
 export default class Shared extends UTIL {
+    currentSpeedRecord = {
+        x: 0,
+        z: 0
+    };
+
     constructor() {
         super();
         this.page();
@@ -27,8 +32,8 @@ export default class Shared extends UTIL {
             pageName: 'endPage',
             point: [x1, y1, x2, y2],
             cb: () => {
-                $wx.sendMessage('clear');
-
+                // $wx.sendMessage('clear');
+                this.clear2d();
                 // 重启游戏
                 this.restart();
 
@@ -63,12 +68,7 @@ export default class Shared extends UTIL {
      * 创建2d画布
      */
     page() {
-        // const offCanvas = wx.createCanvas();
-
         const sharedCanvas = openDataContext.canvas;
-
-        // offCanvas.style.width = winWidth;
-        // offCanvas.style.height = winHeight;
 
         sharedCanvas.height = winHeight * window.devicePixelRatio;
         sharedCanvas.width = winWidth * window.devicePixelRatio;
@@ -79,8 +79,6 @@ export default class Shared extends UTIL {
 
         sharedTexture2d = new THREE.Texture(sharedCanvas);
         sharedTexture2d.minFilter = THREE.LinearFilter;
-
-        // texture2d.needsUpdate = true;
 
         const spriteMaterial = new THREE.SpriteMaterial({
             map: sharedTexture2d
@@ -96,13 +94,23 @@ export default class Shared extends UTIL {
         scene.add(sharedCanvasSprite);
     }
 
-    end() {
+    endPage() {
         $wx.sendMessage('end');
+
+        this.setPosition();
+
         sharedTexture2d.needsUpdate = true;
     }
 
     clear2d() {
         $wx.sendMessage('clear');
         sharedTexture2d.needsUpdate = true;
+    }
+
+    setPosition() {
+        sharedCanvasSprite.position.x += speedRecord.x - this.currentSpeedRecord.x;
+        sharedCanvasSprite.position.z -= speedRecord.z - this.currentSpeedRecord.z;
+
+        this.currentSpeedRecord = speedRecord;
     }
 }
