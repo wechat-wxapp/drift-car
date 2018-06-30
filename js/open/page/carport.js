@@ -45,7 +45,7 @@ export default class Carport extends Init {
         this.cvs.drawImage(btn, 0, 0, btn.width, btn.height, this.computedSizeW(290), this.computedSizeH(766), this.computedSizeW(173), this.computedSizeH(64));
 
         this.cvs.fillStyle = "#ffffff";
-        this.cvs.font = `bold ${this.computedSizeW(29)}px xszt`;
+        this.cvs.font = `bold ${this.computedSizeW(29)}px Arial`;
         this.cvs.fillText('好 的', this.computedSizeW(345), this.computedSizeH(805));
         // 解锁选项
         switch(data.choose) {
@@ -53,19 +53,19 @@ export default class Carport extends Init {
                 { 
                     this.cvs.drawImage(carPane, 0, 0, carPane.width, carPane.height, this.computedSizeW(157), this.computedSizeH(540), this.computedSizeW(140), this.computedSizeH(164));         
                     this.cvs.fillStyle = "#e9b320";
-                    this.cvs.font = `bold ${this.computedSizeW(25)}px xszt`;
+                    this.cvs.font = `bold ${this.computedSizeW(25)}px Arial`;
                     this.cvs.fillText('解锁条件：', this.computedSizeW(322), this.computedSizeH(570)); 
 
                     this.cvs.fillStyle = "#ffffff";
-                    this.cvs.font = `${this.computedSizeW(25)}px xszt`;
+                    this.cvs.font = `${this.computedSizeW(25)}px Arial`;
                     this.cvs.fillText('点击首页公众号按钮，按', this.computedSizeW(326), this.computedSizeH(610));       
 
                     this.cvs.fillStyle = "#ffffff";
-                    this.cvs.font = `${this.computedSizeW(25)}px xszt`;
+                    this.cvs.font = `${this.computedSizeW(25)}px Arial`;
                     this.cvs.fillText('提示操作进行关注有车以', this.computedSizeW(326), this.computedSizeH(646));       
 
                     this.cvs.fillStyle = "#ffffff";
-                    this.cvs.font = `${this.computedSizeW(25)}px xszt`;
+                    this.cvs.font = `${this.computedSizeW(25)}px Arial`;
                     this.cvs.fillText('后公众号。', this.computedSizeW(326), this.computedSizeH(682));
 
                 }
@@ -75,11 +75,11 @@ export default class Carport extends Init {
                     this.cvs.drawImage(carPane, 0, 0, carPane.width, carPane.height, this.computedSizeW(157), this.computedSizeH(540), this.computedSizeW(140), this.computedSizeH(164));
 
                     this.cvs.fillStyle = "#e9b320";
-                    this.cvs.font = `bold ${this.computedSizeW(25)}px xszt`;
+                    this.cvs.font = `bold ${this.computedSizeW(25)}px Arial`;
                     this.cvs.fillText('解锁条件：', this.computedSizeW(322), this.computedSizeH(570));
 
                     this.cvs.fillStyle = "#ffffff";
-                    this.cvs.font = `${this.computedSizeW(25)}px xszt`;
+                    this.cvs.font = `${this.computedSizeW(25)}px Arial`;
                     this.cvs.fillText('一场游戏达到一百分。', this.computedSizeW(326), this.computedSizeH(610));
 
                     const gift100 = wx.createImage();
@@ -93,11 +93,11 @@ export default class Carport extends Init {
                     this.cvs.drawImage(carPane, 0, 0, carPane.width, carPane.height, this.computedSizeW(157), this.computedSizeH(540), this.computedSizeW(140), this.computedSizeH(164));
 
                     this.cvs.fillStyle = "#e9b320";
-                    this.cvs.font = `bold ${this.computedSizeW(25)}px xszt`;
+                    this.cvs.font = `bold ${this.computedSizeW(25)}px Arial`;
                     this.cvs.fillText('解锁条件：', this.computedSizeW(322), this.computedSizeH(570));
 
                     this.cvs.fillStyle = "#ffffff";
-                    this.cvs.font = `${this.computedSizeW(25)}px xszt`;
+                    this.cvs.font = `${this.computedSizeW(25)}px Arial`;
                     this.cvs.fillText('一场游戏达到二百分。', this.computedSizeW(326), this.computedSizeH(610));
 
                     const gift200 = wx.createImage();
@@ -110,11 +110,11 @@ export default class Carport extends Init {
                     this.cvs.drawImage(carPane, 0, 0, carPane.width, carPane.height, this.computedSizeW(157), this.computedSizeH(540), this.computedSizeW(140), this.computedSizeH(164));
 
                     this.cvs.fillStyle = "#e9b320";
-                    this.cvs.font = `bold ${this.computedSizeW(25)}px xszt`;
+                    this.cvs.font = `bold ${this.computedSizeW(25)}px Arial`;
                     this.cvs.fillText('解锁条件：', this.computedSizeW(322), this.computedSizeH(570));
 
                     this.cvs.fillStyle = "#ffffff";
-                    this.cvs.font = `${this.computedSizeW(25)}px xszt`;
+                    this.cvs.font = `${this.computedSizeW(25)}px Arial`;
                     this.cvs.fillText('累计十五天参加游戏。', this.computedSizeW(326), this.computedSizeH(610));
 
                     const unlockGame = wx.createImage();
@@ -128,11 +128,11 @@ export default class Carport extends Init {
                     this.cvs.drawImage(carPane, 0, 0, carPane.width, carPane.height, this.computedSizeW(157), this.computedSizeH(540), this.computedSizeW(140), this.computedSizeH(164));
 
                     this.cvs.fillStyle = "#e9b320";
-                    this.cvs.font = `bold ${this.computedSizeW(25)}px xszt`;
+                    this.cvs.font = `bold ${this.computedSizeW(25)}px Arial`;
                     this.cvs.fillText('解锁条件：', this.computedSizeW(322), this.computedSizeH(570));
 
                     this.cvs.fillStyle = "#ffffff";
-                    this.cvs.font = `${this.computedSizeW(25)}px xszt`;
+                    this.cvs.font = `${this.computedSizeW(25)}px Arial`;
                     this.cvs.fillText('一场游戏中转弯达到100次。', this.computedSizeW(326), this.computedSizeH(610));
 
                     const curve = wx.createImage();
@@ -153,11 +153,11 @@ export default class Carport extends Init {
 
     
     // this.cvs.fillStyle = "#fff";
-    // this.cvs.font = `bold ${this.computedSizeW(36)}px xszt`;
+    // this.cvs.font = `bold ${this.computedSizeW(36)}px Arial`;
     // this.cvs.textAlign = "center";
     // this.cvs.fillText('看视频复活', this.winWidth / 2, this.computedSizeH(716));
     
-    // this.cvs.font = `${this.computedSizeW(26)}px xszt`;
+    // this.cvs.font = `${this.computedSizeW(26)}px Arial`;
     // this.cvs.fillText(`点击跳过`, this.winWidth / 2, this.computedSizeH(864));
     // this.cvs.fillRect(this.computedSizeW(316), this.computedSizeH(880), this.computedSizeW(116), 2);
     

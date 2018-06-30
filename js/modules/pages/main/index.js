@@ -2,7 +2,6 @@ import UTIL from "../../util";
 
 import pageLoading from './loading';
 import Shared from '../shared/index';
-import Beyond from '../beyond/index';
 
 /**
  * 2d canvas函数
@@ -12,7 +11,6 @@ export default class Page extends UTIL {
         super();
         this.page();
 
-        BeyondClass = new Beyond();
         sharedClass = new Shared();
         loadingPage = new pageLoading();
     }

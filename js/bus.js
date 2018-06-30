@@ -102,8 +102,6 @@ const basicData = {
     scoreClass: '',
     // 开放域类
     sharedClass: '',
-    // 超越好友开放域类
-    BeyondClass: '',
 
     // 等待页对象
     loadingPage: '',
@@ -119,9 +117,6 @@ const basicData = {
     sharedCanvas: '',
     sharedTexture2d: '',
     sharedCanvasSprite: '',
-    // 超越好友公开域画布
-    beyondTexture2d: '',
-    beyondCanvasSprite: '',
     // 微信特有离屏画布
     offCanvas2d: '',
     texture2d: '',
@@ -171,7 +166,6 @@ const basicData = {
         qrLamp: 'images/qr-lamp.png',
         qrBtn: 'images/qr-btn.png',
         qrcode: 'images/qrcode.png'
-
     }
 };
 
@@ -258,8 +252,6 @@ export default class Bus{
         offCanvasSprite.position.set(-11.75, 78.44, 20);
         // 分数
         scoreCanvasSprite.position.set(-10, 82.8, 9);
-        // 超越好友
-        beyondCanvasSprite.position.set(-11.75, 78.44, 20);
         // sharedCanvasSprite.position.set(-11.75, 78.44, 20);
 
         camera.position.set(-16.738086885462103, 90.533387653514225, 28.513221776822927);

@@ -53,12 +53,11 @@ export default class Start extends UTIL {
 
                 scorePage.setTexture();
 
-                this.restart();
+                // this.restart();
 
-                BeyondClass.beyondPage();
                 // sharedClass.endPage();
 
-                // pageClass.clear2d();
+                pageClass.clear2d();
 
                 // 设置页面target
                 currentPage = 'gamePage';

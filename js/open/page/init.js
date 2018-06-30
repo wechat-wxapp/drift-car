@@ -81,7 +81,6 @@ export default class Index {
                 that.initSelf(() => {
                     // 保存个人数据
                     that.selfData = that.normalizeSelf(that.rankData, that.self.nickName)
-                    console.log('sd', that.selfData)
 
                 })
             },
@@ -151,5 +150,8 @@ export default class Index {
         console.log('没有分数记录...')
     }
 
+    deepCopy(data) {
+        return JSON.parse(JSON.stringify(data));
+    }
 }
 

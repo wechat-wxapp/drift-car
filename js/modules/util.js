@@ -197,9 +197,6 @@ export default class UTIL {
             if (!startKey) return false;
             score++;
 
-            // 检查是否超越好友
-            BeyondClass.beyondPage();
-
             scorePage.setTexture();
 
             this.updateScore();

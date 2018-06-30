@@ -93,7 +93,7 @@ export default class Road extends UTIL {
         const { body, physical: { floor, boths } } = this.t(params);
 
         body.size = { width: 89, width2: 60, height: 89 };
-        body.rang = { x: 50.7, z: -24.4 };
+        body.rang = { x: 50, z: -24.4 };
         body.boxType = 'r3';
 
         let x = position.x - rang.x + body.rang.x;
@@ -120,8 +120,8 @@ export default class Road extends UTIL {
     r4(params) {
         const { size, position, rang } = this.getLastRoad();
         const { body, physical: { floor, boths } } = this.t(params);
-        body.size = { width: 89, width2: 60, height: 89, height2: 60 };
-        body.rang = { x: 28.2, z: -54.7 };
+        body.size = { width: 88.3, width2: 59.5, height: 89, height2: 60 };
+        body.rang = { x: 27.5, z: -54.7 };
         body.boxType = 'r4';
 
         body.rotation.set(0, 3.14, 0);

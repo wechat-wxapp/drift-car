@@ -100,14 +100,6 @@ export default class Shared extends UTIL {
     }
 
     endPage() {
-        // $wx.setSize(this.size);
-        this.sharedCanvas.width = winWidth * window.devicePixelRatio;
-        this.sharedCanvas.height = winHeight * window.devicePixelRatio;
-
-        const sharedCanvas2d = this.sharedCanvas.getContext("2d");
-
-        sharedCanvas2d.scale(window.devicePixelRatio, window.devicePixelRatio);
-
         $wx.sendMessage('end');
 
         this.setPosition();
