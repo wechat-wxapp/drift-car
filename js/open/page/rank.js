@@ -18,10 +18,11 @@ export default class Rank extends Init {
      * 好友排名
      * */
     // this.friendRank();
-
+    
     //世界
     this.worldRank();
-    
+    // console.log("rankData", this.rankData)
+    console.log('rankSelf', this.selfData)
     /**
      * 群排名
      * */
@@ -49,36 +50,53 @@ export default class Rank extends Init {
     //排名
     this.cvs.beginPath();
     this.cvs.fillStyle = this.themeBule;
-    for(let i = 0;i < 6;i++) {
+    for(let i = 0;i < this.rankData.length;i++) {
       if(i == 3) this.cvs.fillStyle = '#a8a8a8';
+      // 排名
       this.cvs.fillText(i + 1, this.computedSizeW(132), this.computedSizeH(402 + i * 96));
-      this.cvs.arc(this.computedSizeW(234), this.computedSizeH(394 + i * 97), this.computedSizeW(31), 0, 2 * Math.PI);
-    }
-    this.cvs.fill();
+      // 头像
+      let avatar = wx.createImage();
+      avatar.src = this.rankData[i].avatarUrl;
+      avatar.onload = () => {
+        // pattern = this.cvs.createPattern(avatar, 'repeat');
+        // this.cvs.arc(this.computedSizeW(234), this.computedSizeH(394 + i * 97), this.computedSizeW(31), 0, 2 * Math.PI);
+        // this.drawRoundRect(this.cvs, this.computedSizeW(234), this.computedSizeH(394 + i * 97), this.computedSizeW(31), this.computedSizeW(31), this.computedSizeW(31 / 2), 'red')
+        // this.cvs.fill()
+        this.cvs.drawImage(avatar, this.computedSizeW(234), this.computedSizeH(394 + i * 97), this.computedSizeW(31), this.computedSizeW(31));
 
-    this.cvs.fillStyle = '#666';
-    for(let i = 0; i < 6; i++){
-      this.cvs.fillText(`Youche${i}`, this.computedSizeW(286), this.computedSizeH(402 + i * 96), this.computedSizeW(146));
+      }
+
+
+      // this.cvs.arc(this.computedSizeW(234), this.computedSizeH(394 + i * 97), this.computedSizeW(31), 0, 2 * Math.PI);
+
+      this.cvs.fill();
+    }
+
+    // 名字
+    for(let i = 0; i < this.rankData.length; i++){
+      this.cvs.fillStyle = '#666';
+      this.cvs.fillText(this.rankData[i].nickname, this.computedSizeW(286), this.computedSizeH(402 + i * 96), this.computedSizeW(146));
     }
     
+    // 分数
     this.cvs.font = `bold`;
     this.cvs.fillStyle = '#000';
-    for(let i = 0; i < 6; i++){
-      this.cvs.fillText(`465`, this.computedSizeW(538), this.computedSizeH(402 + i * 96));
+    for(let i = 0; i < this.rankData.length; i++){
+      this.cvs.fillText(this.rankData[i].KVDataList[0].value, this.computedSizeW(538), this.computedSizeH(402 + i * 96));
     }
 
-    //blue part
+    //blue part 个人成绩
     this.cvs.fillStyle = this.themeBule;
     this.cvs.fillRect(this.winWidth / 2 - this.computedSizeW(582) / 2, this.computedSizeH(965), this.computedSizeW(582), this.computedSizeH(102));
     this.cvs.fillStyle = `#ffd81f`;
     this.cvs.font = 'noraml';
-    this.cvs.fillText(`2`, this.computedSizeW(132), this.computedSizeH(1028));
+    this.cvs.fillText(this.selfData.rank, this.computedSizeW(132), this.computedSizeH(1028));
     this.cvs.arc(this.computedSizeW(234), this.computedSizeH(1018), this.computedSizeW(31), 0, 2 * Math.PI);
     this.cvs.fill();
     this.cvs.fillStyle = `#fff`;
-    this.cvs.fillText(`Youche2`, this.computedSizeW(286), this.computedSizeH(1028), this.computedSizeW(146));
+    this.cvs.fillText(this.selfData.nickname, this.computedSizeW(286), this.computedSizeH(1028), this.computedSizeW(146));
     this.cvs.font = `bold`;
-    this.cvs.fillText(`465`, this.computedSizeW(538), this.computedSizeH(1028));
+    this.cvs.fillText(this.selfData.KVDataList[0].value, this.computedSizeW(538), this.computedSizeH(1028));
 
     const backIcon1 = wx.createImage();
     backIcon1.src = `images/back-icon.png`;

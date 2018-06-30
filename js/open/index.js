@@ -28,7 +28,9 @@ const init = new Init();
 wx.onMessage(({ command, data }) => {
     switch (command) {
         case 'end':
-            endPage.setTexture();
+            // endPage.setTexture();
+
+            rankPage.setTexture();
             break;
         case 'reseur':
             reseurPage.setTexture();
@@ -59,10 +61,3 @@ wx.onMessage(({ command, data }) => {
 // }
 //
 //
-// wx.getFriendCloudStorage({
-//     keyList: ['score'],
-//     success: res => {
-//         let data = res.data
-//         drawRankList(data)
-//     }
-// })
