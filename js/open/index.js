@@ -30,13 +30,14 @@ wx.onMessage(({ command, data }) => {
         case 'end':
             // endPage.setTexture();
 
-            rankPage.setTexture();
+            console.log('data', data)
+            rankPage.setTexture(data);
             break;
         case 'reseur':
             reseurPage.setTexture();
             break;
         case 'rank':
-            rankPage.setTexture();
+            rankPage.setTexture(data);
             break;
         case 'carport':
             carportPage.setTexture(data);
