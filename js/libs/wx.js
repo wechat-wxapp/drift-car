@@ -39,4 +39,10 @@ export default class WX {
             })
         })
     }
+
+    getFontFamily() {
+        return new Promise((res, rej) => {
+            wx.loadFont("https://static.cdn.24haowan.com/24haowan/test/js/xszt.TTF")
+        })
+    }
 }
