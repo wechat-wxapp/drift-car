@@ -2,6 +2,11 @@
  * 微信类
  * */
 export default class WX {
+    size = {
+        width: winWidth,
+        height: winHeight
+    };
+
     constructor() {
         openDataContext = wx.getOpenDataContext();
 
@@ -37,12 +42,6 @@ export default class WX {
                 },
                 complete: () => {}
             })
-        })
-    }
-
-    getFontFamily() {
-        return new Promise((res, rej) => {
-            wx.loadFont("https://static.cdn.24haowan.com/24haowan/test/js/xszt.TTF")
         })
     }
 }

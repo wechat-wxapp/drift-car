@@ -15,14 +15,14 @@ export default class Loader extends Init {
         this.clearCvs();
 
         this.cvs.fillStyle = "#fff";
-        this.cvs.font = `bold ${this.computedSizeW(26)}px xszt`;
+        this.cvs.font = `bold ${this.computedSizeW(26)}px Arial`;
         this.cvs.textAlign = "center";
         this.cvs.fillText('本次得分', this.winWidth / 2, this.computedSizeH(216));
 
-        this.cvs.font = `bold ${this.computedSizeW(102)}px xszt`;
+        this.cvs.font = `bold ${this.computedSizeW(102)}px Arial`;
         this.cvs.fillText('160', this.winWidth / 2, this.computedSizeH(332));
         
-        this.cvs.font = `bold ${this.computedSizeW(26)}px xszt`;
+        this.cvs.font = `bold ${this.computedSizeW(26)}px Arial`;
         this.cvs.fillText(`历史最高得分：200`, this.winWidth / 2, this.computedSizeH(425));
         // 世界排行
         this.cvs.fillStyle = this.themeBule;
@@ -30,15 +30,15 @@ export default class Loader extends Init {
 
         this.cvs.fillStyle = "#fff";
         this.cvs.textAlign = "left";
-        this.cvs.font = `bold ${this.computedSizeW(22)}px xszt`;
+        this.cvs.font = `bold ${this.computedSizeW(22)}px Arial`;
         this.cvs.fillText('世界排行', this.computedSizeW(136), this.computedSizeH(544));
 
         this.cvs.fillStyle = "#fdd724";
         this.cvs.textAlign = "center";
-        this.cvs.font = `bold ${this.computedSizeW(22)}px xszt`;
+        this.cvs.font = `bold ${this.computedSizeW(22)}px Arial`;
         this.cvs.fillText('45456', this.winWidth / 2, this.computedSizeH(544));
 
-        this.cvs.font = `bold ${this.computedSizeW(22)}px xszt`;
+        this.cvs.font = `bold ${this.computedSizeW(22)}px Arial`;
         this.cvs.fillStyle = "#fff";
         this.cvs.textAlign = "left";
         this.cvs.fillText('354', this.computedSizeW(544), this.computedSizeH(544));
@@ -51,7 +51,7 @@ export default class Loader extends Init {
         this.cvs.fillRect(this.winWidth / 2 - this.computedSizeW(582) / 2, this.computedSizeH(914), this.computedSizeW(582), this.computedSizeH(72));
 
         //名次
-        this.cvs.font = `${this.computedSizeW(18)}px xszt`;
+        this.cvs.font = `${this.computedSizeW(18)}px Arial`;
         this.cvs.fillStyle = "#a8a8a8";
         this.cvs.fillText('43', this.computedSizeW(160), this.computedSizeH(678));
         this.cvs.fillText('45', this.computedSizeW(550), this.computedSizeH(678));
@@ -77,21 +77,21 @@ export default class Loader extends Init {
         this.cvs.closePath();
         this.cvs.fill();
 
-        this.cvs.font = `${this.computedSizeW(20)}px xszt`;
+        this.cvs.font = `${this.computedSizeW(20)}px Arial`;
         this.cvs.fillStyle = "#666";
         this.cvs.textAlign = "center";
         this.cvs.fillText('Youche1', this.computedSizeW(178), this.computedSizeH(840));
         this.cvs.fillText('Youche2', this.computedSizeW(374), this.computedSizeH(840));
         this.cvs.fillText('Youche3', this.computedSizeW(572), this.computedSizeH(840));
         
-        this.cvs.font = `bold ${this.computedSizeW(24)}px xszt`;
+        this.cvs.font = `bold ${this.computedSizeW(24)}px Arial`;
         this.cvs.fillStyle = "#000";
         this.cvs.fillText('188', this.computedSizeW(178), this.computedSizeH(875));
         this.cvs.fillText('160', this.computedSizeW(374), this.computedSizeH(875));
         this.cvs.fillText('134', this.computedSizeW(572), this.computedSizeH(875));
         
         this.cvs.fillStyle = "#808080";
-        this.cvs.font = `${this.computedSizeW(20)}px xszt`;
+        this.cvs.font = `${this.computedSizeW(20)}px Arial`;
         this.cvs.textAlign = "left";
         this.cvs.fillText('排行榜：每周一凌晨更新', this.computedSizeW(130), this.computedSizeH(960));
         
@@ -105,11 +105,11 @@ export default class Loader extends Init {
         this.cvs.drawImage(btn, 0, 0, btn.width, btn.height, this.computedSizeW(415), this.computedSizeH(1044), this.computedSizeW(218), this.computedSizeH(78));
 
         this.cvs.fillStyle = "#fff";
-        this.cvs.font = `bold ${this.computedSizeW(32)}px xszt`;
+        this.cvs.font = `bold ${this.computedSizeW(32)}px Arial`;
         this.cvs.fillText('炫耀一下', this.computedSizeW(164), this.computedSizeH(1087));
         this.cvs.fillText('再玩一局', this.computedSizeW(460), this.computedSizeH(1087));
 
-        this.cvs.font = `${this.computedSizeW(26)}px xszt`;
+        this.cvs.font = `${this.computedSizeW(26)}px Arial`;
         this.cvs.textAlign = "center";
         this.cvs.fillText('返回首页', this.winWidth / 2, this.computedSizeH(1215));
         // this.cvs.fillRect(this.computedSizeW(312), this.computedSizeH(1234), this.computedSizeW(116), 2);

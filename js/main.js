@@ -51,6 +51,16 @@ export default class Main extends UTIL {
         // // 创建loading页对象
         // loadingPage = new pageLoading();
 
+        wx.login({
+            success: function(res) {
+                if (res.code) {
+                    console.log(res.code);
+                } else {
+                    console.log('登录失败！' + res.errMsg)
+                }
+            }
+        });
+
         // 渲染
         this.loop();
     }
@@ -85,7 +95,7 @@ export default class Main extends UTIL {
         scene.add(directionalLight);
 
         // 摄像机调试
-        // controls = new THREE.OrbitControls(camera);
+        controls = new THREE.OrbitControls(camera);
     }
 
     /**
@@ -137,7 +147,7 @@ export default class Main extends UTIL {
      */
     updateRoad() {
         if (key < maxKey) {
-            // if (key < 2) {
+            // if (key < 1) {
 
             if (key === 0) {
                 this.r7();
@@ -152,11 +162,11 @@ export default class Main extends UTIL {
 
 
             // if (key < 1) {
-            //     this.r7();
+            //     this.r6();
             // } else if (key === 1) {
             //     this.r8();
             // } else if (key === 2) {
-            //     this.r8();
+            //     this.r6();
             // } else if (key === 3) {
             //     this.r8();
             // } else if (key === 4) {
@@ -271,6 +281,7 @@ export default class Main extends UTIL {
         // 回收路面
         this.removeObj();
 
+        // beyondTexture2d.needsUpdate = true;
         // texture2d.needsUpdate = true;
         // sharedTexture2d.needsUpdate = true;
 
