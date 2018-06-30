@@ -29,11 +29,21 @@ wx.onMessage(({ command, data }) => {
     switch (command) {
         case 'end':
             endPage.setTexture();
-            // reseurPage.setTexture();
-            // rankPage.setTexture();
-            // carportPage.setTexture();
-            // wechatMPPage.setTexture();
-            // qrPage.setTexture();
+            break;
+        case 'reseur':
+            reseurPage.setTexture();
+            break;
+        case 'rank':
+            rankPage.setTexture();
+            break;
+        case 'carport':
+            carportPage.setTexture(data);
+            break;
+        case 'wechat':
+            wechatMPPage.setTexture();
+            break;
+        case 'qr':
+            qrPage.setTexture();
             break;
         case 'clear':
             init.clearCvs(true);
@@ -53,7 +63,6 @@ wx.onMessage(({ command, data }) => {
 //     keyList: ['score'],
 //     success: res => {
 //         let data = res.data
-//         console.log(data);
-//         // drawRankList(data)
+//         drawRankList(data)
 //     }
 // })
