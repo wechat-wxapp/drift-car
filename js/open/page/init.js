@@ -19,7 +19,10 @@ export default class Index {
         // 个人信息
         this.self = null
 
-        this.initRankData();
+        // 好友排行榜数据
+        // this.initRankData();
+        // 群排行榜的数据
+        // this.initGroupRankData(data.shareTicket);
 
         // 当前页
         this.rankCurrentPage = 1;
@@ -98,6 +101,62 @@ export default class Index {
         })
     }
 
+    // 初始化群排行榜数据并排序
+    initGroupRankData(shareTicket) {
+        let that = this;
+        wx.getGroupCloudStorage({
+            shareTicket: shareTicket,
+            keyList: ['score'],
+            success: res => {
+                console.log('群排行榜', res)
+                let tempRankData = res.data
+                // 排序
+                that.rankData = that.sort(tempRankData, 'des')
+                // 请求个人数据
+                that.initSelf(() => {
+                    // 保存个人数据
+                    that.selfData2 = that.normalizeSelf(that.rankData, that.self.nickName)
+
+                })
+            },
+            fail: res => console.log('获取世界排行榜数据失败...')
+        })
+    }
+
+        
+    initWorldpRankData() {
+        //获取世界排行榜
+        const _wRank = (openid) => {
+            const openid = openid
+            console.log('request1111111111')
+            wx.request({
+                method: 'POST',
+                url: `192.168.6.49:3003/yc/rank/data`,
+                data: {
+                    "openid":"111",
+                    "offset":"0", // 分页偏移量
+                    "limit":"20" // 每页请求数
+                },
+                success: res => {
+                    const worldRank = res.payload.ranks
+                }
+            })
+        }
+        wx.login({
+            success: res => {
+                let code = res.code;
+                wx.request({
+                    url: `192.168.6.49:3003/yc/wechat/code2accessToken?code=${code}`,
+                    success: res => {
+                        //openID,,,,以及session key
+                        _wRank(res.openid)
+                    },
+                    fail: () => console.log('request fail')
+                })
+            },
+            fail: () => console.log('login fail')
+        })
+    }
 
     // 初始化个人信息
     initSelf(callback) {

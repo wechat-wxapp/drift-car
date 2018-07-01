@@ -53,7 +53,8 @@ export default class Start extends UTIL {
 
                 scorePage.setTexture();
 
-                $wx.sendMessage('rank',{ page: rankCurrentPage });
+                $wx.sendMessage('rank',{ page: rankCurrentPage , shareTicket: $wx.shareTicket});
+
                 sharedTexture2d.needsUpdate = true;
 
                 pageClass.clear2d();
