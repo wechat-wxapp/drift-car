@@ -13,7 +13,7 @@ export default class WX {
             console.log('shareTicket: ', res, this.shareTicket);
         });
 
-        this.initAd()
+        // this.initAd()
         
         openDataContext.postMessage({
             command: 'init',
@@ -24,24 +24,24 @@ export default class WX {
         })
     }
 
-    initAd() {
-        //???????2.0.4??
-        const compareVersion = (v1, v2) => {
-            let arr1 = v1.split('.');
-            let arr2 = v2.split('.');
-            for (let i = 0; i < arr1.length;i++) { 
-				if(arr1[i] > arr2[i]) return true
-				else if (arr1[i] == arr2[i]) continue
-				else return false
-			}
-			return true
-        }
-        const version = wx.getSystemInfoSync().version;
-        if (compareVersion(version,`2.0.4`)) {
-            this.rewardedVideoAd = wx.createRewardedVideoAd({adUnitId: `adVideo`})
-            
-        }
-    }
+    // initAd() {
+    //     //???????2.0.4??
+    //     const compareVersion = (v1, v2) => {
+    //         let arr1 = v1.split('.');
+    //         let arr2 = v2.split('.');
+    //         for (let i = 0; i < arr1.length;i++) { 
+	// 			if(arr1[i] > arr2[i]) return true
+	// 			else if (arr1[i] == arr2[i]) continue
+	// 			else return false
+	// 		}
+	// 		return true
+    //     }
+    //     const version = wx.getSystemInfoSync().version;
+    //     if (compareVersion(version,`2.0.4`)) {
+    //         this.rewardedVideoAd = wx.createRewardedVideoAd({adUnitId: `adVideo`})
+
+    //     }
+    // }
     
     sendMessage(command, data) {
         openDataContext.postMessage({ command, data })
