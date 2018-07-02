@@ -11,7 +11,7 @@ export default class Loader extends Init {
     /**
      * 更新页面内容
      * */
-    setTexture(data) {
+    setTexture({ score }) {
         this.clearCvs();
 
         this.cvs.fillStyle = "#fff";
@@ -20,7 +20,7 @@ export default class Loader extends Init {
         this.cvs.fillText('本次得分', this.winWidth / 2, this.computedSizeH(216));
 
         this.cvs.font = `bold ${this.computedSizeW(102)}px Arial`;
-        this.cvs.fillText('160', this.winWidth / 2, this.computedSizeH(332));
+        this.cvs.fillText(score, this.winWidth / 2, this.computedSizeH(332));
         
         this.cvs.font = `bold ${this.computedSizeW(26)}px Arial`;
         this.cvs.fillText(`历史最高得分：200`, this.winWidth / 2, this.computedSizeH(425));

@@ -257,6 +257,12 @@ export default class Main extends UTIL {
         }
     }
 
+    sharedLoop() {
+        if (isSharedLoop) {
+            sharedTexture2d.needsUpdate = true;
+        }
+    }
+
     /**
      * 实现帧循环
      * */
@@ -272,9 +278,12 @@ export default class Main extends UTIL {
         // 回收路面
         this.removeObj();
 
+        // 刷新开放域
+        this.sharedLoop();
+
         // beyondTexture2d.needsUpdate = true;
         // texture2d.needsUpdate = true;
-        sharedTexture2d.needsUpdate = true;
+
 
         requestAnimationFrame(this.loop.bind(this));
     }

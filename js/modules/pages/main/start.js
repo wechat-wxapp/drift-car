@@ -32,6 +32,15 @@ export default class Start extends UTIL {
         // 如果登录则绑定普通按钮点击事件
         wxConfig.isLogin === true && this.bindStartBtn();
         this.bindMusicBtn();
+
+        // 排行榜
+        this.bindRankBtn();
+        // 群排行榜
+        this.bindGroupRankBtn();
+        // 泡妞神器
+        this.bindQrBtn();
+        // 公众号
+        this.bindWechatBtn();
     }
 
     /**
@@ -73,6 +82,84 @@ export default class Start extends UTIL {
             point: [x1, y1, x2, y2],
             cb: () => {
                 musicKey = !musicKey;
+            }
+        });
+    }
+
+    /**
+     * 绑定排行榜按钮
+     * */
+    bindRankBtn() {
+        const x1 = this.computedSizeW(150);
+        const x2 = this.computedSizeW(265);
+        const y1 = this.computedSizeH(315);
+        const y2 = this.computedSizeH(355);
+
+        events.click({
+            name: 'rankBtn',
+            pageName: 'startPage',
+            point: [x1, y1, x2, y2],
+            cb: () => {
+                sharedClass.rankPage();
+            }
+        });
+    }
+
+    /**
+     * 绑定排行榜按钮
+     * */
+    bindGroupRankBtn() {
+        const x1 = this.computedSizeW(165);
+        const x2 = this.computedSizeW(245);
+        const y1 = this.computedSizeH(365);
+        const y2 = this.computedSizeH(390);
+
+        events.click({
+            name: 'groupRankBtn',
+            pageName: 'startPage',
+            point: [x1, y1, x2, y2],
+            cb: () => {
+                sharedClass.groupRankPage();
+            }
+        });
+    }
+
+    /**
+     * 绑定泡妞神器按钮
+     * */
+    bindQrBtn() {
+        const x1 = this.computedSizeW(145);
+        const x2 = this.computedSizeW(190);
+        const y1 = this.computedSizeH(640);
+        const y2 = this.computedSizeH(700);
+
+        events.click({
+            name: 'qrBtn',
+            pageName: 'startPage',
+            point: [x1, y1, x2, y2],
+            cb: () => {
+                sharedClass.qrPage();
+                currentPage = 'qrPage';
+            }
+        });
+    }
+
+    /**
+     * 绑定公众号按钮
+     * */
+    bindWechatBtn() {
+        const x1 = this.computedSizeW(310);
+        const x2 = this.computedSizeW(350);
+        const y1 = this.computedSizeH(640);
+        const y2 = this.computedSizeH(690);
+
+        events.click({
+            name: 'wechatBtn',
+            pageName: 'startPage',
+            point: [x1, y1, x2, y2],
+            cb: () => {
+                sharedClass.wechatPage();
+                currentPage = 'wechatPage';
             }
         });
     }

@@ -1,14 +1,3 @@
-// let sharedCanvas = wx.getSharedCanvas()
-// let context = sharedCanvas.getContext('2d')
-// context.fillStyle = 'green'
-// context.fillRect(0, 0, 100, 100)
-
-// const sharedCanvas = wx.getSharedCanvas();
-// const cvs = sharedCanvas.getContext('2d');
-//
-// cvs.fillStyle = 'red'
-// cvs.fillRect(0, 0, 500, 500)
-
 import EndPage from './page/end';
 import ReseurPage from './page/resurgence.js';
 import RankPage from './page/rank';
@@ -28,10 +17,10 @@ const init = new Init();
 wx.onMessage(({ command, data = {} }) => {
     switch (command) {
         case 'end':
-            endPage.setTexture();
+            endPage.setTexture(data);
             break;
         case 'reseur':
-            reseurPage.setTexture();
+            reseurPage.setTexture(data);
             break;
         case 'rank':
             rankPage.initGroupRankData(data.shareTicket);
@@ -51,12 +40,3 @@ wx.onMessage(({ command, data = {} }) => {
             break;
     }
 });
-
-// function drawRankList (data) {
-//     cvs.fillStyle = "#647fdc";
-//     cvs.fillRect(0, 0, 100, 100);
-//     cvs.font = "bold 70px Arial";
-//     cvs.fillText('123', 100, 100);
-// }
-//
-//

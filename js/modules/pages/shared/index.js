@@ -22,12 +22,29 @@ export default class Shared extends UTIL {
     }
 
     bindEvent() {
+        // 结束页-再玩一次
         this.bindReStart();
+        // 结束页-回来主页
         this.bindGoHome();
+
+        // 复活页-复活
+        this.bindReseur();
+        // 复活页-跳过
+        this.bindSkip();
+
+        // 排行榜-上一页
         this.bindPrePage();
+        // 排行榜-下一页
         this.bindNextPage();
+
+        // 泡妞神器-返回
+        this.bindQrBack();
+
+        // 公众号-返回
+        this.bindWechatBack();
     }
 
+    // 结束页-再玩一次
     bindReStart() {
         const x1 = this.computedSizeW(250);
         const x2 = this.computedSizeW(350);
@@ -49,6 +66,7 @@ export default class Shared extends UTIL {
         });
     }
 
+    // 结束页-返回主页
     bindGoHome() {
         const x1 = this.computedSizeW(175);
         const x2 = this.computedSizeW(245);
@@ -67,6 +85,51 @@ export default class Shared extends UTIL {
 
                 startPage.setTexture();
                 currentPage = 'startPage';
+            }
+        });
+    }
+
+    // 复活页-复活
+    bindReseur() {
+        const x1 = this.computedSizeW(125);
+        const x2 = this.computedSizeW(300);
+        const y1 = this.computedSizeH(360);
+        const y2 = this.computedSizeH(420);
+
+        events.click({
+            name: 'reseurBtn',
+            pageName: 'reseurPage',
+            point: [x1, y1, x2, y2],
+            cb: () => {
+                this.clear2d();
+
+                this.restart(true);
+
+                currentPage = 'gamePage';
+            }
+        });
+    }
+
+    // 复活页-跳过
+    bindSkip() {
+        const x1 = this.computedSizeW(175);
+        const x2 = this.computedSizeW(240);
+        const y1 = this.computedSizeH(460);
+        const y2 = this.computedSizeH(490);
+
+        events.click({
+            name: 'skipBtn',
+            pageName: 'reseurPage',
+            point: [x1, y1, x2, y2],
+            cb: () => {
+                this.clear2d();
+
+                this.endPage();
+
+                // 设置分数
+                $wx.setWxScore();
+
+                currentPage = 'endPage';
             }
         });
     }
@@ -109,6 +172,42 @@ export default class Shared extends UTIL {
         })
     }
 
+    // 泡妞神器-返回
+    bindQrBack() {
+        const x1 = this.computedSizeW(45);
+        const x2 = this.computedSizeW(85);
+        const y1 = this.computedSizeH(630);
+        const y2 = this.computedSizeH(670);
+
+        events.click({
+            name: 'qrBackBtn',
+            pageName: 'qrPage',
+            point: [x1, y1, x2, y2],
+            cb: () => {
+                $wx.sendMessage('clear');
+                startPage.setTexture();
+            }
+        })
+    }
+
+    // 公众号-返回
+    bindWechatBack() {
+        const x1 = this.computedSizeW(45);
+        const x2 = this.computedSizeW(85);
+        const y1 = this.computedSizeH(630);
+        const y2 = this.computedSizeH(670);
+
+        events.click({
+            name: 'wechatBackBtn',
+            pageName: 'wechatPage',
+            point: [x1, y1, x2, y2],
+            cb: () => {
+                $wx.sendMessage('clear');
+                startPage.setTexture();
+            }
+        })
+    }
+
     /**
      * 创建2d画布
      */
@@ -139,8 +238,59 @@ export default class Shared extends UTIL {
         scene.add(sharedCanvasSprite);
     }
 
+    /**
+     * 结束页
+     * */
     endPage() {
-        $wx.sendMessage('end',{ page: 1 });
+        this.showPage('end', { score });
+    }
+
+    /**
+     * 复活页
+     * */
+    reseurPage() {
+        this.showPage('reseur', { score });
+    }
+
+    /**
+     * 车库
+     * */
+    carListPage() {
+        this.showPage('carport');
+    }
+
+    /**
+     * 排行榜
+     * */
+    rankPage() {
+        this.showPage('rank');
+    }
+
+    /**
+     * 泡妞神器
+     * */
+    qrPage() {
+        this.showPage('qr', {}, true);
+    }
+
+    /**
+     * 泡妞神器
+     * */
+    wechatPage() {
+        this.showPage('wechat', {}, true);
+    }
+
+    /**
+     * 群排行榜
+     * */
+    groupRankPage() {
+        this.showPage('rank');
+    }
+
+    showPage(command, data, clear) {
+        $wx.sendMessage(command, data);
+
+        clear && pageClass.clear2d();
 
         this.setPosition();
 
@@ -149,14 +299,6 @@ export default class Shared extends UTIL {
 
     clear2d() {
         $wx.sendMessage('clear');
-        sharedTexture2d.needsUpdate = true;
-    }
-
-    carListPage() {
-        $wx.sendMessage('carport');
-
-        this.setPosition();
-
         sharedTexture2d.needsUpdate = true;
     }
 
