@@ -53,16 +53,14 @@ export default class Start extends UTIL {
 
                 scorePage.setTexture();
 
-                // 改这行
-                sharedClass.endPage();
+                $wx.sendMessage('rank',{ page: rankCurrentPage , shareTicket: $wx.shareTicket});
 
-                // $wx.sendMessage('rank',{ page: rankCurrentPage });
-                // sharedTexture2d.needsUpdate = true;
+                sharedTexture2d.needsUpdate = true;
 
                 pageClass.clear2d();
 
                 // 设置页面target
-                currentPage = 'endPage';
+                currentPage = 'rankPage';
 
 
             }

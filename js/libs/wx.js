@@ -12,20 +12,42 @@ export default class WX {
 
         wx.showShareMenu({ withShareTicket: true });
 
+        this.shareTicket = 'noStareTicket';
         wx.onShow(res => {
-            let shareTicket = res.shareTicket;
-            console.log('shareTicket: ', res, shareTicket);
+            this.shareTicket = res.shareTicket;
+            console.log('shareTicket: ', res, this.shareTicket);
         });
 
+        // this.initAd()
+        
         openDataContext.postMessage({
             command: 'init',
             data: {
                 winWidth,
-                winHeight,
+                winHeight
             }
         })
     }
 
+    // initAd() {
+    //     //???????2.0.4??
+    //     const compareVersion = (v1, v2) => {
+    //         let arr1 = v1.split('.');
+    //         let arr2 = v2.split('.');
+    //         for (let i = 0; i < arr1.length;i++) { 
+	// 			if(arr1[i] > arr2[i]) return true
+	// 			else if (arr1[i] == arr2[i]) continue
+	// 			else return false
+	// 		}
+	// 		return true
+    //     }
+    //     const version = wx.getSystemInfoSync().version;
+    //     if (compareVersion(version,`2.0.4`)) {
+    //         this.rewardedVideoAd = wx.createRewardedVideoAd({adUnitId: `adVideo`})
+
+    //     }
+    // }
+    
     sendMessage(command, data) {
         openDataContext.postMessage({ command, data })
     }

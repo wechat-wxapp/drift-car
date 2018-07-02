@@ -34,6 +34,7 @@ wx.onMessage(({ command, data }) => {
             reseurPage.setTexture();
             break;
         case 'rank':
+            rankPage.initGroupRankData(data.shareTicket);
             rankPage.setTexture(data);
             break;
         case 'carport':
