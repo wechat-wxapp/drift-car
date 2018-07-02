@@ -42,6 +42,8 @@ export default class Shared extends UTIL {
 
         // 公众号-返回
         this.bindWechatBack();
+
+        this.goGroupRank();
     }
 
     // 结束页-再玩一次
@@ -143,11 +145,12 @@ export default class Shared extends UTIL {
 
         events.click({
             name: 'prePageBtn',
-            pageName: 'rankPage',
+            pageName: 'groupRank',
             point: [x1, y1, x2, y2],
             cb: () => {
                 // rankCurrentPage = rankCurrentPage <= 1 ? 1 : rankCurrentPage--;
-                $wx.sendMessage('rank',{ page: rankCurrentPage, common: 0 });
+                console.log(1123414)
+                $wx.sendMessage('groupRank',{ page: rankCurrentPage, common: 0 , shareTicket: $wx.shareTicket});
                 sharedTexture2d.needsUpdate = true;
             }
         })
@@ -159,14 +162,13 @@ export default class Shared extends UTIL {
         const x2 = this.computedSizeW(363);
         const y1 = this.computedSizeH(157);
         const y2 = this.computedSizeH(172);
-
         events.click({
             name: 'nextPageBtn',
-            pageName: 'rankPage',
+            pageName: 'groupRank',
             point: [x1, y1, x2, y2],
             cb: () => {
                 // rankCurrentPage = rankCurrentPage + 1;
-                $wx.sendMessage('rank',{ page: rankCurrentPage, common: 1 });
+                $wx.sendMessage('groupRank',{ page: rankCurrentPage, common: 1 , shareTicket: $wx.shareTicket});
                 sharedTexture2d.needsUpdate = true;
             }
         })
@@ -204,6 +206,26 @@ export default class Shared extends UTIL {
             cb: () => {
                 $wx.sendMessage('clear');
                 startPage.setTexture();
+            }
+        })
+    }
+
+    //查看群排行
+    goGroupRank() {
+        const x1 = this.computedSizeW(0);
+        const x2 = this.computedSizeW(100);
+        const y1 = this.computedSizeH(200);
+        const y2 = this.computedSizeH(300);
+        // this.computedSizeW(445), this.computedSizeH(1150), this.computedSizeW(216), this.computedSizeH(80)
+        events.click({
+            name: 'goGroupRank',
+            pageName: 'friendRank',
+            point: [x1, y1, x2, y2],
+            cb: () => {
+                // rankCurrentPage = rankCurrentPage + 1;
+                // $wx.sendMessage('groupRank',{ page: rankCurrentPage, common: 1 , shareTicket: $wx.shareTicket});
+                // sharedTexture2d.needsUpdate = true;
+                console.log(444444444)
             }
         })
     }

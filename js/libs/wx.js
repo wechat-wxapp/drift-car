@@ -144,7 +144,8 @@ export default class WX extends UTIL {
         return new Promise((res, rej) => {
             wx.setUserCloudStorage({
                 KVDataList: [{ key: "score", value: String(score) }],
-                success: () => {
+                success: (e) => {
+                    console.log('score: ', e, score)
                     res();
                 },
                 fail: () => {
