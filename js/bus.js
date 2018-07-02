@@ -1,4 +1,5 @@
 import * as CANNON from './libs/cannon';
+import pageCarport from "./modules/pages/main/carport";
 
 // 常量
 const basicData = {
@@ -44,6 +45,8 @@ const basicData = {
     $bus: '',
     // 全局微信类
     $wx: '',
+    // 全局loadng类
+    $loader: '',
 
     // 加载锁
     loadKey: false,
@@ -94,7 +97,7 @@ const basicData = {
      * */
     eventPoint: {},
     // 当前页面标识(默认为开始页)
-    currentPage: 'startPage',
+    currentPage: '',
 
     // 主页类
     pageClass: '',
@@ -111,6 +114,8 @@ const basicData = {
     gamePage: '',
     // 分数栏对象
     scorePage: '',
+    // 车库对象
+    carportPage: '',
 
     // 微信公开域画布
     openDataContext: '',
@@ -166,7 +171,10 @@ const basicData = {
         qrLamp: 'images/qr-lamp.png',
         qrBtn: 'images/qr-btn.png',
         qrcode: 'images/qrcode.png'
-    }
+    },
+
+    // 微信相关参数
+    wxConfig: {}
 };
 
 // 变量

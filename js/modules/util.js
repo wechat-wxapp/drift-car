@@ -90,6 +90,9 @@ export default class UTIL {
     };
 
     showEndPage() {
+        // 设置分数
+        $wx.setWxScore();
+
         sharedClass.endPage();
         currentPage = 'endPage';
     }
@@ -127,9 +130,6 @@ export default class UTIL {
      * */
     restart() {
         this.clearWorld();
-
-        // 设置分数
-        $wx.setWxScore();
 
         // 重置变量
         $bus.reset();

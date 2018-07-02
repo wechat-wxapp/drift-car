@@ -1,4 +1,4 @@
-import API from "./api";
+import API from './api';
 
 /**
  * 封装异步接口
@@ -20,17 +20,39 @@ const request = (url, opts) => {
 };
 
 export default {
-    getCode: () => {
-        request(API.SAVE_CODE, {
-            data: { code }
-        }).then(e => {
-            const { code, payload: { data } } = e;
-            if (code === 'code') {
-                const { openid, session_key } = data;
+    /**
+     * 异步方法
+     * */
+    request,
 
-                this.openid = openid;
-                this.openid = session_key;
-            }
+    /**
+     * 获取用户openid,session_key
+     * */
+    getAccessToken: (code) => {
+        return request(API.CODE_2_ACCESS_TOKEN, {
+            data: { code }
+        });
+    },
+
+    /**
+     * 获取用户信息
+     * */
+    getUnionId: (data) => {
+        return request(API.GET_UNIONID, {
+            data: { ...data },
+            method: 'POST'
+        });
+    },
+
+    /**
+     * 获取车库
+     * */
+    getunlock: () => {
+        const { openid } = localStorage.getItem('accessToken');
+
+        return request(API.GET_UNLOCK, {
+            method: 'POST',
+            data: { openid }
         });
     }
 }
