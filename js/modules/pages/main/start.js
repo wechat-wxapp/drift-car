@@ -53,14 +53,19 @@ export default class Start extends UTIL {
 
                 scorePage.setTexture();
 
-                $wx.sendMessage('rank',{ page: rankCurrentPage , shareTicket: $wx.shareTicket});
+                // this.restart();
+
+                // $wx.sendMessage('worldRank',{ page: rankCurrentPage , shareTicket: $wx.shareTicket });
+                $wx.sendMessage('groupRank',{ page: rankCurrentPage , shareTicket: $wx.shareTicket });
+                // $wx.sendMessage('friendRank',{ page: rankCurrentPage , shareTicket: $wx.shareTicket});
 
                 sharedTexture2d.needsUpdate = true;
 
                 pageClass.clear2d();
 
                 // 设置页面target
-                currentPage = 'rankPage';
+                currentPage = 'groupRank';
+                // currentPage = 'gamePage';
 
 
             }

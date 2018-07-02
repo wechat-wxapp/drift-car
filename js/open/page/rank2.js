@@ -38,7 +38,7 @@ export default class Rank extends Init {
         if (this.rankCurrentPage <= 1) {
           this.rankCurrentPage = 1;
         } else {
-          this.rankCurrentPage --;
+          this.rankCurrentPage--;
         }
       }
       break;
@@ -125,7 +125,7 @@ export default class Rank extends Init {
           // this.cvs.fill()
           that.cvs.drawImage(avatar, that.computedSizeW(190), that.computedSizeH(360 + (i - (rankCurrentPage - 1) * counts) * 97), that.computedSizeW(60), that.computedSizeW(60))
         }
-        console.log('3123231',i)
+
 
       // this.cvs.arc(this.computedSizeW(234), this.computedSizeH(394 + i * 97), this.computedSizeW(31), 0, 2 * Math.PI);
 

@@ -50,8 +50,9 @@ export default class WX {
     setWxScore() {
         return new Promise((res, rej) => {
             wx.setUserCloudStorage({
-                KVDataList: [{ key: "score", value: String(score) }],
-                success: () => {
+                KVDataList: [{ key: "score", value: String(56) }],
+                success: (e) => {
+                    // console.log('score: ', e, score)
                     res();
                 },
                 fail: () => {

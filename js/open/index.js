@@ -19,7 +19,9 @@ import Init from './page/init';
 
 const endPage = new EndPage();
 const reseurPage = new ReseurPage();
-const rankPage = new RankPage();
+const friendRankPage = new RankPage();
+const groupRankPage = new RankPage();
+const worldRankPage = new RankPage();
 const carportPage = new CarportPage();
 const wechatMPPage = new WechatMPPage();
 const qrPage = new QrPage();
@@ -36,9 +38,20 @@ wx.onMessage(({ command, data }) => {
         case 'reseur':
             reseurPage.setTexture();
             break;
-        case 'rank':
-            rankPage.initGroupRankData(data.shareTicket);
-            rankPage.setTexture(data);
+        case 'friendRank':
+            friendRankPage.clearCvs();
+            friendRankPage.initFriendRankData()
+                .then(() => friendRankPage.setTexture(data, 1))
+            break;
+        case 'worldRank':
+            worldRankPage.clearCvs();
+            worldRankPage.setTexture(data);
+            break;
+        case 'groupRank':
+            groupRankPage.clearCvs();
+            groupRankPage.initGroupRankData(data.shareTicket)
+                .then(() => groupRankPage.setTexture(data, 2));
+                // groupRankPage.setTexture(data, 2)
             break;
         case 'carport':
             carportPage.setTexture(data);

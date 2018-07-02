@@ -75,11 +75,11 @@ export default class Shared extends UTIL {
 
         events.click({
             name: 'prePageBtn',
-            pageName: 'rankPage',
+            pageName: 'groupRank',
             point: [x1, y1, x2, y2],
             cb: () => {
                 // rankCurrentPage = rankCurrentPage <= 1 ? 1 : rankCurrentPage--;
-                $wx.sendMessage('rank',{ page: rankCurrentPage, common: 0 });
+                $wx.sendMessage('groupRank',{ page: rankCurrentPage, common: 0 , shareTicket: $wx.shareTicket});
                 sharedTexture2d.needsUpdate = true;
             }
         })
@@ -91,14 +91,13 @@ export default class Shared extends UTIL {
         const x2 = this.computedSizeW(363);
         const y1 = this.computedSizeH(157);
         const y2 = this.computedSizeH(172);
-
         events.click({
             name: 'nextPageBtn',
-            pageName: 'rankPage',
+            pageName: 'groupRank',
             point: [x1, y1, x2, y2],
             cb: () => {
                 // rankCurrentPage = rankCurrentPage + 1;
-                $wx.sendMessage('rank',{ page: rankCurrentPage, common: 1 });
+                $wx.sendMessage('groupRank',{ page: rankCurrentPage, common: 1 , shareTicket: $wx.shareTicket});
                 sharedTexture2d.needsUpdate = true;
             }
         })

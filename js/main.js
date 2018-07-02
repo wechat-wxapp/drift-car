@@ -272,7 +272,7 @@ export default class Main extends UTIL {
         this.removeObj();
 
         // texture2d.needsUpdate = true;
-        // sharedTexture2d.needsUpdate = true;
+        sharedTexture2d.needsUpdate = true;
 
         requestAnimationFrame(this.loop.bind(this));
     }
