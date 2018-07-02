@@ -24,7 +24,7 @@ export default class wechatMP extends Init {
 
     const leftLamp = wx.createImage();
     leftLamp.src = 'images/qr-lamp.png';
-    this.cvs.drawImage(leftLamp, 0, 0, leftLamp.width, leftLamp.height, this.computedSizeW(20), this.computedSizeH(110), this.computedSizeW(250), this.computedSizeH(344));
+    this.cvs.drawImage(leftLamp, 0, 0, leftLamp.width, leftLamp.height, this.computedSizeW(0), this.computedSizeH(110), this.computedSizeW(250), this.computedSizeH(344));
 
     const backIcon1 = wx.createImage();
     backIcon1.src = `images/back-icon.png`;
@@ -35,7 +35,7 @@ export default class wechatMP extends Init {
     this.cvs.translate(this.winWidth, 0)
     this.cvs.scale(-1,1)
     righttLamp.src = 'images/qr-lamp.png';
-    this.cvs.drawImage(righttLamp, 0, 0, righttLamp.width, righttLamp.height, this.computedSizeW(20), this.computedSizeH(110), this.computedSizeW(250), this.computedSizeH(344));
+    this.cvs.drawImage(righttLamp, 0, 0, righttLamp.width, righttLamp.height, this.computedSizeW(0), this.computedSizeH(110), this.computedSizeW(250), this.computedSizeH(344));
     this.cvs.restore()
   }
   

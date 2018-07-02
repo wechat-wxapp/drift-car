@@ -1,4 +1,5 @@
 import * as CANNON from './libs/cannon';
+import pageCarport from "./modules/pages/main/carport";
 
 // 常量
 const basicData = {
@@ -44,6 +45,8 @@ const basicData = {
     $bus: '',
     // 全局微信类
     $wx: '',
+    // 全局loadng类
+    $loader: '',
 
     // 加载锁
     loadKey: false,
@@ -94,7 +97,7 @@ const basicData = {
      * */
     eventPoint: {},
     // 当前页面标识(默认为开始页)
-    currentPage: 'startPage',
+    currentPage: '',
 
     // 主页类
     pageClass: '',
@@ -111,9 +114,12 @@ const basicData = {
     gamePage: '',
     // 分数栏对象
     scorePage: '',
+    // 车库对象
+    carportPage: '',
 
     // 微信公开域画布
     openDataContext: '',
+    sharedCanvas: '',
     sharedTexture2d: '',
     sharedCanvasSprite: '',
     // 微信特有离屏画布
@@ -165,8 +171,10 @@ const basicData = {
         qrLamp: 'images/qr-lamp.png',
         qrBtn: 'images/qr-btn.png',
         qrcode: 'images/qrcode.png'
+    },
 
-    }
+    // 微信相关参数
+    wxConfig: {}
 };
 
 // 变量
@@ -251,7 +259,10 @@ export default class Bus{
         carBodys.position.set(25, 15, -10);
         carBodys.quaternion.setFromAxisAngle(new CANNON.Vec3(0, 1, 0), 0);
 
+        // 普通画布
         offCanvasSprite.position.set(-11.75, 78.44, 20);
+        // 分数
+        scoreCanvasSprite.position.set(-10, 82.8, 9);
         // sharedCanvasSprite.position.set(-11.75, 78.44, 20);
 
         camera.position.set(-16.738086885462103, 90.533387653514225, 28.513221776822927);

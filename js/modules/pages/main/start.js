@@ -1,12 +1,11 @@
-import pageGame from './game';
-// import pageS from './s';
-
 import UTIL from '../../util';
 
 /**
  * 开始页函数
  */
 export default class Start extends UTIL {
+    isBindStartBtn = false;
+
     constructor() {
         super();
 
@@ -30,7 +29,8 @@ export default class Start extends UTIL {
      * 绑定事件, 创建开始页
      * */
     buildPage() {
-        this.bindStartBtn();
+        // 如果登录则绑定普通按钮点击事件
+        wxConfig.isLogin === true && this.bindStartBtn();
         this.bindMusicBtn();
     }
 
@@ -38,6 +38,9 @@ export default class Start extends UTIL {
      * 绑定开始按钮
      * */
     bindStartBtn() {
+        // 防止多次绑定
+        if (this.isBindStartBtn) return false;
+
         const x1 = this.computedSizeW(130);
         const x2 = this.computedSizeW(295);
         const y1 = this.computedSizeH(245);
@@ -49,27 +52,30 @@ export default class Start extends UTIL {
             point: [x1, y1, x2, y2],
             cb: () => {
                 // 实例化游戏页面
-                gamePage = new pageGame();
+                // gamePage = new pageGame();
 
-                scorePage.setTexture();
+                // scorePage.setTexture();
 
-                // this.restart();
+                // // this.restart();
 
-                // $wx.sendMessage('worldRank',{ page: rankCurrentPage , shareTicket: $wx.shareTicket });
-                $wx.sendMessage('groupRank',{ page: rankCurrentPage , shareTicket: $wx.shareTicket });
-                // $wx.sendMessage('friendRank',{ page: rankCurrentPage , shareTicket: $wx.shareTicket});
+                // // $wx.sendMessage('worldRank',{ page: rankCurrentPage , shareTicket: $wx.shareTicket });
+                // $wx.sendMessage('groupRank',{ page: rankCurrentPage , shareTicket: $wx.shareTicket });
+                // // $wx.sendMessage('friendRank',{ page: rankCurrentPage , shareTicket: $wx.shareTicket});
 
-                sharedTexture2d.needsUpdate = true;
+                // sharedTexture2d.needsUpdate = true;
 
-                pageClass.clear2d();
+                // pageClass.clear2d();
 
-                // 设置页面target
-                currentPage = 'groupRank';
-                // currentPage = 'gamePage';
+                // // 设置页面target
+                // currentPage = 'groupRank';
+                // // currentPage = 'gamePage';
 
 
+                gamePage.startGame();
             }
         });
+
+        this.isBindStartBtn = true;
     }
 
     /**
@@ -95,13 +101,23 @@ export default class Start extends UTIL {
      * 开始页
      */
     setTexture() {
+        currentPage = 'startPage';
+
         offCanvas2d.clearRect(0, 0, winWidth, winHeight);
 
         offCanvas2d.fillStyle = "#647fdc";
         offCanvas2d.fillRect(0, 0, winWidth, winHeight);
 
         offCanvas2d.drawImage(this.bg, 0, 0, this.bg.width, this.bg.height, 0, 0, winWidth, winHeight);
-        offCanvas2d.drawImage(this.startBtn, 0, 0, this.startBtn.width, this.startBtn.height, winWidth / 2 - this.computedSizeW(this.startBtn.width / 4), this.computedSizeH(250), this.computedSizeW(149), this.computedSizeW(60));
+
+        // 如果已经登录
+        if (wxConfig.isLogin) {
+            offCanvas2d.drawImage(this.startBtn, 0, 0, this.startBtn.width, this.startBtn.height, winWidth / 2 - this.computedSizeW(this.startBtn.width / 4), this.computedSizeH(250), this.computedSizeW(149), this.computedSizeW(60));
+            this.bindStartBtn();
+        } else {
+            wxConfig.startBtn.show();
+        }
+
         offCanvas2d.drawImage(this.leaderboard, 0, 0, this.leaderboard.width, this.leaderboard.height, winWidth / 2 - this.computedSizeW(this.leaderboard.width / 4), this.computedSizeH(320), this.computedSizeW(this.leaderboard.width / 2), this.computedSizeW(this.leaderboard.height / 2));
         offCanvas2d.drawImage(this.checkLeaderboard, 0, 0, this.checkLeaderboard.width, this.checkLeaderboard.height, winWidth / 2 - this.computedSizeW(this.checkLeaderboard.width / 4), this.computedSizeH(370), this.computedSizeW(this.checkLeaderboard.width / 2), this.computedSizeW(this.checkLeaderboard.height / 2));
 

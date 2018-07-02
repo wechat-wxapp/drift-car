@@ -9,6 +9,11 @@ export default class Shared extends UTIL {
         z: 0
     };
 
+    size = {
+        width: winWidth,
+        height: winHeight
+    };
+
     constructor() {
         super();
         this.page();
@@ -21,6 +26,7 @@ export default class Shared extends UTIL {
         this.bindGoHome();
         this.bindPrePage();
         this.bindNextPage();
+        this.goGroupRank();
     }
 
     bindReStart() {
@@ -55,7 +61,7 @@ export default class Shared extends UTIL {
             pageName: 'endPage',
             point: [x1, y1, x2, y2],
             cb: () => {
-                scoreClass.clear2d();
+                this.clear2d();
 
                 offCanvasSprite.position.x += speedRecord.x;
                 offCanvasSprite.position.z -= speedRecord.z;
@@ -79,6 +85,7 @@ export default class Shared extends UTIL {
             point: [x1, y1, x2, y2],
             cb: () => {
                 // rankCurrentPage = rankCurrentPage <= 1 ? 1 : rankCurrentPage--;
+                console.log(1123414)
                 $wx.sendMessage('groupRank',{ page: rankCurrentPage, common: 0 , shareTicket: $wx.shareTicket});
                 sharedTexture2d.needsUpdate = true;
             }
@@ -103,20 +110,40 @@ export default class Shared extends UTIL {
         })
     }
 
+    //查看群排行
+    goGroupRank() {
+        const x1 = this.computedSizeW(0);
+        const x2 = this.computedSizeW(100);
+        const y1 = this.computedSizeH(200);
+        const y2 = this.computedSizeH(300);
+        // this.computedSizeW(445), this.computedSizeH(1150), this.computedSizeW(216), this.computedSizeH(80)
+        events.click({
+            name: 'goGroupRank',
+            pageName: 'friendRank',
+            point: [x1, y1, x2, y2],
+            cb: () => {
+                // rankCurrentPage = rankCurrentPage + 1;
+                // $wx.sendMessage('groupRank',{ page: rankCurrentPage, common: 1 , shareTicket: $wx.shareTicket});
+                // sharedTexture2d.needsUpdate = true;
+                console.log(444444444)
+            }
+        })
+    }
+    
     /**
      * 创建2d画布
      */
     page() {
-        const sharedCanvas = openDataContext.canvas;
+        this.sharedCanvas = openDataContext.canvas;
 
-        sharedCanvas.height = winHeight * window.devicePixelRatio;
-        sharedCanvas.width = winWidth * window.devicePixelRatio;
+        this.sharedCanvas.height = winHeight * window.devicePixelRatio;
+        this.sharedCanvas.width = winWidth * window.devicePixelRatio;
 
-        const sharedCanvas2d = sharedCanvas.getContext("2d");
+        const sharedCanvas2d = this.sharedCanvas.getContext("2d");
 
         sharedCanvas2d.scale(window.devicePixelRatio, window.devicePixelRatio);
 
-        sharedTexture2d = new THREE.Texture(sharedCanvas);
+        sharedTexture2d = new THREE.Texture(this.sharedCanvas);
         sharedTexture2d.minFilter = THREE.LinearFilter;
 
         const spriteMaterial = new THREE.SpriteMaterial({
@@ -143,6 +170,14 @@ export default class Shared extends UTIL {
 
     clear2d() {
         $wx.sendMessage('clear');
+        sharedTexture2d.needsUpdate = true;
+    }
+
+    carListPage() {
+        $wx.sendMessage('carport');
+
+        this.setPosition();
+
         sharedTexture2d.needsUpdate = true;
     }
 

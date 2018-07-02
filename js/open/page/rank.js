@@ -24,9 +24,8 @@ export default class Rank extends Init {
     // 数据总数
   
     let total = this.rankData.length;
-    console.log('33333333',this.rankData)
     // 每页展示数
-    let counts = 3;
+    let counts = 6;
     // 总页数
     let totalPages = Math.ceil(total / counts);
     // 当前页数
@@ -104,11 +103,10 @@ export default class Rank extends Init {
     this.cvs.stroke();
 
     // 排名
-    this.cvs.beginPath();
+    // this.cvs.beginPath();
     this.cvs.fillStyle = this.themeBule;
-
     const that = this;
-    if(total !== 0)
+    if(total !== 0){
 
       for(let i = (rankCurrentPage - 1) * counts; i < current_count + (rankCurrentPage - 1) * counts; i++) {
         if(i == 3) that.cvs.fillStyle = '#a8a8a8';
@@ -125,12 +123,11 @@ export default class Rank extends Init {
           // this.cvs.fill()
           that.cvs.drawImage(avatar, that.computedSizeW(190), that.computedSizeH(360 + (i - (rankCurrentPage - 1) * counts) * 97), that.computedSizeW(60), that.computedSizeW(60))
         }
-        console.log('3123231',i)
-
       // this.cvs.arc(this.computedSizeW(234), this.computedSizeH(394 + i * 97), this.computedSizeW(31), 0, 2 * Math.PI);
 
         // this.cvs.fill();
       }
+    }
 
     // 名字
     if(total !== 0)
@@ -145,11 +142,12 @@ export default class Rank extends Init {
     // 分数
     this.cvs.font = `bold`;
     this.cvs.fillStyle = '#000';
-    if(total !== 0)
+    if(total !== 0){
       for(let i = (rankCurrentPage - 1) * counts; i < current_count + (rankCurrentPage - 1) * counts; i++){
         if(this.rankData[i].KVDataList.length > 0)
           this.cvs.fillText(this.rankData[i].KVDataList[0].value, this.computedSizeW(538), this.computedSizeH(402 + (i - (rankCurrentPage - 1) * counts) * 96));
       }
+    }
 
     //blue part 个人成绩
     this.cvs.fillStyle = this.themeBule;

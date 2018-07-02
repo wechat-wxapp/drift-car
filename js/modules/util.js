@@ -90,7 +90,8 @@ export default class UTIL {
     };
 
     showEndPage() {
-        // this.clear2d();
+        // 设置分数
+        $wx.setWxScore();
 
         sharedClass.endPage();
         currentPage = 'endPage';
@@ -130,9 +131,6 @@ export default class UTIL {
     restart() {
         this.clearWorld();
 
-        // 设置分数
-        $wx.setWxScore();
-
         // 重置变量
         $bus.reset();
 
@@ -141,6 +139,9 @@ export default class UTIL {
 
         // 失败重新开始
         this.end();
+
+        // 重置页面分数
+        scorePage.setTexture();
 
         // 重置背景音乐
         this.readyMusic();
@@ -194,8 +195,8 @@ export default class UTIL {
     updateScore() {
         setTimeout(() => {
             if (!startKey) return false;
-
             score++;
+
             scorePage.setTexture();
 
             this.updateScore();

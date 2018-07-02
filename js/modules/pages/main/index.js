@@ -1,7 +1,10 @@
 import UTIL from "../../util";
 
-import pageLoading from './loading';
 import Shared from '../shared/index';
+
+import pageLoading from './loading';
+import pageGame from "./game";
+import pageCarport from "./carport";
 
 /**
  * 2d canvas函数
@@ -12,7 +15,15 @@ export default class Page extends UTIL {
         this.page();
 
         sharedClass = new Shared();
+
+        // 实例化加载页
         loadingPage = new pageLoading();
+
+        // 实例化游戏页面
+        gamePage = new pageGame();
+
+        // 实例化车库
+        carportPage = new pageCarport();
     }
 
     /**

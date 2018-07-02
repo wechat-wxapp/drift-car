@@ -1,9 +1,7 @@
 /**
  * 初始化函数
  */
-
-
-export default class Index {
+export default class Init {
     constructor() {
         this.winWidth = wx.getSystemInfoSync().screenWidth;
         this.winHeight = wx.getSystemInfoSync().screenHeight;
@@ -52,7 +50,7 @@ export default class Index {
         this.cvs.clearRect(0, 0, this.winWidth, this.winHeight);
         console.log('init.js')
         if(noTransBg) return;
-        this.cvs.fillStyle = "rgba(0, 0, 0, .8)";
+        this.cvs.fillStyle = 'rgba(0, 0, 0, .8)';
         this.cvs.fillRect(0, 0, this.winWidth, this.winHeight);
     }
 
@@ -75,7 +73,7 @@ export default class Index {
         } else {
             cxt.strokeStyle = color;
             cxt.lineWidth = lineWidth;
-            cxt.stroke()
+            cxt.stroke();
         }
         cxt.closePath();
     }
@@ -89,8 +87,8 @@ export default class Index {
                 success: res => {
                     let tempRankData = res.data
                     // 排序
+                    that.rankData = that.sort(tempRankData, 'asc')
                     console.log(`好友数据格式`,that.rankData)
-                    that.rankData = that.sort(tempRankData, 'des')
                     // 请求个人数据
                     that.initSelf().then(() => {
                         // 保存个人数据
@@ -139,6 +137,7 @@ export default class Index {
         const openid = "o4eqt4i61Kdq9nr4cHHwK8_wT3xE";
         //获取世界排行榜
         const _wRank = (openid) => {
+            // const openid = openid
             console.log('request1111111111')
             return new Promise((resovle) => {
                 wx.request({
@@ -245,5 +244,8 @@ export default class Index {
         console.log('没有分数记录...')
     }
 
+    deepCopy(data) {
+        return JSON.parse(JSON.stringify(data));
+    }
 }
 
