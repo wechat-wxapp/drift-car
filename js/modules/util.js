@@ -84,17 +84,19 @@ export default class UTIL {
         // this.restart();
 
         // 显示结束页
-        this.showEndPage();
+        setTimeout(() => {
+            this.showReseurPage();
+        }, 1000);
 
         console.log('---结束游戏---');
     };
 
-    showEndPage() {
-        // 设置分数
-        $wx.setWxScore();
-
-        sharedClass.endPage();
-        currentPage = 'endPage';
+    /**
+     * 显示结束页面
+     * */
+    showReseurPage() {
+        sharedClass.reseurPage();
+        currentPage = 'reseurPage';
     }
 
     /**
@@ -128,17 +130,20 @@ export default class UTIL {
     /**
      * 重置游戏
      * */
-    restart() {
+    restart(isReseur) {
         this.clearWorld();
 
         // 重置变量
         $bus.reset();
 
-        // 复活
-        // this.revival();
-
-        // 失败重新开始
-        this.end();
+        // 判断是否复活
+        if (isReseur) {
+            // 复活
+            this.revival();
+        } else {
+            // 失败重新开始
+            this.end();
+        }
 
         // 重置页面分数
         scorePage.setTexture();

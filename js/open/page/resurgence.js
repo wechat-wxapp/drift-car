@@ -11,8 +11,10 @@ export default class Resurgence extends Init {
   /**
    * 更新页面内容
    * */
-  setTexture(data) {
+  setTexture({ score }) {
     this.clearCvs();
+
+    console.log('asdqwe');
 
     this.cvs.fillStyle = "#fff";
     this.cvs.font = `bold ${this.computedSizeW(26)}px Arial`;
@@ -20,7 +22,7 @@ export default class Resurgence extends Init {
     this.cvs.fillText('本次得分', this.winWidth / 2, this.computedSizeH(216));
     
     this.cvs.font = `bold ${this.computedSizeW(102)}px Arial`;
-    this.cvs.fillText('160', this.winWidth / 2, this.computedSizeH(332));
+    this.cvs.fillText(score, this.winWidth / 2, this.computedSizeH(332));
     
     this.cvs.font = `${this.computedSizeW(26)}px Arial`;
     this.cvs.textAlign = "right";
@@ -36,7 +38,7 @@ export default class Resurgence extends Init {
     this.cvs.fillStyle = "#fff";
     this.cvs.font = `bold ${this.computedSizeW(36)}px Arial`;
     this.cvs.textAlign = "center";
-    this.cvs.fillText('看视频复活', this.winWidth / 2, this.computedSizeH(716));
+    this.cvs.fillText('免 费 复 活', this.winWidth / 2, this.computedSizeH(716));
     
     this.cvs.font = `${this.computedSizeW(26)}px Arial`;
     this.cvs.fillText(`点击跳过`, this.winWidth / 2, this.computedSizeH(864));
