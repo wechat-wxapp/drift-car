@@ -152,6 +152,14 @@ export default class Shared extends UTIL {
         sharedTexture2d.needsUpdate = true;
     }
 
+    carListPage() {
+        $wx.sendMessage('carport');
+
+        this.setPosition();
+
+        sharedTexture2d.needsUpdate = true;
+    }
+
     setPosition() {
         sharedCanvasSprite.position.x += speedRecord.x - this.currentSpeedRecord.x;
         sharedCanvasSprite.position.z -= speedRecord.z - this.currentSpeedRecord.z;

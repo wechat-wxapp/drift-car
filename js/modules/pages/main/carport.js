@@ -1,9 +1,9 @@
-import Init from './init';
+import UTIL from "../../util";
 
 /**
- * 开始页函数
+ * 车库页函数
  */
-export default class Carport extends Init {
+export default class Carport extends UTIL {
     constructor() {
         super();
     }
@@ -12,7 +12,7 @@ export default class Carport extends Init {
      * 更新页面内容
      * */
     setTexture(data) {
-        this.clearCvs();
+        offCanvas2d.clearRect(0, 0, winWidth, winHeight);
 
         const carportPane = wx.createImage();
         carportPane.src = 'images/carport-pane.png';
@@ -153,28 +153,6 @@ export default class Carport extends Init {
                 this.cvs.drawImage(unlockCn, 0, 0, unlockCn.width, unlockCn.height, this.computedSizeW(227), this.computedSizeH(518), this.computedSizeW(79), this.computedSizeH(43));
             }
         }
-
-
-        // this.cvs.fillStyle = "#fff";
-        // this.cvs.font = `bold ${this.computedSizeW(36)}px Arial`;
-        // this.cvs.textAlign = "center";
-        // this.cvs.fillText('看视频复活', this.winWidth / 2, this.computedSizeH(716));
-
-        // this.cvs.font = `${this.computedSizeW(26)}px Arial`;
-        // this.cvs.fillText(`点击跳过`, this.winWidth / 2, this.computedSizeH(864));
-        // this.cvs.fillRect(this.computedSizeW(316), this.computedSizeH(880), this.computedSizeW(116), 2);
-
-        // //最上面那个半透明圆角框
-        // this.drawRoundRect(this.cvs, this.winWidth / 2 - this.computedSizeW(160) / 2, this.computedSizeH(182), this.computedSizeW(160), this.computedSizeH(50), this.computedSizeW(25) ,'rgba(255,255,255,0.3)');
-        // this.cvs.beginPath();
-        // this.cvs.strokeStyle = 'rgba(255, 255, 255, 1)';
-        // this.cvs.moveTo(this.computedSizeW(312), this.computedSizeH(880));
-        // this.cvs.lineTo(this.computedSizeW(432), this.computedSizeH(880));
-        // this.cvs.stroke();
-        // // this.cvs.fillStyle = "#000";
-        // // this.cvs.fillRect(0,0,180,140);
-        // // this.cvs.strokeStyle = 'rgba(255,255,255,0.6)'
-        // // this.cvs.stroke();
     }
 
 }

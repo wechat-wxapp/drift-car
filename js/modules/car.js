@@ -27,8 +27,8 @@ export default class Car extends UTIL {
      * 创建车模型
      */
     createCar() {
-        const material = "https://static.cdn.24haowan.com/24haowan/test/js/car1.png";
-        const model = 'https://static.cdn.24haowan.com/24haowan/test/js/car1.obj';
+        const material = "https://static.cdn.24haowan.com/24haowan/test/js/newcar1.png";
+        const model = 'https://static.cdn.24haowan.com/24haowan/test/js/newcar1.obj';
         // const material = "https://static.cdn.24haowan.com/24haowan/test/js/car2.png";
         // const model = 'https://static.cdn.24haowan.com/24haowan/test/js/car4.obj';
 

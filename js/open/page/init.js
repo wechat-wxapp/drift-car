@@ -1,7 +1,7 @@
 /**
  * 初始化函数
  */
-export default class Index {
+export default class Init {
     constructor() {
         this.winWidth = wx.getSystemInfoSync().screenWidth;
         this.winHeight = wx.getSystemInfoSync().screenHeight;
@@ -125,7 +125,7 @@ export default class Index {
     initWorldpRankData() {
         //获取世界排行榜
         const _wRank = (openid) => {
-            const openid = openid
+            // const openid = openid
             console.log('request1111111111')
             wx.request({
                 method: 'POST',

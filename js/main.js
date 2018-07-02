@@ -10,6 +10,7 @@ import GroundBody from './modules/ground';
 import bindEvent from './modules/bind-event';
 
 import WX from './libs/wx';
+import LOADER from './libs/loader';
 import UTIL from "./modules/util";
 
 // 2d画布
@@ -42,24 +43,12 @@ export default class Main extends UTIL {
 
         // 实例化微信类
         $wx = new WX();
+        // 实例化loading类
+        $loader = new LOADER();
         // 无法加载
         // $wx.getFontFamily();
 
         pageClass = new page();
-        // new Score();
-        // new Shared();
-        // // 创建loading页对象
-        // loadingPage = new pageLoading();
-
-        wx.login({
-            success: function(res) {
-                if (res.code) {
-                    console.log(res.code);
-                } else {
-                    console.log('登录失败！' + res.errMsg)
-                }
-            }
-        });
 
         // 渲染
         this.loop();
@@ -268,7 +257,9 @@ export default class Main extends UTIL {
         }
     }
 
-    // 实现帧循环
+    /**
+     * 实现帧循环
+     * */
     loop() {
         // 更新物理世界
         loadKey && this.updateWorld();
@@ -283,7 +274,7 @@ export default class Main extends UTIL {
 
         // beyondTexture2d.needsUpdate = true;
         // texture2d.needsUpdate = true;
-        // sharedTexture2d.needsUpdate = true;
+        sharedTexture2d.needsUpdate = true;
 
         requestAnimationFrame(this.loop.bind(this));
     }

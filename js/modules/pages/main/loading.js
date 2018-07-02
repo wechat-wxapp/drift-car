@@ -39,7 +39,9 @@ export default class Loader {
         this.loading(loader);
     }
 
-    initCanvas2d() {
+    loaded() {
+        loadKey = true;
+
         // 初始化其他2d画布
         scoreClass = new Score();
 
@@ -82,8 +84,7 @@ export default class Loader {
             if (loader.length > 0) {
                 this.loading(loader);
             } else {
-                loadKey = true;
-                this.initCanvas2d();
+                this.loaded();
             }
         })
     }
