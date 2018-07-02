@@ -118,6 +118,7 @@ const basicData = {
     carportPage: '',
 
     // 微信公开域画布
+    isSharedLoop: false,
     openDataContext: '',
     sharedCanvas: '',
     sharedTexture2d: '',
@@ -174,14 +175,14 @@ const basicData = {
     },
 
     // 微信相关参数
-    wxConfig: {}
+    wxConfig: {},
+
+    // 排行榜当前页数
+    rankCurrentPage: 1
 };
 
 // 变量
 const varData = {
-    // 排行榜当前页数
-    rankCurrentPage: 1,
-    
     // 模型变量
     roadArr: [],
     roadBodys: [],
@@ -212,9 +213,7 @@ const varData = {
     // 最后的道路key
     lastBoxType: 'r6',
 
-    /**
-     * 碰撞后定位2d画布
-     * */
+    // 碰撞后定位2d画布
     speedRecord: {
         x: 0,
         z: 0
