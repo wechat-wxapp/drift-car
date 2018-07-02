@@ -60,26 +60,6 @@ export default class Start extends UTIL {
             pageName: 'startPage',
             point: [x1, y1, x2, y2],
             cb: () => {
-                // 实例化游戏页面
-                // gamePage = new pageGame();
-
-                // scorePage.setTexture();
-
-                // // this.restart();
-
-                // // $wx.sendMessage('worldRank',{ page: rankCurrentPage , shareTicket: $wx.shareTicket });
-                // $wx.sendMessage('groupRank',{ page: rankCurrentPage , shareTicket: $wx.shareTicket });
-                // // $wx.sendMessage('friendRank',{ page: rankCurrentPage , shareTicket: $wx.shareTicket});
-
-                // sharedTexture2d.needsUpdate = true;
-
-                // pageClass.clear2d();
-
-                // // 设置页面target
-                // currentPage = 'groupRank';
-                // // currentPage = 'gamePage';
-
-
                 gamePage.startGame();
             }
         });

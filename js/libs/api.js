@@ -1,9 +1,9 @@
-const API_HOST = 'test';
+const API_HOST = 'prod';
 let host;
 
 switch (API_HOST) {
     case 'prod':
-        host = 'https://192.168.6.49:3003';
+        host = 'http://custom.c56e37f627a5a42e89b31387f12f59fab.cn-shenzhen.alicontainer.com';
         break;
     case 'test':
         host = 'http://192.168.9.95:3000';

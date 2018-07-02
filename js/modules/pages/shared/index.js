@@ -285,7 +285,7 @@ export default class Shared extends UTIL {
      * 排行榜
      * */
     rankPage() {
-        this.showPage('rank');
+        this.showPage('rank', {}, true);
     }
 
     /**
@@ -306,10 +306,12 @@ export default class Shared extends UTIL {
      * 群排行榜
      * */
     groupRankPage() {
-        this.showPage('rank');
+        this.showPage('rank', {}, true);
     }
 
     showPage(command, data, clear) {
+        wxConfig.startBtn.hide();
+
         $wx.sendMessage(command, data);
 
         clear && pageClass.clear2d();

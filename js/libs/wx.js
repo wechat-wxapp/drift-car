@@ -26,8 +26,9 @@ export default class WX extends UTIL {
 
         this.shareTicket = 'noStareTicket';
         wx.onShow(res => {
-            this.shareTicket = res.shareTicket;
-            console.log('shareTicket: ', res, this.shareTicket);
+            if (res.shareTicket) {
+                this.shareTicket = res.shareTicket;
+            }
         });
 
         openDataContext.postMessage({

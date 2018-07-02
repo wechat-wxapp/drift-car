@@ -22,31 +22,10 @@ export default class Game extends UTIL {
         pageClass.clear2d();
 
         // 开始游戏
-        // this.restart();
+        this.restart();
 
         // 设置页面target
-        // currentPage = 'gamePage';
-
-        // sharedClass.carListPage();
-        // pageClass.clear2d();
-//  gamePage = new pageGame();
-
-//                 scorePage.setTexture();
-
-//                 // this.restart();
-
-//                 // $wx.sendMessage('worldRank',{ page: rankCurrentPage , shareTicket: $wx.shareTicket });
-//                 $wx.sendMessage('groupRank',{ page: rankCurrentPage , shareTicket: $wx.shareTicket });
-                $wx.sendMessage('friendRank',{ page: rankCurrentPage , shareTicket: $wx.shareTicket});
-
-//                 sharedTexture2d.needsUpdate = true;
-
-//                 pageClass.clear2d();
-
-//                 // 设置页面target
-                currentPage = 'friendRank';
-//                 // currentPage = 'gamePage';
-
+        currentPage = 'gamePage';
     }
 
     /**
