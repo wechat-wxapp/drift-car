@@ -111,8 +111,6 @@ export default class Rank extends Init {
     this.cvs.beginPath();
     this.cvs.fillStyle = this.themeBule;
 
-
-
     for(let i = (rankCurrentPage - 1) * counts; i < current_count + (rankCurrentPage - 1) * counts; i++) {
       if(i == 3) this.cvs.fillStyle = '#a8a8a8';
       // 排名

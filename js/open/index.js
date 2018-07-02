@@ -28,10 +28,7 @@ const init = new Init();
 wx.onMessage(({ command, data }) => {
     switch (command) {
         case 'end':
-            // endPage.setTexture();
-
-            console.log('data', data)
-            rankPage.setTexture(data);
+            endPage.setTexture();
             break;
         case 'reseur':
             reseurPage.setTexture();
