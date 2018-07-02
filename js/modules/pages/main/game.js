@@ -36,7 +36,7 @@ export default class Game extends UTIL {
 //                 // this.restart();
 
 //                 // $wx.sendMessage('worldRank',{ page: rankCurrentPage , shareTicket: $wx.shareTicket });
-//                 $wx.sendMessage('groupRank',{ page: rankCurrentPage , shareTicket: $wx.shareTicket });
+                // $wx.sendMessage('groupRank',{ page: rankCurrentPage , shareTicket: $wx.shareTicket });
                 $wx.sendMessage('friendRank',{ page: rankCurrentPage , shareTicket: $wx.shareTicket});
 
 //                 sharedTexture2d.needsUpdate = true;

@@ -118,6 +118,8 @@ export default class WX extends UTIL {
                     openid,
                     session_key
                 }
+            } else {
+                $loader.hide();
             }
         })
         .then(e => {

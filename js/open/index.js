@@ -36,18 +36,20 @@ wx.onMessage(({ command, data = {} }) => {
             reseurPage.setTexture();
             break;
         case 'friendRank':
-            friendRankPage.clearCvs();
+            friendRankPage.setTexture(1)
             friendRankPage.initFriendRankData()
-                .then(() => friendRankPage.setTexture(data, 1))
+                .then(() => {
+                    friendRankPage.showData(data)
+                })
             break;
         case 'worldRank':
             worldRankPage.clearCvs();
             worldRankPage.setTexture(data);
             break;
         case 'groupRank':
-            groupRankPage.clearCvs();
+            groupRankPage.setTexture(2)
             groupRankPage.initGroupRankData(data.shareTicket)
-                .then(() => groupRankPage.setTexture(data, 2));
+                .then(() => groupRankPage.showData(data));
                 // groupRankPage.setTexture(data, 2)
             break;
         case 'carport':
