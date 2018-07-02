@@ -64,7 +64,7 @@ export default class Rank extends Init {
     this.cvs.fillStyle = "#e7e7e7";
     this.cvs.fillRect(this.winWidth / 2 - this.computedSizeW(582) / 2, this.computedSizeH(272), this.computedSizeW(582), this.computedSizeH(50));
     this.cvs.fillStyle = "#808080";
-    this.cvs.font = `${this.computedSizeW(20)}px xszt`;
+    this.cvs.font = `${this.computedSizeW(20)}px Arial`;
     this.cvs.textAlign = "left";
     this.cvs.fillText('排行榜：每周一凌晨更新', this.computedSizeW(130), this.computedSizeH(306));
 
@@ -110,8 +110,6 @@ export default class Rank extends Init {
     // 排名
     this.cvs.beginPath();
     this.cvs.fillStyle = this.themeBule;
-
-
 
     for(let i = (rankCurrentPage - 1) * counts; i < current_count + (rankCurrentPage - 1) * counts; i++) {
       if(i == 3) this.cvs.fillStyle = '#a8a8a8';
@@ -172,7 +170,7 @@ export default class Rank extends Init {
     this.cvs.drawImage(btn, 0, 0, btn.width, btn.height, this.computedSizeW(445), this.computedSizeH(1150), this.computedSizeW(216), this.computedSizeH(80));
 
     this.cvs.fillStyle = "#fff";
-    this.cvs.font = `bold ${this.computedSizeW(30)}px xszt`;
+    this.cvs.font = `bold ${this.computedSizeW(30)}px Arial`;
     this.cvs.fillText('查看群排行', this.computedSizeW(480), this.computedSizeH(1194));
 
 
@@ -182,7 +180,7 @@ export default class Rank extends Init {
     this.drawRoundRect(this.cvs, this.computedSizeW(85), this.computedSizeH(160), this.computedSizeW(216), this.computedSizeH(70), this.computedSizeW(35), 'rgba(73,116,235,1)');
     this.drawRoundRect(this.cvs, this.computedSizeW(442), this.computedSizeH(160), this.computedSizeW(216), this.computedSizeH(70), this.computedSizeW(35), '#fff', 2);
     this.cvs.fillStyle = "#fff";
-    this.cvs.font = `bold ${this.computedSizeW(30)}px xszt`;
+    this.cvs.font = `bold ${this.computedSizeW(30)}px Arial`;
     this.cvs.textAlign = "left";
     this.cvs.fillText('好友排行', this.computedSizeW(134), this.computedSizeH(205));
     this.cvs.fillText('世界排行', this.computedSizeW(490), this.computedSizeH(205));
@@ -193,7 +191,7 @@ export default class Rank extends Init {
     this.drawRoundRect(this.cvs, this.computedSizeW(442), this.computedSizeH(160), this.computedSizeW(216), this.computedSizeH(70), this.computedSizeW(35), 'rgba(73,116,235,1)');
     this.cvs.beginPath();
     this.cvs.fillStyle = "#fff";
-    this.cvs.font = `bold ${this.computedSizeW(30)}px xszt`;
+    this.cvs.font = `bold ${this.computedSizeW(30)}px Arial`;
     this.cvs.textAlign = "left";
     this.cvs.fillText('好友排行', this.computedSizeW(134), this.computedSizeH(205));
     this.cvs.fillText('世界排行', this.computedSizeW(490), this.computedSizeH(205));
@@ -204,7 +202,7 @@ export default class Rank extends Init {
     this.cvs.beginPath();
     this.cvs.fillStyle = "#fff";
     this.cvs.textAlign = "center";
-    this.cvs.font = `bold ${this.computedSizeW(30)}px xszt`;
+    this.cvs.font = `bold ${this.computedSizeW(30)}px Arial`;
     this.cvs.fillText('群排行榜', this.winWidth / 2, this.computedSizeH(206));
   }
 

@@ -1,8 +1,6 @@
 /**
  * 初始化函数
  */
-
-
 export default class Index {
     constructor() {
         this.winWidth = wx.getSystemInfoSync().screenWidth;
@@ -49,7 +47,7 @@ export default class Index {
     clearCvs(noTransBg) {
         this.cvs.clearRect(0, 0, this.winWidth, this.winHeight);
         if(noTransBg) return;
-        this.cvs.fillStyle = "rgba(0, 0, 0, .8)";
+        this.cvs.fillStyle = 'rgba(0, 0, 0, .8)';
         this.cvs.fillRect(0, 0, this.winWidth, this.winHeight);
     }
 
@@ -72,7 +70,7 @@ export default class Index {
         } else {
             cxt.strokeStyle = color;
             cxt.lineWidth = lineWidth;
-            cxt.stroke()
+            cxt.stroke();
         }
         cxt.closePath();
     }
@@ -218,5 +216,8 @@ export default class Index {
         console.log('没有分数记录...')
     }
 
+    deepCopy(data) {
+        return JSON.parse(JSON.stringify(data));
+    }
 }
 

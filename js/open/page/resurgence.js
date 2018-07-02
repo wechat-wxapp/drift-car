@@ -15,14 +15,14 @@ export default class Resurgence extends Init {
     this.clearCvs();
 
     this.cvs.fillStyle = "#fff";
-    this.cvs.font = `bold ${this.computedSizeW(26)}px xszt`;
+    this.cvs.font = `bold ${this.computedSizeW(26)}px Arial`;
     this.cvs.textAlign = "center";
     this.cvs.fillText('本次得分', this.winWidth / 2, this.computedSizeH(216));
     
-    this.cvs.font = `bold ${this.computedSizeW(102)}px xszt`;
+    this.cvs.font = `bold ${this.computedSizeW(102)}px Arial`;
     this.cvs.fillText('160', this.winWidth / 2, this.computedSizeH(332));
     
-    this.cvs.font = `${this.computedSizeW(26)}px xszt`;
+    this.cvs.font = `${this.computedSizeW(26)}px Arial`;
     this.cvs.textAlign = "right";
     this.cvs.fillText(`还差18分超越：`, this.computedSizeW(364), this.computedSizeH(470));
     this.cvs.arc(this.computedSizeW(420), this.computedSizeH(466), this.computedSizeH(42), 0, 2 * Math.PI);
@@ -34,11 +34,11 @@ export default class Resurgence extends Init {
     btn.src = 'images/btn.png';
     this.cvs.drawImage(btn, 0, 0, btn.width, btn.height, this.winWidth / 2 - this.computedSizeW(300) / 2, this.computedSizeH(660), this.computedSizeW(300), this.computedSizeH(110));
     this.cvs.fillStyle = "#fff";
-    this.cvs.font = `bold ${this.computedSizeW(36)}px xszt`;
+    this.cvs.font = `bold ${this.computedSizeW(36)}px Arial`;
     this.cvs.textAlign = "center";
     this.cvs.fillText('看视频复活', this.winWidth / 2, this.computedSizeH(716));
     
-    this.cvs.font = `${this.computedSizeW(26)}px xszt`;
+    this.cvs.font = `${this.computedSizeW(26)}px Arial`;
     this.cvs.fillText(`点击跳过`, this.winWidth / 2, this.computedSizeH(864));
     this.cvs.fillRect(this.computedSizeW(316), this.computedSizeH(880), this.computedSizeW(116), 2);
     

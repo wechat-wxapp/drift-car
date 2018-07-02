@@ -175,6 +175,10 @@ export default class Road extends UTIL {
         scenery_3.position.set(x3, 0, z3);
         scenery_4.position.set(x1, 0, z4);
 
+        scenery_1.rotateY(3.142);
+        scenery_3.rotateY(1.571);
+        scenery_4.rotateY(3.142);
+
         scene.add(scenery_1);
         scene.add(scenery_2);
         scene.add(scenery_3);
@@ -211,6 +215,9 @@ export default class Road extends UTIL {
         scenery_3.position.set(x3, 0, z3);
         scenery_4.position.set(x4, 0, z1);
 
+        scenery_1.rotateY(4.713);
+        scenery_2.rotateY(1.571);
+
         scene.add(scenery_1);
         scene.add(scenery_2);
         scene.add(scenery_3);
@@ -240,6 +247,8 @@ export default class Road extends UTIL {
 
         scenery_1.position.set(x1, 0, z1);
         scenery_2.position.set(x2, 0, z2);
+
+        scenery_1.rotateY(3.142);
 
         scene.add(scenery_1);
         scene.add(scenery_2);
@@ -317,6 +326,11 @@ export default class Road extends UTIL {
         scenery_8.position.set(x4, 0, z8);
         scenery_9.position.set(x3, 0, z9);
         scenery_10.position.set(x10, 0, z10);
+
+        scenery_1.rotateY(3.142);
+        scenery_3.rotateY(3.142);
+        scenery_5.rotateY(3.142);
+        scenery_11.rotateY(3.142);
 
         scene.add(scenery_1);
         scene.add(scenery_2);
