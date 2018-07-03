@@ -1,7 +1,6 @@
 import EndPage from './page/end';
 import ReseurPage from './page/resurgence.js';
 import RankPage from './page/rank';
-import CarportPage from './page/carport';
 import WechatMPPage from './page/wechatMP';
 import QrPage from './page/qr';
 import Init from './page/init';
@@ -11,7 +10,6 @@ const reseurPage = new ReseurPage();
 const friendRankPage = new RankPage();
 const groupRankPage = new RankPage();
 const worldRankPage = new RankPage();
-const carportPage = new CarportPage();
 const wechatMPPage = new WechatMPPage();
 const qrPage = new QrPage();
 const init = new Init();

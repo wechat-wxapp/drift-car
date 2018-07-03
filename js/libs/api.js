@@ -1,14 +1,16 @@
-const API_HOST = 'prod';
+const API_HOST = 'test';
 let host;
 
 switch (API_HOST) {
     case 'prod':
-        host = 'http://custom.c56e37f627a5a42e89b31387f12f59fab.cn-shenzhen.alicontainer.com';
+        host = 'https://custom.24haowan.com';
         break;
     case 'test':
-        host = 'http://192.168.9.95:3000';
+        // 泓骅地址
+        host = 'http://192.168.6.183:3000';
         break;
     default:
+        // 强子地址
         host = 'https://192.168.6.49:3003';
         break;
 }
@@ -18,7 +20,10 @@ const API = {
     'GET_UNIONID': '/yc/wechat/getUnionId',
 
     // 获取车库
-    'GET_UNLOCK': '/yc/carport/getunlock'
+    'GET_UNLOCK': '/yc/carport/getunlock',
+
+    // 提交分数
+    'UPDATE_SCORE': '/yc/user/updateScore'
 };
 
 Object.keys(API).forEach(api => {

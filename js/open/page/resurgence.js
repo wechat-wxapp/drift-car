@@ -14,8 +14,6 @@ export default class Resurgence extends Init {
   setTexture({ score }) {
     this.clearCvs();
 
-    console.log('asdqwe');
-
     this.cvs.fillStyle = "#fff";
     this.cvs.font = `bold ${this.computedSizeW(26)}px Arial`;
     this.cvs.textAlign = "center";

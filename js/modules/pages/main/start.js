@@ -14,6 +14,7 @@ export default class Start extends UTIL {
         this.leaderboard = imgList.leaderboard;
         this.checkLeaderboard = imgList.checkLeaderboard;
         this.startBottomBtn1 = imgList.startBottomBtn1;
+        this.startBottomCloseBtn1 = imgList.startBottomCloseBtn1;
         this.startBottomBtn2 = imgList.startBottomBtn2;
         this.startBottomBtn3 = imgList.startBottomBtn3;
         this.startBottomBtn4 = imgList.startBottomBtn4;
@@ -30,7 +31,7 @@ export default class Start extends UTIL {
      * */
     buildPage() {
         // 如果登录则绑定普通按钮点击事件
-        wxConfig.isLogin === true && this.bindStartBtn();
+        $wx.isLogin === true && this.bindStartBtn();
         this.bindMusicBtn();
 
         // 排行榜
@@ -39,6 +40,8 @@ export default class Start extends UTIL {
         this.bindGroupRankBtn();
         // 泡妞神器
         this.bindQrBtn();
+        // 车库
+        this.bindCarportBtn();
         // 公众号
         this.bindWechatBtn();
     }
@@ -82,6 +85,8 @@ export default class Start extends UTIL {
             point: [x1, y1, x2, y2],
             cb: () => {
                 musicKey = !musicKey;
+
+                this.setTexture();
             }
         });
     }
@@ -139,7 +144,26 @@ export default class Start extends UTIL {
             point: [x1, y1, x2, y2],
             cb: () => {
                 sharedClass.qrPage();
-                currentPage = 'qrPage';
+            }
+        });
+    }
+
+    /**
+     * 绑定车库按钮
+     * */
+    bindCarportBtn() {
+        const x1 = this.computedSizeW(230);
+        const x2 = this.computedSizeW(270);
+        const y1 = this.computedSizeH(645);
+        const y2 = this.computedSizeH(685);
+
+        events.click({
+            name: 'carportBtn',
+            pageName: 'startPage',
+            point: [x1, y1, x2, y2],
+            cb: () => {
+                // 加载车列表
+                this.asyncCarList();
             }
         });
     }
@@ -165,6 +189,25 @@ export default class Start extends UTIL {
     }
 
     /**
+     * 加载车库列表
+     * */
+    asyncCarList() {
+        $loader.show();
+        // 获取车库
+        $io.getunlock()
+            .then(e => {
+                $wx.startBtn.hide();
+
+                const { payload: { data } } = e;
+
+                carportPage.list = data;
+                carportPage.setTexture();
+
+                $loader.hide();
+            });
+    }
+
+    /**
      * 开始页
      */
     setTexture() {
@@ -178,11 +221,11 @@ export default class Start extends UTIL {
         offCanvas2d.drawImage(this.bg, 0, 0, this.bg.width, this.bg.height, 0, 0, winWidth, winHeight);
 
         // 如果已经登录
-        if (wxConfig.isLogin) {
+        if ($wx.isLogin) {
             offCanvas2d.drawImage(this.startBtn, 0, 0, this.startBtn.width, this.startBtn.height, winWidth / 2 - this.computedSizeW(this.startBtn.width / 4), this.computedSizeH(250), this.computedSizeW(149), this.computedSizeW(60));
             this.bindStartBtn();
         } else {
-            wxConfig.startBtn.show();
+            $wx.startBtn.show();
         }
 
         offCanvas2d.drawImage(this.leaderboard, 0, 0, this.leaderboard.width, this.leaderboard.height, winWidth / 2 - this.computedSizeW(this.leaderboard.width / 4), this.computedSizeH(320), this.computedSizeW(this.leaderboard.width / 2), this.computedSizeW(this.leaderboard.height / 2));
@@ -190,7 +233,9 @@ export default class Start extends UTIL {
 
         const bottomSize = winWidth / 6;
 
-        offCanvas2d.drawImage(this.startBottomBtn1, 0, 0, this.startBottomBtn1.width, this.startBottomBtn1.height, bottomSize * 1.2 - this.startBottomBtn1.width / 4, winHeight - this.computedSizeW(95), this.computedSizeW(this.startBottomBtn1.width / 2), this.computedSizeW(this.startBottomBtn1.height / 2));
+        const musicBtn = musicKey ? this.startBottomBtn1 : this.startBottomCloseBtn1;
+
+        offCanvas2d.drawImage(musicBtn, 0, 0, musicBtn.width, musicBtn.height, bottomSize * 1.2 - musicBtn.width / 4, winHeight - this.computedSizeW(95), this.computedSizeW(musicBtn.width / 2), this.computedSizeW(musicBtn.height / 2));
         offCanvas2d.drawImage(this.startBottomBtn2, 0, 0, this.startBottomBtn2.width, this.startBottomBtn2.height, bottomSize * 2.4  - this.startBottomBtn2.width / 4, winHeight - this.computedSizeW(95), this.computedSizeW(this.startBottomBtn2.width / 2), this.computedSizeW(this.startBottomBtn2.height / 2));
         offCanvas2d.drawImage(this.startBottomBtn3, 0, 0, this.startBottomBtn3.width, this.startBottomBtn3.height, bottomSize * 3.6 - this.startBottomBtn3.width / 4, winHeight - this.computedSizeW(95), this.computedSizeW(this.startBottomBtn3.width / 2), this.computedSizeW(this.startBottomBtn3.height / 2));
         offCanvas2d.drawImage(this.startBottomBtn4, 0, 0, this.startBottomBtn4.width, this.startBottomBtn4.height, bottomSize * 4.8 - this.startBottomBtn4.width / 4, winHeight - this.computedSizeW(95), this.computedSizeW(this.startBottomBtn4.width / 2), this.computedSizeW(this.startBottomBtn4.height / 2));

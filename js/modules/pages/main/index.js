@@ -10,6 +10,11 @@ import pageCarport from "./carport";
  * 2d canvas函数
  */
 export default class Page extends UTIL {
+    currentSpeedRecord = {
+        x: 0,
+        z: 0
+    };
+
     constructor() {
         super();
         this.page();
@@ -18,12 +23,6 @@ export default class Page extends UTIL {
 
         // 实例化加载页
         loadingPage = new pageLoading();
-
-        // 实例化游戏页面
-        gamePage = new pageGame();
-
-        // 实例化车库
-        carportPage = new pageCarport();
     }
 
     /**
@@ -62,5 +61,12 @@ export default class Page extends UTIL {
     clear2d() {
         offCanvas2d.clearRect(0, 0, winWidth, winHeight);
         texture2d.needsUpdate = true;
+    }
+
+    setPosition() {
+        offCanvasSprite.position.x += speedRecord.x - this.currentSpeedRecord.x;
+        offCanvasSprite.position.z -= speedRecord.z - this.currentSpeedRecord.z;
+
+        this.currentSpeedRecord = speedRecord;
     }
 }

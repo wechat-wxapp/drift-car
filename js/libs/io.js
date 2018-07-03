@@ -54,5 +54,17 @@ export default {
             method: 'POST',
             data: { openid }
         });
+    },
+
+    /**
+     * 提交分数
+     * */
+    updateScore: (score) => {
+        const { openid } = localStorage.getItem('accessToken');
+
+        return request(API.UPDATE_SCORE, {
+            method: 'POST',
+            data: { openid, score }
+        });
     }
 }

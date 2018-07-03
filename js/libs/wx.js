@@ -1,4 +1,3 @@
-import IO from './io';
 import UTIL from '../modules/util';
 
 /**
@@ -16,8 +15,6 @@ export default class WX extends UTIL {
         this.init();
         this.checkLogin();
         this.createStartBtn();
-
-        // IO.getunlock();
     }
 
     init() {
@@ -48,7 +45,7 @@ export default class WX extends UTIL {
      * 创建开始按钮
      * */
     createStartBtn() {
-        wxConfig.startBtn = wx.createUserInfoButton({
+        this.startBtn = wx.createUserInfoButton({
             type: 'image',
             image: 'https://static.cdn.24haowan.com/24haowan/test/js/start-btn.png',
             style: {
@@ -59,9 +56,9 @@ export default class WX extends UTIL {
             }
         });
 
-        wxConfig.startBtn.hide();
+        this.startBtn.hide();
 
-        wxConfig.startBtn.onTap((res) => {
+        this.startBtn.onTap((res) => {
             this.wxUnionId(res);
         });
     }
@@ -72,10 +69,10 @@ export default class WX extends UTIL {
     checkLogin() {
         wx.checkSession({
             success: () => {
-                wxConfig.isLogin = true;
+                this.isLogin = true;
             },
             fail: () => {
-                wxConfig.isLogin = false;
+                this.isLogin = false;
                 this.wxLogin();
             }
         });
@@ -104,7 +101,7 @@ export default class WX extends UTIL {
         const { encryptedData, iv, rawData, signature } = data;
         $loader.show();
 
-        IO.getAccessToken(this.code)
+        $io.getAccessToken(this.code)
         .then(token => {
             const { code, payload: { data } } = token;
             if (code === '0') {
@@ -123,7 +120,7 @@ export default class WX extends UTIL {
             }
         })
         .then(e => {
-            IO.getUnionId({ ...e, encryptedData, iv, rawData, signature })
+            $io.getUnionId({ ...e, encryptedData, iv, rawData, signature })
             .then(e => {
                 const { code } = e;
                 if (code === '0') {
@@ -133,7 +130,7 @@ export default class WX extends UTIL {
 
                 // 开始游戏
                 gamePage.startGame();
-                wxConfig.isLogin = true;
+                this.isLogin = true;
                 $loader.hide();
             });
         });

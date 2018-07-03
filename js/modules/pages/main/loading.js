@@ -7,6 +7,8 @@ import TurnRoadSmall from "../../turn-road-small";
 import Score from '../score/index';
 
 import pageStart from './start';
+import pageCarport from "./carport";
+import pageGame from "./game";
 
 /**
  * 开始页函数
@@ -44,6 +46,12 @@ export default class Loader {
 
         // 初始化其他2d画布
         scoreClass = new Score();
+
+        // 实例化车库
+        carportPage = new pageCarport();
+
+        // 实例化游戏页面
+        gamePage = new pageGame();
 
         startPage = new pageStart();
     }

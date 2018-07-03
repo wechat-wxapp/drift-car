@@ -12,13 +12,13 @@ export default class Init {
         this.themeBule = `rgba(73,116,235,1)`;
         // 排行榜数据
         // this.rankData = null;
-        this.rankData = null
+        this.rankData = null;
         // this.groupRankData = null;
         // this.worldRankData = null;
         // 排行榜里面的个人成绩数据
         this.selfData = null;
         // 个人信息
-        this.self = null
+        this.self = null;
 
         // 好友排行榜数据
         // this.initFriendRankData();
@@ -29,7 +29,6 @@ export default class Init {
         this.rankCurrentPage = 1;
         // this._initSelfData();
         // this._initSelf();
-        // console.log('23333', wx.request)
     }
 
     /**
@@ -48,7 +47,6 @@ export default class Init {
      * */
     clearCvs(noTransBg) {
         this.cvs.clearRect(0, 0, this.winWidth, this.winHeight);
-        console.log('init.js')
         if(noTransBg) return;
         this.cvs.fillStyle = 'rgba(0, 0, 0, .8)';
         this.cvs.fillRect(0, 0, this.winWidth, this.winHeight);

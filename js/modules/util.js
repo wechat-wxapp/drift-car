@@ -95,8 +95,11 @@ export default class UTIL {
      * 显示结束页面
      * */
     showReseurPage() {
-        sharedClass.reseurPage();
-        currentPage = 'reseurPage';
+        if (reseurNum === 0) {
+            sharedClass.endPage();
+        } else {
+            sharedClass.reseurPage();
+        }
     }
 
     /**
@@ -186,6 +189,8 @@ export default class UTIL {
         speed = 2.5;
         speedKey = 0;
         lastSpeedKey = 0;
+
+        $bus.setData('reseurNum', $bus.constantData.reseurNum);
     }
 
     /**
@@ -194,7 +199,10 @@ export default class UTIL {
     revival() {
         lastSpeedKey = 0;
 
-        console.log(`---成功复活 当前分数: ${score} 当前速度: ${speed}---`);
+        // 扣减复活数
+        reseurNum--;
+
+        console.log(`---成功复活 剩余复活次数: ${reseurNum} 当前分数: ${score} 当前速度: ${speed}---`);
     }
 
     updateScore() {

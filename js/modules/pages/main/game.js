@@ -13,7 +13,7 @@ export default class Game extends UTIL {
      * */
     startGame() {
         // 关闭按钮
-        wxConfig.startBtn.hide();
+        $wx.startBtn.hide();
 
         // 初始化分数空间
         scorePage.setTexture();
@@ -26,6 +26,9 @@ export default class Game extends UTIL {
 
         // 设置页面target
         currentPage = 'gamePage';
+
+        // 默认关闭开放域循环
+        isSharedLoop = false;
     }
 
     /**
