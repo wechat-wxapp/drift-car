@@ -118,6 +118,7 @@ export default class WX extends UTIL {
                     session_key
                 }
             } else {
+                $loader.hide();
                 console.log('接口出错: ', token);
             }
         })

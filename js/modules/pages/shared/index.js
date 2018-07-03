@@ -44,6 +44,9 @@ export default class Shared extends UTIL {
         this.bindWechatBack();
 
         this.goGroupRank();
+        this.iWantToPlay();
+        this.goBack1();
+        this.goBack2();
     }
 
     // 结束页-再玩一次
@@ -173,6 +176,43 @@ export default class Shared extends UTIL {
             }
         })
     }
+    // 上一页按钮
+    bindPrePage() {
+        const x1 = this.computedSizeW(254);
+        const x2 = this.computedSizeW(291);
+        const y1 = this.computedSizeH(158);
+        const y2 = this.computedSizeH(171);
+
+        events.click({
+            name: 'prePageBtn',
+            pageName: 'friendRank',
+            point: [x1, y1, x2, y2],
+            cb: () => {
+                // rankCurrentPage = rankCurrentPage <= 1 ? 1 : rankCurrentPage--;
+                console.log(1123414)
+                $wx.sendMessage('friendRank',{ page: rankCurrentPage, common: 0 , shareTicket: $wx.shareTicket});
+                sharedTexture2d.needsUpdate = true;
+            }
+        })
+    }
+
+    // 下一页按钮
+    bindNextPage() {
+        const x1 = this.computedSizeW(311);
+        const x2 = this.computedSizeW(363);
+        const y1 = this.computedSizeH(157);
+        const y2 = this.computedSizeH(172);
+        events.click({
+            name: 'nextPageBtn',
+            pageName: 'friendRank',
+            point: [x1, y1, x2, y2],
+            cb: () => {
+                // rankCurrentPage = rankCurrentPage + 1;
+                $wx.sendMessage('friendRank',{ page: rankCurrentPage, common: 1 , shareTicket: $wx.shareTicket});
+                sharedTexture2d.needsUpdate = true;
+            }
+        })
+    }
 
     // 泡妞神器-返回
     bindQrBack() {
@@ -212,23 +252,93 @@ export default class Shared extends UTIL {
 
     //查看群排行
     goGroupRank() {
-        const x1 = this.computedSizeW(0);
-        const x2 = this.computedSizeW(100);
-        const y1 = this.computedSizeH(200);
-        const y2 = this.computedSizeH(300);
+        const x1 = this.computedSizeW(246);
+        const x2 = this.computedSizeW(365);
+        const y1 = this.computedSizeH(635);
+        const y2 = this.computedSizeH(675);
         // this.computedSizeW(445), this.computedSizeH(1150), this.computedSizeW(216), this.computedSizeH(80)
         events.click({
             name: 'goGroupRank',
             pageName: 'friendRank',
             point: [x1, y1, x2, y2],
             cb: () => {
+                isSharedLoop = true;
+                console.log('goGroupRank')
                 // rankCurrentPage = rankCurrentPage + 1;
-                // $wx.sendMessage('groupRank',{ page: rankCurrentPage, common: 1 , shareTicket: $wx.shareTicket});
+                $wx.sendMessage('groupRank',{ page: rankCurrentPage, common: 1 , shareTicket: $wx.shareTicket });
                 // sharedTexture2d.needsUpdate = true;
-                console.log(444444444)
+                currentPage = 'groupRank';
             }
         })
     }
+
+    //开始页
+
+    iWantToPlay() {
+        const x1 = this.computedSizeW(246);
+        const x2 = this.computedSizeW(365);
+        const y1 = this.computedSizeH(635);
+        const y2 = this.computedSizeH(675);
+        // this.computedSizeW(445), this.computedSizeH(1150), this.computedSizeW(216), this.computedSizeH(80)
+        events.click({
+            name: 'iWantToPlay',
+            pageName: 'groupRank',
+            point: [x1, y1, x2, y2],
+            cb: () => {
+                this.clear2d();
+
+                offCanvasSprite.position.x += speedRecord.x;
+                offCanvasSprite.position.z -= speedRecord.z;
+
+                startPage.setTexture();
+                currentPage = 'startPage';
+            }
+        })
+    }
+
+    //返回
+    goBack1() {
+        const x1 = this.computedSizeW(50);
+        const x2 = this.computedSizeW(76);
+        const y1 = this.computedSizeH(642);
+        const y2 = this.computedSizeH(666);
+        // this.computedSizeW(445), this.computedSizeH(1150), this.computedSizeW(216), this.computedSizeH(80)
+        events.click({
+            name: 'goBack1',
+            pageName: 'friendRank',
+            point: [x1, y1, x2, y2],
+            cb: () => {
+                this.clear2d();
+                isSharedLoop = false;
+                offCanvasSprite.position.x += speedRecord.x;
+                offCanvasSprite.position.z -= speedRecord.z;
+
+                startPage.setTexture();
+                currentPage = 'startPage';
+            }
+        })
+    }
+    goBack2() {
+        const x1 = this.computedSizeW(50);
+        const x2 = this.computedSizeW(76);
+        const y1 = this.computedSizeH(642);
+        const y2 = this.computedSizeH(666);
+        events.click({
+            name: 'goBack2',
+            pageName: 'groupRank',
+            point: [x1, y1, x2, y2],
+            cb: () => {
+                this.clear2d();
+                isSharedLoop = false;
+                offCanvasSprite.position.x += speedRecord.x;
+                offCanvasSprite.position.z -= speedRecord.z;
+
+                startPage.setTexture();
+                currentPage = 'startPage';
+            }
+        })
+    }
+
 
     /**
      * 创建2d画布
@@ -285,7 +395,9 @@ export default class Shared extends UTIL {
      * 排行榜
      * */
     rankPage() {
-        this.showPage('rank', {}, true);
+        isSharedLoop = true;
+        currentPage = 'friendRank';
+        this.showPage('friendRank', {}, true);
     }
 
     /**
@@ -296,7 +408,7 @@ export default class Shared extends UTIL {
     }
 
     /**
-     * 泡妞神器
+     * 公众号
      * */
     wechatPage() {
         this.showPage('wechat', {}, true);
@@ -306,7 +418,9 @@ export default class Shared extends UTIL {
      * 群排行榜
      * */
     groupRankPage() {
-        this.showPage('rank', {}, true);
+        isSharedLoop = true;
+        currentPage = 'groupRank';
+        this.showPage('groupRank', {shareTicket: $wx.shareTicket}, true);
     }
 
     showPage(command, data, clear) {

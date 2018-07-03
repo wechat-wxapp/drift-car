@@ -205,6 +205,7 @@ export default class Init {
             return arr;
         }
 
+        // console.log('arr111',arr) arr[i].KVDataList.length == 0
         var num = Math.floor(arr.length/2);
         var middleArr = arr.splice(num, 1);
         var middleValue = middleArr[0].KVDataList.length > 0 ? middleArr[0].KVDataList[0].value : 0;
@@ -213,7 +214,7 @@ export default class Init {
         
         if (des === 'des') {
             for(var i = 0; i < arr.length; i++){
-                if(arr[i].KVDataList.length > 0 && arr[i].KVDataList[0].value < middleValue){
+                if(arr[i].KVDataList[0].value * 1 < middleValue * 1){
                     left.push(arr[i]);
                 }else{
                     right.push(arr[i]);
@@ -221,14 +222,15 @@ export default class Init {
             }
         } else {
             for(var i = 0; i < arr.length; i++){
-                if(arr[i].KVDataList[0].value > middleValue){
+                if(arr[i].KVDataList[0].value * 1  > middleValue * 1){
                     left.push(arr[i]);
                 }else{
                     right.push(arr[i]);
                 }
             }
         }
-
+        console.log('des111' ,right)
+        console.log('des222' ,left)
         return this.sort(left, des, isGroup).concat(middleArr,this.sort(right, des, isGroup));
     }
 
