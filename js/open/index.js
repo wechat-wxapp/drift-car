@@ -42,7 +42,8 @@ wx.onMessage(({ command, data = {} }) => {
             break;
         case 'worldRank':
             worldRankPage.clearCvs();
-            worldRankPage.setTexture(data);
+            worldRankPage.initWorldRankData(data)
+            worldRankPage.setTexture(data)
             break;
         case 'groupRank':
             groupRankPage.clearCvs();

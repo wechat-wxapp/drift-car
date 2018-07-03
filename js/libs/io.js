@@ -54,5 +54,20 @@ export default {
             method: 'POST',
             data: { openid }
         });
+    },
+
+    /**
+     * 获取世界排行
+     * */
+    getWorldRank: () => {
+        const { openid } = localStorage.getItem('openid');
+
+        return request(API.GET_WORLD_RANK, {
+            method: 'POST',
+            data: { openid,
+                offset: 0,
+                limit: 20
+             }
+        });
     }
 }

@@ -18,7 +18,10 @@ const API = {
     'GET_UNIONID': '/yc/wechat/getUnionId',
 
     // 获取车库
-    'GET_UNLOCK': '/yc/carport/getunlock'
+    'GET_UNLOCK': '/yc/carport/getunlock',
+
+    // 获取世界排行
+    'GET_WORLD_RANK': '/yc/rank/data'
 };
 
 Object.keys(API).forEach(api => {
