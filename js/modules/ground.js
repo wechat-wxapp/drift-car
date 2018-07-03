@@ -23,7 +23,7 @@ export default class Ground {
 
         ground.position.set(0, -0.5, 0);
 
-        scene.add(ground);
+        // scene.add(ground);
 
         const groundShape = new CANNON.Plane();
         groundBody = new CANNON.Body({ mass: 0 });

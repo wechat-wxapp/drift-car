@@ -13,7 +13,6 @@ export default class WX extends UTIL {
         super();
 
         this.init();
-        this.checkLogin();
         this.createStartBtn();
     }
 
@@ -54,41 +53,49 @@ export default class WX extends UTIL {
         this.startBtn.hide();
 
         this.startBtn.onTap((res) => {
-            this.wxUnionId(res);
+            this.checkLogin(res);
         });
     }
 
     /**
      * 判断KEY是否有效
      * */
-    checkLogin() {
-        wx.checkSession({
-            success: () => {
-                this.isLogin = true;
-            },
-            fail: () => {
-                console.log('登录已过期');
+    checkLogin(data) {
+        const accessToken = localStorage.getItem('accessToken');
+        if (accessToken) {
+            gamePage.startGame();
+        } else {
+            this.wxLogin(data);
+        }
 
-                this.isLogin = false;
-                this.wxLogin();
-            }
-        });
-
-        // this.isLogin = false;
-        // this.wxLogin();
+        // wx.checkSession({
+        //     success: () => {
+        //         console.log('登录状态: 已登录');
+        //         gamePage.startGame();
+        //         this.isLogin = true;
+        //     },
+        //     fail: () => {
+        //         console.log('登录状态: 已过期');
+        //         this.isLogin = false;
+        //         this.wxLogin(data);
+        //     }
+        // });
     }
 
     /**
      * 登录操作
      * */
-    wxLogin() {
+    wxLogin(data) {
+        currentPage = 'gamePage';
+
         wx.login({
             success: (res) => {
                 const { code } = res;
                 if (code) {
                     this.code = code;
+                    this.wxUnionId(data);
                 } else {
-                    console.log('登录失败！' + res.errMsg);
+                    console.log('登录失败: ' + res.errMsg);
                 }
             }
         });

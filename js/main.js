@@ -57,7 +57,13 @@ export default class Main extends UTIL {
      * 更新每日
      * */
     updateDate() {
-        $io.updateDate();
+        const accessToken = localStorage.getItem('accessToken');
+
+        console.log('当前localStorage: ', accessToken);
+
+        if (accessToken) {
+            $io.updateDate();
+        }
     }
 
     /**
@@ -157,9 +163,9 @@ export default class Main extends UTIL {
 
 
             // if (key < 1) {
-            //     this.r6();
-            // } else if (key === 1) {
             //     this.r8();
+            // } else if (key === 1) {
+            //     this.r5();
             // } else if (key === 2) {
             //     this.r6();
             // } else if (key === 3) {
@@ -287,7 +293,6 @@ export default class Main extends UTIL {
         // 刷新开放域
         this.sharedLoop();
 
-        // beyondTexture2d.needsUpdate = true;
         // texture2d.needsUpdate = true;
 
         requestAnimationFrame(this.loop.bind(this));
