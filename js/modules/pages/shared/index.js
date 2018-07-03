@@ -418,9 +418,15 @@ export default class Shared extends UTIL {
      * 群排行榜
      * */
     groupRankPage() {
-        isSharedLoop = true;
-        currentPage = 'groupRank';
-        this.showPage('groupRank', {shareTicket: $wx.shareTicket}, true);
+        wx.updateShareMenu({
+            withShareTicket: true
+          })
+        wx.shareAppMessage({
+            title: '转发标题'
+          })
+        // isSharedLoop = true;
+        // currentPage = 'groupRank';
+        // this.showPage('groupRank', {shareTicket: $wx.shareTicket}, true);
     }
 
     showPage(command, data, clear) {

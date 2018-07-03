@@ -13,30 +13,30 @@ export default class Rank extends Init {
    * */
   setTexture(type) {
     this.clearCvs();
-    if(type === 1) {
+    if(type == 1) {
       this.friendRank()
     }
-    else if(type === 2) {
+    else if(type == 2) {
       // this.initGroupRankData(data.shareTicket);
       this.groupRank();
     }
     else this.worldRank();
-    // 数据总数
   
-    // // 更新提示
+    // 更新提示
     this.cvs.fillStyle = "#e7e7e7";
     this.cvs.fillRect(this.winWidth / 2 - this.computedSizeW(582) / 2, this.computedSizeH(272), this.computedSizeW(582), this.computedSizeH(50));
     this.cvs.fillStyle = "#808080";
-    this.cvs.font = `${this.computedSizeW(20)}px xszt`;
+    this.cvs.font = `${this.computedSizeW(20)}px Yahei`;
     this.cvs.textAlign = "left";
     this.cvs.fillText('排行榜：每周一凌晨更新', this.computedSizeW(130), this.computedSizeH(306));
     
     this.cvs.fillStyle = "#fff";
     this.cvs.fillRect(this.winWidth / 2 - this.computedSizeW(582) / 2, this.computedSizeH(322), this.computedSizeW(582), this.computedSizeH(620));
 
-    // //分割线
-    this.cvs.lineWidth = '1';
+    //分割线
+    this.cvs.lineWidth = 1;
     this.cvs.strokeStyle = '#ededed';
+    const that = this;
     for (let i = 0; i < 5; i++) {
       this.cvs.moveTo(this.computedSizeW(130), this.computedSizeH(445 + i * 96));
       this.cvs.lineTo(this.computedSizeW(608), this.computedSizeH(445 + i * 96));
@@ -129,7 +129,7 @@ export default class Rank extends Init {
     this.cvs.fillRect(this.winWidth / 2 - this.computedSizeW(582) / 2, this.computedSizeH(322), this.computedSizeW(582), this.computedSizeH(620));
 
     //分割线
-    this.cvs.lineWidth = '1';
+    this.cvs.lineWidth = 1;
     this.cvs.strokeStyle = '#ededed';
     for (let i = 0; i < 5; i++) {
       this.cvs.moveTo(this.computedSizeW(130), this.computedSizeH(445 + i * 96));
@@ -152,15 +152,8 @@ export default class Rank extends Init {
         avatar.src = that.rankData[i].avatarUrl;
 
         avatar.onload = () => {
-          // pattern = that.cvs.createPattern(avatar, 'repeat');
-          // this.cvs.arc(this.computedSizeW(234), this.computedSizeH(394 + i * 97), this.computedSizeW(31), 0, 2 * Math.PI);
-          // this.drawRoundRect(this.cvs, this.computedSizeW(234), this.computedSizeH(394 + i * 97), this.computedSizeW(31), this.computedSizeW(31), this.computedSizeW(31 / 2), 'red')
-          // this.cvs.fill()
-          that.cvs.drawImage(avatar, that.computedSizeW(190), that.computedSizeH(360 + (i - (rankCurrentPage - 1) * counts) * 97), that.computedSizeW(60), that.computedSizeW(60))
+          that.circleImg(this.cvs, avatar, this.computedSizeW(190), that.computedSizeH(360 + (i - (rankCurrentPage - 1) * counts) * 102),this.computedSizeW(30))
         }
-      // this.cvs.arc(this.computedSizeW(234), this.computedSizeH(394 + i * 97), this.computedSizeW(31), 0, 2 * Math.PI);
-
-        // this.cvs.fill();
       }
     }
 
@@ -169,7 +162,6 @@ export default class Rank extends Init {
       for(let i = (rankCurrentPage - 1) * counts; i < current_count + (rankCurrentPage - 1) * counts; i++){
         this.cvs.fillStyle = '#666';
         this.cvs.fillText(this.rankData[i].nickname, this.computedSizeW(286), this.computedSizeH(402 + (i - (rankCurrentPage - 1) * counts) * 96), this.computedSizeW(146));
-        // console.log('this.rankData: ', this.rankData);
       }
       
       // this.cvs.fillText(`this.rankData[i].nickname`, this.computedSizeW(286), this.computedSizeH(402 ), this.computedSizeW(146));
@@ -184,11 +176,13 @@ export default class Rank extends Init {
       }
     }
 
+    //蓝色部分自己排名头像
     let avatar = wx.createImage();
     avatar.src = this.selfData.avatarUrl
     avatar.onload = () => {
-      this.cvs.drawImage(avatar, this.computedSizeW(190), this.computedSizeH(990), this.computedSizeW(60), this.computedSizeW(60))
-      // this.cvs.drawImage(avatar, this.computedSizeW(234), this.computedSizeH(1018), this.computedSizeW(60), this.computedSizeW(60))
+      this.circleImg(this.cvs,avatar,this.computedSizeW(190), this.computedSizeH(988),this.computedSizeW(30))
+
+      // this.cvs.drawImage(avatar, this.computedSizeW(190), this.computedSizeH(990), this.computedSizeW(60), this.computedSizeW(60))
     }
 
     //蓝色自己排名
