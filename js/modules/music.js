@@ -36,6 +36,10 @@ export default class Music {
         music.play();
     }
 
+    pusedMusic() {
+        this.bgmAudio.pause();
+    }
+
     playBgm() {
         this.bgmAudio.currentTime = 0;
         this.playMusic(this.bgmAudio);

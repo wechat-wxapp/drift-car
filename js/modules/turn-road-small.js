@@ -100,6 +100,7 @@ export default class Road extends UTIL {
         const z = body.rang.z + body.size.height + position.z - rang.z - size.height - body.size.height;
 
         boxType === 'r4' && (x +=  size.width - size.width2);
+        boxType === 'r1' && (x += .8);
 
         body.position.set(x, 0, z);
         floor.position.set(x, floor.position.y, z);

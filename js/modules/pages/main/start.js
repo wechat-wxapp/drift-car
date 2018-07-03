@@ -86,6 +86,8 @@ export default class Start extends UTIL {
             cb: () => {
                 musicKey = !musicKey;
 
+                music.pusedMusic();
+
                 this.setTexture();
             }
         });

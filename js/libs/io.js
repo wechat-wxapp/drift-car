@@ -101,7 +101,7 @@ export default {
      * 获取世界排行
      * */
     getWorldRank: (data) => {
-        const { openid } = localStorage.getItem('openid');
+        const { openid } = localStorage.getItem('accessToken');
 
         return request(API.GET_WORLD_RANK, {
             method: 'POST',
