@@ -222,5 +222,17 @@ export default class Init {
     deepCopy(data) {
         return JSON.parse(JSON.stringify(data));
     }
+
+    //绘制圆形头像
+    circleImg(ctx, img, x, y, r) {
+        ctx.save();
+        let d =2 * r;
+        let cx = x + r;
+        let cy = y + r;
+        ctx.arc(cx, cy, r, 0, 2 * Math.PI);
+        ctx.clip();
+        ctx.drawImage(img, x, y, d, d);
+        ctx.restore();
+      }
 }
 

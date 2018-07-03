@@ -60,7 +60,7 @@ export default class Resurgence extends Init {
             const avatar = wx.createImage();
             avatar.src = myFri.avatarUrl
             avatar.onload = () => {
-                this.cvs.drawImage(avatar,  bothLeft + this.computedSizeW(scoreLength   + 13), this.computedSizeH(424), this.computedSizeW(84), this.computedSizeW(84))
+                this.circleImg(this.cvs, avatar, bothLeft + this.computedSizeW(scoreLength   + 13), this.computedSizeH(424), this.computedSizeW(42), this.computedSizeW(42))
             }
         }
     }   

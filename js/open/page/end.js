@@ -118,17 +118,17 @@ export default class Loader extends Init {
                 const avatar = wx.createImage();
                 avatar.src = myPowerfulFri.avatarUrl
                 avatar.onload = () => {
-                    this.cvs.drawImage(avatar,  this.computedSizeW(136), this.computedSizeH(722), this.computedSizeW(84), this.computedSizeW(84))
+                    this.circleImg(this.cvs, avatar,  this.computedSizeW(136), this.computedSizeH(722), this.computedSizeW(42), this.computedSizeW(42))
                 }
                 const avatar1 = wx.createImage();
                 avatar1.src = this.selfData.avatarUrl
                 avatar1.onload = () => {
-                    this.cvs.drawImage(avatar1, this.computedSizeW(332), this.computedSizeH(722), this.computedSizeW(84), this.computedSizeW(84))
+                    this.circleImg(this.cvs, avatar1,  this.computedSizeW(332), this.computedSizeH(722), this.computedSizeW(42), this.computedSizeW(42))
                 }
                 const avatar2 = wx.createImage();
                 avatar2.src = myWeakFri.avatarUrl
                 avatar2.onload = () => {
-                    this.cvs.drawImage(avatar2, this.computedSizeW(530), this.computedSizeH(722), this.computedSizeW(84), this.computedSizeW(84))
+                    this.circleImg(this.cvs, avatar2,  this.computedSizeW(530), this.computedSizeH(722), this.computedSizeW(42), this.computedSizeW(42))
                 }
                 console.log('myWeakFri:',myWeakFri)
                 console.log('myPowerfulFri:',myPowerfulFri)
@@ -185,12 +185,12 @@ export default class Loader extends Init {
                 const avatar = wx.createImage();
                 avatar.src = myWeakFri.avatarUrl
                 avatar.onload = () => {
-                    this.cvs.drawImage(avatar,  this.winWidth / 4 * 3 - this.computedSizeW(84), this.computedSizeH(722), this.computedSizeW(84), this.computedSizeW(84))
+                    this.circleImg(this.cvs, avatar,  this.winWidth / 4 * 3 - this.computedSizeW(84), this.computedSizeH(722), this.computedSizeW(42), this.computedSizeW(42))
                 }
                 const avatar1 = wx.createImage();
                 avatar1.src = myPowerfulFri.avatarUrl
                 avatar1.onload = () => {
-                    this.cvs.drawImage(avatar1, this.winWidth / 4, this.computedSizeH(722), this.computedSizeW(84), this.computedSizeW(84))
+                    this.circleImg(this.cvs, avatar1, this.winWidth / 4, this.computedSizeH(722), this.computedSizeW(42), this.computedSizeW(42))
                 }
 
                 this.cvs.font = `${this.computedSizeW(20)}px Arial`;
@@ -214,7 +214,7 @@ export default class Loader extends Init {
                 const avatar = wx.createImage();
                 avatar.src = this.selfData.avatarUrl
                 avatar.onload = () => {
-                    this.cvs.drawImage(avatar,  this.computedSizeW(332), this.computedSizeH(722), this.computedSizeW(84), this.computedSizeW(84))
+                    this.circleImg(this.cvs, avatar,  this.computedSizeW(332), this.computedSizeH(722), this.computedSizeW(42), this.computedSizeW(42))
                 }
                 this.cvs.font = `${this.computedSizeW(20)}px Arial`;
                 this.cvs.fillStyle = "#666";
