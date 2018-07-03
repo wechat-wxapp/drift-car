@@ -106,7 +106,7 @@ export default class WX extends UTIL {
      * */
     wxUnionId(data) {
         const { encryptedData, iv, rawData, signature } = data;
-        // $loader.show();
+        $loader.show();
 
         $io.getAccessToken(this.code)
         .then(token => {

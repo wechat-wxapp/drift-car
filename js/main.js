@@ -57,7 +57,13 @@ export default class Main extends UTIL {
      * 更新每日
      * */
     updateDate() {
-        $io.updateDate();
+        const accessToken = localStorage.getItem('accessToken');
+
+        console.log('当前localStorage: ', accessToken);
+
+        if (accessToken) {
+            $io.updateDate();
+        }
     }
 
     /**
