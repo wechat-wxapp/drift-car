@@ -97,13 +97,21 @@ export default class WX extends UTIL {
 
                     this.getAccessToken()
                         .then(e => {
+                            console.log('3');
                             $loader.hide();
                         });
 
                 } else {
                     $loader.hide();
+
                     console.log('登录失败: ' + res.errMsg);
                 }
+            },
+            fail: () => {
+                $loader.hide();
+                console.log('登录失败error: ' + res.errMsg);
+            },
+            complete: () => {
             }
         });
     }
@@ -116,7 +124,9 @@ export default class WX extends UTIL {
             $io.getAccessToken(this.code)
             .then(token => {
                 const { code, payload: { data } } = token;
+                console.log('2', code, token);
                 if (code === '0') {
+                    console.log('1token', token);
                     // 缓存openid, session_key
                     localStorage.setItem('accessToken', data);
 
