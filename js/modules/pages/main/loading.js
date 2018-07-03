@@ -55,13 +55,8 @@ export default class Loader {
 
         startPage = new pageStart();
 
-        if($wx.shareTicket !== 'noStareTicket') {
-            isSharedLoop = true;
-            pageClass.clear2d()
-            sharedTexture2d.needsUpdate = true;
-            $wx.sendMessage('groupRank',{ type: 2 , page: rankCurrentPage, common: 0 , shareTicket: $wx.shareTicket});
-            currentPage = 'groupRank';
-        }
+        // 进入是否显示群排行榜
+        sharedClass.showGroupRankPage();
     }
 
     /**

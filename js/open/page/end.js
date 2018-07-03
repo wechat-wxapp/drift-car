@@ -14,6 +14,8 @@ export default class Loader extends Init {
     setTexture(data) {
         this.clearCvs();
 
+        if (this.selfData) this.updateWxScore(data.score);
+
         this.cvs.fillStyle = "#fff";
         this.cvs.font = `bold ${this.computedSizeW(26)}px Arial`;
         this.cvs.textAlign = "center";
@@ -73,8 +75,6 @@ export default class Loader extends Init {
         this.drawRoundRect(this.cvs, this.winWidth / 2 - this.computedSizeW(160) / 2, this.computedSizeH(182), this.computedSizeW(160), this.computedSizeH(50), this.computedSizeW(25) ,'rgba(255,255,255,0.3)');
         
         if (this.rankData !== null ) {
-            console.log(this.selfData)
-            console.log(this.rankData)
             const rank = this.selfData.rank
             let {myPowerfulFri,myWeakFri} = {}
             if (rank !== 1) {
@@ -130,8 +130,6 @@ export default class Loader extends Init {
                 avatar2.onload = () => {
                     this.circleImg(this.cvs, avatar2,  this.computedSizeW(530), this.computedSizeH(722), this.computedSizeW(42), this.computedSizeW(42))
                 }
-                console.log('myWeakFri:',myWeakFri)
-                console.log('myPowerfulFri:',myPowerfulFri)
                 this.cvs.font = `${this.computedSizeW(20)}px Arial`;
                 this.cvs.fillStyle = "#666";
                 this.cvs.textAlign = "center";

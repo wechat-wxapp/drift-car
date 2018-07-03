@@ -190,6 +190,9 @@ export default class UTIL {
         speedKey = 0;
         lastSpeedKey = 0;
 
+        // 重置转弯次数
+        turn = 0;
+
         $bus.setData('reseurNum', $bus.constantData.reseurNum);
     }
 

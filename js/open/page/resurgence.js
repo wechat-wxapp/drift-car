@@ -18,18 +18,12 @@ export default class Resurgence extends Init {
         let myFri = null
         let scoreLess = 0
         this.rankData.map((e,index)=>{
-            console.log(e['KVDataList'][0].value)
-            console.log(data.score)
             if (e['KVDataList'][0].value > data.score && e.openid !== this.selfData.openid) {
-                console.log('less')
                 myFri = e
                 scoreLess = myFri['KVDataList'][0].value - data.score
             }
         })
-        console.log(myFri)
-        console.log(scoreLess)
         if (myFri === null) {
-            console.log('第一')
             const rankOne = wx.createImage();
             rankOne.src = 'images/rankOne.png';
             this.cvs.drawImage(rankOne, 0, 0, rankOne.width, rankOne.height, this.winWidth / 2 - this.computedSizeW(326) / 2, this.computedSizeH(456), this.computedSizeW(326), this.computedSizeH(25));
@@ -40,7 +34,6 @@ export default class Resurgence extends Init {
             let nicknameLeft = (myFri.nickname.length <= 15? myFri.nickname.length : 15 ) * 26
             let sumWidth = scoreLength + 110 + nicknameLeft
             let bothLeft = this.winWidth / 2 - this.computedSizeW(sumWidth) / 2
-            console.log(sumWidth)
             this.cvs.fillStyle = "#fff";
 
             this.cvs.font = `${this.computedSizeW(26)}px Arial`;
