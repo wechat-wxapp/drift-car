@@ -26,6 +26,11 @@ export default class Main extends UTIL {
     constructor() {
         super();
 
+        wx.updateShareMenu({
+            withShareTicket: true,
+            success: ()=> console.log('updateShareMenu')
+         })
+
         // 初始化3D世界
         this.initThree();
 
@@ -37,19 +42,20 @@ export default class Main extends UTIL {
 
         // 创建全局绑定对象
         events = new bindEvent();
-
+        
         // 创建音乐播放器
         music = new Music();
-
+        
         // 实例化微信类
         $wx = new WX();
+        $wx.shareTicket = wx.getLaunchOptionsSync().shareTicket || 'noStareTicket';
         // 实例化loading类
         $loader = new LOADER();
         // 无法加载
         // $wx.getFontFamily();
 
         pageClass = new page();
-
+        
         // 渲染
         this.loop();
     }

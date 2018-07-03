@@ -46,6 +46,14 @@ export default class Loader {
         scoreClass = new Score();
 
         startPage = new pageStart();
+
+        if($wx.shareTicket !== 'noStareTicket') {
+            isSharedLoop = true;
+            pageClass.clear2d()
+            sharedTexture2d.needsUpdate = true;
+            $wx.sendMessage('groupRank',{ page: rankCurrentPage, common: 0 , shareTicket: $wx.shareTicket});
+            currentPage = 'groupRank';
+        }
     }
 
     /**

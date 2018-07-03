@@ -17,6 +17,8 @@ export default class WX extends UTIL {
         this.checkLogin();
         this.createStartBtn();
 
+        this.scaleTime = 0;
+        
         // IO.getunlock();
     }
 
@@ -24,11 +26,11 @@ export default class WX extends UTIL {
         openDataContext = wx.getOpenDataContext();
         wx.showShareMenu({ withShareTicket: true });
 
-        this.shareTicket = 'noStareTicket';
-        wx.onShow(res => {
-            this.shareTicket = res.shareTicket;
-            console.log('shareTicket: ', res, this.shareTicket);
-        });
+        // this.shareTicket = 'noStareTicket';
+        // wx.onShow(res => {
+        //     if(res.shareTicket) this.shareTicket = res.shareTicket;
+        //     console.log('00000shareTicket: ', this.shareTicket);
+        // });
 
         openDataContext.postMessage({
             command: 'init',

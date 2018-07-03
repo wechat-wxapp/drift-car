@@ -33,9 +33,11 @@ export default class Shared extends UTIL {
         this.bindSkip();
 
         // 排行榜-上一页
-        this.bindPrePage();
+        this.groupPrePage();
+        this.friendPrePage();
         // 排行榜-下一页
-        this.bindNextPage();
+        this.groupNextPage();
+        this.friendNextPage();
 
         // 泡妞神器-返回
         this.bindQrBack();
@@ -140,14 +142,14 @@ export default class Shared extends UTIL {
     }
 
     // 上一页按钮
-    bindPrePage() {
+    groupPrePage() {
         const x1 = this.computedSizeW(254);
         const x2 = this.computedSizeW(291);
         const y1 = this.computedSizeH(158);
         const y2 = this.computedSizeH(171);
 
         events.click({
-            name: 'prePageBtn',
+            name: 'groupPrePage',
             pageName: 'groupRank',
             point: [x1, y1, x2, y2],
             cb: () => {
@@ -160,31 +162,32 @@ export default class Shared extends UTIL {
     }
 
     // 下一页按钮
-    bindNextPage() {
+    groupNextPage() {
         const x1 = this.computedSizeW(311);
         const x2 = this.computedSizeW(363);
         const y1 = this.computedSizeH(157);
         const y2 = this.computedSizeH(172);
         events.click({
-            name: 'nextPageBtn',
+            name: 'groupNextPage',
             pageName: 'groupRank',
             point: [x1, y1, x2, y2],
             cb: () => {
                 // rankCurrentPage = rankCurrentPage + 1;
+                console.log('下一页！！！！！',this)
                 $wx.sendMessage('groupRank',{ page: rankCurrentPage, common: 1 , shareTicket: $wx.shareTicket});
                 sharedTexture2d.needsUpdate = true;
             }
         })
     }
     // 上一页按钮
-    bindPrePage() {
+    friendPrePage() {
         const x1 = this.computedSizeW(254);
         const x2 = this.computedSizeW(291);
         const y1 = this.computedSizeH(158);
         const y2 = this.computedSizeH(171);
 
         events.click({
-            name: 'prePageBtn',
+            name: 'friendPrePage',
             pageName: 'friendRank',
             point: [x1, y1, x2, y2],
             cb: () => {
@@ -197,13 +200,13 @@ export default class Shared extends UTIL {
     }
 
     // 下一页按钮
-    bindNextPage() {
+    friendNextPage() {
         const x1 = this.computedSizeW(311);
         const x2 = this.computedSizeW(363);
         const y1 = this.computedSizeH(157);
         const y2 = this.computedSizeH(172);
         events.click({
-            name: 'nextPageBtn',
+            name: 'friendNextPage',
             pageName: 'friendRank',
             point: [x1, y1, x2, y2],
             cb: () => {
@@ -262,12 +265,7 @@ export default class Shared extends UTIL {
             pageName: 'friendRank',
             point: [x1, y1, x2, y2],
             cb: () => {
-                isSharedLoop = true;
-                console.log('goGroupRank')
-                // rankCurrentPage = rankCurrentPage + 1;
-                $wx.sendMessage('groupRank',{ page: rankCurrentPage, common: 1 , shareTicket: $wx.shareTicket });
-                // sharedTexture2d.needsUpdate = true;
-                currentPage = 'groupRank';
+                this.groupRankPage()
             }
         })
     }
@@ -339,7 +337,6 @@ export default class Shared extends UTIL {
         })
     }
 
-
     /**
      * 创建2d画布
      */
@@ -397,7 +394,8 @@ export default class Shared extends UTIL {
     rankPage() {
         isSharedLoop = true;
         currentPage = 'friendRank';
-        this.showPage('friendRank', {}, true);
+        //禁止从这里进去缩放
+        this.showPage('friendRank', { noScale: $wx.shareTicket === 'noShareTicket' }, true);
     }
 
     /**
@@ -418,11 +416,8 @@ export default class Shared extends UTIL {
      * 群排行榜
      * */
     groupRankPage() {
-        wx.updateShareMenu({
-            withShareTicket: true
-          })
         wx.shareAppMessage({
-            title: '转发标题'
+            title: '漂移车王'
           })
         // isSharedLoop = true;
         // currentPage = 'groupRank';

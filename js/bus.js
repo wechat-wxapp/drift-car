@@ -16,6 +16,8 @@ const basicData = {
     ground: '',
     groundBody: '',
 
+    scaleTime: 0,
+    
     // 车辆类
     carClass: '',
     // 直路类

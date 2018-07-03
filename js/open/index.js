@@ -16,7 +16,7 @@ const wechatMPPage = new WechatMPPage();
 const qrPage = new QrPage();
 const init = new Init();
 
-wx.onMessage(({ command, data = {} }) => {
+wx.onMessage(({ command, data = {}}) => {
     switch (command) {
         case 'end':
             endPage.setTexture(data);
@@ -25,7 +25,7 @@ wx.onMessage(({ command, data = {} }) => {
             reseurPage.setTexture(data);
             break;
         case 'friendRank':
-            friendRankPage.setTexture(1)
+            friendRankPage.setTexture(1, data.noScale)
             friendRankPage.initFriendRankData()
                 .then(() => {
                     friendRankPage.showData(data)
@@ -51,7 +51,7 @@ wx.onMessage(({ command, data = {} }) => {
             qrPage.setTexture();
             break;
         case 'clear':
-            init.clearCvs(true);
+            init.clearCvs(true, true);
             break;
     }
 });
