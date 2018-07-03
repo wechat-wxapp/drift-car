@@ -51,7 +51,7 @@ export default class Loader {
             isSharedLoop = true;
             pageClass.clear2d()
             sharedTexture2d.needsUpdate = true;
-            $wx.sendMessage('groupRank',{ page: rankCurrentPage, common: 0 , shareTicket: $wx.shareTicket});
+            $wx.sendMessage('groupRank',{ type: 2 , page: rankCurrentPage, common: 0 , shareTicket: $wx.shareTicket});
             currentPage = 'groupRank';
         }
     }

@@ -159,6 +159,7 @@ const basicData = {
         leaderboard: 'images/leaderboard-btn.png',
         checkLeaderboard: 'images/check-leaderboard-btn.png',
         startBottomBtn1: 'images/start-bottom-btn-1.png',
+        startBottomBtn1off: 'images/start-bottom-btn-1-off.png',
         startBottomBtn2: 'images/start-bottom-btn-2.png',
         startBottomBtn3: 'images/start-bottom-btn-3.png',
         startBottomBtn4: 'images/start-bottom-btn-4.png',
@@ -173,7 +174,10 @@ const basicData = {
         // 二维码
         qrLamp: 'images/qr-lamp.png',
         qrBtn: 'images/qr-btn.png',
-        qrcode: 'images/qrcode.png'
+        qrcode: 'images/qrcode.png',
+
+        //排行
+        rankOne: 'images/rankOne.png'
     },
 
     // 微信相关参数

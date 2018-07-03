@@ -15,12 +15,14 @@ export default class Rank extends Init {
     this.clearCvs(null, noScale);
     if(type == 1) {
       this.friendRank()
-    }
-    else if(type == 2) {
+    }else if(type == 2) {
       // this.initGroupRankData(data.shareTicket);
+      console.log("qun============")
       this.groupRank();
+    }else {
+      console.log('世界')
+      this.worldRank();
     }
-    else this.worldRank();
   
     // 更新提示
     this.cvs.fillStyle = "#e7e7e7";
@@ -63,7 +65,7 @@ export default class Rank extends Init {
     //下一页保存 tudo
     // wx.total = total
     // console.log('getWX---------', wx.total)
-    
+
     // 每页展示数
     let counts = 6;
     // 总页数
@@ -150,8 +152,11 @@ export default class Rank extends Init {
 
         avatar.onload = () => {
           that.circleImg(this.cvs, avatar, this.computedSizeW(190), that.computedSizeH(364 + (i - (rankCurrentPage - 1) * counts) * 96.8), this.computedSizeW(30))
+          that.cvs.closePath();
         }
       }
+      // this.cvs.fillStyle = ''
+      // this.cvs.fill();
     }
 
     // 名字
@@ -173,30 +178,46 @@ export default class Rank extends Init {
       }
     }
 
-    //蓝色部分自己排名头像
-    let avatar = wx.createImage();
-    avatar.src = this.selfData.avatarUrl
-    avatar.onload = () => {
-      this.circleImg(this.cvs,avatar,this.computedSizeW(190), this.computedSizeH(988),this.computedSizeW(30))
+    //   //蓝色自己排名
+    //   this.cvs.fillStyle = `#ffd81f`;
+    //   this.cvs.font = 'noraml';
+    //   if(total !== 0)
+    //     this.cvs.fillText(this.selfData.rank, this.computedSizeW(132), this.computedSizeH(1028));
+    //   this.cvs.fillStyle = `#fff`;
+    //   if(total !== 0)
+    //     this.cvs.fillText(this.selfData.nickname, this.computedSizeW(286), this.computedSizeH(1028), this.computedSizeW(146));
+    //   this.cvs.font = `bold`;
+    //   if(this.selfData.KVDataList.length > 0)
+    //     this.cvs.fillText(this.selfData.KVDataList[0].value, this.computedSizeW(538), this.computedSizeH(1028));
+    // }
 
-      // this.cvs.drawImage(avatar, this.computedSizeW(190), this.computedSizeH(990), this.computedSizeW(60), this.computedSizeW(60))
-    }
+    //蓝色部分自己排名头像
+    // let avatar2 = wx.createImage();
+    // avatar2.src = this.selfData.avatarUrl
+    // avatar2.onload = () => {
+    //   this.circleImg(this.cvs,avatar2,this.computedSizeW(190), this.computedSizeH(988),this.computedSizeW(30))
+    //   this.cvs.closePath();
+    // }
 
     //蓝色自己排名
     this.cvs.fillStyle = `#ffd81f`;
     this.cvs.font = 'noraml';
-    if(total !== 0)
+    if(total !== 0) {
       this.cvs.fillText(this.selfData.rank, this.computedSizeW(132), this.computedSizeH(1026));
+    }
       // this.cvs.arc(this.computedSizeW(234), this.computedSizeH(1018), this.computedSizeW(31), 0, 2 * Math.PI);
       // this.cvs.fill();
       this.cvs.fillStyle = `#fff`;
-    if(total !== 0)
+    if(total !== 0){
       this.cvs.fillText(this.selfData.nickname, this.computedSizeW(286), this.computedSizeH(1026), this.computedSizeW(146));
+    }
     this.cvs.font = `bold`;
-    if(this.selfData.KVDataList.length > 0)
+    if(this.selfData.KVDataList.length > 0) {
       this.cvs.fillText(this.selfData.KVDataList[0].value, this.computedSizeW(538), this.computedSizeH(1026));
+    }
     
   }
+    
 
   friendRank(){
     this.drawRoundRect(this.cvs, this.computedSizeW(85), this.computedSizeH(160), this.computedSizeW(216), this.computedSizeH(70), this.computedSizeW(35), 'rgba(73,116,235,1)');
@@ -217,8 +238,8 @@ export default class Rank extends Init {
   }
 
   worldRank(){
-    // this.drawRoundRect(this.cvs, this.computedSizeW(85), this.computedSizeH(160), this.computedSizeW(216), this.computedSizeH(70), this.computedSizeW(35), '#fff', 2);
-    // this.drawRoundRect(this.cvs, this.computedSizeW(442), this.computedSizeH(160), this.computedSizeW(216), this.computedSizeH(70), this.computedSizeW(35), 'rgba(73,116,235,1)');
+    this.drawRoundRect(this.cvs, this.computedSizeW(85), this.computedSizeH(160), this.computedSizeW(216), this.computedSizeH(70), this.computedSizeW(35), '#fff', 2);
+    this.drawRoundRect(this.cvs, this.computedSizeW(442), this.computedSizeH(160), this.computedSizeW(216), this.computedSizeH(70), this.computedSizeW(35), 'rgba(73,116,235,1)');
     this.cvs.beginPath();
     this.cvs.fillStyle = "#fff";
     this.cvs.font = `bold ${this.computedSizeW(30)}px xszt`;
@@ -233,10 +254,12 @@ export default class Rank extends Init {
     this.cvs.fillStyle = "#fff";
     this.cvs.font = `bold ${this.computedSizeW(30)}px xszt`;
     this.cvs.fillText('查看群排行', this.computedSizeW(480), this.computedSizeH(1194));
-    this.cvs.clo
+    this.cvs.closePath();
   }
 
   groupRank(){
+    // this.drawRoundRect(this.cvs, this.computedSizeW(85), this.computedSizeH(160), this.computedSizeW(216), this.computedSizeH(70), this.computedSizeW(35), '#fff', 2);
+    // this.drawRoundRect(this.cvs, this.computedSizeW(442), this.computedSizeH(160), this.computedSizeW(216), this.computedSizeH(70), this.computedSizeW(35), 'rgba(73,116,235,1)');
     this.drawRoundRect(this.cvs, (this.winWidth - this.computedSizeW(216)) / 2, this.computedSizeH(160), this.computedSizeW(216), this.computedSizeH(70), this.computedSizeW(35), 'rgba(73,116,235,1)');
     this.cvs.beginPath();
     this.cvs.fillStyle = "#fff";
