@@ -92,7 +92,7 @@ export default class Init {
                         // 保存个人数据
                         that.selfData = that.normalizeSelf(that.rankData, that.self.nickName)
                         console.log('friend ranks self data',that.rankData,that.selfData)
-                        resolve()
+                        resolve(that.rankData)
                     })
                 },
                 fail: res => {
@@ -130,45 +130,20 @@ export default class Init {
     }
 
         
-    initWorldpRankData(offset = 0, limit = 20) {
-        const domain = `192.168.6.49:3003`;
-        const openid = "o4eqt4i61Kdq9nr4cHHwK8_wT3xE";
-        //获取世界排行榜
-        const _wRank = (openid) => {
-            // const openid = openid
-            console.log('request1111111111')
-            return new Promise((resovle) => {
-                wx.request({
-                    method: 'POST',
-                    url: `${domain}/yc/rank/data`,
-                    data: {
-                        openid: openid,
-                        offset: offset, // 分页偏移量
-                        limit: limit // 每页请求数
-                    },
-                    success: res => {
-                        const worldRank = res.payload.ranks
-                        console.log(`world request`, res)
-                        console.log(`world rank request`, worldRank)
-                    }
-                })
-            })
-        }
-        _wRank(openid)
-        // wx.login({
-        //     success: res => {
-        //         let code = res.code;
-        //         wx.request({
-        //             url: `${domain}/yc/wechat/code2accessToken?code=${code}`,
-        //             success: res => {
-        //                 //openID,,,,以及session key
-        //                 _wRank(res.openid)
-        //             },
-        //             fail: () => console.log('request fail')
-        //         })
-        //     },
-        //     fail: () => console.log('login fail')
-        // })
+    initWorldRankData(data) {
+        this.rankData = data.ranks
+        this.rankData.map(e=>{
+            e['KVDataList'] = []
+            e['KVDataList'].push({value: e.score})
+            e.avatarUrl = e.headimgurl
+        })
+        this.selfData = data.user
+        this.selfData['KVDataList'] = []
+        this.selfData['KVDataList'].push({value: this.selfData.score})
+        this.selfData.avatarUrl = this.selfData.headimgurl
+        console.log('worldrank:',this.rankData)
+        console.log('selfrank:',this.selfData)
+
     }
 
     // 初始化个人信息
@@ -227,8 +202,6 @@ export default class Init {
                 }
             }
         }
-        console.log('des111' ,right)
-        console.log('des222' ,left)
         return this.sort(left, des, isGroup).concat(middleArr,this.sort(right, des, isGroup));
     }
 
@@ -247,5 +220,17 @@ export default class Init {
     deepCopy(data) {
         return JSON.parse(JSON.stringify(data));
     }
+
+    //绘制圆形头像
+    circleImg(ctx, img, x, y, r) {
+        ctx.save();
+        let d =2 * r;
+        let cx = x + r;
+        let cy = y + r;
+        ctx.arc(cx, cy, r, 0, 2 * Math.PI);
+        ctx.clip();
+        ctx.drawImage(img, x, y, d, d);
+        ctx.restore();
+      }
 }
 

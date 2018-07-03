@@ -17,10 +17,18 @@ const init = new Init();
 wx.onMessage(({ command, data = {} }) => {
     switch (command) {
         case 'end':
-            endPage.setTexture(data);
+            endPage.setTexture(data)
+            endPage.initFriendRankData()
+                .then((e) => {
+                    endPage.setTexture(data);
+                })
             break;
         case 'reseur':
-            reseurPage.setTexture(data);
+            reseurPage.setTexture(data)
+            reseurPage.initFriendRankData()
+                .then((e) => {
+                    reseurPage.setTexture(data);
+                })
             break;
         case 'friendRank':
             friendRankPage.setTexture(1)
@@ -30,14 +38,14 @@ wx.onMessage(({ command, data = {} }) => {
                 })
             break;
         case 'worldRank':
-            worldRankPage.clearCvs();
-            worldRankPage.setTexture(data);
+            worldRankPage.setTexture(data)
+            worldRankPage.initWorldRankData(data)
+            worldRankPage.showData(data)
             break;
         case 'groupRank':
             groupRankPage.setTexture(2)
             groupRankPage.initGroupRankData(data.shareTicket)
                 .then(() => groupRankPage.showData(data));
-                // groupRankPage.setTexture(data, 2)
             break;
         case 'carport':
             carportPage.setTexture(data);

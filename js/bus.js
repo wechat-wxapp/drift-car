@@ -183,7 +183,10 @@ const basicData = {
         // 二维码
         qrLamp: 'images/qr-lamp.png',
         qrBtn: 'images/qr-btn.png',
-        qrcode: 'images/qrcode.png'
+        qrcode: 'images/qrcode.png',
+
+        //排行
+        rankOne: 'images/rankOne.png'
     },
 
     // 排行榜当前页数

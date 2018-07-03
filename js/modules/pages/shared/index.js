@@ -47,6 +47,16 @@ export default class Shared extends UTIL {
         this.bindFriendRankNextPage();
         // 好友排行榜-返回
         this.friendRankGoBack();
+        // 世界排行-好友排行榜
+        this.goFriendRank();
+
+
+        // 世界排行榜-上一页
+        this.bindWorldRankPrePage();
+        // 世界排行榜-下一页
+        this.bindWorldRankNextPage();
+        // 世界排行-返回
+        this.worldRankGoBack();
 
         // 泡妞神器-返回
         this.bindQrBack();
@@ -92,6 +102,7 @@ export default class Shared extends UTIL {
             pageName: 'endPage',
             point: [x1, y1, x2, y2],
             cb: () => {
+                isSharedLoop = false;
                 this.clear2d();
 
                 offCanvasSprite.position.x += speedRecord.x;
@@ -103,6 +114,23 @@ export default class Shared extends UTIL {
         });
     }
 
+    // 结束页-好友排行
+    endFriendRank() {
+        const x1 = this.computedSizeW(266);
+        const x2 = this.computedSizeW(352);
+        const y1 = this.computedSizeH(517);
+        const y2 = this.computedSizeH(532);
+
+        events.click({
+            name: 'endFriendRank',
+            pageName: 'endPage',
+            point: [x1, y1, x2, y2],
+            cb: () => {
+                isSharedLoop = true ;
+                sharedClass.rankPage();
+            }
+        });
+    }
     // 复活页-复活
     bindReseur() {
         const x1 = this.computedSizeW(125);
@@ -115,8 +143,8 @@ export default class Shared extends UTIL {
             pageName: 'reseurPage',
             point: [x1, y1, x2, y2],
             cb: () => {
+                isSharedLoop = false;
                 this.clear2d();
-
                 this.restart(true);
 
                 currentPage = 'gamePage';
@@ -137,6 +165,7 @@ export default class Shared extends UTIL {
             point: [x1, y1, x2, y2],
             cb: () => {
                 this.clear2d();
+                isSharedLoop = true;
 
                 this.endPage();
 
@@ -150,6 +179,102 @@ export default class Shared extends UTIL {
                 currentPage = 'endPage';
             }
         });
+    }
+
+    // 上一页按钮
+    bindWorldRankPrePage() {
+        const x1 = this.computedSizeW(254);
+        const x2 = this.computedSizeW(291);
+        const y1 = this.computedSizeH(158);
+        const y2 = this.computedSizeH(171);
+
+        events.click({
+            name: 'worldRankPrePage',
+            pageName: 'worldRank',
+            point: [x1, y1, x2, y2],
+            cb: () => {
+                // rankCurrentPage = rankCurrentPage <= 1 ? 1 : rankCurrentPage--;
+                if (rankCurrentPage === 1) {
+                    return
+                }
+                rankCurrentPage -= 1
+                IO.getWorldRank({ offset: rankCurrentPage - 1 }).then(e=>{
+                    let exp = {
+                        "payload": {
+                            "user":  {
+                                "openid": "1111",
+                                "score": "122",
+                                "rank": 2,
+                                "headimgurl": "https://wx.qlogo.cn/mmopen/vi_32/xAGSkZZsicKKtkQLfwz7mtR3W6DGgyCAebK9WBiaLN3mLibRzyLFJmAyzoyhBxzib6oUhaeL8L64bQZIicJibtAYHCgg/132",
+                                "nickname": "脚12312皮哥",
+                            },
+                            "ranks": [
+                                {
+                                    "openid": "12111",
+                                    "score": "122",
+                                    "rank": 1,
+                                    "headimgurl": "https://wx.qlogo.cn/mmopen/vi_32/xAGSkZZsicKKtkQLfwz7mtR3W6DGgyCAebK9WBiaLN3mLibRzyLFJmAyzoyhBxzib6oUhaeL8L64bQZIicJibtAYHCgg/132",
+                                    "nickname": "脚1皮哥",
+                                },
+                                {
+                                    "openid": "1111",
+                                    "score": "122",
+                                    "rank": 2,
+                                    "headimgurl": "https://wx.qlogo.cn/mmopen/vi_32/xAGSkZZsicKKtkQLfwz7mtR3W6DGgyCAebK9WBiaLN3mLibRzyLFJmAyzoyhBxzib6oUhaeL8L64bQZIicJibtAYHCgg/132",
+                                    "nickname": "脚12312皮哥",
+                                },
+                                {
+                                    "openid": "111",
+                                    "headimgurl": "https://wx.qlogo.cn/mmopen/vi_32/xAGSkZZsicKKtkQLfwz7mtR3W6DGgyCAebK9WBiaLN3mLibRzyLFJmAyzoyhBxzib6oUhaeL8L64bQZIicJibtAYHCgg/132",
+                                    "nickname": "脚皮哥",
+                                    "score": "20",
+                                    "rank": 3
+                                }
+                            ]
+                        },
+                        "code": "0",
+                        "msg": "ok"
+                    }
+                    this.showPage('worldRank',{
+                        page: 1,
+                        common: 1 ,
+                        shareTicket: $wx.shareTicket,
+                        ranks:e.payload.ranks ,
+                        user:e.payload.user
+                    })
+                    sharedTexture2d.needsUpdate = true;
+                    currentPage = 'worldRank';
+                })
+            }
+        })
+    }
+
+    // 下一页按钮
+    bindWorldRankNextPage() {
+        const x1 = this.computedSizeW(311);
+        const x2 = this.computedSizeW(363);
+        const y1 = this.computedSizeH(157);
+        const y2 = this.computedSizeH(172);
+        events.click({
+            name: 'worldRankNextPage',
+            pageName: 'worldRank',
+            point: [x1, y1, x2, y2],
+            cb: () => {
+                // rankCurrentPage = rankCurrentPage <= 1 ? 1 : rankCurrentPage--;
+                rankCurrentPage += 1
+                IO.getWorldRank({ offset: rankCurrentPage - 1 }).then(e=>{
+                    this.showPage('worldRank',{
+                        page: 1,
+                        common: 1 ,
+                        shareTicket: $wx.shareTicket,
+                        ranks:e.payload.ranks ,
+                        user:e.payload.user
+                    })
+                    sharedTexture2d.needsUpdate = true;
+                    currentPage = 'worldRank';
+                })
+            }
+        })
     }
 
     // 群排行榜-上一页按钮
@@ -260,6 +385,26 @@ export default class Shared extends UTIL {
     }
 
     // 查看群排行
+    /**
+     * 绑定排行榜按钮
+     * */
+    goFriendRank() {
+        const x1 = this.computedSizeW(51);
+        const x2 = this.computedSizeW(161);
+        const y1 = this.computedSizeH(91);
+        const y2 = this.computedSizeH(120);
+
+        events.click({
+            name: 'friendRankBtn',
+            pageName: 'worldRank',
+            point: [x1, y1, x2, y2],
+            cb: () => {
+                sharedClass.rankPage();
+            }
+        });
+    }
+
+    //查看群排行
     goGroupRank() {
         const x1 = this.computedSizeW(246);
         const x2 = this.computedSizeW(365);
@@ -291,6 +436,7 @@ export default class Shared extends UTIL {
             pageName: 'groupRank',
             point: [x1, y1, x2, y2],
             cb: () => {
+                isSharedLoop = false;
                 this.clear2d();
 
                 startPage.setTexture();
@@ -337,6 +483,26 @@ export default class Shared extends UTIL {
         })
     }
 
+    worldRankGoBack() {
+        const x1 = this.computedSizeW(50);
+        const x2 = this.computedSizeW(76);
+        const y1 = this.computedSizeH(642);
+        const y2 = this.computedSizeH(666);
+        events.click({
+            name: 'worldRankGoBack',
+            pageName: 'worldRank',
+            point: [x1, y1, x2, y2],
+            cb: () => {
+                isSharedLoop = false;
+                this.clear2d();
+                offCanvasSprite.position.x += speedRecord.x;
+                offCanvasSprite.position.z -= speedRecord.z;
+
+                startPage.setTexture();
+                currentPage = 'startPage';
+            }
+        })
+    }
 
     /**
      * 创建2d画布
@@ -372,6 +538,7 @@ export default class Shared extends UTIL {
      * 结束页
      * */
     endPage() {
+        isSharedLoop = true;
         currentPage = 'endPage';
         this.showPage('end', { score });
     }
@@ -380,6 +547,7 @@ export default class Shared extends UTIL {
      * 复活页
      * */
     reseurPage() {
+        isSharedLoop = true;
         currentPage = 'reseurPage';
         this.showPage('reseur', { score });
     }
@@ -413,9 +581,15 @@ export default class Shared extends UTIL {
      * 群排行榜
      * */
     groupRankPage() {
-        isSharedLoop = true;
-        currentPage = 'groupRank';
-        this.showPage('groupRank', {shareTicket: $wx.shareTicket}, true);
+        wx.updateShareMenu({
+            withShareTicket: true
+          })
+        wx.shareAppMessage({
+            title: '转发标题'
+          })
+        // isSharedLoop = true;
+        // currentPage = 'groupRank';
+        // this.showPage('groupRank', {shareTicket: $wx.shareTicket}, true);
     }
 
     showPage(command, data, clear) {

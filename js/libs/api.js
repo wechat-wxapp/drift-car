@@ -22,6 +22,9 @@ const API = {
     // 获取车库
     'GET_UNLOCK': '/yc/carport/getunlock',
 
+    // 获取世界排行
+    'GET_WORLD_RANK': '/yc/rank/data',
+
     // 提交分数
     'UPDATE_SCORE': '/yc/user/updateScore'
 };
