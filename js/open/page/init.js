@@ -8,6 +8,8 @@ export default class Init {
         this.winHeight = wx.getSystemInfoSync().screenHeight * this.dpr;
         const sharedCanvas = wx.getSharedCanvas();
         this.cvs = sharedCanvas.getContext('2d');
+
+        //用来判断只进行一次canvas缩放
         wx.hasScaled = 0;
 
         this.themeBule = `rgba(73,116,235,1)`;
@@ -238,11 +240,11 @@ export default class Init {
         let cx = x + r;
         let cy = y + r;
         ctx.arc(cx, cy, r, 0, 2 * Math.PI);
-        ctx.stroke();
+        // ctx.stroke();
         ctx.clip();
         ctx.drawImage(img, x, y, d, d);
         ctx.restore();
-        ctx.closePath();
+        // ctx.closePath();
     }
 
     canvasScale(isEnlarge) {
