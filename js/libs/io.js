@@ -59,14 +59,14 @@ export default {
     /**
      * 获取世界排行
      * */
-    getWorldRank: () => {
+    getWorldRank: (data) => {
         const { openid } = localStorage.getItem('openid');
 
         return request(API.GET_WORLD_RANK, {
             method: 'POST',
             data: { openid,
-                offset: 0,
-                limit: 20
+                offset: data.offset,
+                limit: 6
              }
         });
     }

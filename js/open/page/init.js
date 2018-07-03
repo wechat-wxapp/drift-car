@@ -94,7 +94,7 @@ export default class Init {
                         // 保存个人数据
                         that.selfData = that.normalizeSelf(that.rankData, that.self.nickName)
                         console.log('friend ranks self data',that.rankData,that.selfData)
-                        resolve()
+                        resolve(that.rankData)
                     })
                 },
                 fail: res => {
@@ -143,8 +143,8 @@ export default class Init {
         this.selfData['KVDataList'] = []
         this.selfData['KVDataList'].push({value: this.selfData.score})
         this.selfData.avatarUrl = this.selfData.headimgurl
-        console.log(this.rankData)
-        console.log(this.selfData)
+        console.log('worldrank:',this.rankData)
+        console.log('selfrank:',this.selfData)
 
     }
 
@@ -180,6 +180,7 @@ export default class Init {
             return arr;
         }
 
+        // console.log('arr111',arr) arr[i].KVDataList.length == 0
         var num = Math.floor(arr.length/2);
         var middleArr = arr.splice(num, 1);
         var middleValue = middleArr[0].KVDataList.length > 0 ? middleArr[0].KVDataList[0].value : 0;
@@ -188,7 +189,7 @@ export default class Init {
         
         if (des === 'des') {
             for(var i = 0; i < arr.length; i++){
-                if(arr[i].KVDataList.length > 0 && arr[i].KVDataList[0].value < middleValue){
+                if(arr[i].KVDataList[0].value * 1 < middleValue * 1){
                     left.push(arr[i]);
                 }else{
                     right.push(arr[i]);
@@ -196,14 +197,13 @@ export default class Init {
             }
         } else {
             for(var i = 0; i < arr.length; i++){
-                if(arr[i].KVDataList[0].value > middleValue){
+                if(arr[i].KVDataList[0].value * 1  > middleValue * 1){
                     left.push(arr[i]);
                 }else{
                     right.push(arr[i]);
                 }
             }
         }
-
         return this.sort(left, des, isGroup).concat(middleArr,this.sort(right, des, isGroup));
     }
 

@@ -10,8 +10,6 @@ export default class WX extends UTIL {
         height: winHeight
     };
 
-    isLogin = false;
-
     constructor() {
         super();
 
@@ -118,6 +116,9 @@ export default class WX extends UTIL {
                     openid,
                     session_key
                 }
+            } else {
+                $loader.hide();
+                console.log('接口出错: ', token);
             }
         })
         .then(e => {

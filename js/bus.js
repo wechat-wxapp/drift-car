@@ -118,6 +118,7 @@ const basicData = {
     carportPage: '',
 
     // 微信公开域画布
+    isSharedLoop: false,
     openDataContext: '',
     sharedCanvas: '',
     sharedTexture2d: '',
@@ -156,6 +157,7 @@ const basicData = {
         leaderboard: 'images/leaderboard-btn.png',
         checkLeaderboard: 'images/check-leaderboard-btn.png',
         startBottomBtn1: 'images/start-bottom-btn-1.png',
+        startBottomBtn1off: 'images/start-bottom-btn-1-off.png',
         startBottomBtn2: 'images/start-bottom-btn-2.png',
         startBottomBtn3: 'images/start-bottom-btn-3.png',
         startBottomBtn4: 'images/start-bottom-btn-4.png',
@@ -170,18 +172,21 @@ const basicData = {
         // 二维码
         qrLamp: 'images/qr-lamp.png',
         qrBtn: 'images/qr-btn.png',
-        qrcode: 'images/qrcode.png'
+        qrcode: 'images/qrcode.png',
+
+        //排行
+        rankOne: 'images/rankOne.png'
     },
 
     // 微信相关参数
-    wxConfig: {}
+    wxConfig: {},
+
+    // 排行榜当前页数
+    rankCurrentPage: 1
 };
 
 // 变量
 const varData = {
-    // 排行榜当前页数
-    rankCurrentPage: 1,
-    
     // 模型变量
     roadArr: [],
     roadBodys: [],
@@ -212,9 +217,7 @@ const varData = {
     // 最后的道路key
     lastBoxType: 'r6',
 
-    /**
-     * 碰撞后定位2d画布
-     * */
+    // 碰撞后定位2d画布
     speedRecord: {
         x: 0,
         z: 0

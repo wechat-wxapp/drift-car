@@ -1,14 +1,3 @@
-// let sharedCanvas = wx.getSharedCanvas()
-// let context = sharedCanvas.getContext('2d')
-// context.fillStyle = 'green'
-// context.fillRect(0, 0, 100, 100)
-
-// const sharedCanvas = wx.getSharedCanvas();
-// const cvs = sharedCanvas.getContext('2d');
-//
-// cvs.fillStyle = 'red'
-// cvs.fillRect(0, 0, 500, 500)
-
 import EndPage from './page/end';
 import ReseurPage from './page/resurgence.js';
 import RankPage from './page/rank';
@@ -30,25 +19,35 @@ const init = new Init();
 wx.onMessage(({ command, data = {} }) => {
     switch (command) {
         case 'end':
-            endPage.setTexture();
+            endPage.setTexture(data)
+            endPage.initFriendRankData()
+                .then((e) => {
+                    endPage.setTexture(data);
+                })
             break;
         case 'reseur':
-            reseurPage.setTexture();
+            reseurPage.setTexture(data)
+            reseurPage.initFriendRankData()
+                .then((e) => {
+                    reseurPage.setTexture(data);
+                })
             break;
         case 'friendRank':
-            friendRankPage.clearCvs();
+            friendRankPage.setTexture(1)
             friendRankPage.initFriendRankData()
-                .then(() => friendRankPage.setTexture(data, 1))
+                .then(() => {
+                    friendRankPage.showData(data)
+                })
             break;
         case 'worldRank':
-            worldRankPage.clearCvs();
-            worldRankPage.initWorldRankData(data)
             worldRankPage.setTexture(data)
+            worldRankPage.initWorldRankData(data)
+            worldRankPage.showData(data)
             break;
         case 'groupRank':
-            groupRankPage.clearCvs();
+            groupRankPage.setTexture(2)
             groupRankPage.initGroupRankData(data.shareTicket)
-                .then(() => groupRankPage.setTexture(data, 2));
+                .then(() => groupRankPage.showData(data));
                 // groupRankPage.setTexture(data, 2)
             break;
         case 'carport':
@@ -65,12 +64,3 @@ wx.onMessage(({ command, data = {} }) => {
             break;
     }
 });
-
-// function drawRankList (data) {
-//     cvs.fillStyle = "#647fdc";
-//     cvs.fillRect(0, 0, 100, 100);
-//     cvs.font = "bold 70px Arial";
-//     cvs.fillText('123', 100, 100);
-// }
-//
-//
