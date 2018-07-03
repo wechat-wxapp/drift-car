@@ -111,11 +111,9 @@ export default class Shared extends UTIL {
                 isSharedLoop = false;
                 this.clear2d();
 
-                offCanvasSprite.position.x += speedRecord.x;
-                offCanvasSprite.position.z -= speedRecord.z;
+                pageClass.setPosition();
 
                 startPage.setTexture();
-                currentPage = 'startPage';
             }
         });
     }
@@ -196,7 +194,7 @@ export default class Shared extends UTIL {
                 this.endPage();
 
                 // 提交分数到服务器
-                $io.updateScore(score);
+                // $io.updateScore(score);
 
                 // 更新解锁分数
                 $io.unlockCar({ score, turn });
@@ -474,6 +472,8 @@ export default class Shared extends UTIL {
                 this.clear2d();
                 isSharedLoop = false;
 
+                pageClass.setPosition();
+
                 startPage.setTexture();
             }
         })
@@ -493,11 +493,14 @@ export default class Shared extends UTIL {
                 this.clear2d();
                 isSharedLoop = false;
 
+                pageClass.setPosition();
+
                 startPage.setTexture();
             }
         })
     }
 
+    // 世界排行榜-返回
     worldRankGoBack() {
         const x1 = this.computedSizeW(50);
         const x2 = this.computedSizeW(76);
@@ -511,8 +514,9 @@ export default class Shared extends UTIL {
                 isSharedLoop = false;
                 this.clear2d();
 
+                pageClass.setPosition();
+
                 startPage.setTexture();
-                currentPage = 'startPage';
             }
         })
     }
@@ -524,9 +528,6 @@ export default class Shared extends UTIL {
         wx.shareAppMessage({
             title: '漂移车王'
         })
-        // isSharedLoop = true;
-        // currentPage = 'groupRank';
-        // this.showPage('groupRank', {shareTicket: $wx.shareTicket}, true);
     }
 
     /**

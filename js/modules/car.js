@@ -7,8 +7,8 @@ import Speeder from "./speeder";
 export default class Car extends UTIL {
     model = {
         id: 0,
-        model: 'https://static.cdn.24haowan.com/24haowan/test/js/newcar3.obj',
-        material: 'https://static.cdn.24haowan.com/24haowan/test/js/newcar3.png',
+        model: 'https://static.cdn.24haowan.com/24haowan/test/js/newcar2.obj',
+        material: 'https://static.cdn.24haowan.com/24haowan/test/js/newcar2.png',
         modelSize: [ 2, 2, 2 ],
         cannonSize: [ 4, 6, 4 ]
     };

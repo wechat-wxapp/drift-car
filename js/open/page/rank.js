@@ -180,7 +180,7 @@ export default class Rank extends Init {
           this.circleImg(this.cvs,avatar, this.computedSizeW(190), this.computedSizeH(990), this.computedSizeW(30), this.computedSizeW(30))
           this.cvs.beginPath();
         }
-        //蓝色自己排名
+              //蓝色自己排名
         this.cvs.fillStyle = `#ffd81f`;
         this.cvs.font = 'noraml';
         if(total !== 0)

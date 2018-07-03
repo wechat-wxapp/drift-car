@@ -14,7 +14,8 @@ const request = (url, opts) => {
             fail: (e) => {
                 rej(e);
             },
-            complete: () => {}
+            complete: () => {
+            }
         });
     });
 };

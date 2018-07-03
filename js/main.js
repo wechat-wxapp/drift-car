@@ -290,8 +290,6 @@ export default class Main extends UTIL {
         // beyondTexture2d.needsUpdate = true;
         // texture2d.needsUpdate = true;
 
-        texture2d.needsUpdate = true;
-
         requestAnimationFrame(this.loop.bind(this));
     }
 }

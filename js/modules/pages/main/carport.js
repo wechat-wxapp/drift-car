@@ -150,13 +150,13 @@ export default class Carport extends UTIL {
 
                 // 如果已解锁
                 unlock && offCanvas2d.drawImage(this.selectedIcon, 0, 0, this.selectedIcon.width, this.selectedIcon.height, this.computedSizeW(140 + x * 97), this.computedSizeH(240 + pkey * 107), this.selectedIcon.width / 2, this.selectedIcon.height / 2);
+
+                texture2d.needsUpdate = true;
             }
         });
 
         // 返回按钮
         offCanvas2d.drawImage(this.backIcon, 0, 0, this.backIcon.width, this.backIcon.height, this.computedSizeW(46), this.computedSizeH(634), this.backIcon.width / 2, this.backIcon.height / 2);
-
-        texture2d.needsUpdate = true;
     }
 
     setContent() {

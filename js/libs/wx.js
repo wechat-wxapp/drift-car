@@ -62,18 +62,20 @@ export default class WX extends UTIL {
      * 判断KEY是否有效
      * */
     checkLogin() {
-        // wx.checkSession({
-        //     success: () => {
-        //         this.isLogin = true;
-        //     },
-        //     fail: () => {
-        //         this.isLogin = false;
-        //         this.wxLogin();
-        //     }
-        // });
+        wx.checkSession({
+            success: () => {
+                this.isLogin = true;
+            },
+            fail: () => {
+                console.log('登录已过期');
 
-        this.isLogin = false;
-        this.wxLogin();
+                this.isLogin = false;
+                this.wxLogin();
+            }
+        });
+
+        // this.isLogin = false;
+        // this.wxLogin();
     }
 
     /**
