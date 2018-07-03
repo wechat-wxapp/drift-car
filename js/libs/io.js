@@ -57,6 +57,18 @@ export default {
     },
 
     /**
+     * 提交分数
+     * */
+    updateScore: (score) => {
+        const { openid } = localStorage.getItem('accessToken');
+
+        return request(API.UPDATE_SCORE, {
+            method: 'POST',
+            data: { openid, score }
+        });
+    },
+
+    /**
      * 获取世界排行
      * */
     getWorldRank: (data) => {

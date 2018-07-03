@@ -3,12 +3,14 @@ let host;
 
 switch (API_HOST) {
     case 'prod':
-        host = 'https://192.168.6.49:3003';
+        host = 'https://custom.24haowan.com';
         break;
     case 'test':
-        host = 'http://192.168.9.95:3000';
+        // 泓骅地址
+        host = 'http://192.168.6.183:3000';
         break;
     default:
+        // 强子地址
         host = 'https://192.168.6.49:3003';
         break;
 }
@@ -21,7 +23,10 @@ const API = {
     'GET_UNLOCK': '/yc/carport/getunlock',
 
     // 获取世界排行
-    'GET_WORLD_RANK': '/yc/rank/data'
+    'GET_WORLD_RANK': '/yc/rank/data',
+
+    // 提交分数
+    'UPDATE_SCORE': '/yc/user/updateScore'
 };
 
 Object.keys(API).forEach(api => {

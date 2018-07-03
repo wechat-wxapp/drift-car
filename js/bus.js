@@ -1,7 +1,13 @@
 import * as CANNON from './libs/cannon';
-import pageCarport from "./modules/pages/main/carport";
+import IO from './libs/io';
 
-// 常量
+// 不可变常量, 不参与全局挂载
+const constantData = {
+    // 复活次数, 默认 1 次
+    reseurNum: 1
+};
+
+// 普通变量
 const basicData = {
     scene: '',
     renderer: '',
@@ -16,8 +22,9 @@ const basicData = {
     ground: '',
     groundBody: '',
 
-    scaleTime: 0,
-    
+    // 汽车列表
+    carList: [],
+
     // 车辆类
     carClass: '',
     // 直路类
@@ -47,7 +54,9 @@ const basicData = {
     $bus: '',
     // 全局微信类
     $wx: '',
-    // 全局loadng类
+    // 全局异步函数
+    $io: IO,
+    // 全局loading类
     $loader: '',
 
     // 加载锁
@@ -75,7 +84,7 @@ const basicData = {
     speedStepMax: 0.08,
     // 加速等级区间
     level: 0,
-    levelSpeed: [5, 10, 15, 20, 25, 30, 35, 40, 45, 50],
+    levelSpeed: [5, 20, 30, 40, 50, 60, 35, 40, 45, 50],
 
     timeStep: 1.0 / 60.0,
 
@@ -137,10 +146,10 @@ const basicData = {
     // 预加载图片列表
     imgList: {
         btn: 'images/btn.png',
-        backIcon: `images/back-icon.png`,
+        backIcon: 'images/back-icon.png',
         carPane: `images/car-pane.png`,
-        carportPane: `images/carport-pane.png`,
-        selectedIcon: `images/selected-icon.png`,
+        carportPane: 'images/carport-pane.png',
+        selectedIcon: 'images/selected-icon.png',
         unlockPane: 'images/unlock-pane.png',
         unlockGame: 'images/unlock-game.png',
         unlockCn: 'images/unlock-cn.png',
@@ -159,7 +168,7 @@ const basicData = {
         leaderboard: 'images/leaderboard-btn.png',
         checkLeaderboard: 'images/check-leaderboard-btn.png',
         startBottomBtn1: 'images/start-bottom-btn-1.png',
-        startBottomBtn1off: 'images/start-bottom-btn-1-off.png',
+        startBottomCloseBtn1: 'images/start-bottom-close-btn-1.png',
         startBottomBtn2: 'images/start-bottom-btn-2.png',
         startBottomBtn3: 'images/start-bottom-btn-3.png',
         startBottomBtn4: 'images/start-bottom-btn-4.png',
@@ -180,14 +189,11 @@ const basicData = {
         rankOne: 'images/rankOne.png'
     },
 
-    // 微信相关参数
-    wxConfig: {},
-
     // 排行榜当前页数
     rankCurrentPage: 1
 };
 
-// 变量
+// 可重置变量
 const varData = {
     // 模型变量
     roadArr: [],
@@ -233,6 +239,8 @@ export default class Bus{
     constructor() {
         this.basicData = basicData;
         this.varData = varData;
+        // 不可变常量
+        this.constantData = constantData;
 
         this.setWindowData({ ...this.basicData, ...JSON.parse(JSON.stringify(this.varData)) });
     }
@@ -255,6 +263,13 @@ export default class Bus{
 
         // 重置位置
         this.resetModel();
+    }
+
+    /**
+     * 设置挂载属性
+     * */
+    setData(key, value) {
+        window[key] = value
     }
 
     /**

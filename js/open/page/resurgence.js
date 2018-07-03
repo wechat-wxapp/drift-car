@@ -42,7 +42,7 @@ export default class Resurgence extends Init {
             let bothLeft = this.winWidth / 2 - this.computedSizeW(sumWidth) / 2
             console.log(sumWidth)
             this.cvs.fillStyle = "#fff";
-            
+
             this.cvs.font = `${this.computedSizeW(26)}px Arial`;
             this.cvs.textAlign = "right";
             this.cvs.fillText(`还差${scoreLess}分超越:`, bothLeft + this.computedSizeW(scoreLength), this.computedSizeH(470));
@@ -55,14 +55,14 @@ export default class Resurgence extends Init {
             this.cvs.fillText(myFri.nickname, bothLeft + this.computedSizeW(scoreLength + 110), this.computedSizeH(470));
             // this.cvs.fillText(`yourchef`, this.computedSizeW(480), this.computedSizeH(470));
             this.cvs.fill();
-            
+
             const avatar = wx.createImage();
             avatar.src = myFri.avatarUrl
             avatar.onload = () => {
                 this.circleImg(this.cvs, avatar, bothLeft + this.computedSizeW(scoreLength   + 13), this.computedSizeH(424), this.computedSizeW(42), this.computedSizeW(42))
             }
         }
-    }   
+    }
 
     this.cvs.fillStyle = "#fff";
     this.cvs.font = `bold ${this.computedSizeW(26)}px Arial`;
@@ -70,7 +70,7 @@ export default class Resurgence extends Init {
     this.cvs.fillText('本次得分', this.winWidth / 2, this.computedSizeH(216));
     this.cvs.font = `bold ${this.computedSizeW(102)}px Arial`;
     this.cvs.fillText(data.score, this.winWidth / 2, this.computedSizeH(332));
-        
+
 
     const btn = wx.createImage();
     btn.src = 'images/btn.png';

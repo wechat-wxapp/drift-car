@@ -13,13 +13,13 @@ export default class Init {
         this.themeBule = `rgba(73,116,235,1)`;
         // 排行榜数据
         // this.rankData = null;
-        this.rankData = null
+        this.rankData = null;
         // this.groupRankData = null;
         // this.worldRankData = null;
         // 排行榜里面的个人成绩数据
         this.selfData = null;
         // 个人信息
-        this.self = null
+        this.self = null;
 
         // 好友排行榜数据
         // this.initFriendRankData();
@@ -30,7 +30,6 @@ export default class Init {
         this.rankCurrentPage = 1;
         // this._initSelfData();
         // this._initSelf();
-        // console.log('23333', wx.request)
     }
 
     /**
@@ -68,7 +67,6 @@ export default class Init {
      * 圆角矩形
      * */
     drawRoundRect(cxt, x, y, width, height, radius, color, lineWidth) {
-        // cxt.scale(1 / this.dpr, 1 / this.dpr);
         cxt.beginPath();
         cxt.arc(x + radius, y + radius, radius, Math.PI, Math.PI * 3 / 2);
         cxt.lineTo(width - radius + x, y);
