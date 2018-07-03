@@ -177,44 +177,27 @@ export default class Rank extends Init {
           this.cvs.fillText(this.rankData[i].KVDataList[0].value, this.computedSizeW(538), this.computedSizeH(402 + (i - (rankCurrentPage - 1) * counts) * 96));
       }
     }
-
-    //   //蓝色自己排名
-    //   this.cvs.fillStyle = `#ffd81f`;
-    //   this.cvs.font = 'noraml';
-    //   if(total !== 0)
-    //     this.cvs.fillText(this.selfData.rank, this.computedSizeW(132), this.computedSizeH(1028));
-    //   this.cvs.fillStyle = `#fff`;
-    //   if(total !== 0)
-    //     this.cvs.fillText(this.selfData.nickname, this.computedSizeW(286), this.computedSizeH(1028), this.computedSizeW(146));
-    //   this.cvs.font = `bold`;
-    //   if(this.selfData.KVDataList.length > 0)
-    //     this.cvs.fillText(this.selfData.KVDataList[0].value, this.computedSizeW(538), this.computedSizeH(1028));
-    // }
-
-    //蓝色部分自己排名头像
-    // let avatar2 = wx.createImage();
-    // avatar2.src = this.selfData.avatarUrl
-    // avatar2.onload = () => {
-    //   this.circleImg(this.cvs,avatar2,this.computedSizeW(190), this.computedSizeH(988),this.computedSizeW(30))
-    //   this.cvs.closePath();
-    // }
-
-    //蓝色自己排名
-    this.cvs.fillStyle = `#ffd81f`;
-    this.cvs.font = 'noraml';
-    if(total !== 0) {
-      this.cvs.fillText(this.selfData.rank, this.computedSizeW(132), this.computedSizeH(1026));
-    }
-      // this.cvs.arc(this.computedSizeW(234), this.computedSizeH(1018), this.computedSizeW(31), 0, 2 * Math.PI);
-      // this.cvs.fill();
-      this.cvs.fillStyle = `#fff`;
-    if(total !== 0){
-      this.cvs.fillText(this.selfData.nickname, this.computedSizeW(286), this.computedSizeH(1026), this.computedSizeW(146));
-    }
-    this.cvs.font = `bold`;
-    if(this.selfData.KVDataList.length > 0) {
-      this.cvs.fillText(this.selfData.KVDataList[0].value, this.computedSizeW(538), this.computedSizeH(1026));
-    }
+      let avatar = wx.createImage();
+      if (this.selfData.avatarUrl) {
+        avatar.src = this.selfData.avatarUrl
+        avatar.onload = () => {
+          this.circleImg(this.cvs,avatar, this.computedSizeW(190), this.computedSizeH(990), this.computedSizeW(30), this.computedSizeW(30))
+          // this.cvs.drawImage(avatar, this.computedSizeW(234), this.computedSizeH(1018), this.computedSizeW(60), this.computedSizeW(60))
+        }
+              //蓝色自己排名
+        this.cvs.fillStyle = `#ffd81f`;
+        this.cvs.font = 'noraml';
+        if(total !== 0)
+          this.cvs.fillText(this.selfData.rank, this.computedSizeW(132), this.computedSizeH(1028));
+        // this.cvs.arc(this.computedSizeW(234), this.computedSizeH(1018), this.computedSizeW(31), 0, 2 * Math.PI);
+        // this.cvs.fill();
+        this.cvs.fillStyle = `#fff`;
+        if(total !== 0)
+          this.cvs.fillText(this.selfData.nickname, this.computedSizeW(286), this.computedSizeH(1028), this.computedSizeW(146));
+        this.cvs.font = `bold`;
+        if(this.selfData.KVDataList.length > 0)
+          this.cvs.fillText(this.selfData.KVDataList[0].value, this.computedSizeW(538), this.computedSizeH(1028));
+      }
     
   }
     
