@@ -54,6 +54,14 @@ export default class Loader {
         gamePage = new pageGame();
 
         startPage = new pageStart();
+
+        if($wx.shareTicket !== 'noStareTicket') {
+            isSharedLoop = true;
+            pageClass.clear2d()
+            sharedTexture2d.needsUpdate = true;
+            $wx.sendMessage('groupRank',{ type: 2 , page: rankCurrentPage, common: 0 , shareTicket: $wx.shareTicket});
+            currentPage = 'groupRank';
+        }
     }
 
     /**

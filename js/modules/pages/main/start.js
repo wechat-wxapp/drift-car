@@ -92,7 +92,7 @@ export default class Start extends UTIL {
     }
 
     /**
-     * 绑定排行榜按钮
+     * 绑定好友排行榜按钮
      * */
     bindRankBtn() {
         const x1 = this.computedSizeW(150);
@@ -105,13 +105,15 @@ export default class Start extends UTIL {
             pageName: 'startPage',
             point: [x1, y1, x2, y2],
             cb: () => {
+                console.log('111111')
                 sharedClass.rankPage();
+                // isSharedLoop = true;
             }
         });
     }
 
     /**
-     * 绑定排行榜按钮
+     * 绑定群排行榜按钮
      * */
     bindGroupRankBtn() {
         const x1 = this.computedSizeW(165);

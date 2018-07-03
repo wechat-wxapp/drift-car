@@ -26,6 +26,8 @@ export default class Shared extends UTIL {
         this.bindReStart();
         // 结束页-回来主页
         this.bindGoHome();
+        // 结束页-好友排行
+        this.endFriendRank()
 
         // 复活页-复活
         this.bindReseur();
@@ -448,10 +450,7 @@ export default class Shared extends UTIL {
             pageName: 'friendRank',
             point: [x1, y1, x2, y2],
             cb: () => {
-                isSharedLoop = true;
-
-                $wx.sendMessage('groupRank',{ page: rankCurrentPage, common: 1 , shareTicket: $wx.shareTicket });
-                currentPage = 'groupRank';
+                this.groupRankPage()
             }
         })
     }
@@ -590,7 +589,8 @@ export default class Shared extends UTIL {
     rankPage() {
         isSharedLoop = true;
         currentPage = 'friendRank';
-        this.showPage('friendRank', {}, true);
+        //禁止从这里进去缩放
+        this.showPage('friendRank', { noScale: $wx.shareTicket === 'noShareTicket' }, true);
     }
 
     /**
@@ -613,11 +613,8 @@ export default class Shared extends UTIL {
      * 群排行榜
      * */
     groupRankPage() {
-        wx.updateShareMenu({
-            withShareTicket: true
-          })
         wx.shareAppMessage({
-            title: '转发标题'
+            title: '漂移车王'
           })
         // isSharedLoop = true;
         // currentPage = 'groupRank';

@@ -3,12 +3,13 @@
  */
 export default class Init {
     constructor() {
-        this.winWidth = wx.getSystemInfoSync().screenWidth;
-        this.winHeight = wx.getSystemInfoSync().screenHeight;
-
+        this.dpr = wx.getSystemInfoSync().pixelRatio;
+        this.winWidth = wx.getSystemInfoSync().screenWidth * this.dpr;
+        this.winHeight = wx.getSystemInfoSync().screenHeight * this.dpr;
         const sharedCanvas = wx.getSharedCanvas();
         this.cvs = sharedCanvas.getContext('2d');
-
+        wx.hasScaled = 0;
+        console.log('初始化!!!!',wx.hasScaled)
         this.themeBule = `rgba(73,116,235,1)`;
         // 排行榜数据
         // this.rankData = null;
@@ -45,11 +46,21 @@ export default class Init {
     /**
      * 清除画布内容
      * */
-    clearCvs(noTransBg) {
+    clearCvs(noTransBg, noScale) {
         this.cvs.clearRect(0, 0, this.winWidth, this.winHeight);
+        if(wx.hasScaled === 0 && !noScale) {
+            this.canvasScale();
+            wx.hasScaled++;
+        }
+        // else if(this.hasScaled === 1) {
+        //     console.log('44444444',this.hasScaled)
+        //     this.canvasScale(1);
+        //     this.hasScaled++;
+        // }
         if(noTransBg) return;
         this.cvs.fillStyle = 'rgba(0, 0, 0, .8)';
         this.cvs.fillRect(0, 0, this.winWidth, this.winHeight);
+
     }
 
     /**
@@ -223,14 +234,23 @@ export default class Init {
 
     //绘制圆形头像
     circleImg(ctx, img, x, y, r) {
+        ctx.beginPath();
         ctx.save();
-        let d =2 * r;
+        let d = 2 * r;
         let cx = x + r;
         let cy = y + r;
         ctx.arc(cx, cy, r, 0, 2 * Math.PI);
+        ctx.stroke();
         ctx.clip();
         ctx.drawImage(img, x, y, d, d);
         ctx.restore();
-      }
+        ctx.closePath();
+    }
+
+    canvasScale(isEnlarge) {
+        console.log('canvasScale has run !!!!!! the obj is:',this.constructor.name,)
+        // if(this.constructor.name === 'Init') return;
+        !isEnlarge ? this.cvs.scale(1 / this.dpr, 1 / this.dpr) : this.cvs.scale(this.dpr, this.dpr)
+    }
 }
 

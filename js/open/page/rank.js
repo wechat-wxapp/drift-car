@@ -11,16 +11,18 @@ export default class Rank extends Init {
   /**
    * 更新页面内容
    * */
-  setTexture(type) {
-    this.clearCvs();
+  setTexture(type, noScale) {
+    this.clearCvs(null, noScale);
     if(type == 1) {
       this.friendRank()
-    }
-    else if(type == 2) {
+    }else if(type == 2) {
       // this.initGroupRankData(data.shareTicket);
+      console.log("qun============")
       this.groupRank();
+    }else {
+      console.log('世界')
+      this.worldRank();
     }
-    else this.worldRank();
   
     // 更新提示
     this.cvs.fillStyle = "#e7e7e7";
@@ -54,11 +56,16 @@ export default class Rank extends Init {
     // const btn = wx.createImage();
     // btn.src = 'images/btn.png';
     // this.cvs.drawImage(btn, 0, 0, btn.width, btn.height, this.computedSizeW(445), this.computedSizeH(1150), this.computedSizeW(216), this.computedSizeH(80));
-
+    // this.canvasScale()
   }
 
   showData(data) {
     let total = this.rankData.length;
+
+    //下一页保存 tudo
+    // wx.total = total
+    // console.log('getWX---------', wx.total)
+
     // 每页展示数
     let counts = 6;
     // 总页数
@@ -99,7 +106,7 @@ export default class Rank extends Init {
     this.cvs.fillText('排行榜：每周一凌晨更新', this.computedSizeW(130), this.computedSizeH(306));
 
 
-    this.cvs.fillStyle = "#4974ea";
+    this.cvs.fillStyle = this.themeBule;
     if (rankCurrentPage == 1) {
       this.cvs.fillStyle = "#808080";
     }
@@ -107,26 +114,18 @@ export default class Rank extends Init {
     this.cvs.textAlign = "left";
     this.cvs.fillText('上一页', this.computedSizeW(460), this.computedSizeW(306))
 
-    this.cvs.fillStyle = "#4974ea";
-    if (rankCurrentPage === 1 || rankCurrentPage === totalPages) {
-      this.cvs.fillStyle = "#808080";
-    }
+    this.cvs.fillStyle = "#808080";
     this.cvs.font = `${this.computedSizeW(20)}px xszt`;
     this.cvs.textAlign = "left";
-    this.cvs.fillText('|', this.computedSizeW(550), this.computedSizeW(306))
+    this.cvs.fillText('|', this.computedSizeW(548), this.computedSizeW(306))
 
-    this.cvs.fillStyle = "#4974ea";
+    this.cvs.fillStyle = this.themeBule;
     if (rankCurrentPage === totalPages) {
       this.cvs.fillStyle = "#808080";
     }
     this.cvs.font = `${this.computedSizeW(20)}px xszt`;
     this.cvs.textAlign = "left";
     this.cvs.fillText('下一页', this.computedSizeW(570), this.computedSizeW(306))
-
-
-    
-    this.cvs.fillStyle = "#fff";
-    this.cvs.fillRect(this.winWidth / 2 - this.computedSizeW(582) / 2, this.computedSizeH(322), this.computedSizeW(582), this.computedSizeH(620));
 
     //分割线
     this.cvs.lineWidth = 1;
@@ -152,18 +151,21 @@ export default class Rank extends Init {
         avatar.src = that.rankData[i].avatarUrl;
 
         avatar.onload = () => {
-          that.circleImg(this.cvs, avatar, this.computedSizeW(190), that.computedSizeH(360 + (i - (rankCurrentPage - 1) * counts) * 102),this.computedSizeW(30))
+          that.circleImg(this.cvs, avatar, this.computedSizeW(190), that.computedSizeH(364 + (i - (rankCurrentPage - 1) * counts) * 96.8), this.computedSizeW(30))
+          that.cvs.closePath();
         }
       }
+      // this.cvs.fillStyle = ''
+      // this.cvs.fill();
     }
 
     // 名字
-    if(total !== 0)
+    if(total !== 0) {
       for(let i = (rankCurrentPage - 1) * counts; i < current_count + (rankCurrentPage - 1) * counts; i++){
         this.cvs.fillStyle = '#666';
         this.cvs.fillText(this.rankData[i].nickname, this.computedSizeW(286), this.computedSizeH(402 + (i - (rankCurrentPage - 1) * counts) * 96), this.computedSizeW(146));
       }
-      
+    }
       // this.cvs.fillText(`this.rankData[i].nickname`, this.computedSizeW(286), this.computedSizeH(402 ), this.computedSizeW(146));
 
     // 分数
@@ -196,7 +198,7 @@ export default class Rank extends Init {
         if(this.selfData.KVDataList.length > 0)
           this.cvs.fillText(this.selfData.KVDataList[0].value, this.computedSizeW(538), this.computedSizeH(1028));
       }
-
+    
   }
     
 
@@ -206,9 +208,8 @@ export default class Rank extends Init {
     this.cvs.fillStyle = "#fff";
     this.cvs.font = `bold ${this.computedSizeW(30)}px xszt`;
     this.cvs.textAlign = "left";
-    this.cvs.fillText('好友排行', this.computedSizeW(134), this.computedSizeH(205));
-    this.cvs.fillText('世界排行', this.computedSizeW(490), this.computedSizeH(205));
-
+    this.cvs.fillText('好友排行', this.computedSizeW(133), this.computedSizeH(206));
+    this.cvs.fillText('世界排行', this.computedSizeW(489), this.computedSizeH(206));
 
     const btn = wx.createImage();
     btn.src = 'images/btn.png';
@@ -216,6 +217,7 @@ export default class Rank extends Init {
     this.cvs.fillStyle = "#fff";
     this.cvs.font = `bold ${this.computedSizeW(30)}px xszt`;
     this.cvs.fillText('查看群排行', this.computedSizeW(480), this.computedSizeH(1194));
+    
   }
 
   worldRank(){
@@ -225,9 +227,9 @@ export default class Rank extends Init {
     this.cvs.fillStyle = "#fff";
     this.cvs.font = `bold ${this.computedSizeW(30)}px xszt`;
     this.cvs.textAlign = "left";
-    this.cvs.fillText('好友排行', this.computedSizeW(134), this.computedSizeH(205));
-    this.cvs.fillText('世界排行', this.computedSizeW(490), this.computedSizeH(205));
-
+    this.cvs.fillText('好友排行', this.computedSizeW(133), this.computedSizeH(206));
+    this.cvs.fillText('世界排行', this.computedSizeW(489), this.computedSizeH(206));
+    this.cvs.closePath()
 
     const btn = wx.createImage();
     btn.src = 'images/btn.png';
@@ -235,9 +237,12 @@ export default class Rank extends Init {
     this.cvs.fillStyle = "#fff";
     this.cvs.font = `bold ${this.computedSizeW(30)}px xszt`;
     this.cvs.fillText('查看群排行', this.computedSizeW(480), this.computedSizeH(1194));
+    this.cvs.closePath();
   }
 
   groupRank(){
+    // this.drawRoundRect(this.cvs, this.computedSizeW(85), this.computedSizeH(160), this.computedSizeW(216), this.computedSizeH(70), this.computedSizeW(35), '#fff', 2);
+    // this.drawRoundRect(this.cvs, this.computedSizeW(442), this.computedSizeH(160), this.computedSizeW(216), this.computedSizeH(70), this.computedSizeW(35), 'rgba(73,116,235,1)');
     this.drawRoundRect(this.cvs, (this.winWidth - this.computedSizeW(216)) / 2, this.computedSizeH(160), this.computedSizeW(216), this.computedSizeH(70), this.computedSizeW(35), 'rgba(73,116,235,1)');
     this.cvs.beginPath();
     this.cvs.fillStyle = "#fff";
