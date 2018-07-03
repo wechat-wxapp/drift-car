@@ -303,7 +303,7 @@ export default class Shared extends UTIL {
         const y2 = this.computedSizeH(171);
 
         events.click({
-            name: 'prePageBtn',
+            name: 'groupRankPrePage',
             pageName: 'groupRank',
             point: [x1, y1, x2, y2],
             cb: () => {
@@ -320,7 +320,7 @@ export default class Shared extends UTIL {
         const y1 = this.computedSizeH(157);
         const y2 = this.computedSizeH(172);
         events.click({
-            name: 'nextPageBtn',
+            name: 'groupRankNextPage',
             pageName: 'groupRank',
             point: [x1, y1, x2, y2],
             cb: () => {
@@ -338,7 +338,7 @@ export default class Shared extends UTIL {
         const y2 = this.computedSizeH(171);
 
         events.click({
-            name: 'prePageBtn',
+            name: 'friendRankPrePage',
             pageName: 'friendRank',
             point: [x1, y1, x2, y2],
             cb: () => {
@@ -355,11 +355,12 @@ export default class Shared extends UTIL {
         const y1 = this.computedSizeH(157);
         const y2 = this.computedSizeH(172);
         events.click({
-            name: 'nextPageBtn',
+            name: 'friendRankNextPage',
             pageName: 'friendRank',
             point: [x1, y1, x2, y2],
             cb: () => {
                 // rankCurrentPage = rankCurrentPage + 1;
+                console.log('rankCurrentPage',rankCurrentPage)
                 $wx.sendMessage('friendRank',{ page: rankCurrentPage, common: 1 , shareTicket: $wx.shareTicket});
                 sharedTexture2d.needsUpdate = true;
             }
