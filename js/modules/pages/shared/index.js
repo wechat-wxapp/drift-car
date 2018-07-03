@@ -47,8 +47,8 @@ export default class Shared extends UTIL {
         this.bindFriendRankNextPage();
         // 好友排行榜-返回
         this.friendRankGoBack();
-        // 世界排行-好友排行榜
-        this.goFriendRank();
+        // 好友排行-世界排行榜
+        this.goWorldRank();
 
 
         // 世界排行榜-上一页
@@ -57,6 +57,8 @@ export default class Shared extends UTIL {
         this.bindWorldRankNextPage();
         // 世界排行-返回
         this.worldRankGoBack();
+        // 世界排行-好友排行榜
+        this.goFriendRank();
 
         // 泡妞神器-返回
         this.bindQrBack();
@@ -198,7 +200,7 @@ export default class Shared extends UTIL {
                     return
                 }
                 rankCurrentPage -= 1
-                IO.getWorldRank({ offset: rankCurrentPage - 1 }).then(e=>{
+                $io.getWorldRank({ offset: rankCurrentPage - 1 }).then(e=>{
                     let exp = {
                         "payload": {
                             "user":  {
@@ -249,6 +251,36 @@ export default class Shared extends UTIL {
         })
     }
 
+    //查看世界排行
+    goWorldRank() {
+        const x1 = this.computedSizeW(249);
+        const x2 = this.computedSizeW(356);
+        const y1 = this.computedSizeH(88);
+        const y2 = this.computedSizeH(123);
+
+        events.click({
+            name: 'goWorldRank',
+            pageName: 'friendRank',
+            point: [x1, y1, x2, y2],
+            cb: () => {
+                isSharedLoop = true;
+                console.log('goWorldRank')
+                rankCurrentPage = 1
+                $io.getWorldRank({ offset: rankCurrentPage - 1 }).then(e=>{
+                    this.showPage('worldRank',{
+                        page: 1,
+                        common: 1 ,
+                        shareTicket: $wx.shareTicket,
+                        ranks:e.payload.ranks ,
+                        user:e.payload.user
+                    })
+                    sharedTexture2d.needsUpdate = true;
+                    currentPage = 'worldRank';
+                })
+            }
+        })
+    }
+
     // 下一页按钮
     bindWorldRankNextPage() {
         const x1 = this.computedSizeW(311);
@@ -262,7 +294,7 @@ export default class Shared extends UTIL {
             cb: () => {
                 // rankCurrentPage = rankCurrentPage <= 1 ? 1 : rankCurrentPage--;
                 rankCurrentPage += 1
-                IO.getWorldRank({ offset: rankCurrentPage - 1 }).then(e=>{
+                $io.getWorldRank({ offset: rankCurrentPage - 1 }).then(e=>{
                     this.showPage('worldRank',{
                         page: 1,
                         common: 1 ,
