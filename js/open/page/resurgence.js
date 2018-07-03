@@ -60,6 +60,7 @@ export default class Resurgence extends Init {
             avatar.src = myFri.avatarUrl
             avatar.onload = () => {
                 this.circleImg(this.cvs, avatar, bothLeft + this.computedSizeW(scoreLength   + 13), this.computedSizeH(424), this.computedSizeW(42), this.computedSizeW(42))
+                this.cvs.beginPath()
             }
         }
     }

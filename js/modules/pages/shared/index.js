@@ -66,6 +66,8 @@ export default class Shared extends UTIL {
 
         // 泡妞神器-返回
         this.bindQrBack();
+        // 泡妞神器-保存二维码
+        this.saveQrcode();
 
         // 公众号-返回
         this.bindWechatBack();
@@ -418,6 +420,31 @@ export default class Shared extends UTIL {
             cb: () => {
                 this.clear2d();
                 startPage.setTexture();
+            }
+        })
+    }
+
+    //泡妞神器-保存二维码
+    saveQrcode() {
+        const x1 = this.computedSizeW(130);
+        const x2 = this.computedSizeW(275);
+        const y1 = this.computedSizeH(540);
+        const y2 = this.computedSizeH(570);
+
+        events.click({
+            name: 'saveQrcode',
+            pageName: 'qrPage',
+            point: [x1, y1, x2, y2],
+            cb: () => {
+                wx.saveImageToPhotosAlbum({
+                    filePath: 'images/qrcode.png',
+                    success: function() {
+                        wx.showToast({ title:'保存成功' });
+                    },
+                    fail: function() {
+                        wx.showToast({ title:'保存失败' });
+                    }
+                })
             }
         })
     }
