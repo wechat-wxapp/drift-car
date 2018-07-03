@@ -39,7 +39,7 @@ export default class Car extends UTIL {
                 car.scale.set(2, 2, 2);
                 car.position.set(25, 15, -10);
 
-                const boxShape = new CANNON.Box(new CANNON.Vec3(4, 6, 6));
+                const boxShape = new CANNON.Box(new CANNON.Vec3(4, 6, 4));
 
                 carBodys = new CANNON.Body({ mass: 2, shape: boxShape });
                 carBodys.position.set(car.position.x, car.position.y, car.position.z);
@@ -84,6 +84,7 @@ export default class Car extends UTIL {
                     currentW = localW + percent * (-1.57 - localW);
 
                     carBodys.quaternion.setFromAxisAngle(new CANNON.Vec3(0, 1, 0), currentW);
+
                     if (percent >= 1) {
                         movekey = 'x';
                     }

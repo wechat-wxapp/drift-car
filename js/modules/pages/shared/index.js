@@ -32,10 +32,15 @@ export default class Shared extends UTIL {
         // 复活页-跳过
         this.bindSkip();
 
-        // 排行榜-上一页
-        this.bindPrePage();
-        // 排行榜-下一页
-        this.bindNextPage();
+        // 群组排行榜-上一页
+        this.bindGroupRankPrePage();
+        // 群组排行榜-下一页
+        this.bindGroupRankNextPage();
+
+        // 好友排行榜-上一页
+        this.bindFriendRankPrePage();
+        // 好友排行榜-下一页
+        this.bindFriendRankNextPage();
 
         // 泡妞神器-返回
         this.bindQrBack();
@@ -140,7 +145,7 @@ export default class Shared extends UTIL {
     }
 
     // 上一页按钮
-    bindPrePage() {
+    bindGroupRankPrePage() {
         const x1 = this.computedSizeW(254);
         const x2 = this.computedSizeW(291);
         const y1 = this.computedSizeH(158);
@@ -160,7 +165,7 @@ export default class Shared extends UTIL {
     }
 
     // 下一页按钮
-    bindNextPage() {
+    bindGroupRankNextPage() {
         const x1 = this.computedSizeW(311);
         const x2 = this.computedSizeW(363);
         const y1 = this.computedSizeH(157);
@@ -177,7 +182,7 @@ export default class Shared extends UTIL {
         })
     }
     // 上一页按钮
-    bindPrePage() {
+    bindFriendRankPrePage() {
         const x1 = this.computedSizeW(254);
         const x2 = this.computedSizeW(291);
         const y1 = this.computedSizeH(158);
@@ -197,7 +202,7 @@ export default class Shared extends UTIL {
     }
 
     // 下一页按钮
-    bindNextPage() {
+    bindFriendRankNextPage() {
         const x1 = this.computedSizeW(311);
         const x2 = this.computedSizeW(363);
         const y1 = this.computedSizeH(157);
@@ -226,7 +231,7 @@ export default class Shared extends UTIL {
             pageName: 'qrPage',
             point: [x1, y1, x2, y2],
             cb: () => {
-                $wx.sendMessage('clear');
+                this.clear2d();
                 startPage.setTexture();
             }
         })
@@ -244,7 +249,7 @@ export default class Shared extends UTIL {
             pageName: 'wechatPage',
             point: [x1, y1, x2, y2],
             cb: () => {
-                $wx.sendMessage('clear');
+                this.clear2d();
                 startPage.setTexture();
             }
         })
@@ -318,6 +323,7 @@ export default class Shared extends UTIL {
             }
         })
     }
+
     goBack2() {
         const x1 = this.computedSizeW(50);
         const x2 = this.computedSizeW(76);
@@ -328,6 +334,7 @@ export default class Shared extends UTIL {
             pageName: 'groupRank',
             point: [x1, y1, x2, y2],
             cb: () => {
+                console.log('asd');
                 this.clear2d();
                 isSharedLoop = false;
                 offCanvasSprite.position.x += speedRecord.x;

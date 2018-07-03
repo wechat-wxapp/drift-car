@@ -73,7 +73,7 @@ const basicData = {
     speedStepMax: 0.08,
     // 加速等级区间
     level: 0,
-    levelSpeed: [5, 10, 15, 20, 25, 30, 35, 40, 45, 50],
+    levelSpeed: [5, 20, 30, 40, 50, 60, 35, 40, 45, 50],
 
     timeStep: 1.0 / 60.0,
 
