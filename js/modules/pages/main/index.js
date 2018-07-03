@@ -3,8 +3,6 @@ import UTIL from "../../util";
 import Shared from '../shared/index';
 
 import pageLoading from './loading';
-import pageGame from "./game";
-import pageCarport from "./carport";
 
 /**
  * 2d canvas函数
@@ -63,6 +61,9 @@ export default class Page extends UTIL {
         texture2d.needsUpdate = true;
     }
 
+    /**
+     * 设置当前未知
+     * */
     setPosition() {
         offCanvasSprite.position.x += speedRecord.x - this.currentSpeedRecord.x;
         offCanvasSprite.position.z -= speedRecord.z - this.currentSpeedRecord.z;

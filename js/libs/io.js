@@ -69,6 +69,34 @@ export default {
     },
 
     /**
+     * 提交解锁车辆参数
+     * */
+    unlockCar: (data) => {
+        const { openid } = localStorage.getItem('accessToken');
+
+        data.openid = openid;
+
+        return request(API.UNLOCK_CAR, {
+            method: 'POST',
+            data: {
+                data: JSON.stringify(data)
+            }
+        });
+    },
+
+    /**
+     * 更新每日
+     * */
+    updateDate: () => {
+        const { openid } = localStorage.getItem('accessToken');
+
+        return request(API.UPDATE_DATE, {
+            method: 'POST',
+            data: { openid }
+        });
+    },
+
+    /**
      * 获取世界排行
      * */
     getWorldRank: (data) => {

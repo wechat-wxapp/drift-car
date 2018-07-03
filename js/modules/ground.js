@@ -20,7 +20,7 @@ export default class Ground {
         ground = new THREE.Mesh(new THREE.BoxGeometry(30000, 1, 30000), ground_material);
         ground.receiveShadow = true;
         ground.castShadow = true;
-        // scene.add(ground);
+        scene.add(ground);
 
         const groundShape = new CANNON.Plane();
         groundBody = new CANNON.Body({ mass: 0 });

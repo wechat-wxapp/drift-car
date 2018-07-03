@@ -17,7 +17,6 @@ export default class Rank extends Init {
       this.friendRank()
     }else if(type == 2) {
       // this.initGroupRankData(data.shareTicket);
-      console.log("qun============")
       this.groupRank();
     }else {
       console.log('世界')

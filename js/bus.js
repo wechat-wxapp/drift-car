@@ -67,6 +67,8 @@ const basicData = {
     // 得分
     score: 0,
     lastScore: 0,
+    // 转弯多少次
+    turn: 0,
 
     // 最后的道路key
     // lastBoxType: 'r6',

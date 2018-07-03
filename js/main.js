@@ -1,10 +1,9 @@
 import './libs/OBJLoader';
 
-import Music from './modules/music';
-
 import './libs/cannonDebugRenderer';
 import './libs/OrbitControls';
 
+import Music from './modules/music';
 
 import GroundBody from './modules/ground';
 import bindEvent from './modules/bind-event';
@@ -15,9 +14,6 @@ import UTIL from "./modules/util";
 
 // 2d画布
 import page from './modules/pages/main/index';
-// import Score from './modules/pages/score';
-// import Shared from './modules/pages/shared';
-// import pageLoading from './modules/pages/loading';
 
 /**
  * 游戏主函数
@@ -25,11 +21,6 @@ import page from './modules/pages/main/index';
 export default class Main extends UTIL {
     constructor() {
         super();
-
-        wx.updateShareMenu({
-            withShareTicket: true,
-            success: ()=> console.log('updateShareMenu')
-         })
 
         // 初始化3D世界
         this.initThree();
@@ -48,16 +39,25 @@ export default class Main extends UTIL {
         
         // 实例化微信类
         $wx = new WX();
-        $wx.shareTicket = wx.getLaunchOptionsSync().shareTicket || 'noStareTicket';
+
         // 实例化loading类
         $loader = new LOADER();
-        // 无法加载
-        // $wx.getFontFamily();
 
+        // 实例化主屏2d
         pageClass = new page();
-        
+
+        // 更新每日参与
+        this.updateDate();
+
         // 渲染
         this.loop();
+    }
+
+    /**
+     * 更新每日
+     * */
+    updateDate() {
+        $io.updateDate();
     }
 
     /**
