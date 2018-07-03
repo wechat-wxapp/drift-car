@@ -15,10 +15,9 @@ export default class Resurgence extends Init {
     this.clearCvs();
 
     if (this.rankData !== null ) {
-        let rank = this.rankData.indexOf(this.selfData)
         let myFri = null
         let scoreLess = 0
-        this.rankData.map(e=>{
+        this.rankData.map((e,index)=>{
             console.log(e['KVDataList'][0].value)
             console.log(data.score)
             if (e['KVDataList'][0].value > data.score && e.openid !== this.selfData.openid) {
