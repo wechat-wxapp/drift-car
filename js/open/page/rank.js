@@ -176,8 +176,8 @@ export default class Rank extends Init {
       }
     }
       let avatar = wx.createImage();
-      avatar.src = this.selfData.avatarUrl
-      if (avatar.src) {
+      if (this.selfData.avatarUrl) {
+        avatar.src = this.selfData.avatarUrl
         avatar.onload = () => {
           this.circleImg(this.cvs,avatar, this.computedSizeW(190), this.computedSizeH(990), this.computedSizeW(30), this.computedSizeW(30))
           // this.cvs.drawImage(avatar, this.computedSizeW(234), this.computedSizeH(1018), this.computedSizeW(60), this.computedSizeW(60))
