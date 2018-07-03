@@ -28,6 +28,8 @@ export default class Shared extends UTIL {
         this.bindGoHome();
         // 结束页-好友排行
         this.endFriendRank()
+        // 结束页-炫耀一下
+        this.showYourScore();
 
         // 复活页-复活
         this.bindReseur();
@@ -135,6 +137,26 @@ export default class Shared extends UTIL {
             }
         });
     }
+    
+    /**
+     * 结束页面的炫耀一下
+     */
+    showYourScore() {
+        const x1 = this.computedSizeW(62);
+        const x2 = this.computedSizeW(183);
+        const y1 = this.computedSizeH(570);
+        const y2 = this.computedSizeH(610);
+
+        events.click({
+            name: 'showYourScore',
+            pageName: 'endPage',
+            point: [x1, y1, x2, y2],
+            cb: () => {
+                this.groupRankPage()
+            }
+        })
+    }
+
     // 复活页-复活
     bindReseur() {
         const x1 = this.computedSizeW(125);

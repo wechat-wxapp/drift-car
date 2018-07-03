@@ -16,11 +16,8 @@ export default class Rank extends Init {
     if(type == 1) {
       this.friendRank()
     }else if(type == 2) {
-      // this.initGroupRankData(data.shareTicket);
-      console.log("qun============")
       this.groupRank();
     }else {
-      console.log('世界')
       this.worldRank();
     }
   
@@ -40,8 +37,8 @@ export default class Rank extends Init {
     this.cvs.strokeStyle = '#ededed';
     const that = this;
     for (let i = 0; i < 5; i++) {
-      this.cvs.moveTo(this.computedSizeW(130), this.computedSizeH(445 + i * 96));
-      this.cvs.lineTo(this.computedSizeW(608), this.computedSizeH(445 + i * 96));
+      that.cvs.moveTo(this.computedSizeW(130), this.computedSizeH(445 + i * 96));
+      that.cvs.lineTo(this.computedSizeW(608), this.computedSizeH(445 + i * 96));
     }
     this.cvs.stroke();
 
@@ -155,8 +152,6 @@ export default class Rank extends Init {
           that.cvs.closePath();
         }
       }
-      // this.cvs.fillStyle = ''
-      // this.cvs.fill();
     }
 
     // 名字
@@ -182,9 +177,9 @@ export default class Rank extends Init {
         avatar.src = this.selfData.avatarUrl
         avatar.onload = () => {
           this.circleImg(this.cvs,avatar, this.computedSizeW(190), this.computedSizeH(990), this.computedSizeW(30), this.computedSizeW(30))
-          // this.cvs.drawImage(avatar, this.computedSizeW(234), this.computedSizeH(1018), this.computedSizeW(60), this.computedSizeW(60))
+          this.cvs.beginPath();
         }
-              //蓝色自己排名
+        //蓝色自己排名
         this.cvs.fillStyle = `#ffd81f`;
         this.cvs.font = 'noraml';
         if(total !== 0)
