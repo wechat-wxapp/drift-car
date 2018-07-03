@@ -7,8 +7,8 @@ import Speeder from "./speeder";
 export default class Car extends UTIL {
     model = {
         id: 0,
-        model: 'https://static.cdn.24haowan.com/24haowan/test/js/newcar1.obj',
-        material: 'https://static.cdn.24haowan.com/24haowan/test/js/newcar1.png',
+        model: 'https://static.cdn.24haowan.com/24haowan/test/js/newcar2.obj',
+        material: 'https://static.cdn.24haowan.com/24haowan/test/js/newcar2.png',
         modelSize: [ 2, 2, 2 ],
         cannonSize: [ 4, 6, 4 ]
     };
@@ -113,7 +113,10 @@ export default class Car extends UTIL {
     drift() {
         if (startKey) {
             // 播放漂移音乐
-            // music.playDrift();
+            music.playDrift();
+
+            // 增加转弯次数
+            turn++;
 
             const localW = currentW;
             if (!clickKey) {

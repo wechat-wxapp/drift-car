@@ -8,10 +8,10 @@ export default class Init {
         this.winHeight = wx.getSystemInfoSync().screenHeight * this.dpr;
         const sharedCanvas = wx.getSharedCanvas();
         this.cvs = sharedCanvas.getContext('2d');
-        
+
         //用来判断只进行一次canvas缩放
         wx.hasScaled = 0;
-        
+
         this.themeBule = `rgba(73,116,235,1)`;
         // 排行榜数据
         // this.rankData = null;
@@ -98,13 +98,11 @@ export default class Init {
                 success: res => {
                     let tempRankData = res.data
                     // 排序
-                    that.rankData = that.sort(tempRankData, 'asc')
-                    console.log(`好友数据格式`,that.rankData)
+                    that.rankData = that.sort(tempRankData, 'asc');
                     // 请求个人数据
                     that.initSelf().then(() => {
                         // 保存个人数据
-                        that.selfData = that.normalizeSelf(that.rankData, that.self.nickName)
-                        console.log('friend ranks self data',that.rankData,that.selfData)
+                        that.selfData = that.normalizeSelf(that.rankData, that.self.nickName);
                         resolve(that.rankData)
                     })
                 },
@@ -250,9 +248,27 @@ export default class Init {
     }
 
     canvasScale(isEnlarge) {
-        console.log('canvasScale has run !!!!!! the obj is:',this.constructor.name,)
-        // if(this.constructor.name === 'Init') return;
         !isEnlarge ? this.cvs.scale(1 / this.dpr, 1 / this.dpr) : this.cvs.scale(this.dpr, this.dpr)
+    }
+
+    /**
+     * 更新微信分数
+     * */
+    updateWxScore(score) {
+        const { KVDataList } = this.selfData;
+        const { value } = KVDataList[0];
+
+        if (score > value) {
+            wx.setUserCloudStorage({
+                KVDataList: [{ key: "score", value: String(score) }],
+                success: (e) => {
+                    console.log('更新数分成功: ', score)
+                },
+                fail: () => {
+                },
+                complete: () => {}
+            })
+        }
     }
 }
 

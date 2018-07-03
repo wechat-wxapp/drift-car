@@ -67,6 +67,8 @@ const basicData = {
     // 得分
     score: 0,
     lastScore: 0,
+    // 转弯多少次
+    turn: 0,
 
     // 最后的道路key
     // lastBoxType: 'r6',
@@ -84,7 +86,7 @@ const basicData = {
     speedStepMax: 0.08,
     // 加速等级区间
     level: 0,
-    levelSpeed: [5, 20, 30, 40, 50, 60, 35, 40, 45, 50],
+    levelSpeed: [5, 20, 40, 60, 80, 90, 120, 160, 200, 250],
 
     timeStep: 1.0 / 60.0,
 

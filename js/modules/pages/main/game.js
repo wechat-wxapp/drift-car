@@ -21,14 +21,14 @@ export default class Game extends UTIL {
         // 清除其余2d画布
         pageClass.clear2d();
 
-        // 开始游戏
-        this.restart();
-
         // 设置页面target
         currentPage = 'gamePage';
 
         // 默认关闭开放域循环
         isSharedLoop = false;
+
+        // 开始游戏
+        this.restart();
     }
 
     /**

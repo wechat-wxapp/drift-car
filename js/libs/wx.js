@@ -21,11 +21,7 @@ export default class WX extends UTIL {
         openDataContext = wx.getOpenDataContext();
         wx.showShareMenu({ withShareTicket: true });
 
-        // this.shareTicket = 'noStareTicket';
-        // wx.onShow(res => {
-        //     if(res.shareTicket) this.shareTicket = res.shareTicket;
-        //     console.log('00000shareTicket: ', this.shareTicket);
-        // });
+        this.shareTicket = wx.getLaunchOptionsSync().shareTicket || 'noStareTicket';
 
         openDataContext.postMessage({
             command: 'init',
@@ -71,10 +67,15 @@ export default class WX extends UTIL {
                 this.isLogin = true;
             },
             fail: () => {
+                console.log('登录已过期');
+
                 this.isLogin = false;
                 this.wxLogin();
             }
         });
+
+        // this.isLogin = false;
+        // this.wxLogin();
     }
 
     /**
@@ -138,19 +139,19 @@ export default class WX extends UTIL {
     /**
      * 保存用户分数
      * */
-    setWxScore() {
-        return new Promise((res, rej) => {
-            wx.setUserCloudStorage({
-                KVDataList: [{ key: "score", value: String(score) }],
-                success: (e) => {
-                    console.log('score: ', e, score)
-                    res();
-                },
-                fail: () => {
-                    rej();
-                },
-                complete: () => {}
-            })
-        })
-    }
+    // setWxScore() {
+    //     return new Promise((res, rej) => {
+    //         wx.setUserCloudStorage({
+    //             KVDataList: [{ key: "score", value: String(score) }],
+    //             success: (e) => {
+    //                 console.log('score: ', e, score)
+    //                 res();
+    //             },
+    //             fail: () => {
+    //                 rej();
+    //             },
+    //             complete: () => {}
+    //         })
+    //     })
+    // }
 }

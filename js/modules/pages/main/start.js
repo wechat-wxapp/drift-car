@@ -105,9 +105,7 @@ export default class Start extends UTIL {
             pageName: 'startPage',
             point: [x1, y1, x2, y2],
             cb: () => {
-                console.log('111111')
                 sharedClass.rankPage();
-                // isSharedLoop = true;
             }
         });
     }
