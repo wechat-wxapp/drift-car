@@ -62,8 +62,11 @@ export default class Road extends UTIL {
         // 撞墙
         roadBoths.addEventListener("collide", this.collide.bind(this));
 
+        console.log('type: ', type);
+
         // 得分
         roadBody.addEventListener("collide", () => {
+            console.log(type);
             this.getScore(key, type);
         });
 

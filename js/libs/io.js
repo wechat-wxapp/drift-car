@@ -9,12 +9,15 @@ const request = (url, opts) => {
             url,
             ...opts,
             success: (e) => {
+                console.log('chenggongh: ');
                 res(e.data);
             },
             fail: (e) => {
+                console.log('cuowu: ');
                 rej(e);
             },
             complete: () => {
+                console.log('wancheng');
             }
         });
     });

@@ -194,6 +194,17 @@ export default class Start extends UTIL {
      * 加载车库列表
      * */
     asyncCarList() {
+        const { session_key, openid } = localStorage.getItem('accessToken');
+
+        if (!session_key || !openid) {
+            wx.showToast({
+                title: '您还没登录',
+                icon: 'loading',
+                duration: 2
+            });
+            return false;
+        }
+
         $loader.show();
         // 获取车库
         $io.getunlock()

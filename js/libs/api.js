@@ -15,6 +15,8 @@ switch (API_HOST) {
         break;
 }
 
+console.log('当前API_HOST: ', host);
+
 const API = {
     'CODE_2_ACCESS_TOKEN': '/yc/wechat/code2accessToken',
     'GET_UNIONID': '/yc/wechat/getUnionId',

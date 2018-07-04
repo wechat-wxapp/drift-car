@@ -23,7 +23,7 @@ export default class UTIL {
 
         const objLoader = new THREE.OBJLoader();
         objLoader.load(model, (obj) => {
-            console.log('加载模型: ', model);
+            // console.log('加载模型: ', model);
             // var materialObj = new THREE.MeshBasicMaterial({
             //   vertexColors: THREE.FaceColors,
             //   overdraw: 0.5
@@ -113,10 +113,10 @@ export default class UTIL {
             return false;
         }
 
-        if (realKey > 3) {
+        // if (realKey > 3) {
             removeKey = true;
             sceneryRemoveKey = true;
-        }
+        // }
 
         if (type === 'remove' && sceneryRemoveKey && sceneryArr.length > 0) {
              sceneryArr.shift().map(v => scene.remove(v));
@@ -127,7 +127,6 @@ export default class UTIL {
         }
         speedKey++;
         lastSpeedKey = realKey;
-
     }
 
     /**
@@ -219,6 +218,16 @@ export default class UTIL {
         }, 1000)
     }
 
+    q() {
+        setTimeout(() => {
+            world.step(timeStep);
+
+            car.position.copy(carBodys.position);
+            car.quaternion.copy(carBodys.quaternion);
+            this.q();
+        }, 100)
+    }
+
     /**
      * 首次开始音效
      * */
@@ -235,6 +244,8 @@ export default class UTIL {
 
                     // 更新分数
                     this.updateScore();
+
+                    this.q();
 
                     // 清空倒计时
                     gamePage.page();
