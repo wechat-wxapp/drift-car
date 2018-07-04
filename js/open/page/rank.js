@@ -6,6 +6,11 @@ import Init from './init';
 export default class Rank extends Init {
   constructor() {
     super();
+    this.total = null;
+    // 每页展示数
+    this.counts = 6;
+    // 总页数
+    this.totalPages = 1;
   }
 
   /**
@@ -21,12 +26,11 @@ export default class Rank extends Init {
     }else {
       this.worldRank();
     }
-  
     // 更新提示
     this.cvs.fillStyle = "#e7e7e7";
     this.cvs.fillRect(this.winWidth / 2 - this.computedSizeW(582) / 2, this.computedSizeH(272), this.computedSizeW(582), this.computedSizeH(50));
     this.cvs.fillStyle = "#808080";
-    this.cvs.font = `${this.computedSizeW(20)}px Yahei`;
+    this.cvs.font = `${this.computedSizeH(20)}px Yahei`;
     this.cvs.textAlign = "left";
     this.cvs.fillText('排行榜：每周一凌晨更新', this.computedSizeW(130), this.computedSizeH(306));
     
@@ -58,43 +62,33 @@ export default class Rank extends Init {
   }
 
   showData(data) {
-    let total = this.rankData.length;
-
-    //下一页保存 tudo
-    // wx.total = total
-    // console.log('getWX---------', wx.total)
-
-    // 每页展示数
-    let counts = 6;
-    // 总页数
-    let totalPages = Math.ceil(total / counts);
+    
+    this.total = this.rankData.length;
+    this.totalPages = Math.ceil(this.total / this.counts);
     // 当前页数
-    // let rankCurrentPage = 1;
-    // let rankCurrentPage = data.page >= totalPages ? totalPages : data.page;
-
     switch (data.common) {
-      case 0 : {
-        if (this.rankCurrentPage <= 1) {
-          this.rankCurrentPage = 1;
-        } else {
-          this.rankCurrentPage --;
-        }
-      }
+      case 0 : 
+      this.rankCurrentPage <= 1 ? this.rankCurrentPage = 1 : this.rankCurrentPage--;
       break;
-      case 1 : {
-          if (this.rankCurrentPage >= totalPages) {
-            this.rankCurrentPage = totalPages;
-          } else {
-            this.rankCurrentPage++;
-          }
-      }
+      case 1 :
+      this.rankCurrentPage >= this.totalPages ? this.rankCurrentPage = this.totalPages : this.rankCurrentPage++;
       break;
     }
-    let rankCurrentPage = this.rankCurrentPage
-
+    let rankCurrentPage = this.rankCurrentPage;
+    
     // 当前页面展示数量
-    let current_count = (rankCurrentPage == totalPages) ? (total % counts) : counts;
+    let current_count = (rankCurrentPage == this.totalPages) ? (this.total % this.counts) : this.counts;
 
+    //是否有下一页和上一页
+    this.hasNextPage = this.totalPages > rankCurrentPage;
+    this.hasPrePage = rankCurrentPage > 1;
+
+    // let { isDriving } = data;
+    this.isLastPage = rankCurrentPage === this.totalPages;
+    this.isFristPage = rankCurrentPage === 1;
+    this.noNext = this.isLastPage? 1 : 0;
+    this.noPre = this.isFristPage ? 1 : 0;
+    
     // 更新提示
     this.cvs.fillStyle = "#e7e7e7";
     this.cvs.fillRect(this.winWidth / 2 - this.computedSizeW(582) / 2, this.computedSizeH(272), this.computedSizeW(582), this.computedSizeH(50));
@@ -103,27 +97,28 @@ export default class Rank extends Init {
     this.cvs.textAlign = "left";
     this.cvs.fillText('排行榜：每周一凌晨更新', this.computedSizeW(130), this.computedSizeH(306));
 
-
-    this.cvs.fillStyle = this.themeBule;
-    if (rankCurrentPage == 1) {
-      this.cvs.fillStyle = "#808080";
-    }
+    // this.cvs.fillStyle = this.themeBule;
+    // if (rankCurrentPage == 1) {
+    //   this.cvs.fillStyle = "#808080";
+    // }
+    this.hasPrePage ? this.cvs.fillStyle = this.themeBule : this.cvs.fillStyle = "#808080";
     this.cvs.font = `${this.computedSizeW(20)}px xszt`;
     this.cvs.textAlign = "left";
-    this.cvs.fillText('上一页', this.computedSizeW(460), this.computedSizeW(306))
+    this.cvs.fillText('上一页', this.computedSizeW(460), this.computedSizeH(306))
 
     this.cvs.fillStyle = "#808080";
     this.cvs.font = `${this.computedSizeW(20)}px xszt`;
     this.cvs.textAlign = "left";
-    this.cvs.fillText('|', this.computedSizeW(548), this.computedSizeW(306))
+    this.cvs.fillText('|', this.computedSizeW(548), this.computedSizeH(306))
 
-    this.cvs.fillStyle = this.themeBule;
-    if (rankCurrentPage === totalPages) {
-      this.cvs.fillStyle = "#808080";
-    }
+    // this.cvs.fillStyle = this.themeBule;
+    // if (rankCurrentPage === this.totalPages) {
+    //   this.cvs.fillStyle = "#808080";
+    // }
+    this.hasNextPage ? this.cvs.fillStyle = this.themeBule : this.cvs.fillStyle = "#808080";
     this.cvs.font = `${this.computedSizeW(20)}px xszt`;
     this.cvs.textAlign = "left";
-    this.cvs.fillText('下一页', this.computedSizeW(570), this.computedSizeW(306))
+    this.cvs.fillText('下一页', this.computedSizeW(570), this.computedSizeH(306))
 
     //分割线
     this.cvs.lineWidth = 1;
@@ -138,28 +133,28 @@ export default class Rank extends Init {
     this.cvs.beginPath();
     this.cvs.fillStyle = this.themeBule;
     const that = this;
-    if(total !== 0){
+    if(this.total !== 0){
 
-      for(let i = (rankCurrentPage - 1) * counts; i < current_count + (rankCurrentPage - 1) * counts; i++) {
+      for(let i = (rankCurrentPage - 1) * this.counts; i < current_count + (rankCurrentPage - 1) * this.counts; i++) {
         if(i == 3) that.cvs.fillStyle = '#a8a8a8';
         // 排名
-        that.cvs.fillText(i + 1, that.computedSizeW(132), that.computedSizeH(402 + (i - (rankCurrentPage - 1) * counts) * 96));
+        that.cvs.fillText(i + 1, that.computedSizeW(132), that.computedSizeH(402 + (i - (rankCurrentPage - 1) * this.counts) * 96));
         // 头像
         let avatar = wx.createImage();
         avatar.src = that.rankData[i].avatarUrl;
 
         avatar.onload = () => {
-          that.circleImg(this.cvs, avatar, this.computedSizeW(190), that.computedSizeH(364 + (i - (rankCurrentPage - 1) * counts) * 96.8), this.computedSizeW(30))
+          that.circleImg(this.cvs, avatar, this.computedSizeW(190), that.computedSizeH(364 + (i - (rankCurrentPage - 1) * this.counts) * 96.8), this.computedSizeW(30))
           that.cvs.closePath();
         }
       }
     }
 
     // 名字
-    if(total !== 0) {
-      for(let i = (rankCurrentPage - 1) * counts; i < current_count + (rankCurrentPage - 1) * counts; i++){
+    if(this.total !== 0) {
+      for(let i = (rankCurrentPage - 1) * this.counts; i < current_count + (rankCurrentPage - 1) * this.counts; i++){
         this.cvs.fillStyle = '#666';
-        this.cvs.fillText(this.rankData[i].nickname, this.computedSizeW(286), this.computedSizeH(402 + (i - (rankCurrentPage - 1) * counts) * 96), this.computedSizeW(146));
+        this.cvs.fillText(this.rankData[i].nickname, this.computedSizeW(286), this.computedSizeH(402 + (i - (rankCurrentPage - 1) * this.counts) * 96), this.computedSizeW(146));
       }
     }
       // this.cvs.fillText(`this.rankData[i].nickname`, this.computedSizeW(286), this.computedSizeH(402 ), this.computedSizeW(146));
@@ -167,28 +162,29 @@ export default class Rank extends Init {
     // 分数
     this.cvs.font = `bold`;
     this.cvs.fillStyle = '#000';
-    if(total !== 0){
-      for(let i = (rankCurrentPage - 1) * counts; i < current_count + (rankCurrentPage - 1) * counts; i++){
+    if(this.total !== 0){
+      for(let i = (rankCurrentPage - 1) * this.counts; i < current_count + (rankCurrentPage - 1) * this.counts; i++){
         if(this.rankData[i].KVDataList.length > 0)
-          this.cvs.fillText(this.rankData[i].KVDataList[0].value, this.computedSizeW(538), this.computedSizeH(402 + (i - (rankCurrentPage - 1) * counts) * 96));
+          this.cvs.fillText(this.rankData[i].KVDataList[0].value, this.computedSizeW(538), this.computedSizeH(402 + (i - (rankCurrentPage - 1) * this.counts) * 96));
       }
     }
       let avatar = wx.createImage();
       if (this.selfData.avatarUrl) {
         avatar.src = this.selfData.avatarUrl
         avatar.onload = () => {
-          this.circleImg(this.cvs,avatar, this.computedSizeW(190), this.computedSizeH(990), this.computedSizeW(30), this.computedSizeW(30))
+          this.circleImg(this.cvs,avatar, this.computedSizeW(190), this.computedSizeH(990), this.computedSizeW(30), this.computedSizeH(30))
           this.cvs.beginPath();
         }
               //蓝色自己排名
         this.cvs.fillStyle = `#ffd81f`;
         this.cvs.font = 'noraml';
-        if(total !== 0)
+        if(this.total !== 0)
           this.cvs.fillText(this.selfData.rank, this.computedSizeW(132), this.computedSizeH(1028));
-        // this.cvs.arc(this.computedSizeW(234), this.computedSizeH(1018), this.computedSizeW(31), 0, 2 * Math.PI);
+        // this.cvs.fillRect(100,100,this.computedSizeW(200),this.computedSizeH(200))
+        // this.cvs.arc(this.computedSizeW(280), this.computedSizeH(299), this.computedSizeW(80), 0, 2 * Math.PI);
         // this.cvs.fill();
         this.cvs.fillStyle = `#fff`;
-        if(total !== 0)
+        if(this.total !== 0)
           this.cvs.fillText(this.selfData.nickname, this.computedSizeW(286), this.computedSizeH(1028), this.computedSizeW(146));
         this.cvs.font = `bold`;
         if(this.selfData.KVDataList.length > 0)
@@ -199,8 +195,8 @@ export default class Rank extends Init {
     
 
   friendRank(){
-    this.drawRoundRect(this.cvs, this.computedSizeW(85), this.computedSizeH(160), this.computedSizeW(216), this.computedSizeH(70), this.computedSizeW(35), 'rgba(73,116,235,1)');
-    this.drawRoundRect(this.cvs, this.computedSizeW(442), this.computedSizeH(160), this.computedSizeW(216), this.computedSizeH(70), this.computedSizeW(35), '#fff', 2);
+    this.drawRoundRect(this.cvs, this.computedSizeW(85), this.computedSizeH(160), this.computedSizeW(216), this.computedSizeH(70), this.computedSizeH(35), 'rgba(73,116,235,1)');
+    this.drawRoundRect(this.cvs, this.computedSizeW(442), this.computedSizeH(160), this.computedSizeW(216), this.computedSizeH(70), this.computedSizeH(35), '#fff', 2);
     this.cvs.fillStyle = "#fff";
     this.cvs.font = `bold ${this.computedSizeW(30)}px xszt`;
     this.cvs.textAlign = "left";
@@ -217,8 +213,8 @@ export default class Rank extends Init {
   }
 
   worldRank(){
-    this.drawRoundRect(this.cvs, this.computedSizeW(85), this.computedSizeH(160), this.computedSizeW(216), this.computedSizeH(70), this.computedSizeW(35), '#fff', 2);
-    this.drawRoundRect(this.cvs, this.computedSizeW(442), this.computedSizeH(160), this.computedSizeW(216), this.computedSizeH(70), this.computedSizeW(35), 'rgba(73,116,235,1)');
+    this.drawRoundRect(this.cvs, this.computedSizeW(85), this.computedSizeH(160), this.computedSizeW(216), this.computedSizeH(70), this.computedSizeH(35), '#fff', 2);
+    this.drawRoundRect(this.cvs, this.computedSizeW(442), this.computedSizeH(160), this.computedSizeW(216), this.computedSizeH(70), this.computedSizeH(35), 'rgba(73,116,235,1)');
     this.cvs.beginPath();
     this.cvs.fillStyle = "#fff";
     this.cvs.font = `bold ${this.computedSizeW(30)}px xszt`;
@@ -239,7 +235,7 @@ export default class Rank extends Init {
   groupRank(){
     // this.drawRoundRect(this.cvs, this.computedSizeW(85), this.computedSizeH(160), this.computedSizeW(216), this.computedSizeH(70), this.computedSizeW(35), '#fff', 2);
     // this.drawRoundRect(this.cvs, this.computedSizeW(442), this.computedSizeH(160), this.computedSizeW(216), this.computedSizeH(70), this.computedSizeW(35), 'rgba(73,116,235,1)');
-    this.drawRoundRect(this.cvs, (this.winWidth - this.computedSizeW(216)) / 2, this.computedSizeH(160), this.computedSizeW(216), this.computedSizeH(70), this.computedSizeW(35), 'rgba(73,116,235,1)');
+    this.drawRoundRect(this.cvs, (this.winWidth - this.computedSizeW(216)) / 2, this.computedSizeH(160), this.computedSizeW(216), this.computedSizeH(70), this.computedSizeH(35), 'rgba(73,116,235,1)');
     this.cvs.beginPath();
     this.cvs.fillStyle = "#fff";
     this.cvs.textAlign = "center";
