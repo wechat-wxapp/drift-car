@@ -90,8 +90,9 @@ export default class Init {
     }
 
     // 初始化好友排行榜数据并排序
-    initFriendRankData() {
+    initFriendRankData(data) {
         return new Promise((resolve, reject) => {
+            if(this.rankData) return resolve(data);
             let that = this;
             wx.getFriendCloudStorage({
                 keyList: ['score'],
@@ -114,9 +115,11 @@ export default class Init {
     }
 
     // 初始化群排行榜数据并排序
-    initGroupRankData(shareTicket) {
+    initGroupRankData(data) {
+        const { shareTicket } = data;
         return new Promise((resolve, reject) => {
-            let that = this;
+            if(this.rankData) return resolve(data);
+            const that = this;
             wx.getGroupCloudStorage({
                 shareTicket: shareTicket,
                 keyList: ['score'],
@@ -124,7 +127,6 @@ export default class Init {
                     let tempRankData = res.data
                     // 排序
                     that.rankData = that.sort(tempRankData, 'asc', 1)
-                    // that.rankData = that.groupSort(tempRankData)
                     // 请求个人数据
                     console.log('请求群排行榜', that.rankData)
                     that.initSelf().then(() => {
@@ -234,7 +236,6 @@ export default class Init {
 
     //绘制圆形头像
     circleImg(ctx, img, x, y, r) {
-        ctx.beginPath();
         ctx.save();
         let d = 2 * r;
         let cx = x + r;
@@ -244,6 +245,7 @@ export default class Init {
         ctx.clip();
         ctx.drawImage(img, x, y, d, d);
         ctx.restore();
+        ctx.beginPath();
         // ctx.closePath();
     }
 

@@ -259,7 +259,8 @@ export default class Shared extends UTIL {
                         common: 1 ,
                         shareTicket: $wx.shareTicket,
                         ranks:e.payload.ranks ,
-                        user:e.payload.user
+                        user:e.payload.user,
+                        isDriving : 'pre'
                     });
                     sharedTexture2d.needsUpdate = true;
                     currentPage = 'worldRank';
@@ -286,7 +287,8 @@ export default class Shared extends UTIL {
                         common: 1 ,
                         shareTicket: $wx.shareTicket,
                         ranks:e.payload.ranks,
-                        user:e.payload.user
+                        user:e.payload.user,
+                        isDriving : 'next'
                     });
                     sharedTexture2d.needsUpdate = true;
                     currentPage = 'worldRank';
@@ -307,7 +309,7 @@ export default class Shared extends UTIL {
             pageName: 'groupRank',
             point: [x1, y1, x2, y2],
             cb: () => {
-                $wx.sendMessage('groupRank',{ page: rankCurrentPage, common: 0 , shareTicket: $wx.shareTicket});
+                $wx.sendMessage('groupRank',{ page: rankCurrentPage, common: 0 , shareTicket: $wx.shareTicket , isDriving : 'pre'});
                 sharedTexture2d.needsUpdate = true;
             }
         })
@@ -325,7 +327,7 @@ export default class Shared extends UTIL {
             point: [x1, y1, x2, y2],
             cb: () => {
                 // rankCurrentPage = rankCurrentPage + 1;
-                $wx.sendMessage('groupRank',{ page: rankCurrentPage, common: 1 , shareTicket: $wx.shareTicket});
+                $wx.sendMessage('groupRank',{ page: rankCurrentPage, common: 1 , shareTicket: $wx.shareTicket , isDriving : 'next'});
                 sharedTexture2d.needsUpdate = true;
             }
         })
@@ -342,7 +344,7 @@ export default class Shared extends UTIL {
             pageName: 'friendRank',
             point: [x1, y1, x2, y2],
             cb: () => {
-                $wx.sendMessage('friendRank',{ page: rankCurrentPage, common: 0 , shareTicket: $wx.shareTicket});
+                $wx.sendMessage('friendRank',{ page: rankCurrentPage, common: 0 , isDriving : 'pre'});
                 sharedTexture2d.needsUpdate = true;
             }
         })
@@ -359,9 +361,7 @@ export default class Shared extends UTIL {
             pageName: 'friendRank',
             point: [x1, y1, x2, y2],
             cb: () => {
-                // rankCurrentPage = rankCurrentPage + 1;
-                console.log('rankCurrentPage',rankCurrentPage)
-                $wx.sendMessage('friendRank',{ page: rankCurrentPage, common: 1 , shareTicket: $wx.shareTicket});
+                $wx.sendMessage('friendRank',{ page: rankCurrentPage, common: 1 , isDriving : 'next'} );
                 sharedTexture2d.needsUpdate = true;
             }
         })

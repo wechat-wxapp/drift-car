@@ -31,21 +31,29 @@ wx.onMessage(({ command, data = {}}) => {
                 })
             break;
         case 'friendRank':
-            friendRankPage.setTexture(1, data.noScale)
-            friendRankPage.initFriendRankData()
-                .then(() => {
-                    friendRankPage.showData(data)
-                })
+            if(!data.isDriving || (data.isDriving == 'next' && !friendRankPage.noNext) || (data.isDriving == 'pre' && !friendRankPage.noPre)) {
+                friendRankPage.setTexture(1, data.noScale)
+                friendRankPage.initFriendRankData(data)
+                    .then((res) => {
+                        friendRankPage.showData(data, res)
+                    })
+            }
             break;
         case 'worldRank':
-            worldRankPage.setTexture(3, data)
-            worldRankPage.initWorldRankData(data)
-            worldRankPage.showData(data)
+            if(!data.isDriving || (data.isDriving == 'next' && !worldRankPage.noNext) || (data.isDriving == 'pre' && !worldRankPage.noPre)) {
+                worldRankPage.setTexture(3, data)
+                worldRankPage.initWorldRankData(data)
+                worldRankPage.showData(data)
+            }
             break;
         case 'groupRank':
-            groupRankPage.setTexture(2)
-            groupRankPage.initGroupRankData(data.shareTicket)
-                .then(() => groupRankPage.showData(data));
+            if(!data.isDriving || (data.isDriving == 'next' && !groupRankPage.noNext) || (data.isDriving == 'pre' && !groupRankPage.noPre)) {
+                groupRankPage.setTexture(2)
+                groupRankPage.initGroupRankData(data)
+                    .then((res) => {
+                        groupRankPage.showData(data, res)
+                });
+            }
             break;
         case 'carport':
             carportPage.setTexture(data);
