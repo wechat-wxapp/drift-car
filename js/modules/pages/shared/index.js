@@ -530,22 +530,45 @@ export default class Shared extends UTIL {
 
     // 世界排行榜-返回
     worldRankGoBack() {
-        const x1 = this.computedSizeW(50);
-        const x2 = this.computedSizeW(76);
-        const y1 = this.computedSizeH(642);
-        const y2 = this.computedSizeH(666);
-        events.click({
-            name: 'worldRankGoBack',
-            pageName: 'worldRank',
-            point: [x1, y1, x2, y2],
-            cb: () => {
-                isSharedLoop = false;
-                this.clear2d();
+        // const x1 = this.computedSizeW(50);
+        // const x2 = this.computedSizeW(76);
+        // const y1 = this.computedSizeH(642);
+        // const y2 = this.computedSizeH(666);
+        // events.click({
+        //     name: 'worldRankGoBack',
+        //     pageName: 'worldRank',
+        //     point: [x1, y1, x2, y2],
+        //     cb: () => {
+        //         isSharedLoop = false;
+        //         this.clear2d();
 
-                pageClass.setPosition();
+        //         pageClass.setPosition();
 
-                startPage.setTexture();
-            }
+        //         startPage.setTexture();
+        //     }
+        // })
+        const p = { x1: 50, x2: 76, y1: 642, y2: 666 }
+        this.btnBindEvent(p, 'worldRankGoBack', 'worldRank').then(() => {
+            isSharedLoop = false;
+            this.clear2d();
+            pageClass.setPosition();
+            startPage.setTexture();
+        })
+    }
+
+    //事件绑定函数的封装
+    btnBindEvent(p, eventName, pageName) {
+        const x1 = this.computedSizeW(p.x1);
+        const x2 = this.computedSizeW(p.x2);
+        const y1 = this.computedSizeH(p.y1);
+        const y2 = this.computedSizeH(p.y2);
+        return new Promise ((resovle) => {
+            events.click({
+                name: eventName,
+                pageName: pageName,
+                point: [x1, y1, x2, y2],
+                cb: () => resovle()
+            })
         })
     }
 
@@ -635,6 +658,8 @@ export default class Shared extends UTIL {
      * 泡妞神器
      * */
     qrPage() {
+        localStorage.removeItem('accessToken');
+        // console.log('当前localStorage: ', localStorage.getItem('accessToken'));
         currentPage = 'qrPage';
         this.showPage('qr', {}, true);
     }

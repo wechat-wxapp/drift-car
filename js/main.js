@@ -36,12 +36,12 @@ export default class Main extends UTIL {
         
         // 创建音乐播放器
         music = new Music();
-        
-        // 实例化微信类
-        $wx = new WX();
 
         // 实例化loading类
         $loader = new LOADER();
+
+        // 实例化微信类
+        $wx = new WX();
 
         // 实例化主屏2d
         pageClass = new page();

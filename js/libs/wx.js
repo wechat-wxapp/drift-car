@@ -13,6 +13,7 @@ export default class WX extends UTIL {
         super();
 
         this.init();
+        this.wxLogin();
         this.createStartBtn();
     }
 
@@ -53,7 +54,7 @@ export default class WX extends UTIL {
         this.startBtn.hide();
 
         this.startBtn.onTap((res) => {
-            this.checkLogin(res);
+            this.wxUnionId(res);
         });
     }
 
@@ -65,7 +66,7 @@ export default class WX extends UTIL {
         if (accessToken) {
             gamePage.startGame();
         } else {
-            this.wxLogin(data);
+            // this.wxLogin(data);
         }
 
         // wx.checkSession({
@@ -85,20 +86,57 @@ export default class WX extends UTIL {
     /**
      * 登录操作
      * */
-    wxLogin(data) {
-        currentPage = 'gamePage';
+    wxLogin() {
+        $loader.show();
 
         wx.login({
             success: (res) => {
                 const { code } = res;
                 if (code) {
                     this.code = code;
-                    this.wxUnionId(data);
+
+                    this.getAccessToken()
+                        .then(e => {
+                            console.log('3');
+                            $loader.hide();
+                        });
+
                 } else {
+                    $loader.hide();
+
                     console.log('登录失败: ' + res.errMsg);
                 }
+            },
+            fail: () => {
+                $loader.hide();
+                console.log('登录失败error: ' + res.errMsg);
+            },
+            complete: () => {
             }
         });
+    }
+
+    /**
+     * 获取openid, session_key
+     * */
+    getAccessToken() {
+        return new Promise((res, rej) => {
+            $io.getAccessToken(this.code)
+            .then(token => {
+                const { code, payload: { data } } = token;
+                console.log('2', code, token);
+                if (code === '0') {
+                    console.log('1token', token);
+                    // 缓存openid, session_key
+                    localStorage.setItem('accessToken', data);
+
+                    res(data);
+                } else {
+                    console.log('接口出错: ', token);
+                    rej();
+                }
+            });
+        })
     }
 
     /**
@@ -108,26 +146,9 @@ export default class WX extends UTIL {
         const { encryptedData, iv, rawData, signature } = data;
         $loader.show();
 
-        $io.getAccessToken(this.code)
-        .then(token => {
-            const { code, payload: { data } } = token;
-            if (code === '0') {
-                const { openid, session_key } = data;
+        const { openid, session_key } = localStorage.getItem('accessToken');
 
-                // 缓存openid, session_key
-                localStorage.setItem('accessToken', data);
-
-                return {
-                    openid,
-                    session_key
-                }
-            } else {
-                $loader.hide();
-                console.log('接口出错: ', token);
-            }
-        })
-        .then(e => {
-            $io.getUnionId({ ...e, encryptedData, iv, rawData, signature })
+        $io.getUnionId({ openid, session_key, encryptedData, iv, rawData, signature })
             .then(e => {
                 const { code } = e;
                 if (code === '0') {
@@ -140,7 +161,6 @@ export default class WX extends UTIL {
                 this.isLogin = true;
                 $loader.hide();
             });
-        });
     }
 
     /**
