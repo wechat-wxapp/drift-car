@@ -92,7 +92,7 @@ export default class Init {
     // 初始化好友排行榜数据并排序
     initFriendRankData(data) {
         return new Promise((resolve, reject) => {
-            if(this.rankData) return resolve(data);
+            // if(this.rankData) return resolve(data);
             let that = this;
             wx.getFriendCloudStorage({
                 keyList: ['score'],
@@ -118,7 +118,7 @@ export default class Init {
     initGroupRankData(data) {
         const { shareTicket } = data;
         return new Promise((resolve, reject) => {
-            if(this.rankData) return resolve(data);
+            // if(this.rankData) return resolve(data);
             const that = this;
             wx.getGroupCloudStorage({
                 shareTicket: shareTicket,
