@@ -23,7 +23,7 @@ export default class UTIL {
 
         const objLoader = new THREE.OBJLoader();
         objLoader.load(model, (obj) => {
-            console.log('加载模型: ', model);
+            // console.log('加载模型: ', model);
             // var materialObj = new THREE.MeshBasicMaterial({
             //   vertexColors: THREE.FaceColors,
             //   overdraw: 0.5
@@ -95,6 +95,9 @@ export default class UTIL {
      * 显示结束页面
      * */
     showReseurPage() {
+        // 设置游戏状态
+        onGame = false;
+
         if (reseurNum === 0) {
             sharedClass.endPage();
         } else {
@@ -113,7 +116,7 @@ export default class UTIL {
             return false;
         }
 
-        if (realKey > 3) {
+        if (realKey > 1) {
             removeKey = true;
             sceneryRemoveKey = true;
         }
@@ -127,7 +130,6 @@ export default class UTIL {
         }
         speedKey++;
         lastSpeedKey = realKey;
-
     }
 
     /**
@@ -135,6 +137,9 @@ export default class UTIL {
      * */
     restart(isReseur) {
         this.clearWorld();
+
+        // 设置游戏状态
+        onGame = true;
 
         // 重置变量
         $bus.reset();

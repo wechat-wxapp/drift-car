@@ -64,6 +64,7 @@ export default class Road extends UTIL {
 
         // 得分
         roadBody.addEventListener("collide", () => {
+            console.log(type);
             this.getScore(key, type);
         });
 

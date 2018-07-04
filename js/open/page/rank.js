@@ -75,9 +75,10 @@ export default class Rank extends Init {
       break;
     }
     let rankCurrentPage = this.rankCurrentPage;
-    
+
     // 当前页面展示数量
     let current_count = (rankCurrentPage == this.totalPages) ? (this.total % this.counts) : this.counts;
+      current_count === 0 && (current_count = 5);
 
     //是否有下一页和上一页
     this.hasNextPage = this.totalPages > rankCurrentPage;
@@ -135,6 +136,7 @@ export default class Rank extends Init {
     const that = this;
     if(this.total !== 0){
 
+
       for(let i = (rankCurrentPage - 1) * this.counts; i < current_count + (rankCurrentPage - 1) * this.counts; i++) {
         if(i == 3) that.cvs.fillStyle = '#a8a8a8';
         // 排名
@@ -154,6 +156,7 @@ export default class Rank extends Init {
     if(this.total !== 0) {
       for(let i = (rankCurrentPage - 1) * this.counts; i < current_count + (rankCurrentPage - 1) * this.counts; i++){
         this.cvs.fillStyle = '#666';
+
         this.cvs.fillText(this.rankData[i].nickname, this.computedSizeW(286), this.computedSizeH(402 + (i - (rankCurrentPage - 1) * this.counts) * 96), this.computedSizeW(146));
       }
     }

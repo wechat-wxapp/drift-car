@@ -29,7 +29,19 @@ export default class WX extends UTIL {
                 winWidth,
                 winHeight
             }
-        })
+        });
+
+        wx.onHide(() => {
+            startKey = false;
+        });
+
+        wx.onShow(() => {
+            if (onGame) {
+                startKey = true;
+                // 继续更新分数
+                this.updateScore();
+            }
+        });
     }
 
     sendMessage(command, data) {
@@ -97,7 +109,6 @@ export default class WX extends UTIL {
 
                     this.getAccessToken()
                         .then(e => {
-                            console.log('3');
                             $loader.hide();
                         });
 
@@ -112,6 +123,7 @@ export default class WX extends UTIL {
                 console.log('登录失败error: ' + res.errMsg);
             },
             complete: () => {
+                $loader.hide();
             }
         });
     }
@@ -120,17 +132,25 @@ export default class WX extends UTIL {
      * 获取openid, session_key
      * */
     getAccessToken() {
+        console.log('当前wx.code: ', this.code);
         return new Promise((res, rej) => {
             $io.getAccessToken(this.code)
             .then(token => {
                 const { code, payload: { data } } = token;
-                console.log('2', code, token);
-                if (code === '0') {
-                    console.log('1token', token);
-                    // 缓存openid, session_key
-                    localStorage.setItem('accessToken', data);
 
-                    res(data);
+                console.log('接口返回openid', data);
+
+                if (code === '0') {
+
+                    const { session_key, openid } = data;
+
+                    if (session_key && openid) {
+                        // 缓存openid, session_key
+                        localStorage.setItem('accessToken', data);
+                        res(data);
+                    } else {
+                        rej();
+                    }
                 } else {
                     console.log('接口出错: ', token);
                     rej();

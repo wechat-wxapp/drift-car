@@ -30,7 +30,7 @@ export default class Resurgence extends Init {
         }
         else {
 
-            let scoreLength = (`还差${scoreLess}分超越:`.length + 1) * 26
+            let scoreLength = (`还差${scoreLess}分超越:`.length) * 26
             let nicknameLeft = (myFri.nickname.length <= 15? myFri.nickname.length : 15 ) * 26
             let sumWidth = scoreLength + 110 + nicknameLeft
             let bothLeft = this.winWidth / 2 - this.computedSizeW(sumWidth) / 2
