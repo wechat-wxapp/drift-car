@@ -191,6 +191,9 @@ const basicData = {
         rankOne: 'images/rankOne.png'
     },
 
+    // 是否正在进行游戏
+    onGame: false,
+
     // 排行榜当前页数
     rankCurrentPage: 1
 };
@@ -278,6 +281,9 @@ export default class Bus{
      * 重置模型,摄像头位置
      * */
     resetModel() {
+        carClass.removeCar();
+        carClass.addCar();
+
         carBodys.position.set(25, 15, -10);
         carBodys.quaternion.setFromAxisAngle(new CANNON.Vec3(0, 1, 0), 0);
 

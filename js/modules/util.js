@@ -95,6 +95,9 @@ export default class UTIL {
      * 显示结束页面
      * */
     showReseurPage() {
+        // 设置游戏状态
+        onGame = false;
+
         if (reseurNum === 0) {
             sharedClass.endPage();
         } else {
@@ -113,10 +116,10 @@ export default class UTIL {
             return false;
         }
 
-        // if (realKey > 3) {
+        if (realKey > 1) {
             removeKey = true;
             sceneryRemoveKey = true;
-        // }
+        }
 
         if (type === 'remove' && sceneryRemoveKey && sceneryArr.length > 0) {
              sceneryArr.shift().map(v => scene.remove(v));
@@ -134,6 +137,9 @@ export default class UTIL {
      * */
     restart(isReseur) {
         this.clearWorld();
+
+        // 设置游戏状态
+        onGame = true;
 
         // 重置变量
         $bus.reset();
@@ -218,16 +224,6 @@ export default class UTIL {
         }, 1000)
     }
 
-    q() {
-        setTimeout(() => {
-            world.step(timeStep);
-
-            car.position.copy(carBodys.position);
-            car.quaternion.copy(carBodys.quaternion);
-            this.q();
-        }, 100)
-    }
-
     /**
      * 首次开始音效
      * */
@@ -244,8 +240,6 @@ export default class UTIL {
 
                     // 更新分数
                     this.updateScore();
-
-                    this.q();
 
                     // 清空倒计时
                     gamePage.page();

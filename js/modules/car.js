@@ -113,7 +113,7 @@ export default class Car extends UTIL {
     drift() {
         if (startKey) {
             // 播放漂移音乐
-            // music.playDrift();
+            music.playDrift();
 
             // 增加转弯次数
             turn++;

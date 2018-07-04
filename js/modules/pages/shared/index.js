@@ -231,7 +231,7 @@ export default class Shared extends UTIL {
                         ranks:e.payload.ranks ,
                         user:e.payload.user
                     });
-                    sharedTexture2d.needsUpdate = true;
+                    // sharedTexture2d.needsUpdate = true;
                     currentPage = 'worldRank';
                 })
             }
@@ -262,7 +262,7 @@ export default class Shared extends UTIL {
                         user:e.payload.user,
                         isDriving : 'pre'
                     });
-                    sharedTexture2d.needsUpdate = true;
+                    // sharedTexture2d.needsUpdate = true;
                     currentPage = 'worldRank';
                 })
             }

@@ -29,7 +29,19 @@ export default class WX extends UTIL {
                 winWidth,
                 winHeight
             }
-        })
+        });
+
+        wx.onHide(() => {
+            startKey = false;
+        });
+
+        wx.onShow(() => {
+            if (onGame) {
+                startKey = true;
+                // 继续更新分数
+                this.updateScore();
+            }
+        });
     }
 
     sendMessage(command, data) {

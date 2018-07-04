@@ -280,7 +280,7 @@ export default class Main extends UTIL {
      * */
     loop() {
         // 更新物理世界
-        // loadKey && this.updateWorld();
+        loadKey && this.updateWorld();
         // 生成路面
         loadKey && this.updateRoad();
         // 更新汽车动画
