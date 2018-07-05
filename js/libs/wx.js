@@ -9,6 +9,11 @@ export default class WX extends UTIL {
         height: winHeight
     };
 
+    shareObj = {
+        title: '漂移大师',
+        imageUrl: 'https://static.cdn.24haowan.com/24haowan/test/js/share.png'
+    };
+
     isLogin = false;
     tapLock = false;
 
@@ -45,6 +50,9 @@ export default class WX extends UTIL {
                 this.updateScore();
             }
         });
+
+        const { title, imageUrl } = this.shareObj;
+        wx.onShareAppMessage(() => ({ title, imageUrl }))
     }
 
     sendMessage(command, data) {
@@ -175,10 +183,13 @@ export default class WX extends UTIL {
     /**
      * 触发分享
      * */
-    shareAppMessage(title = '漂移大师', imageUrl = 'https://static.cdn.24haowan.com/24haowan/test/js/share.png') {
+    shareAppMessage(title, imageUrl) {
+        const shareTitle = title || this.shareObj.title;
+        const shareImg = imageUrl || this.shareObj.imageUrl;
+
         wx.shareAppMessage({
-            title,
-            imageUrl
+            title: shareTitle,
+            imageUrl: shareImg
         })
     }
 }
