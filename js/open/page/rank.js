@@ -14,8 +14,10 @@ export default class Rank extends Init {
   }
 
   /**
-   * 更新页面内容
-   * */
+   * 基础页面框架
+   * @param {Number} type 
+   * @param {*} noScale 
+   */
   setTexture(type, noScale) {
     this.clearCvs(null, noScale);
     if(type == 1) {
@@ -61,10 +63,12 @@ export default class Rank extends Init {
     // this.canvasScale()
   }
 
+  /**
+   * 更新页面内容数据
+   * */
   showData(data) {
-    
     this.total = this.rankData.length;
-    this.totalPages = Math.ceil(this.total / this.counts);
+    this.totalPages = data.rankCurrentPage ? data.rankCurrentPage : Math.ceil(this.total / this.counts);
     // 当前页数
     switch (data.common) {
       case 0 : 
@@ -74,15 +78,17 @@ export default class Rank extends Init {
       this.rankCurrentPage >= this.totalPages ? this.rankCurrentPage = this.totalPages : this.rankCurrentPage++;
       break;
     }
-    let rankCurrentPage = this.rankCurrentPage;
-
+    
+    let rankCurrentPage = data.rankCurrentPage ? data.rankCurrentPage : this.rankCurrentPage
+    
     // 当前页面展示数量
-    let current_count = (rankCurrentPage == this.totalPages) ? (this.total % this.counts) : this.counts;
-      current_count === 0 && (current_count = 5);
+    let current_count = (rankCurrentPage == this.totalPages) ? ((false == (this.total % this.counts)) ? 6 : this.total % this.counts) : this.counts;
+    console.log('总条数',rankCurrentPage,current_count,this.total % this.counts,this.total,this.totalPages)
 
     //是否有下一页和上一页
-    this.hasNextPage = this.totalPages > rankCurrentPage;
-    this.hasPrePage = rankCurrentPage > 1;
+    
+    let hasNextPage = data.hasNextPage || (this.totalPages > rankCurrentPage);
+    let hasPrePage = data.hasPrePage || rankCurrentPage > 1;
 
     // let { isDriving } = data;
     this.isLastPage = rankCurrentPage === this.totalPages;
@@ -102,7 +108,7 @@ export default class Rank extends Init {
     // if (rankCurrentPage == 1) {
     //   this.cvs.fillStyle = "#808080";
     // }
-    this.hasPrePage ? this.cvs.fillStyle = this.themeBule : this.cvs.fillStyle = "#808080";
+    hasPrePage ? this.cvs.fillStyle = this.themeBule : this.cvs.fillStyle = "#808080";
     this.cvs.font = `${this.computedSizeW(20)}px xszt`;
     this.cvs.textAlign = "left";
     this.cvs.fillText('上一页', this.computedSizeW(460), this.computedSizeH(306))
@@ -116,7 +122,7 @@ export default class Rank extends Init {
     // if (rankCurrentPage === this.totalPages) {
     //   this.cvs.fillStyle = "#808080";
     // }
-    this.hasNextPage ? this.cvs.fillStyle = this.themeBule : this.cvs.fillStyle = "#808080";
+    hasNextPage ? this.cvs.fillStyle = this.themeBule : this.cvs.fillStyle = "#808080";
     this.cvs.font = `${this.computedSizeW(20)}px xszt`;
     this.cvs.textAlign = "left";
     this.cvs.fillText('下一页', this.computedSizeW(570), this.computedSizeH(306))
@@ -135,15 +141,15 @@ export default class Rank extends Init {
     this.cvs.fillStyle = this.themeBule;
     const that = this;
     if(this.total !== 0){
-
-
       for(let i = (rankCurrentPage - 1) * this.counts; i < current_count + (rankCurrentPage - 1) * this.counts; i++) {
-        if(i == 3) that.cvs.fillStyle = '#a8a8a8';
+        //前三名变蓝色
+        that.cvs.fillStyle = [0, 1, 2].includes(i) ? that.themeBule : '#a8a8a8'
         // 排名
         that.cvs.fillText(i + 1, that.computedSizeW(132), that.computedSizeH(402 + (i - (rankCurrentPage - 1) * this.counts) * 96));
         // 头像
         let avatar = wx.createImage();
-        avatar.src = that.rankData[i].avatarUrl;
+        let j = data.rankCurrentPage ? i % 6 : i;
+        avatar.src = that.rankData[j].avatarUrl;
 
         avatar.onload = () => {
           that.circleImg(this.cvs, avatar, this.computedSizeW(190), that.computedSizeH(364 + (i - (rankCurrentPage - 1) * this.counts) * 96.8), this.computedSizeW(30))
@@ -156,8 +162,8 @@ export default class Rank extends Init {
     if(this.total !== 0) {
       for(let i = (rankCurrentPage - 1) * this.counts; i < current_count + (rankCurrentPage - 1) * this.counts; i++){
         this.cvs.fillStyle = '#666';
-
-        this.cvs.fillText(this.rankData[i].nickname, this.computedSizeW(286), this.computedSizeH(402 + (i - (rankCurrentPage - 1) * this.counts) * 96), this.computedSizeW(146));
+        let j = data.rankCurrentPage ? i % 6 : i;
+        this.cvs.fillText(this.rankData[j].nickname, this.computedSizeW(286), this.computedSizeH(402 + (i - (rankCurrentPage - 1) * this.counts) * 96), this.computedSizeW(146));
       }
     }
       // this.cvs.fillText(`this.rankData[i].nickname`, this.computedSizeW(286), this.computedSizeH(402 ), this.computedSizeW(146));
@@ -167,8 +173,9 @@ export default class Rank extends Init {
     this.cvs.fillStyle = '#000';
     if(this.total !== 0){
       for(let i = (rankCurrentPage - 1) * this.counts; i < current_count + (rankCurrentPage - 1) * this.counts; i++){
-        if(this.rankData[i].KVDataList.length > 0)
-          this.cvs.fillText(this.rankData[i].KVDataList[0].value, this.computedSizeW(538), this.computedSizeH(402 + (i - (rankCurrentPage - 1) * this.counts) * 96));
+        let j = data.rankCurrentPage ? i % 6 : i;
+        if(this.rankData[j].KVDataList.length > 0)
+          this.cvs.fillText(this.rankData[j].KVDataList[0].value, this.computedSizeW(538), this.computedSizeH(402 + (i - (rankCurrentPage - 1) * this.counts) * 96));
       }
     }
       let avatar = wx.createImage();
