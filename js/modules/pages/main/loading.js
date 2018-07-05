@@ -4,6 +4,8 @@ import Road from '../../road';
 import TurnRoad from "../../turn-road";
 import TurnRoadSmall from "../../turn-road-small";
 
+import UTIL from "../../util";
+
 import Score from '../score/index';
 
 import pageStart from './start';
@@ -13,8 +15,10 @@ import pageGame from "./game";
 /**
  * 开始页函数
  */
-export default class Loader {
+export default class Loader extends UTIL {
     constructor() {
+        super();
+
         this.setTexture('正在加载...');
         // $wx.sendMessage('loading', '正在加载...');
 
@@ -69,17 +73,17 @@ export default class Loader {
         offCanvas2d.fillRect(0, 0, winWidth, winHeight);
 
         if (this.imgKey) {
-            const bg = imgList.loadingBg;
+            const bg = imgList.indexBg;
             const logo = imgList.logo;
 
             offCanvas2d.drawImage(bg, 0, 0, bg.width, bg.height, 0, 0, winWidth, winHeight);
-            offCanvas2d.drawImage(logo, 0, 0, logo.width, logo.height, winWidth / 2 - logo.width / 4, winHeight / 2 - logo.height / 2 - 20, logo.width / 2, logo.height / 2);
+            offCanvas2d.drawImage(logo, 0, 0, logo.width, logo.height, winWidth / 2 - this.computedSizeW(logo.width / 8), winHeight / 2 - this.computedSizeH(logo.height / 2) - 20, this.computedSizeW(logo.width / 4), this.computedSizeW(logo.height / 4));
         }
 
         offCanvas2d.fillStyle = "#fff";
         // offCanvas2d.font = "bold 40px Arial";
         offCanvas2d.textAlign = "center";
-        offCanvas2d.fillText(text, winWidth / 2, winHeight / 2);
+        offCanvas2d.fillText(text, winWidth / 2, winHeight / 2 - this.computedSizeH(55));
 
         texture2d.needsUpdate = true;
     }

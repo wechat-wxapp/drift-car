@@ -9,6 +9,7 @@ import GroundBody from './modules/ground';
 import bindEvent from './modules/bind-event';
 
 import WX from './libs/wx';
+import CACHE from './libs/cache';
 import LOADER from './libs/loader';
 import UTIL from "./modules/util";
 
@@ -37,6 +38,9 @@ export default class Main extends UTIL {
         // 创建音乐播放器
         music = new Music();
 
+        // 实例化缓存类
+        $cache = new CACHE();
+
         // 实例化loading类
         $loader = new LOADER();
 
@@ -58,8 +62,6 @@ export default class Main extends UTIL {
      * */
     updateDate() {
         const accessToken = localStorage.getItem('accessToken');
-
-        console.log('当前localStorage: ', accessToken);
 
         if (accessToken) {
             $io.updateDate();
@@ -96,7 +98,7 @@ export default class Main extends UTIL {
         scene.add(directionalLight);
 
         // 摄像机调试
-        // controls = new THREE.OrbitControls(camera);
+        controls = new THREE.OrbitControls(camera);
     }
 
     /**

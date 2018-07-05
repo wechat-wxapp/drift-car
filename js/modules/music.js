@@ -60,6 +60,7 @@ export default class Music {
     }
 
     playReady() {
+        // this.readyAudio.pause();
         this.readyAudio.currentTime = 0;
         this.playMusic(this.readyAudio);
     }

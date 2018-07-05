@@ -52,6 +52,8 @@ const basicData = {
 
     // 全局变量bus对象
     $bus: '',
+    // 全局缓存类
+    $cache: '',
     // 全局微信类
     $wx: '',
     // 全局异步函数
@@ -168,12 +170,12 @@ const basicData = {
         indexBg: 'images/index.png',
         startBtn: 'images/start-btn.png',
         leaderboard: 'images/leaderboard-btn.png',
-        checkLeaderboard: 'images/check-leaderboard-btn.png',
-        startBottomBtn1: 'images/start-bottom-btn-1.png',
-        startBottomCloseBtn1: 'images/start-bottom-close-btn-1.png',
-        startBottomBtn2: 'images/start-bottom-btn-2.png',
-        startBottomBtn3: 'images/start-bottom-btn-3.png',
-        startBottomBtn4: 'images/start-bottom-btn-4.png',
+        groupLeaderboard: 'images/group-leaderboard-btn.png',
+        musicOn: 'images/music-on.png',
+        musicOff: 'images/music-off.png',
+        qr: 'images/qr.png',
+        carport: 'images/carport.png',
+        wechat: 'images/wechat.png',
 
         // 游戏页
         scoreBg: 'images/score-bg.png',

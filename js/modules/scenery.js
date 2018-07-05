@@ -10,12 +10,12 @@ export default class Scenery extends UTIL {
 
     build() {
         return Promise.all([
-            this.s1(),
-            this.s2(),
-            this.s3(),
+            // this.s1(),
+            // this.s2(),
+            // this.s3(),
             this.s4(),
             this.s5(),
-            this.s6(),
+            // this.s6(),
             this.s7()
         ]);
     }
