@@ -12,7 +12,7 @@ export default class Music {
 
         this.bgmAudio = new Audio();
         this.bgmAudio.loop = true;
-        this.bgmAudio.src  = 'sound/BGM2.mp3';
+        this.bgmAudio.src  = 'sound/BGM.mp3';
 
         this.driftAudio = new Audio();
         this.driftAudio.src = 'sound/drift.mp3';
@@ -31,7 +31,8 @@ export default class Music {
     }
 
     playMusic(music) {
-        if (!musicKey) return false;
+        const isMusic = $cache.getGameData('music');
+        if (!isMusic) return false;
 
         music.play();
     }

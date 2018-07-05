@@ -98,7 +98,7 @@ export default class Main extends UTIL {
         scene.add(directionalLight);
 
         // 摄像机调试
-        controls = new THREE.OrbitControls(camera);
+        // controls = new THREE.OrbitControls(camera);
     }
 
     /**

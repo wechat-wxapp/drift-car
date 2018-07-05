@@ -230,6 +230,7 @@ export default class UTIL {
     /**
      * 首次开始音效
      * */
+    // 关闭小程序后再进入
     readyMusic() {
         music.pauseBgm();
         const playMusic = (key = 0) => {
