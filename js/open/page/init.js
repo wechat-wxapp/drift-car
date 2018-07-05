@@ -92,7 +92,7 @@ export default class Init {
     // 初始化好友排行榜数据并排序
     initFriendRankData(data) {
         return new Promise((resolve, reject) => {
-            if(this.rankData) return resolve(data);
+            // if(this.rankData) return resolve(data);
             let that = this;
             wx.getFriendCloudStorage({
                 keyList: ['score'],
@@ -154,9 +154,6 @@ export default class Init {
         this.selfData['KVDataList'] = []
         this.selfData['KVDataList'].push({value: this.selfData.score})
         this.selfData.avatarUrl = this.selfData.headimgurl
-        console.log('worldrank:',this.rankData)
-        console.log('selfrank:',this.selfData)
-
     }
 
     // 初始化个人信息
@@ -237,13 +234,16 @@ export default class Init {
     //绘制圆形头像
     circleImg(ctx, img, x, y, r) {
         ctx.save();
+        // ctx.lineWidth = 18
         let d = 2 * r;
         let cx = x + r;
         let cy = y + r;
         ctx.arc(cx, cy, r, 0, 2 * Math.PI);
-        // ctx.stroke();
         ctx.clip();
         ctx.drawImage(img, x, y, d, d);
+        // ctx.strokeStyle = `rgba(73,116,235,1)`
+        // ctx.strokeStyle = "#fff"
+        ctx.stroke();
         ctx.restore();
         ctx.beginPath();
         // ctx.closePath();
