@@ -42,11 +42,11 @@ export default class Road extends UTIL {
         roadObj.key = key + 1;
 
         const roadBodyShape = new CANNON.Box(new CANNON.Vec3(28, 1, 30));
-        const roadLeftShape = new CANNON.Box(new CANNON.Vec3(1, 2, 30));
-        const roadRightShape = new CANNON.Box(new CANNON.Vec3(1, 2, 30));
+        const roadLeftShape = new CANNON.Box(new CANNON.Vec3(1, 8, 30));
+        const roadRightShape = new CANNON.Box(new CANNON.Vec3(1, 8, 30));
 
         const roadBody = new CANNON.Body({ mass: 0, shape: roadBodyShape, position: new CANNON.Vec3(roadObj.position.x, 1, roadObj.position.z) });
-        const roadBoths = new CANNON.Body({ mass: 0, position: new CANNON.Vec3(roadObj.position.x, 2, roadObj.position.z) });
+        const roadBoths = new CANNON.Body({ mass: 0, position: new CANNON.Vec3(roadObj.position.x, 8, roadObj.position.z) });
         roadBoths.addShape(roadLeftShape, new CANNON.Vec3(-29, 0, 0));
         roadBoths.addShape(roadRightShape, new CANNON.Vec3(29, 0, 0));
 

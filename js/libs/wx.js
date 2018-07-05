@@ -9,11 +9,14 @@ export default class WX extends UTIL {
         height: winHeight
     };
 
+    isLogin = false;
+    tapLock = false;
+
     constructor() {
         super();
 
         this.init();
-        this.wxLogin();
+        this.checkLogin();
         this.createStartBtn();
     }
 
@@ -54,18 +57,20 @@ export default class WX extends UTIL {
     createStartBtn() {
         this.startBtn = wx.createUserInfoButton({
             type: 'image',
-            image: 'https://static.cdn.24haowan.com/24haowan/test/js/start-btn.png',
+            image: 'https://static.cdn.24haowan.com/24haowan/test/js/start-btn.png?v=123',
             style: {
-                left: this.computedSizeW(132.5),
-                top: this.computedSizeH(250),
-                width: this.computedSizeW(149),
-                height: this.computedSizeW(60)
+                left: this.computedSizeW(102),
+                top: this.computedSizeH(525),
+                width: this.computedSizeW(210),
+                height: this.computedSizeW(50)
             }
         });
 
         this.startBtn.hide();
 
         this.startBtn.onTap((res) => {
+            if (this.tapLock) return false;
+            this.tapLock = true;
             this.wxUnionId(res);
         });
     }
@@ -73,26 +78,13 @@ export default class WX extends UTIL {
     /**
      * 判断KEY是否有效
      * */
-    checkLogin(data) {
-        const accessToken = localStorage.getItem('accessToken');
-        if (accessToken) {
-            gamePage.startGame();
+    checkLogin() {
+        const { openid, session_key } = $cache.getCache('accessToken');
+        if (!openid || !session_key) {
+            this.wxLogin();
         } else {
-            // this.wxLogin(data);
+            this.isLogin = true;
         }
-
-        // wx.checkSession({
-        //     success: () => {
-        //         console.log('登录状态: 已登录');
-        //         gamePage.startGame();
-        //         this.isLogin = true;
-        //     },
-        //     fail: () => {
-        //         console.log('登录状态: 已过期');
-        //         this.isLogin = false;
-        //         this.wxLogin(data);
-        //     }
-        // });
     }
 
     /**
@@ -100,7 +92,6 @@ export default class WX extends UTIL {
      * */
     wxLogin() {
         $loader.show();
-
         wx.login({
             success: (res) => {
                 const { code } = res;
@@ -119,11 +110,9 @@ export default class WX extends UTIL {
                 }
             },
             fail: () => {
-                $loader.hide();
                 console.log('登录失败error: ' + res.errMsg);
             },
             complete: () => {
-                $loader.hide();
             }
         });
     }
@@ -184,21 +173,12 @@ export default class WX extends UTIL {
     }
 
     /**
-     * 保存用户分数
+     * 触发分享
      * */
-    // setWxScore() {
-    //     return new Promise((res, rej) => {
-    //         wx.setUserCloudStorage({
-    //             KVDataList: [{ key: "score", value: String(score) }],
-    //             success: (e) => {
-    //                 console.log('score: ', e, score)
-    //                 res();
-    //             },
-    //             fail: () => {
-    //                 rej();
-    //             },
-    //             complete: () => {}
-    //         })
-    //     })
-    // }
+    shareAppMessage(title = '漂移大师', imageUrl = 'https://static.cdn.24haowan.com/24haowan/test/js/share.png') {
+        wx.shareAppMessage({
+            title,
+            imageUrl
+        })
+    }
 }

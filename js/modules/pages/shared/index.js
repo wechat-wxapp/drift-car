@@ -27,7 +27,7 @@ export default class Shared extends UTIL {
         // 结束页-回来主页
         this.bindGoHome();
         // 结束页-好友排行
-        this.endFriendRank()
+        this.endFriendRank();
         // 结束页-炫耀一下
         this.showYourScore();
 
@@ -92,8 +92,6 @@ export default class Shared extends UTIL {
                 this.clear2d();
                 // 重启游戏
                 this.restart();
-
-                currentPage = 'gamePage';
             }
         });
     }
@@ -577,9 +575,10 @@ export default class Shared extends UTIL {
      * 群排行榜
      * */
     groupRankPage() {
-        wx.shareAppMessage({
-            title: '漂移车王'
-        })
+        // wx.shareAppMessage({
+        //     title: '漂移车王'
+        // })
+        $wx.shareAppMessage();
     }
 
     /**

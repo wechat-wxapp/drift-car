@@ -10,14 +10,15 @@ export default class Start extends UTIL {
         super();
 
         this.bg = imgList.indexBg;
+        this.logo = imgList.logo;
         this.startBtn = imgList.startBtn;
         this.leaderboard = imgList.leaderboard;
-        this.checkLeaderboard = imgList.checkLeaderboard;
-        this.startBottomBtn1 = imgList.startBottomBtn1;
-        this.startBottomCloseBtn1 = imgList.startBottomCloseBtn1;
-        this.startBottomBtn2 = imgList.startBottomBtn2;
-        this.startBottomBtn3 = imgList.startBottomBtn3;
-        this.startBottomBtn4 = imgList.startBottomBtn4;
+        this.groupLeaderboard = imgList.groupLeaderboard;
+        this.musicOn = imgList.musicOn;
+        this.musicOff = imgList.musicOff;
+        this.qr = imgList.qr;
+        this.carport = imgList.carport;
+        this.wechat = imgList.wechat;
 
         // 创建页面
         this.setTexture();
@@ -53,10 +54,10 @@ export default class Start extends UTIL {
         // 防止多次绑定
         if (this.isBindStartBtn) return false;
 
-        const x1 = this.computedSizeW(130);
-        const x2 = this.computedSizeW(295);
-        const y1 = this.computedSizeH(245);
-        const y2 = this.computedSizeH(305);
+        const x1 = this.computedSizeW(95);
+        const x2 = this.computedSizeW(320);
+        const y1 = this.computedSizeH(517);
+        const y2 = this.computedSizeH(575);
 
         events.click({
             name: 'startBtn',
@@ -74,17 +75,19 @@ export default class Start extends UTIL {
      * 绑定音乐按钮
      * */
     bindMusicBtn() {
-        const x1 = this.computedSizeW(65);
-        const x2 = this.computedSizeW(100);
-        const y1 = this.computedSizeH(655);
-        const y2 = this.computedSizeH(685);
+        const x1 = this.computedSizeW(18);
+        const x2 = this.computedSizeW(71);
+        const y1 = this.computedSizeH(17);
+        const y2 = this.computedSizeH(64);
 
         events.click({
             name: 'musicBtn',
             pageName: 'startPage',
             point: [x1, y1, x2, y2],
             cb: () => {
-                musicKey = !musicKey;
+                const isMusic = $cache.getGameData('music');
+
+                $cache.setGameData('music', !isMusic);
 
                 music.pusedMusic();
 
@@ -97,10 +100,10 @@ export default class Start extends UTIL {
      * 绑定好友排行榜按钮
      * */
     bindRankBtn() {
-        const x1 = this.computedSizeW(150);
-        const x2 = this.computedSizeW(265);
-        const y1 = this.computedSizeH(315);
-        const y2 = this.computedSizeH(355);
+        const x1 = this.computedSizeW(211);
+        const x2 = this.computedSizeW(317);
+        const y1 = this.computedSizeH(594);
+        const y2 = this.computedSizeH(641);
 
         events.click({
             name: 'rankBtn',
@@ -116,10 +119,10 @@ export default class Start extends UTIL {
      * 绑定群排行榜按钮
      * */
     bindGroupRankBtn() {
-        const x1 = this.computedSizeW(165);
-        const x2 = this.computedSizeW(245);
-        const y1 = this.computedSizeH(365);
-        const y2 = this.computedSizeH(390);
+        const x1 = this.computedSizeW(176);
+        const x2 = this.computedSizeW(241);
+        const y1 = this.computedSizeH(663);
+        const y2 = this.computedSizeH(726);
 
         events.click({
             name: 'groupRankBtn',
@@ -135,10 +138,10 @@ export default class Start extends UTIL {
      * 绑定泡妞神器按钮
      * */
     bindQrBtn() {
-        const x1 = this.computedSizeW(145);
-        const x2 = this.computedSizeW(190);
-        const y1 = this.computedSizeH(640);
-        const y2 = this.computedSizeH(700);
+        const x1 = this.computedSizeW(96);
+        const x2 = this.computedSizeW(152);
+        const y1 = this.computedSizeH(663);
+        const y2 = this.computedSizeH(726);
 
         events.click({
             name: 'qrBtn',
@@ -154,10 +157,10 @@ export default class Start extends UTIL {
      * 绑定车库按钮
      * */
     bindCarportBtn() {
-        const x1 = this.computedSizeW(230);
-        const x2 = this.computedSizeW(270);
-        const y1 = this.computedSizeH(645);
-        const y2 = this.computedSizeH(685);
+        const x1 = this.computedSizeW(98);
+        const x2 = this.computedSizeW(199);
+        const y1 = this.computedSizeH(599);
+        const y2 = this.computedSizeH(647);
 
         events.click({
             name: 'carportBtn',
@@ -174,10 +177,10 @@ export default class Start extends UTIL {
      * 绑定公众号按钮
      * */
     bindWechatBtn() {
-        const x1 = this.computedSizeW(310);
-        const x2 = this.computedSizeW(350);
-        const y1 = this.computedSizeH(640);
-        const y2 = this.computedSizeH(690);
+        const x1 = this.computedSizeW(259);
+        const x2 = this.computedSizeW(316);
+        const y1 = this.computedSizeH(657);
+        const y2 = this.computedSizeH(724);
 
         events.click({
             name: 'wechatBtn',
@@ -194,16 +197,12 @@ export default class Start extends UTIL {
      * 加载车库列表
      * */
     asyncCarList() {
-        const { session_key, openid } = localStorage.getItem('accessToken');
-
-        if (!session_key || !openid) {
-            wx.showToast({
-                title: '您还没登录',
-                icon: 'loading',
-                duration: 2
-            });
-            return false;
-        }
+        // const { session_key, openid } = localStorage.getItem('accessToken');
+        //
+        // if (!session_key || !openid) {
+        //     $loader.toast('请先进行授权');
+        //     return false;
+        // }
 
         $loader.show();
         // 获取车库
@@ -233,25 +232,27 @@ export default class Start extends UTIL {
 
         offCanvas2d.drawImage(this.bg, 0, 0, this.bg.width, this.bg.height, 0, 0, winWidth, winHeight);
 
+        offCanvas2d.drawImage(this.logo, 0, 0, this.logo.width, this.logo.height, winWidth / 2 - this.computedSizeW(this.logo.width / 4), this.computedSizeH(72), this.computedSizeW(this.logo.width / 2), this.computedSizeW(this.logo.height / 2));
+
+        const isMuisc = $cache.getGameData('music');
+        const musicBtn = isMuisc ? this.musicOn : this.musicOff;
+
+        offCanvas2d.drawImage(musicBtn, 0, 0, musicBtn.width, musicBtn.height, winWidth / 2 - this.computedSizeW(180), this.computedSizeH(24), this.computedSizeW(musicBtn.width / 2), this.computedSizeH(musicBtn.height / 2));
+
         // 如果已经登录
         if ($wx.isLogin) {
-            offCanvas2d.drawImage(this.startBtn, 0, 0, this.startBtn.width, this.startBtn.height, winWidth / 2 - this.computedSizeW(this.startBtn.width / 4), this.computedSizeH(250), this.computedSizeW(149), this.computedSizeW(60));
+            offCanvas2d.drawImage(this.startBtn, 0, 0, this.startBtn.width, this.startBtn.height, winWidth / 2 - this.computedSizeW(this.startBtn.width / 4), this.computedSizeH(525), this.computedSizeW(this.startBtn.width / 2), this.computedSizeW(this.startBtn.height / 2));
             this.bindStartBtn();
         } else {
             $wx.startBtn.show();
         }
 
-        offCanvas2d.drawImage(this.leaderboard, 0, 0, this.leaderboard.width, this.leaderboard.height, winWidth / 2 - this.computedSizeW(this.leaderboard.width / 4), this.computedSizeH(320), this.computedSizeW(this.leaderboard.width / 2), this.computedSizeW(this.leaderboard.height / 2));
-        offCanvas2d.drawImage(this.checkLeaderboard, 0, 0, this.checkLeaderboard.width, this.checkLeaderboard.height, winWidth / 2 - this.computedSizeW(this.checkLeaderboard.width / 4), this.computedSizeH(370), this.computedSizeW(this.checkLeaderboard.width / 2), this.computedSizeW(this.checkLeaderboard.height / 2));
+        offCanvas2d.drawImage(this.leaderboard, 0, 0, this.leaderboard.width, this.leaderboard.height, winWidth / 2 - this.computedSizeW(this.leaderboard.width / 4 - 55), this.computedSizeH(602), this.computedSizeW(this.leaderboard.width / 2), this.computedSizeW(this.leaderboard.height / 2));
+        offCanvas2d.drawImage(this.carport, 0, 0, this.carport.width, this.carport.height, winWidth / 2 - this.computedSizeW(this.carport.width / 4 + 55), this.computedSizeH(602), this.computedSizeW(this.carport.width / 2), this.computedSizeW(this.carport.height / 2));
 
-        const bottomSize = winWidth / 6;
-
-        const musicBtn = musicKey ? this.startBottomBtn1 : this.startBottomCloseBtn1;
-
-        offCanvas2d.drawImage(musicBtn, 0, 0, musicBtn.width, musicBtn.height, bottomSize * 1.2 - musicBtn.width / 4, winHeight - this.computedSizeW(95), this.computedSizeW(musicBtn.width / 2), this.computedSizeW(musicBtn.height / 2));
-        offCanvas2d.drawImage(this.startBottomBtn2, 0, 0, this.startBottomBtn2.width, this.startBottomBtn2.height, bottomSize * 2.4  - this.startBottomBtn2.width / 4, winHeight - this.computedSizeW(95), this.computedSizeW(this.startBottomBtn2.width / 2), this.computedSizeW(this.startBottomBtn2.height / 2));
-        offCanvas2d.drawImage(this.startBottomBtn3, 0, 0, this.startBottomBtn3.width, this.startBottomBtn3.height, bottomSize * 3.6 - this.startBottomBtn3.width / 4, winHeight - this.computedSizeW(95), this.computedSizeW(this.startBottomBtn3.width / 2), this.computedSizeW(this.startBottomBtn3.height / 2));
-        offCanvas2d.drawImage(this.startBottomBtn4, 0, 0, this.startBottomBtn4.width, this.startBottomBtn4.height, bottomSize * 4.8 - this.startBottomBtn4.width / 4, winHeight - this.computedSizeW(95), this.computedSizeW(this.startBottomBtn4.width / 2), this.computedSizeW(this.startBottomBtn4.height / 2));
+        offCanvas2d.drawImage(this.qr, 0, 0, this.qr.width, this.qr.height, this.computedSizeW(100), this.computedSizeH(670), this.computedSizeW(this.qr.width / 2), this.computedSizeW(this.qr.height / 2));
+        offCanvas2d.drawImage(this.groupLeaderboard, 0, 0, this.groupLeaderboard.width, this.groupLeaderboard.height, winWidth / 2 - this.computedSizeW(this.groupLeaderboard.width / 4), this.computedSizeH(670), this.computedSizeW(this.groupLeaderboard.width / 2), this.computedSizeW(this.groupLeaderboard.height / 2));
+        offCanvas2d.drawImage(this.wechat, 0, 0, this.wechat.width, this.wechat.height, this.computedSizeW(270), this.computedSizeH(670), this.computedSizeW(this.wechat.width / 2), this.computedSizeW(this.wechat.height / 2));
 
         texture2d.needsUpdate = true;
     }

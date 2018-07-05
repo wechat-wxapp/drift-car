@@ -136,6 +136,9 @@ export default class UTIL {
      * 重置游戏
      * */
     restart(isReseur) {
+        // 全屏不能点击
+        currentPage = 'off';
+
         this.clearWorld();
 
         // 设置游戏状态
@@ -227,6 +230,7 @@ export default class UTIL {
     /**
      * 首次开始音效
      * */
+    // 关闭小程序后再进入
     readyMusic() {
         music.pauseBgm();
         const playMusic = (key = 0) => {
@@ -244,6 +248,9 @@ export default class UTIL {
                     // 清空倒计时
                     gamePage.page();
 
+                    // 设置页面target
+                    currentPage = 'gamePage';
+
                     return false;
                 } else {
                     // 倒计时
@@ -252,10 +259,11 @@ export default class UTIL {
                     music.playReady();
                 }
                 playMusic(++key);
-            }, 1000);
+            }, 1400);
         };
         // 倒计时
         gamePage.page(3);
+        music.playReady();
         playMusic();
     }
 

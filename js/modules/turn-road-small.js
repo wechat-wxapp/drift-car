@@ -41,13 +41,13 @@ export default class Road extends UTIL {
         const roadBody1Shape = new CANNON.Box(new CANNON.Vec3(28, 1, 45));
         const roadBody2Shape = new CANNON.Box(new CANNON.Vec3(30, 1, 16));
 
-        const collide1Shape = new CANNON.Box(new CANNON.Vec3(1, 2, 45));
-        const collide2Shape = new CANNON.Box(new CANNON.Vec3(1, 2, 15));
-        const collide3Shape = new CANNON.Box(new CANNON.Vec3(1, 2, 45));
-        const collide4Shape = new CANNON.Box(new CANNON.Vec3(1, 2, 15));
+        const collide1Shape = new CANNON.Box(new CANNON.Vec3(1, 8, 45));
+        const collide2Shape = new CANNON.Box(new CANNON.Vec3(1, 8, 15));
+        const collide3Shape = new CANNON.Box(new CANNON.Vec3(1, 8, 45));
+        const collide4Shape = new CANNON.Box(new CANNON.Vec3(1, 8, 15));
 
         const roadBody = new CANNON.Body({ mass: 0, position: new CANNON.Vec3(0, 1, 0) });
-        const roadBoths = new CANNON.Body({ mass: 0, position: new CANNON.Vec3(0, 2, roadObj.position.z - .5) });
+        const roadBoths = new CANNON.Body({ mass: 0, position: new CANNON.Vec3(0, 8, roadObj.position.z - .5) });
 
         const rotating = new CANNON.Quaternion();
         rotating.setFromAxisAngle(new CANNON.Vec3(0, 1, 0), -1.57);
@@ -64,7 +64,6 @@ export default class Road extends UTIL {
 
         // 得分
         roadBody.addEventListener("collide", () => {
-            console.log(type);
             this.getScore(key, type);
         });
 

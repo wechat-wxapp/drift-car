@@ -105,8 +105,10 @@ export default class Carport extends UTIL {
                         model: modelUrl,
                         material: modelPic,
                         modelSize: modelSize,
-                        cannonSize: modelRealSize
+                        physicalSize: modelRealSize
                     };
+
+                    $cache.setGameData('car', model);
 
                     carClass.createCar(model);
 

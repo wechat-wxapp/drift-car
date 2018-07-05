@@ -1,8 +1,11 @@
+import UTIL from "./util";
+
 /**
  * 地板函数
  */
-export default class Ground {
+export default class Ground extends UTIL {
     constructor() {
+        super();
         this.createGroundBody();
     }
 
@@ -10,7 +13,7 @@ export default class Ground {
      * 创建地板
      * */
     createGroundBody() {
-        const metal_texture = new THREE.TextureLoader().load("https://static.cdn.24haowan.com/24haowan/test/js/floor.jpg");
+        const metal_texture = new THREE.TextureLoader().load("https://static.cdn.24haowan.com/24haowan/test/js/floor.png");
         metal_texture.wrapS = THREE.RepeatWrapping;
         metal_texture.wrapT = THREE.RepeatWrapping;
         metal_texture.repeat.set(300, 300);
@@ -28,6 +31,9 @@ export default class Ground {
         const groundShape = new CANNON.Plane();
         groundBody = new CANNON.Body({ mass: 0 });
         groundBody.addShape(groundShape);
+
+        // 接触地板马上结束
+        groundBody.addEventListener("collide", this.collide.bind(this));
 
         groundBody.quaternion.setFromAxisAngle(new CANNON.Vec3(1, 0, 0), -Math.PI / 2);
 
