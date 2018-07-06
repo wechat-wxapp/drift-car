@@ -40,11 +40,20 @@ wx.onMessage(({ command, data = {}}) => {
             }
             break;
         case 'worldRank':
-            // if(!data.isDriving || (data.isDriving == 'next' && !worldRankPage.noNext) || (data.isDriving == 'pre' && !worldRankPage.noPre)) {
+            if(!data.isDriving || (data.isDriving == 'next' && !worldRankPage.noNext) || (data.isDriving == 'pre' && !worldRankPage.noPre)) {
                 worldRankPage.setTexture(3, data)
                 worldRankPage.initWorldRankData(data)
-                worldRankPage.showData(data)
-            // }
+                worldRankPage.showData(data, 'world')
+                if(worldRankPage.noNext) {
+                    wx.worldRankNoNext = true
+                    console.log("999999999")
+                }
+                else {
+                    wx.worldRankNoNext = false
+                    console.log('0000000000000000')
+                }
+                console.log('=============',wx,wx.worldRankNoNext)
+            }
             break;
         case 'groupRank':
             if(!data.isDriving || (data.isDriving == 'next' && !groupRankPage.noNext) || (data.isDriving == 'pre' && !groupRankPage.noPre)) {

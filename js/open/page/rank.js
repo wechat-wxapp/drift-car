@@ -66,7 +66,7 @@ export default class Rank extends Init {
   /**
    * 更新页面内容数据
    * */
-  showData(data) {
+  showData(data, type) {
     this.total = this.rankData.length;
     this.totalPages = data.rankCurrentPage ? data.rankCurrentPage : Math.ceil(this.total / this.counts);
     // 当前页数
@@ -83,7 +83,6 @@ export default class Rank extends Init {
     
     // 当前页面展示数量
     let current_count = (rankCurrentPage == this.totalPages) ? ((false == (this.total % this.counts)) ? 6 : this.total % this.counts) : this.counts;
-    console.log('总条数',rankCurrentPage,current_count,this.total % this.counts,this.total,this.totalPages)
 
     //是否有下一页和上一页
     
@@ -91,10 +90,18 @@ export default class Rank extends Init {
     let hasPrePage = data.hasPrePage || rankCurrentPage > 1;
 
     // let { isDriving } = data;
-    this.isLastPage = rankCurrentPage === this.totalPages;
-    this.isFristPage = rankCurrentPage === 1;
-    this.noNext = this.isLastPage? 1 : 0;
-    this.noPre = this.isFristPage ? 1 : 0;
+    let isLastPage = rankCurrentPage === this.totalPages;
+    let isFristPage = rankCurrentPage === 1;
+    if(type == 'world') {
+      this.noNext = !data.hasNextPage;
+      console.log("00000011")
+    }
+    else {
+      this.noNext = isLastPage ? 1 : 0;
+    }
+    this.noPre = isFristPage ? 1 : 0;
+    console.log('世界排行榜',data,this.noNext)
+    console.log('zhengduicuo',type == 'world' && data.isDriving)
     
     // 更新提示
     this.cvs.fillStyle = "#e7e7e7";

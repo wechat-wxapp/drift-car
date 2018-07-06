@@ -216,17 +216,17 @@ export default class Shared extends UTIL {
             pageName: 'worldRank',
             point: [x1, y1, x2, y2],
             cb: () => {
-                // rankCurrentPage = rankCurrentPage <= 1 ? 1 : rankCurrentPage--;
                 if (rankCurrentPage === 1) return;
+                worldRankNextSwitch = true;
                 rankCurrentPage -= 1;
-                let offset =  ((rankCurrentPage - 1) * 6);
-                $io.getWorldRank({ offset: offset }).then(e=>{
+                let offset =  ((rankCurrentPage - 1) * requestLimit);
+                $io.getWorldRank({ offset: offset }).then(e =>{
                     this.showPage('worldRank',{
                         hasPrePage: rankCurrentPage !== 1 ,
                         rankCurrentPage: rankCurrentPage,
                         hasNextPage: 1,
                         common: 0 ,
-                        // shareTicket: $wx.shareTicket,
+                        isDriving : 'pre',
                         ranks:e.payload.ranks ,
                         user:e.payload.user
                     });
@@ -253,10 +253,9 @@ export default class Shared extends UTIL {
                 rankCurrentPage = 1
                 $io.getWorldRank({ offset: rankCurrentPage - 1 }).then(e=>{
                     this.showPage('worldRank',{
-                        hasNextPage: 1,
                         ranks:e.payload.ranks ,
+                        hasNextPage: e.payload.hasNext,
                         user:e.payload.user
-                        // isDriving : false,
                     });
                     // sharedTexture2d.needsUpdate = true;
                     console.log('goWorldRank')
@@ -277,13 +276,15 @@ export default class Shared extends UTIL {
             pageName: 'worldRank',
             point: [x1, y1, x2, y2],
             cb: () => {
-                let offset = rankCurrentPage * 6;
+                if(!worldRankNextSwitch) return;
+                let offset = rankCurrentPage * requestLimit;
                 rankCurrentPage += 1;
                 $io.getWorldRank({ offset: offset }).then(e=>{
+                    worldRankNextSwitch = e.payload.hasNext ? true : false;
                     this.showPage('worldRank',{
                         hasPrePage: rankCurrentPage !== 1,
                         rankCurrentPage: rankCurrentPage,
-                        hasNextPage: e.payload.ranks.length == 6,
+                        hasNextPage: e.payload.hasNext,
                         common: 1 ,
                         ranks:e.payload.ranks,
                         user:e.payload.user,

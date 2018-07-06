@@ -197,7 +197,11 @@ const basicData = {
     onGame: false,
 
     // 排行榜当前页数
-    rankCurrentPage: 1
+    rankCurrentPage: 1,
+    //世界排行榜下一页启动
+    worldRankNextSwitch: true,
+    // 请求数量,limit
+    requestLimit: 6
 };
 
 // 可重置变量

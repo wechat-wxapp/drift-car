@@ -107,7 +107,7 @@ export default {
             method: 'POST',
             data: { openid,
                 offset: data.offset,
-                limit: 6
+                limit: requestLimit
              }
         });
     }
