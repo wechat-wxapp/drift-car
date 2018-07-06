@@ -82,7 +82,7 @@ export default class Rank extends Init {
     let rankCurrentPage = data.rankCurrentPage ? data.rankCurrentPage : this.rankCurrentPage
     
     // 当前页面展示数量
-    let current_count = (rankCurrentPage == this.totalPages) ? ((false == (this.total % this.counts)) ? 6 : this.total % this.counts) : this.counts;
+    let current_count = (rankCurrentPage == this.totalPages) ? ((false == (this.total % this.counts)) ? this.counts : this.total % this.counts) : this.counts;
 
     //是否有下一页和上一页
     
@@ -92,16 +92,12 @@ export default class Rank extends Init {
     // let { isDriving } = data;
     let isLastPage = rankCurrentPage === this.totalPages;
     let isFristPage = rankCurrentPage === 1;
-    if(type == 'world') {
+    if(type === 'world') {
       this.noNext = !data.hasNextPage;
-      console.log("00000011")
-    }
-    else {
+    } else {
       this.noNext = isLastPage ? 1 : 0;
     }
     this.noPre = isFristPage ? 1 : 0;
-    console.log('世界排行榜',data,this.noNext)
-    console.log('zhengduicuo',type == 'world' && data.isDriving)
     
     // 更新提示
     this.cvs.fillStyle = "#e7e7e7";
