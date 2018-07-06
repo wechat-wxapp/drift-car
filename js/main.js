@@ -190,6 +190,23 @@ export default class Main extends UTIL {
     updateAnimation() {
         if (startKey) {
 
+            if(isTurning) {
+                let oldSpeed = speed;
+                let _temp = false;
+                this.speedTimer = $timer(() => {
+                    if(!_temp) {
+                        speed -= 0.1;
+                        if(speed <= (oldSpeed / 2)) _temp = true;
+                    } else {
+                        speed += 0.1
+                        if(speed >= oldSpeed) {
+                            speed = oldSpeed;
+                            this.speedTimer.closeTimeout();
+                        }
+                    }
+                     
+                }, 8)
+            }
             if (movekey === 'x') {
                 car.position.x += speed;
                 carBodys.position.x += speed;
