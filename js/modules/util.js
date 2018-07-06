@@ -84,8 +84,9 @@ export default class UTIL {
         // this.restart();
 
         // 显示结束页
-        setTimeout(() => {
+        this.endPageTimer = $timer(() => {
             this.showReseurPage();
+            this.endPageTimer.closeTimeout();
         }, 1000);
 
         console.log('---结束游戏---');
@@ -217,14 +218,17 @@ export default class UTIL {
     }
 
     updateScore() {
-        setTimeout(() => {
-            if (!startKey) return false;
+        this.scoreTimer = $timer(() => {
+            if (!startKey) {
+                // 关闭分数计时器
+                this.scoreTimer.closeTimeout();
+                return false;
+            }
+
             score++;
 
             scorePage.setTexture();
-
-            this.updateScore();
-        }, 1000)
+        }, 1000);
     }
 
     /**
@@ -233,38 +237,39 @@ export default class UTIL {
     // 关闭小程序后再进入
     readyMusic() {
         music.pauseBgm();
-        const playMusic = (key = 0) => {
-            setTimeout(() => {
-                if (key >= 2) {
-                    music.playBgm();
-                    music.playGo();
 
-                    // 设置开启key
-                    startKey = true;
+        this.musicTimer = $timer(({ key }) => {
+            if (key >= 3) {
+                console.log('asd');
+                music.playBgm();
+                music.playGo();
 
-                    // 更新分数
-                    this.updateScore();
+                // 设置开启key
+                startKey = true;
 
-                    // 清空倒计时
-                    gamePage.page();
+                // 更新分数
+                this.updateScore();
 
-                    // 设置页面target
-                    currentPage = 'gamePage';
+                // 清空倒计时
+                gamePage.page();
 
-                    return false;
-                } else {
-                    // 倒计时
-                    gamePage.page(2 - key);
+                // 设置页面target
+                currentPage = 'gamePage';
 
-                    music.playReady();
-                }
-                playMusic(++key);
-            }, 1400);
-        };
-        // 倒计时
+                // 关闭倒计时器
+                this.musicTimer.closeTimeout();
+
+                return false;
+            } else {
+                // 倒计时
+                gamePage.page(3 - key);
+
+                music.playReady();
+            }
+        }, 1000);
+
         gamePage.page(3);
         music.playReady();
-        playMusic();
     }
 
     /**
