@@ -189,6 +189,7 @@ export default class Main extends UTIL {
      */
     updateAnimation() {
         if (startKey) {
+
             if (movekey === 'x') {
                 car.position.x += speed;
                 carBodys.position.x += speed;
@@ -277,10 +278,17 @@ export default class Main extends UTIL {
         }
     }
 
+    timer(progress) {
+        if (timerArr.length <= 0) return false;
+        timerArr.map(v => {
+            Object.values(v)[0](progress);
+        })
+    }
+
     /**
      * 实现帧循环
      * */
-    loop() {
+    loop(progress) {
         // 更新物理世界
         loadKey && this.updateWorld();
         // 生成路面
@@ -294,6 +302,9 @@ export default class Main extends UTIL {
 
         // 刷新开放域
         this.sharedLoop();
+
+        // 运行计时器
+        this.timer(progress);
 
         // texture2d.needsUpdate = true;
 

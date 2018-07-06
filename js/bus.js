@@ -1,5 +1,6 @@
 import * as CANNON from './libs/cannon';
 import IO from './libs/io';
+import TIMER from './libs/timer';
 
 // 不可变常量, 不参与全局挂载
 const constantData = {
@@ -60,6 +61,8 @@ const basicData = {
     $io: IO,
     // 全局loading类
     $loader: '',
+    // 全局计时器
+    $timer: TIMER,
 
     // 加载锁
     loadKey: false,
@@ -195,6 +198,8 @@ const basicData = {
 
     // 是否正在进行游戏
     onGame: false,
+
+    timerArr: [],
 
     // 排行榜当前页数
     rankCurrentPage: 1,
