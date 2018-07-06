@@ -50,22 +50,8 @@ export default class Main extends UTIL {
         // 实例化主屏2d
         pageClass = new page();
 
-        // 更新每日参与
-        this.updateDate();
-
         // 渲染
         this.loop();
-    }
-
-    /**
-     * 更新每日
-     * */
-    updateDate() {
-        const accessToken = localStorage.getItem('accessToken');
-
-        if (accessToken) {
-            $io.updateDate();
-        }
     }
 
     /**

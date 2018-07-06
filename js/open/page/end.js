@@ -14,7 +14,15 @@ export default class Loader extends Init {
     setTexture(data) {
         this.clearCvs();
 
-        if (this.selfData) this.updateWxScore(data.score);
+        let maxScore = data.score;
+
+        if (this.selfData) {
+            if (data.score > this.selfData['KVDataList'][0].value) {
+                this.updateWxScore(data.score);
+            } else {
+                maxScore = this.selfData['KVDataList'][0].value;
+            }
+        }
 
         this.cvs.fillStyle = "#fff";
         this.cvs.font = `bold ${this.computedSizeW(26)}px Arial`;
@@ -221,7 +229,7 @@ export default class Loader extends Init {
                 
                 this.cvs.font = `bold ${this.computedSizeW(24)}px Arial`;
                 this.cvs.fillStyle = "#000";
-                this.cvs.fillText(this.selfData['KVDataList'][0].value, this.computedSizeW(374), this.computedSizeH(875));
+                this.cvs.fillText(maxScore, this.computedSizeW(374), this.computedSizeH(875));
             }
         }
     

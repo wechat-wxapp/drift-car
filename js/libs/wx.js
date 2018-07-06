@@ -39,17 +39,11 @@ export default class WX extends UTIL {
             }
         });
 
-        wx.onHide(() => {
-            startKey = false;
-        });
+        // wx.onHide(() => {
+        // });
 
-        wx.onShow(() => {
-            if (onGame) {
-                startKey = true;
-                // 继续更新分数
-                this.updateScore();
-            }
-        });
+        // wx.onShow(() => {
+        // });
 
         const { title, imageUrl } = this.shareObj;
         wx.onShareAppMessage(() => ({ title, imageUrl }))
@@ -92,6 +86,23 @@ export default class WX extends UTIL {
             this.wxLogin();
         } else {
             this.isLogin = true;
+            this.updateDate();
+        }
+    }
+
+    /**
+     * 更新每日
+     * */
+    updateDate() {
+        const accessToken = localStorage.getItem('accessToken');
+
+        if (accessToken) {
+            $io.unlockCar({ day: true })
+            .then(e => {
+                const { payload: { hasNew } } = e;
+                $cache.setGameData('hasNew', hasNew);
+                startPage && startPage.setTexture();
+            });
         }
     }
 
@@ -144,6 +155,7 @@ export default class WX extends UTIL {
                     if (session_key && openid) {
                         // 缓存openid, session_key
                         localStorage.setItem('accessToken', data);
+                        this.updateDate();
                         res(data);
                     } else {
                         rej();

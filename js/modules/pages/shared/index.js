@@ -192,14 +192,6 @@ export default class Shared extends UTIL {
                 isSharedLoop = true;
 
                 this.endPage();
-
-                // 提交分数到服务器
-                // $io.updateScore(score);
-
-                // 更新解锁分数
-                $io.unlockCar({ score, turn });
-
-                currentPage = 'endPage';
             }
         });
     }
@@ -630,6 +622,13 @@ export default class Shared extends UTIL {
      * 结束页
      * */
     endPage() {
+        // 更新解锁分数
+        $io.unlockCar({ score, turn })
+        .then((e) => {
+            const { payload: { hasNew } } = e;
+            $cache.setGameData('hasNew', hasNew);
+        });
+
         isSharedLoop = true;
         currentPage = 'endPage';
         this.showPage('end', { score });

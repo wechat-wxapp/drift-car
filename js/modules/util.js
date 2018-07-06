@@ -96,9 +96,6 @@ export default class UTIL {
      * 显示结束页面
      * */
     showReseurPage() {
-        // 设置游戏状态
-        onGame = false;
-
         if (reseurNum === 0) {
             sharedClass.endPage();
         } else {
@@ -141,9 +138,6 @@ export default class UTIL {
         currentPage = 'off';
 
         this.clearWorld();
-
-        // 设置游戏状态
-        onGame = true;
 
         // 重置变量
         $bus.reset();
@@ -240,7 +234,6 @@ export default class UTIL {
 
         this.musicTimer = $timer(({ key }) => {
             if (key >= 3) {
-                console.log('asd');
                 music.playBgm();
                 music.playGo();
 

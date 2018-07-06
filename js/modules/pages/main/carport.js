@@ -7,6 +7,9 @@ export default class Carport extends UTIL {
     constructor() {
         super();
 
+        this.carPane = imgList.carPane;
+        this.carPaneOn = imgList.carPaneOn;
+        this.carNew = imgList.carNew;
         this.carportPane = imgList.carportPane;
         this.selectedIcon = imgList.selectedIcon;
         this.backIcon = imgList.backIcon;
@@ -17,6 +20,7 @@ export default class Carport extends UTIL {
         this.unlockGame = imgList.unlockGame;
         this.curve = imgList.curve;
         this.unlockCn = imgList.unlockCn;
+        this.closeBtn = imgList.closeBtn;
 
         this.buildPage();
     }
@@ -31,6 +35,8 @@ export default class Carport extends UTIL {
         this.bindCarBackBtn();
         // 点击使用/确认
         this.bindCarUseBtn();
+        // 车库详情页面关闭按钮
+        this.bindCarContentCloseBtn();
     }
 
     /**
@@ -58,6 +64,8 @@ export default class Carport extends UTIL {
                     currentPage = 'carportPage';
                     return false;
                 }
+
+                this.list[this.index].isNew = false;
 
                 this.setContent();
             }
@@ -111,11 +119,28 @@ export default class Carport extends UTIL {
                     $cache.setGameData('car', model);
 
                     carClass.createCar(model);
-
-                    this.setTexture();
-                } else {
-                    this.setTexture();
                 }
+
+                this.setTexture();
+            }
+        });
+    }
+
+    /**
+     * 绑定车辆详细页面关闭按钮
+     * */
+    bindCarContentCloseBtn() {
+        const x1 = this.computedSizeW(324);
+        const x2 = this.computedSizeW(363);
+        const y1 = this.computedSizeH(264);
+        const y2 = this.computedSizeH(305);
+
+        events.click({
+            name: 'carContentBackBtn',
+            pageName: 'carportContentPage',
+            point: [x1, y1, x2, y2],
+            cb: () => {
+                this.setTexture();
             }
         });
     }
@@ -126,6 +151,8 @@ export default class Carport extends UTIL {
     setTexture() {
         currentPage = 'carportPage';
 
+        const currentCarId = $cache.getGameData('car').id;
+
         offCanvas2d.clearRect(0, 0, winWidth, winHeight);
 
         offCanvas2d.fillStyle = 'rgba(0, 0, 0, .8)';
@@ -135,7 +162,7 @@ export default class Carport extends UTIL {
 
         // 车辆列表
         this.list.map((v, k) => {
-            const { unlock, imgUrl } = v;
+            const { isNew, carId, unlock, imgUrl } = v;
 
             const carPane = wx.createImage();
             carPane.src = imgUrl;
@@ -145,17 +172,32 @@ export default class Carport extends UTIL {
 
                 const x = k - pkey * 3;
 
-                offCanvas2d.drawImage(carPane, 0, 0, carPane.width, carPane.height, this.computedSizeW(73 + x * 97), this.computedSizeH(245 + pkey * 107), this.computedSizeW(77), this.computedSizeH(90));
+                // 是否已选择
+                if (carId === currentCarId) {
+                    offCanvas2d.drawImage(this.carPaneOn, 0, 0, this.carPaneOn.width, this.carPaneOn.height, this.computedSizeW(67 + x * 97), this.computedSizeH(240 + pkey * 107), this.computedSizeW(90), this.computedSizeH(103));
+                }
+
+                // 汽车背景
+                offCanvas2d.drawImage(this.carPane, 0, 0, this.carPane.width, this.carPane.height, this.computedSizeW(73 + x * 97), this.computedSizeH(245 + pkey * 107), this.computedSizeW(80), this.computedSizeH(93));
+
+                // 汽车
+                offCanvas2d.drawImage(carPane, 0, 0, carPane.width, carPane.height, this.computedSizeW(75 + x * 97), this.computedSizeH(247 + pkey * 107), this.computedSizeW(75), this.computedSizeH(88));
 
                 // 缓存已经加载完的图片
                 this.list[k].imgUrlObj = carPane;
 
-                // 如果已解锁
-                unlock && offCanvas2d.drawImage(this.selectedIcon, 0, 0, this.selectedIcon.width, this.selectedIcon.height, this.computedSizeW(140 + x * 97), this.computedSizeH(240 + pkey * 107), this.selectedIcon.width / 2, this.selectedIcon.height / 2);
+                if (isNew) {
+                    offCanvas2d.drawImage(this.carNew, 0, 0, this.carNew.width, this.carNew.height, this.computedSizeW(140 + x * 97), this.computedSizeH(240 + pkey * 107), this.carNew.width / 2, this.carNew.height / 2);
+                } else {
+                    // 如果已解锁
+                    unlock && offCanvas2d.drawImage(this.selectedIcon, 0, 0, this.selectedIcon.width, this.selectedIcon.height, this.computedSizeW(140 + x * 97), this.computedSizeH(240 + pkey * 107), this.selectedIcon.width / 2, this.selectedIcon.height / 2);
+                }
 
                 texture2d.needsUpdate = true;
             }
         });
+
+        texture2d.needsUpdate = true;
 
         // 返回按钮
         offCanvas2d.drawImage(this.backIcon, 0, 0, this.backIcon.width, this.backIcon.height, this.computedSizeW(46), this.computedSizeH(634), this.backIcon.width / 2, this.backIcon.height / 2);
@@ -173,8 +215,11 @@ export default class Carport extends UTIL {
 
         offCanvas2d.textAlign = 'left';
 
-        // 背景
-        offCanvas2d.drawImage(imgUrlObj, 0, 0, imgUrlObj.width, imgUrlObj.height, this.computedSizeW(87), this.computedSizeH(298), this.computedSizeW(77), this.computedSizeH(90));
+        // 汽车背景
+        offCanvas2d.drawImage(this.carPane, 0, 0, this.carPane.width, this.carPane.height, this.computedSizeW(87), this.computedSizeH(298), this.computedSizeW(80), this.computedSizeH(93));
+
+        // 汽车
+        offCanvas2d.drawImage(imgUrlObj, 0, 0, imgUrlObj.width, imgUrlObj.height, this.computedSizeW(90), this.computedSizeH(301), this.computedSizeW(75), this.computedSizeH(88));
 
         // 解锁条件文字
         offCanvas2d.fillStyle = "#e9b320";
@@ -186,6 +231,9 @@ export default class Carport extends UTIL {
         offCanvas2d.font = `bold ${this.computedSizeW(16)}px Arial`;
         const btnText = unlock ? '使 用' : '好 的';
         offCanvas2d.fillText(btnText, this.computedSizeW(190), this.computedSizeH(444));
+
+        // 关闭按钮
+        offCanvas2d.drawImage(this.closeBtn, 0, 0, this.closeBtn.width, this.closeBtn.height, this.computedSizeW(330), this.computedSizeH(275), this.computedSizeW(this.closeBtn.width / 2), this.computedSizeH(this.closeBtn.height / 2));
 
         // 解锁选项
         switch(unlockNum) {

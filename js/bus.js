@@ -154,16 +154,7 @@ const basicData = {
     imgList: {
         btn: 'images/btn.png',
         backIcon: 'images/back-icon.png',
-        carPane: `images/car-pane.png`,
-        carportPane: 'images/carport-pane.png',
-        selectedIcon: 'images/selected-icon.png',
-        unlockPane: 'images/unlock-pane.png',
-        unlockGame: 'images/unlock-game.png',
-        unlockCn: 'images/unlock-cn.png',
-        unlockBtn: 'images/unlock-btn.png',
-        gift100: 'images/gift-100.png',
-        gift200: 'images/gift-200.png',
-        curve: 'images/curve.png',
+        closeBtn: 'images/close-btn.png',
 
         //loading页
         logo: 'images/logo.png',
@@ -192,13 +183,25 @@ const basicData = {
         qrBtn: 'images/qr-btn.png',
         qrcode: 'images/qrcode.png',
 
-        //排行
-        rankOne: 'images/rankOne.png'
+        // 排行
+        rankOne: 'images/rankOne.png',
+
+        // 车库
+        carPane: 'images/car-pane.png',
+        carPaneOn: 'images/car-pane-on.png',
+        carNew: 'images/car-new.png',
+        carportPane: 'images/carport-pane.png',
+        selectedIcon: 'images/selected-icon.png',
+        unlockPane: 'images/unlock-pane.png',
+        unlockGame: 'images/unlock-game.png',
+        unlockCn: 'images/unlock-cn.png',
+        unlockBtn: 'images/unlock-btn.png',
+        gift100: 'images/gift-100.png',
+        gift200: 'images/gift-200.png',
+        curve: 'images/curve.png'
     },
 
-    // 是否正在进行游戏
-    onGame: false,
-
+    // 计时器组
     timerArr: [],
 
     // 排行榜当前页数
