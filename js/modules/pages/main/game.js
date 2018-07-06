@@ -36,14 +36,14 @@ export default class Game extends UTIL {
 
             // 增加转弯次数
             turn++;
-
+            isTurning = true;
             const localW = currentW;
             if (!clickKey) {
                 Speeder((percent, status) => {
                     currentW = localW - percent * localW;
 
                     carBodys.quaternion.setFromAxisAngle(new CANNON.Vec3(0, 1, 0), currentW);
-
+                    isTurning = false;
                     if (percent >= 1) {
                         movekey = 'z';
                     }
@@ -60,7 +60,7 @@ export default class Game extends UTIL {
                     currentW = localW + percent * (-1.57 - localW);
 
                     carBodys.quaternion.setFromAxisAngle(new CANNON.Vec3(0, 1, 0), currentW);
-
+                    isTurning = false;
                     if (percent >= 1) {
                         movekey = 'x';
                     }

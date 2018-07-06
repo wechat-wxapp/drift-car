@@ -74,6 +74,8 @@ const basicData = {
     lastScore: 0,
     // 转弯多少次
     turn: 0,
+    // 点击转弯减速的判断
+    isTurning: false,
 
     // 最后的道路key
     // lastBoxType: 'r6',
