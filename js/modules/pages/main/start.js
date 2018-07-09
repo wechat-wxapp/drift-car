@@ -19,6 +19,7 @@ export default class Start extends UTIL {
         this.qr = imgList.qr;
         this.carport = imgList.carport;
         this.wechat = imgList.wechat;
+        this.carNew = imgList.carNew;
 
         // 创建页面
         this.setTexture();
@@ -167,6 +168,8 @@ export default class Start extends UTIL {
             pageName: 'startPage',
             point: [x1, y1, x2, y2],
             cb: () => {
+                $cache.setGameData('hasNew', false);
+
                 // 加载车列表
                 this.asyncCarList();
             }
@@ -225,6 +228,8 @@ export default class Start extends UTIL {
     setTexture() {
         currentPage = 'startPage';
 
+        const hasNew = $cache.getGameData('hasNew');
+
         offCanvas2d.clearRect(0, 0, winWidth, winHeight);
 
         offCanvas2d.fillStyle = "#647fdc";
@@ -249,6 +254,9 @@ export default class Start extends UTIL {
 
         offCanvas2d.drawImage(this.leaderboard, 0, 0, this.leaderboard.width, this.leaderboard.height, winWidth / 2 - this.computedSizeW(this.leaderboard.width / 4 - 55), this.computedSizeH(602), this.computedSizeW(this.leaderboard.width / 2), this.computedSizeW(this.leaderboard.height / 2));
         offCanvas2d.drawImage(this.carport, 0, 0, this.carport.width, this.carport.height, winWidth / 2 - this.computedSizeW(this.carport.width / 4 + 55), this.computedSizeH(602), this.computedSizeW(this.carport.width / 2), this.computedSizeW(this.carport.height / 2));
+
+        // 是否含有新解锁车辆
+        hasNew && offCanvas2d.drawImage(this.carNew, 0, 0, this.carNew.width, this.carNew.height, winWidth / 2 - this.computedSizeW(15), this.computedSizeH(598), this.computedSizeW(this.carNew.width / 2), this.computedSizeW(this.carNew.height / 2));
 
         offCanvas2d.drawImage(this.qr, 0, 0, this.qr.width, this.qr.height, this.computedSizeW(100), this.computedSizeH(670), this.computedSizeW(this.qr.width / 2), this.computedSizeW(this.qr.height / 2));
         offCanvas2d.drawImage(this.groupLeaderboard, 0, 0, this.groupLeaderboard.width, this.groupLeaderboard.height, winWidth / 2 - this.computedSizeW(this.groupLeaderboard.width / 4), this.computedSizeH(670), this.computedSizeW(this.groupLeaderboard.width / 2), this.computedSizeW(this.groupLeaderboard.height / 2));

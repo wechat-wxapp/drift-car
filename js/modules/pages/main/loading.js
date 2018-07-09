@@ -20,7 +20,6 @@ export default class Loader extends UTIL {
         super();
 
         this.setTexture('正在加载...');
-        // $wx.sendMessage('loading', '正在加载...');
 
         const loader = [{
             text: '正在抽取图片...',
@@ -38,7 +37,7 @@ export default class Loader extends UTIL {
             text: '正在给路涂色...',
             load: this.buildTurnRoad
         }, {
-            text: '正在给路涂色...',
+            text: '正在把太阳放出来...',
             load: this.buildTurnRoadSmall
         }];
 

@@ -95,6 +95,9 @@ export default class Game extends UTIL {
 
         // 开始游戏
         this.restart();
+
+        // sharedClass.reseurPage();
+        // beyondClass.beyondPage();
     }
 
     /**

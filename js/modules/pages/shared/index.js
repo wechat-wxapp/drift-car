@@ -78,17 +78,16 @@ export default class Shared extends UTIL {
 
     // 结束页-再玩一次
     bindReStart() {
-        const x1 = this.computedSizeW(250);
-        const x2 = this.computedSizeW(350);
-        const y1 = this.computedSizeH(583);
-        const y2 = this.computedSizeH(610);
+        const x1 = this.computedSizeW(60);
+        const x2 = this.computedSizeW(356);
+        const y1 = this.computedSizeH(531);
+        const y2 = this.computedSizeH(570);
 
         events.click({
             name: 'restartBtn',
             pageName: 'endPage',
             point: [x1, y1, x2, y2],
             cb: () => {
-                // $wx.sendMessage('clear');
                 this.clear2d();
                 // 重启游戏
                 this.restart();
@@ -98,10 +97,10 @@ export default class Shared extends UTIL {
 
     // 结束页-返回主页
     bindGoHome() {
-        const x1 = this.computedSizeW(175);
-        const x2 = this.computedSizeW(245);
-        const y1 = this.computedSizeH(655);
-        const y2 = this.computedSizeH(680);
+        const x1 = this.computedSizeW(56);
+        const x2 = this.computedSizeW(176);
+        const y1 = this.computedSizeH(596);
+        const y2 = this.computedSizeH(632);
 
         events.click({
             name: 'goHomeBtn',
@@ -120,10 +119,10 @@ export default class Shared extends UTIL {
 
     // 结束页-好友排行
     endFriendRank() {
-        const x1 = this.computedSizeW(266);
-        const x2 = this.computedSizeW(352);
-        const y1 = this.computedSizeH(517);
-        const y2 = this.computedSizeH(532);
+        const x1 = this.computedSizeW(232);
+        const x2 = this.computedSizeW(327);
+        const y1 = this.computedSizeH(456);
+        const y2 = this.computedSizeH(494);
 
         events.click({
             name: 'endFriendRank',
@@ -140,10 +139,10 @@ export default class Shared extends UTIL {
      * 结束页面的炫耀一下
      */
     showYourScore() {
-        const x1 = this.computedSizeW(62);
-        const x2 = this.computedSizeW(183);
-        const y1 = this.computedSizeH(570);
-        const y2 = this.computedSizeH(610);
+        const x1 = this.computedSizeW(238);
+        const x2 = this.computedSizeW(357);
+        const y1 = this.computedSizeH(596);
+        const y2 = this.computedSizeH(632);
 
         events.click({
             name: 'showYourScore',
@@ -157,10 +156,10 @@ export default class Shared extends UTIL {
 
     // 复活页-复活
     bindReseur() {
-        const x1 = this.computedSizeW(125);
-        const x2 = this.computedSizeW(300);
-        const y1 = this.computedSizeH(360);
-        const y2 = this.computedSizeH(420);
+        const x1 = this.computedSizeW(82);
+        const x2 = this.computedSizeW(341);
+        const y1 = this.computedSizeH(482);
+        const y2 = this.computedSizeH(549);
 
         events.click({
             name: 'reseurBtn',
@@ -178,10 +177,10 @@ export default class Shared extends UTIL {
 
     // 复活页-跳过
     bindSkip() {
-        const x1 = this.computedSizeW(175);
-        const x2 = this.computedSizeW(240);
-        const y1 = this.computedSizeH(460);
-        const y2 = this.computedSizeH(490);
+        const x1 = this.computedSizeW(170);
+        const x2 = this.computedSizeW(255);
+        const y1 = this.computedSizeH(570);
+        const y2 = this.computedSizeH(604);
 
         events.click({
             name: 'skipBtn',
@@ -192,14 +191,6 @@ export default class Shared extends UTIL {
                 isSharedLoop = true;
 
                 this.endPage();
-
-                // 提交分数到服务器
-                // $io.updateScore(score);
-
-                // 更新解锁分数
-                $io.unlockCar({ score, turn });
-
-                currentPage = 'endPage';
             }
         });
     }
@@ -575,9 +566,6 @@ export default class Shared extends UTIL {
      * 群排行榜
      * */
     groupRankPage() {
-        // wx.shareAppMessage({
-        //     title: '漂移车王'
-        // })
         $wx.shareAppMessage();
     }
 
@@ -602,8 +590,8 @@ export default class Shared extends UTIL {
     page() {
         this.sharedCanvas = openDataContext.canvas;
 
-        this.sharedCanvas.height = winHeight * window.devicePixelRatio;
         this.sharedCanvas.width = winWidth * window.devicePixelRatio;
+        this.sharedCanvas.height = winHeight * window.devicePixelRatio;
 
         const sharedCanvas2d = this.sharedCanvas.getContext("2d");
 
@@ -630,6 +618,15 @@ export default class Shared extends UTIL {
      * 结束页
      * */
     endPage() {
+        this.setCanvasSize();
+
+        // 更新解锁分数
+        $io.unlockCar({ score, turn })
+        .then((e) => {
+            const { payload: { hasNew } } = e;
+            $cache.setGameData('hasNew', hasNew);
+        });
+
         isSharedLoop = true;
         currentPage = 'endPage';
         this.showPage('end', { score });
@@ -639,6 +636,8 @@ export default class Shared extends UTIL {
      * 复活页
      * */
     reseurPage() {
+        this.setCanvasSize();
+
         isSharedLoop = true;
         currentPage = 'reseurPage';
         this.showPage('reseur', { score });
@@ -658,8 +657,6 @@ export default class Shared extends UTIL {
      * 泡妞神器
      * */
     qrPage() {
-        localStorage.removeItem('accessToken');
-        // console.log('当前localStorage: ', localStorage.getItem('accessToken'));
         currentPage = 'qrPage';
         this.showPage('qr', {}, true);
     }
@@ -670,6 +667,25 @@ export default class Shared extends UTIL {
     wechatPage() {
         currentPage = 'wechatPage';
         this.showPage('wechat', {}, true);
+    }
+
+    /**
+     * 设置canvas尺寸
+     * */
+    setCanvasSize() {
+        if (currentShared === 'shared') return false;
+
+        this.sharedCanvas.width = winWidth * window.devicePixelRatio;
+        this.sharedCanvas.height = winHeight * window.devicePixelRatio;
+
+        // if (!this.asd) {
+        //         const sharedCanvas2d = this.sharedCanvas.getContext("2d");
+        //
+        //         sharedCanvas2d.scale(window.devicePixelRatio, window.devicePixelRatio);
+        //         this.asd = true;
+        //     }
+
+        currentShared = 'shared';
     }
 
     showPage(command, data, clear) {

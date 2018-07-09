@@ -119,6 +119,8 @@ const basicData = {
     eventPoint: {},
     // 当前页面标识(默认为开始页)
     currentPage: '',
+    // 当前开放域标识
+    currentShared: 'shared',
 
     // 主页类
     pageClass: '',
@@ -126,7 +128,9 @@ const basicData = {
     scoreClass: '',
     // 开放域类
     sharedClass: '',
-asd: '',
+    // 超越好友类
+    beyondClass: '',
+
     // 等待页对象
     loadingPage: '',
     // 开始页对象
@@ -144,6 +148,9 @@ asd: '',
     sharedCanvas: '',
     sharedTexture2d: '',
     sharedCanvasSprite: '',
+    // 超越好友
+    beyondTexture2d: '',
+    beyondCanvasSprite: '',
     // 微信特有离屏画布
     offCanvas2d: '',
     texture2d: '',
@@ -157,16 +164,7 @@ asd: '',
     imgList: {
         btn: 'images/btn.png',
         backIcon: 'images/back-icon.png',
-        carPane: `images/car-pane.png`,
-        carportPane: 'images/carport-pane.png',
-        selectedIcon: 'images/selected-icon.png',
-        unlockPane: 'images/unlock-pane.png',
-        unlockGame: 'images/unlock-game.png',
-        unlockCn: 'images/unlock-cn.png',
-        unlockBtn: 'images/unlock-btn.png',
-        gift100: 'images/gift-100.png',
-        gift200: 'images/gift-200.png',
-        curve: 'images/curve.png',
+        closeBtn: 'images/close-btn.png',
 
         //loading页
         logo: 'images/logo.png',
@@ -185,6 +183,16 @@ asd: '',
 
         // 游戏页
         scoreBg: 'images/score-bg.png',
+
+        // 结束页
+        endHeader: 'images/end-header.png',
+        endAgain: 'images/end-again.png',
+        endBack: 'images/end-back.png',
+        endShare: 'images/end-share.png',
+        endRankBg: 'images/end-rank-bg.png',
+
+        // 复活页
+        reseurRePlay: 'images/reseur-rePlay.png',
 
         // 公众号
         point: 'images/point.png',
@@ -214,11 +222,23 @@ asd: '',
         goGroupRank: 'images/go-group-rank.png',
         //方形返回按钮
         backBtn: `images/back-btn.png`,
+
+        // 车库
+        carPane: 'images/car-pane.png',
+        carPaneOn: 'images/car-pane-on.png',
+        carNew: 'images/car-new.png',
+        carportPane: 'images/carport-pane.png',
+        selectedIcon: 'images/selected-icon.png',
+        unlockPane: 'images/unlock-pane.png',
+        unlockGame: 'images/unlock-game.png',
+        unlockCn: 'images/unlock-cn.png',
+        unlockBtn: 'images/unlock-btn.png',
+        gift100: 'images/gift-100.png',
+        gift200: 'images/gift-200.png',
+        curve: 'images/curve.png'
     },
 
-    // 是否正在进行游戏
-    onGame: false,
-
+    // 计时器组
     timerArr: [],
 
     // 排行榜当前页数
@@ -322,6 +342,8 @@ export default class Bus{
         offCanvasSprite.position.set(-11.75, 78.44, 20);
         // 分数
         scoreCanvasSprite.position.set(-10, 82.8, 9);
+        // 超越好友
+        // beyondCanvasSprite.position.set(-11.75, 78.44, 20);
         // sharedCanvasSprite.position.set(-11.75, 78.44, 20);
 
         camera.position.set(-16.738086885462103, 90.533387653514225, 28.513221776822927);

@@ -257,20 +257,24 @@ export default class Init {
      * 更新微信分数
      * */
     updateWxScore(score) {
-        const { KVDataList } = this.selfData;
-        const { value } = KVDataList[0];
+        // const { KVDataList } = this.selfData;
+        // const { value } = KVDataList[0];
+        //
+        // if (score > value) {
+        wx.setUserCloudStorage({
+            KVDataList: [{ key: "score", value: String(score) }],
+            success: (e) => {
+                console.log('更新数分成功: ', score)
+            },
+            fail: () => {
+            },
+            complete: () => {}
+        })
+        // }
+    }
 
-        if (score > value) {
-            wx.setUserCloudStorage({
-                KVDataList: [{ key: "score", value: String(score) }],
-                success: (e) => {
-                    console.log('更新数分成功: ', score)
-                },
-                fail: () => {
-                },
-                complete: () => {}
-            })
-        }
+    getHWData() {
+        return wx.HWData;
     }
 }
 

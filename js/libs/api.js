@@ -21,17 +21,12 @@ const API = {
     'CODE_2_ACCESS_TOKEN': '/yc/wechat/code2accessToken',
     'GET_UNIONID': '/yc/wechat/getUnionId',
 
-    //更新每日
-    'UPDATE_DATE': '/yc/user/updateDate',
-
     // 获取车库
     'GET_UNLOCK': '/yc/carport/getunlock',
 
     // 获取世界排行
     'GET_WORLD_RANK': '/yc/rank/data',
 
-    // 提交分数
-    'UPDATE_SCORE': '/yc/user/updateScore',
     // 更新解锁车辆分数
     'UNLOCK_CAR': '/yc/carport/unlockCar'
 };
