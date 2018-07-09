@@ -1,6 +1,7 @@
 import UTIL from "../../util";
 
 import Shared from '../shared/index';
+import Beyond from '../shared/beyond';
 
 import pageLoading from './loading';
 
@@ -18,6 +19,7 @@ export default class Page extends UTIL {
         this.page();
 
         sharedClass = new Shared();
+        // beyondClass = new Beyond();
 
         // 实例化加载页
         loadingPage = new pageLoading();

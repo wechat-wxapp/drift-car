@@ -27,6 +27,8 @@ export default class Scenery extends UTIL {
         return new Promise((res, rej) => {
             const material = "https://static.cdn.24haowan.com/24haowan/test/js/b01.png";
             const model = 'https://static.cdn.24haowan.com/24haowan/test/js/b01.obj';
+            // const material = "https://static.cdn.24haowan.com/24haowan/test/js/testb.png";
+            // const model = 'https://static.cdn.24haowan.com/24haowan/test/js/testb.obj';
 
             this.createObj(model, material, (obj) => {
                 const scenery = obj;

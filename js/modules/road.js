@@ -26,6 +26,7 @@ export default class Road extends UTIL {
             this.createObj(model, material, (obj) => {
                 road = obj;
 
+
                 road.scale.set(2, 2, 2);
 
                 res();

@@ -74,8 +74,6 @@ const basicData = {
     lastScore: 0,
     // 转弯多少次
     turn: 0,
-    // 点击转弯减速的判断
-    isTurning: false,
 
     // 最后的道路key
     // lastBoxType: 'r6',
@@ -118,6 +116,8 @@ const basicData = {
     eventPoint: {},
     // 当前页面标识(默认为开始页)
     currentPage: '',
+    // 当前开放域标识
+    currentShared: 'shared',
 
     // 主页类
     pageClass: '',
@@ -125,6 +125,8 @@ const basicData = {
     scoreClass: '',
     // 开放域类
     sharedClass: '',
+    // 超越好友类
+    beyondClass: '',
 
     // 等待页对象
     loadingPage: '',
@@ -143,6 +145,9 @@ const basicData = {
     sharedCanvas: '',
     sharedTexture2d: '',
     sharedCanvasSprite: '',
+    // 超越好友
+    beyondTexture2d: '',
+    beyondCanvasSprite: '',
     // 微信特有离屏画布
     offCanvas2d: '',
     texture2d: '',
@@ -175,6 +180,16 @@ const basicData = {
 
         // 游戏页
         scoreBg: 'images/score-bg.png',
+
+        // 结束页
+        endHeader: 'images/end-header.png',
+        endAgain: 'images/end-again.png',
+        endBack: 'images/end-back.png',
+        endShare: 'images/end-share.png',
+        endRankBg: 'images/end-rank-bg.png',
+
+        // 复活页
+        reseurRePlay: 'images/reseur-rePlay.png',
 
         // 公众号
         point: 'images/point.png',
@@ -307,6 +322,8 @@ export default class Bus{
         offCanvasSprite.position.set(-11.75, 78.44, 20);
         // 分数
         scoreCanvasSprite.position.set(-10, 82.8, 9);
+        // 超越好友
+        // beyondCanvasSprite.position.set(-11.75, 78.44, 20);
         // sharedCanvasSprite.position.set(-11.75, 78.44, 20);
 
         camera.position.set(-16.738086885462103, 90.533387653514225, 28.513221776822927);

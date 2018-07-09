@@ -272,5 +272,9 @@ export default class Init {
         })
         // }
     }
+
+    getHWData() {
+        return wx.HWData;
+    }
 }
 

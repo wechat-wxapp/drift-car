@@ -176,23 +176,6 @@ export default class Main extends UTIL {
     updateAnimation() {
         if (startKey) {
 
-            if(isTurning) {
-                let oldSpeed = speed;
-                let _temp = false;
-                this.speedTimer = $timer(() => {
-                    if(!_temp) {
-                        speed -= 0.1;
-                        if(speed <= (oldSpeed / 2)) _temp = true;
-                    } else {
-                        speed += 0.1
-                        if(speed >= oldSpeed) {
-                            speed = oldSpeed;
-                            this.speedTimer.closeTimeout();
-                        }
-                    }
-                     
-                }, 8)
-            }
             if (movekey === 'x') {
                 car.position.x += speed;
                 carBodys.position.x += speed;
@@ -201,9 +184,8 @@ export default class Main extends UTIL {
                 speedRecord.x += speed;
 
                 // 2d canvas
-                // offCanvasSprite.position.x += speed;
                 scoreCanvasSprite.position.x += speed;
-                // sharedCanvasSprite.position.x += speed;
+                // beyondCanvasSprite.position.x += speed;
             } else {
                 car.position.z -= speed;
                 carBodys.position.z -= speed;
@@ -212,9 +194,8 @@ export default class Main extends UTIL {
                 speedRecord.z += speed;
 
                 // 2d canvas
-                // offCanvasSprite.position.z -= speed;
                 scoreCanvasSprite.position.z -= speed;
-                // sharedCanvasSprite.position.z -= speed;
+                // beyondCanvasSprite.position.z -= speed;
             }
         }
 
@@ -270,7 +251,7 @@ export default class Main extends UTIL {
                 level++;
                 // levelSpeed.splice(0, 1);
                 this.updateLevelSpeed();
-                console.log(`---加速 当前区间 ${level}---`);
+                // console.log(`---加速 当前区间 ${level}---`);
             }
         }
     }
@@ -310,6 +291,7 @@ export default class Main extends UTIL {
         this.timer(progress);
 
         // texture2d.needsUpdate = true;
+        // beyondTexture2d.needsUpdate = true;
 
         requestAnimationFrame(this.loop.bind(this));
     }

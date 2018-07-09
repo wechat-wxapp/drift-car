@@ -83,6 +83,9 @@ export default class UTIL {
         // 重启游戏
         // this.restart();
 
+        // 清除超越好友
+        // beyondClass.clear2d();
+
         // 显示结束页
         this.endPageTimer = $timer(() => {
             this.showReseurPage();
@@ -149,6 +152,8 @@ export default class UTIL {
         } else {
             // 失败重新开始
             this.end();
+            // 清除超越好友数据判断
+            // beyondClass.reset();
         }
 
         // 重置页面分数
@@ -221,6 +226,8 @@ export default class UTIL {
 
             score++;
 
+            // 检测超越好友
+            // beyondClass.beyondPage();
             scorePage.setTexture();
         }, 1000);
     }
@@ -259,7 +266,7 @@ export default class UTIL {
 
                 music.playReady();
             }
-        }, 1000);
+        }, 1500);
 
         gamePage.page(3);
         music.playReady();
