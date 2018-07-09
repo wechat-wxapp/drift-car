@@ -61,7 +61,7 @@ export default class Shared extends UTIL {
         this.bindWorldRankNextPage();
         // 世界排行-返回
         this.worldRankGoBack();
-        // 世界排行-好友排行榜
+        // 世界排行-查看好友排行榜
         this.goFriendRank();
 
         // 泡妞神器-返回
@@ -195,12 +195,12 @@ export default class Shared extends UTIL {
         });
     }
 
-    // 上一页按钮
+    // 世界页面-上一页按钮
     bindWorldRankPrePage() {
-        const x1 = this.computedSizeW(250);
-        const x2 = this.computedSizeW(300);
-        const y1 = this.computedSizeH(150);
-        const y2 = this.computedSizeH(180);
+        const x1 = this.computedSizeW(110);
+        const x2 = this.computedSizeW(195);
+        const y1 = this.computedSizeH(500);
+        const y2 = this.computedSizeH(528);
 
         events.click({
             name: 'worldRankPrePage',
@@ -230,10 +230,10 @@ export default class Shared extends UTIL {
 
     //查看世界排行
     goWorldRank() {
-        const x1 = this.computedSizeW(249);
-        const x2 = this.computedSizeW(356);
-        const y1 = this.computedSizeH(88);
-        const y2 = this.computedSizeH(123);
+        const x1 = this.computedSizeW(234);
+        const x2 = this.computedSizeW(360);
+        const y1 = this.computedSizeH(96);
+        const y2 = this.computedSizeH(148);
 
         events.click({
             name: 'goWorldRank',
@@ -258,10 +258,10 @@ export default class Shared extends UTIL {
 
     // 世界排行榜-下一页按钮
     bindWorldRankNextPage() {
-        const x1 = this.computedSizeW(300);
-        const x2 = this.computedSizeW(365);
-        const y1 = this.computedSizeH(150);
-        const y2 = this.computedSizeH(180);
+        const x1 = this.computedSizeW(220);
+        const x2 = this.computedSizeW(300);
+        const y1 = this.computedSizeH(500);
+        const y2 = this.computedSizeH(528);
         events.click({
             name: 'worldRankNextPage',
             pageName: 'worldRank',
@@ -290,10 +290,10 @@ export default class Shared extends UTIL {
 
     // 群排行榜-上一页按钮
     bindGroupRankPrePage() {
-        const x1 = this.computedSizeW(250);
-        const x2 = this.computedSizeW(300);
-        const y1 = this.computedSizeH(150);
-        const y2 = this.computedSizeH(180);
+        const x1 = this.computedSizeW(110);
+        const x2 = this.computedSizeW(195);
+        const y1 = this.computedSizeH(500);
+        const y2 = this.computedSizeH(528);
 
         events.click({
             name: 'groupRankPrePage',
@@ -308,10 +308,10 @@ export default class Shared extends UTIL {
 
     // 群排行榜-下一页按钮
     bindGroupRankNextPage() {
-        const x1 = this.computedSizeW(300);
-        const x2 = this.computedSizeW(365);
-        const y1 = this.computedSizeH(150);
-        const y2 = this.computedSizeH(180);
+        const x1 = this.computedSizeW(220);
+        const x2 = this.computedSizeW(300);
+        const y1 = this.computedSizeH(500);
+        const y2 = this.computedSizeH(528);
         events.click({
             name: 'groupRankNextPage',
             pageName: 'groupRank',
@@ -325,10 +325,10 @@ export default class Shared extends UTIL {
     }
     // 好友排行榜-上一页按钮
     bindFriendRankPrePage() {
-        const x1 = this.computedSizeW(250);
-        const x2 = this.computedSizeW(300);
-        const y1 = this.computedSizeH(150);
-        const y2 = this.computedSizeH(180);
+        const x1 = this.computedSizeW(110);
+        const x2 = this.computedSizeW(195);
+        const y1 = this.computedSizeH(500);
+        const y2 = this.computedSizeH(528);
 
         events.click({
             name: 'friendRankPrePage',
@@ -343,10 +343,10 @@ export default class Shared extends UTIL {
 
     // 好友排行榜-下一页按钮
     bindFriendRankNextPage() {
-        const x1 = this.computedSizeW(300);
-        const x2 = this.computedSizeW(365);
-        const y1 = this.computedSizeH(150);
-        const y2 = this.computedSizeH(180);
+        const x1 = this.computedSizeW(220);
+        const x2 = this.computedSizeW(300);
+        const y1 = this.computedSizeH(500);
+        const y2 = this.computedSizeH(528);
         events.click({
             name: 'friendRankNextPage',
             pageName: 'friendRank',
@@ -420,13 +420,13 @@ export default class Shared extends UTIL {
     }
 
     /**
-     * 绑定排行榜按钮
+     * 查看好友排行榜按钮
      * */
     goFriendRank() {
-        const x1 = this.computedSizeW(51);
-        const x2 = this.computedSizeW(161);
-        const y1 = this.computedSizeH(91);
-        const y2 = this.computedSizeH(120);
+        const x1 = this.computedSizeW(52);
+        const x2 = this.computedSizeW(178);
+        const y1 = this.computedSizeH(96);
+        const y2 = this.computedSizeH(145);
 
         events.click({
             name: 'friendRankBtn',
@@ -440,10 +440,10 @@ export default class Shared extends UTIL {
 
     //查看群排行
     goGroupRank() {
-        const x1 = this.computedSizeW(246);
-        const x2 = this.computedSizeW(365);
-        const y1 = this.computedSizeH(635);
-        const y2 = this.computedSizeH(675);
+        const x1 = this.computedSizeW(268);
+        const x2 = this.computedSizeW(358);
+        const y1 = this.computedSizeH(628);
+        const y2 = this.computedSizeH(660);
 
         events.click({
             name: 'goGroupRankFromFriend',
@@ -465,10 +465,10 @@ export default class Shared extends UTIL {
 
     // 群排行榜-我也要玩
     iWantToPlay() {
-        const x1 = this.computedSizeW(246);
-        const x2 = this.computedSizeW(365);
-        const y1 = this.computedSizeH(635);
-        const y2 = this.computedSizeH(675);
+        const x1 = this.computedSizeW(265);
+        const x2 = this.computedSizeW(358);
+        const y1 = this.computedSizeH(628);
+        const y2 = this.computedSizeH(660);
 
         events.click({
             name: 'iWantToPlay',
@@ -477,7 +477,6 @@ export default class Shared extends UTIL {
             cb: () => {
                 isSharedLoop = false;
                 this.clear2d();
-
                 startPage.setTexture();
             }
         })
@@ -485,10 +484,10 @@ export default class Shared extends UTIL {
 
     //好友排行榜-返回
     friendRankGoBack() {
-        const x1 = this.computedSizeW(45);
-        const x2 = this.computedSizeW(80);
+        const x1 = this.computedSizeW(50);
+        const x2 = this.computedSizeW(140);
         const y1 = this.computedSizeH(630);
-        const y2 = this.computedSizeH(670);
+        const y2 = this.computedSizeH(660);
 
         events.click({
             name: 'friendRankGoBack',
@@ -507,10 +506,10 @@ export default class Shared extends UTIL {
 
     // 群排行榜-返回
     groupRankGoBack() {
-        const x1 = this.computedSizeW(45);
-        const x2 = this.computedSizeW(80);
+        const x1 = this.computedSizeW(50);
+        const x2 = this.computedSizeW(140);
         const y1 = this.computedSizeH(630);
-        const y2 = this.computedSizeH(670);
+        const y2 = this.computedSizeH(660);
         events.click({
             name: 'groupRankGoBack',
             pageName: 'groupRank',
@@ -528,10 +527,10 @@ export default class Shared extends UTIL {
 
     // 世界排行榜-返回
     worldRankGoBack() {
-        const x1 = this.computedSizeW(45);
-        const x2 = this.computedSizeW(80);
+        const x1 = this.computedSizeW(50);
+        const x2 = this.computedSizeW(140);
         const y1 = this.computedSizeH(630);
-        const y2 = this.computedSizeH(670);
+        const y2 = this.computedSizeH(660);
         events.click({
             name: 'worldRankGoBack',
             pageName: 'worldRank',

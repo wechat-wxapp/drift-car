@@ -91,7 +91,8 @@ export default class UTIL {
             this.showReseurPage();
             this.endPageTimer.closeTimeout();
         }, 1000);
-
+        // oldSpeed = '';
+        // isTurning = false;
         console.log('---结束游戏---');
     };
 

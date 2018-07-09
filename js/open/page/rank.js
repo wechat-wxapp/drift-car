@@ -8,7 +8,7 @@ export default class Rank extends Init {
     super();
     this.total = null;
     // 每页展示数
-    this.counts = 6;
+    this.counts = 5;
     // 总页数
     this.totalPages = 1;
   }
@@ -29,33 +29,36 @@ export default class Rank extends Init {
       this.worldRank();
     }
     // 更新提示
-    this.cvs.fillStyle = "#e7e7e7";
-    this.cvs.fillRect(this.winWidth / 2 - this.computedSizeW(582) / 2, this.computedSizeH(272), this.computedSizeW(582), this.computedSizeH(50));
+    this.cvs.fillStyle = "#fbf6f1";
+    this.cvs.fillRect(this.winWidth / 2 - this.computedSizeW(560) / 2, this.computedSizeH(291), this.computedSizeW(560), this.computedSizeH(50));
     this.cvs.fillStyle = "#808080";
     this.cvs.font = `${this.computedSizeH(20)}px Yahei`;
-    this.cvs.textAlign = "left";
-    this.cvs.fillText('排行榜：每周一凌晨更新', this.computedSizeW(130), this.computedSizeH(306));
+    this.cvs.textAlign = "center";
+    this.cvs.fillText('排行榜：每周一凌晨更新',this.winWidth / 2, this.computedSizeH(324));
     
+    //中央空白背景板
     this.cvs.fillStyle = "#fff";
-    this.cvs.fillRect(this.winWidth / 2 - this.computedSizeW(582) / 2, this.computedSizeH(322), this.computedSizeW(582), this.computedSizeH(620));
+    this.cvs.fillRect(this.winWidth / 2 - this.computedSizeW(560) / 2, this.computedSizeH(338), this.computedSizeW(560), this.computedSizeH(640));
 
     //分割线
-    this.cvs.lineWidth = 1;
-    this.cvs.strokeStyle = '#ededed';
+    this.cvs.lineWidth = 2; 
+    this.cvs.strokeStyle = '#e7e7e7';
     const that = this;
-    for (let i = 0; i < 5; i++) {
-      that.cvs.moveTo(this.computedSizeW(130), this.computedSizeH(445 + i * 96));
-      that.cvs.lineTo(this.computedSizeW(608), this.computedSizeH(445 + i * 96));
+    for (let i = 0; i < 4; i++) {
+      that.cvs.moveTo(this.computedSizeW(125), this.computedSizeH(448 + i * 110));
+      that.cvs.lineTo(this.computedSizeW(625), this.computedSizeH(448 + i * 110));
     }
     this.cvs.stroke();
 
-    //blue part 个人成绩
-    this.cvs.fillStyle = this.themeBule;
-    this.cvs.fillRect(this.winWidth / 2 - this.computedSizeW(582) / 2, this.computedSizeH(965), this.computedSizeW(582), this.computedSizeH(102));
+    //个人成绩背景板
+    // this.cvs.beginPath();
+    this.cvs.fillStyle = '#fff';
+    this.cvs.fillRect(this.winWidth / 2 - this.computedSizeW(560) / 2, this.computedSizeH(999), this.computedSizeW(560), this.computedSizeH(110));
 
-    const backIcon1 = wx.createImage();
-    backIcon1.src = `images/back-icon.png`;
-    this.cvs.drawImage(backIcon1, 0, 0, backIcon1.width, backIcon1.height, this.computedSizeW(84), this.computedSizeH(1150), this.computedSizeW(62), this.computedSizeH(62));
+    //返回按钮
+    const backBtn = wx.createImage();
+    backBtn.src = `images/back-btn.png`;
+    this.cvs.drawImage(backBtn, 0, 0, backBtn.width, backBtn.height, this.computedSizeW(95), this.computedSizeH(1139), this.computedSizeW(162), this.computedSizeH(63));
 
     // const btn = wx.createImage();
     // btn.src = 'images/btn.png';
@@ -85,7 +88,6 @@ export default class Rank extends Init {
     let current_count = (rankCurrentPage == this.totalPages) ? ((false == (this.total % this.counts)) ? this.counts : this.total % this.counts) : this.counts;
 
     //是否有下一页和上一页
-    
     let hasNextPage = data.hasNextPage || (this.totalPages > rankCurrentPage);
     let hasPrePage = data.hasPrePage || rankCurrentPage > 1;
 
@@ -98,46 +100,34 @@ export default class Rank extends Init {
       this.noNext = isLastPage ? 1 : 0;
     }
     this.noPre = isFristPage ? 1 : 0;
-    
-    // 更新提示
-    this.cvs.fillStyle = "#e7e7e7";
-    this.cvs.fillRect(this.winWidth / 2 - this.computedSizeW(582) / 2, this.computedSizeH(272), this.computedSizeW(582), this.computedSizeH(50));
-    this.cvs.fillStyle = "#808080";
-    this.cvs.font = `${this.computedSizeW(20)}px xszt`;
-    this.cvs.textAlign = "left";
-    this.cvs.fillText('排行榜：每周一凌晨更新', this.computedSizeW(130), this.computedSizeH(306));
 
     // this.cvs.fillStyle = this.themeBule;
     // if (rankCurrentPage == 1) {
     //   this.cvs.fillStyle = "#808080";
     // }
-    hasPrePage ? this.cvs.fillStyle = this.themeBule : this.cvs.fillStyle = "#808080";
-    this.cvs.font = `${this.computedSizeW(20)}px xszt`;
-    this.cvs.textAlign = "left";
-    this.cvs.fillText('上一页', this.computedSizeW(460), this.computedSizeH(306))
 
-    this.cvs.fillStyle = "#808080";
-    this.cvs.font = `${this.computedSizeW(20)}px xszt`;
-    this.cvs.textAlign = "left";
-    this.cvs.fillText('|', this.computedSizeW(548), this.computedSizeH(306))
-
-    // this.cvs.fillStyle = this.themeBule;
-    // if (rankCurrentPage === this.totalPages) {
-    //   this.cvs.fillStyle = "#808080";
-    // }
-    hasNextPage ? this.cvs.fillStyle = this.themeBule : this.cvs.fillStyle = "#808080";
-    this.cvs.font = `${this.computedSizeW(20)}px xszt`;
-    this.cvs.textAlign = "left";
-    this.cvs.fillText('下一页', this.computedSizeW(570), this.computedSizeH(306))
-
-    //分割线
-    this.cvs.lineWidth = 1;
-    this.cvs.strokeStyle = '#ededed';
-    for (let i = 0; i < 5; i++) {
-      this.cvs.moveTo(this.computedSizeW(130), this.computedSizeH(445 + i * 96));
-      this.cvs.lineTo(this.computedSizeW(608), this.computedSizeH(445 + i * 96));
+    /**
+     * 上下一页
+     */
+    // hasPrePage ? this.cvs.fillStyle = this.themeBule : this.cvs.fillStyle = "#808080";
+    if(hasPrePage) {
+      const prePageDis = wx.createImage();
+      prePageDis.src = 'images/pre-page-dis.png';
+      this.cvs.drawImage(prePageDis, 0, 0, prePageDis.width, prePageDis.height, this.computedSizeW(201), this.computedSizeH(902), this.computedSizeW(154), this.computedSizeH(63));
+    }else {
+      const prePageN = wx.createImage();
+      prePageN.src = 'images/pre-page-n.png';
+      this.cvs.drawImage(prePageN, 0, 0, prePageN.width, prePageN.height, this.computedSizeW(201), this.computedSizeH(902), this.computedSizeW(154), this.computedSizeH(63));
     }
-    this.cvs.stroke();
+    if(hasNextPage) {
+      const nextPageDis = wx.createImage();
+      nextPageDis.src = 'images/next-page-dis.png';
+      this.cvs.drawImage(nextPageDis, 0, 0, nextPageDis.width, nextPageDis.height, this.computedSizeW(394), this.computedSizeH(902), this.computedSizeW(154), this.computedSizeH(63));
+    }else {
+      const nextPageN = wx.createImage();
+      nextPageN.src = 'images/next-page-n.png';
+      this.cvs.drawImage(nextPageN, 0, 0, nextPageN.width, nextPageN.height, this.computedSizeW(394), this.computedSizeH(902), this.computedSizeW(154), this.computedSizeH(63));
+    }
 
     // 排名
     this.cvs.beginPath();
@@ -145,123 +135,104 @@ export default class Rank extends Init {
     const that = this;
     if(this.total !== 0){
       for(let i = (rankCurrentPage - 1) * this.counts; i < current_count + (rankCurrentPage - 1) * this.counts; i++) {
-        //前三名变蓝色
-        that.cvs.fillStyle = [0, 1, 2].includes(i) ? that.themeBule : '#a8a8a8'
+        that.cvs.fillStyle = '#7f2409';
         // 排名
-        that.cvs.fillText(i + 1, that.computedSizeW(132), that.computedSizeH(402 + (i - (rankCurrentPage - 1) * this.counts) * 96));
+        that.cvs.fillText(i + 1, that.computedSizeW(132), that.computedSizeH(402 + (i - (rankCurrentPage - 1) * this.counts) * 110));
         // 头像
         let avatar = wx.createImage();
-        let j = data.rankCurrentPage ? i % 6 : i;
+        let j = data.rankCurrentPage ? i % 5 : i;
         avatar.src = that.rankData[j].avatarUrl;
-
         avatar.onload = () => {
-          that.circleImg(this.cvs, avatar, this.computedSizeW(190), that.computedSizeH(364 + (i - (rankCurrentPage - 1) * this.counts) * 96.8), this.computedSizeW(30))
+          that.circleImg(this.cvs, avatar, this.computedSizeW(176), that.computedSizeH(356 + (i - (rankCurrentPage - 1) * this.counts) * 110), this.computedSizeW(39.5))
           that.cvs.closePath();
         }
       }
     }
 
     // 名字
+    this.cvs.font = `bold`;
+    this.cvs.textAlign = "left";
     if(this.total !== 0) {
       for(let i = (rankCurrentPage - 1) * this.counts; i < current_count + (rankCurrentPage - 1) * this.counts; i++){
-        this.cvs.fillStyle = '#666';
-        let j = data.rankCurrentPage ? i % 6 : i;
-        this.cvs.fillText(this.rankData[j].nickname, this.computedSizeW(286), this.computedSizeH(402 + (i - (rankCurrentPage - 1) * this.counts) * 96), this.computedSizeW(146));
+        this.cvs.fillStyle = '#8a8a8a';
+        let j = data.rankCurrentPage ? i % 5 : i;
+        this.cvs.fillText(this.rankData[j].nickname, this.computedSizeW(275), this.computedSizeH(402 + (i - (rankCurrentPage - 1) * this.counts) * 110), this.computedSizeW(146));
       }
     }
       // this.cvs.fillText(`this.rankData[i].nickname`, this.computedSizeW(286), this.computedSizeH(402 ), this.computedSizeW(146));
 
     // 分数
-    this.cvs.font = `bold`;
-    this.cvs.fillStyle = '#000';
+    this.cvs.fillStyle = '#2a2a2a';
     if(this.total !== 0){
       for(let i = (rankCurrentPage - 1) * this.counts; i < current_count + (rankCurrentPage - 1) * this.counts; i++){
-        let j = data.rankCurrentPage ? i % 6 : i;
+        let j = data.rankCurrentPage ? i % 5 : i;
         if(this.rankData[j].KVDataList.length > 0)
-          this.cvs.fillText(this.rankData[j].KVDataList[0].value, this.computedSizeW(538), this.computedSizeH(402 + (i - (rankCurrentPage - 1) * this.counts) * 96));
+          this.cvs.fillText(this.rankData[j].KVDataList[0].value, this.computedSizeW(583), this.computedSizeH(402 + (i - (rankCurrentPage - 1) * this.counts) * 110));
       }
     }
-      let avatar = wx.createImage();
-      if (this.selfData.avatarUrl) {
-        avatar.src = this.selfData.avatarUrl
-        avatar.onload = () => {
-          this.circleImg(this.cvs,avatar, this.computedSizeW(190), this.computedSizeH(990), this.computedSizeW(30), this.computedSizeH(30))
-          this.cvs.beginPath();
-        }
-              //蓝色自己排名
-        this.cvs.fillStyle = `#ffd81f`;
-        this.cvs.font = 'noraml';
-        if(this.total !== 0)
-          this.cvs.fillText(this.selfData.rank, this.computedSizeW(132), this.computedSizeH(1028));
-        // this.cvs.fillRect(100,100,this.computedSizeW(200),this.computedSizeH(200))
-        // this.cvs.arc(this.computedSizeW(280), this.computedSizeH(299), this.computedSizeW(80), 0, 2 * Math.PI);
-        // this.cvs.fill();
-        this.cvs.fillStyle = `#fff`;
-        if(this.total !== 0)
-          this.cvs.fillText(this.selfData.nickname, this.computedSizeW(286), this.computedSizeH(1028), this.computedSizeW(146));
-        this.cvs.font = `bold`;
-        if(this.selfData.KVDataList.length > 0)
-          this.cvs.fillText(this.selfData.KVDataList[0].value, this.computedSizeW(538), this.computedSizeH(1028));
+    
+    //底部白色自己排名
+    let avatar = wx.createImage();
+    if (this.selfData.avatarUrl) {
+      avatar.src = this.selfData.avatarUrl
+      avatar.onload = () => {
+        this.circleImg(this.cvs,avatar, this.computedSizeW(190), this.computedSizeH(1024), this.computedSizeW(30), this.computedSizeH(39))
+        this.cvs.beginPath();
       }
+      if(this.total !== 0){
+        this.cvs.fillStyle = '#7f2409';
+        this.cvs.fillText(this.selfData.rank, this.computedSizeW(132), this.computedSizeH(1064));
+      }
+      if(this.total !== 0){
+        this.cvs.fillStyle = '#8a8a8a';
+        this.cvs.fillText(this.selfData.nickname, this.computedSizeW(275), this.computedSizeH(1064), this.computedSizeW(146));
+      }
+      if(this.selfData.KVDataList.length > 0){
+        this.cvs.fillStyle = '#2a2a2a';
+        this.cvs.fillText(this.selfData.KVDataList[0].value, this.computedSizeW(583), this.computedSizeH(1064));
+      }
+    }
     
   }
     
 
   friendRank(){
-    this.drawRoundRect(this.cvs, this.computedSizeW(85), this.computedSizeH(160), this.computedSizeW(216), this.computedSizeH(70), this.computedSizeH(35), 'rgba(73,116,235,1)');
-    this.drawRoundRect(this.cvs, this.computedSizeW(442), this.computedSizeH(160), this.computedSizeW(216), this.computedSizeH(70), this.computedSizeH(35), '#fff', 2);
-    this.cvs.fillStyle = "#fff";
-    this.cvs.font = `bold ${this.computedSizeW(30)}px xszt`;
-    this.cvs.textAlign = "left";
-    this.cvs.fillText('好友排行', this.computedSizeW(133), this.computedSizeH(206));
-    this.cvs.fillText('世界排行', this.computedSizeW(489), this.computedSizeH(206));
-
-    const btn = wx.createImage();
-    btn.src = 'images/btn.png';
-    this.cvs.drawImage(btn, 0, 0, btn.width, btn.height, this.computedSizeW(445), this.computedSizeH(1150), this.computedSizeW(216), this.computedSizeH(80));
-    this.cvs.fillStyle = "#fff";
-    this.cvs.font = `bold ${this.computedSizeW(30)}px xszt`;
-    this.cvs.fillText('查看群排行', this.computedSizeW(480), this.computedSizeH(1194));
+    const friendRankOn = wx.createImage();
+    friendRankOn.src = 'images/friend-rank-on.png';
+    this.cvs.drawImage(friendRankOn, 0, 0, friendRankOn.width, friendRankOn.height, this.computedSizeW(95), this.computedSizeH(172), this.computedSizeW(280), this.computedSizeH(119));
     
+    const worldRankOff = wx.createImage();
+    worldRankOff.src = 'images/world-rank-off.png';
+    this.cvs.drawImage(worldRankOff, 0, 0, worldRankOff.width, worldRankOff.height, this.computedSizeW(376), this.computedSizeH(172), this.computedSizeW(280), this.computedSizeH(119));
+    
+    const goGroupRank = wx.createImage();
+    goGroupRank.src = 'images/go-group-rank.png';
+    this.cvs.drawImage(goGroupRank, 0, 0, goGroupRank.width, goGroupRank.height, this.computedSizeW(481), this.computedSizeH(1139), this.computedSizeW(174), this.computedSizeH(63));
   }
 
   worldRank(){
-    this.drawRoundRect(this.cvs, this.computedSizeW(85), this.computedSizeH(160), this.computedSizeW(216), this.computedSizeH(70), this.computedSizeH(35), '#fff', 2);
-    this.drawRoundRect(this.cvs, this.computedSizeW(442), this.computedSizeH(160), this.computedSizeW(216), this.computedSizeH(70), this.computedSizeH(35), 'rgba(73,116,235,1)');
-    this.cvs.beginPath();
-    this.cvs.fillStyle = "#fff";
-    this.cvs.font = `bold ${this.computedSizeW(30)}px xszt`;
-    this.cvs.textAlign = "left";
-    this.cvs.fillText('好友排行', this.computedSizeW(133), this.computedSizeH(206));
-    this.cvs.fillText('世界排行', this.computedSizeW(489), this.computedSizeH(206));
-    this.cvs.closePath()
+    const friendRankOff = wx.createImage();
+    friendRankOff.src = 'images/friend-rank-off.png';
+    this.cvs.drawImage(friendRankOff, 0, 0, friendRankOff.width, friendRankOff.height, this.computedSizeW(95), this.computedSizeH(172), this.computedSizeW(280), this.computedSizeH(119));
+    
+    const worldRankOn = wx.createImage();
+    worldRankOn.src = 'images/world-rank-on.png';
+    this.cvs.drawImage(worldRankOn, 0, 0, worldRankOn.width, worldRankOn.height, this.computedSizeW(376), this.computedSizeH(172), this.computedSizeW(280), this.computedSizeH(119));
+    
+    const goGroupRank = wx.createImage();
+    goGroupRank.src = 'images/go-group-rank.png';
+    this.cvs.drawImage(goGroupRank, 0, 0, goGroupRank.width, goGroupRank.height, this.computedSizeW(481), this.computedSizeH(1139), this.computedSizeW(174), this.computedSizeH(63));
 
-    const btn = wx.createImage();
-    btn.src = 'images/btn.png';
-    this.cvs.drawImage(btn, 0, 0, btn.width, btn.height, this.computedSizeW(445), this.computedSizeH(1150), this.computedSizeW(216), this.computedSizeH(80));
-    this.cvs.fillStyle = "#fff";
-    this.cvs.font = `bold ${this.computedSizeW(30)}px xszt`;
-    this.cvs.fillText('查看群排行', this.computedSizeW(480), this.computedSizeH(1194));
-    this.cvs.closePath();
   }
 
   groupRank(){
-    // this.drawRoundRect(this.cvs, this.computedSizeW(85), this.computedSizeH(160), this.computedSizeW(216), this.computedSizeH(70), this.computedSizeW(35), '#fff', 2);
-    // this.drawRoundRect(this.cvs, this.computedSizeW(442), this.computedSizeH(160), this.computedSizeW(216), this.computedSizeH(70), this.computedSizeW(35), 'rgba(73,116,235,1)');
-    this.drawRoundRect(this.cvs, (this.winWidth - this.computedSizeW(216)) / 2, this.computedSizeH(160), this.computedSizeW(216), this.computedSizeH(70), this.computedSizeH(35), 'rgba(73,116,235,1)');
-    this.cvs.beginPath();
-    this.cvs.fillStyle = "#fff";
-    this.cvs.textAlign = "center";
-    this.cvs.font = `bold ${this.computedSizeW(30)}px xszt`;
-    this.cvs.fillText('群排行榜', this.winWidth / 2, this.computedSizeH(206));
+    const groupRankOn = wx.createImage();
+    groupRankOn.src = 'images/group-rank-on.png';
+    this.cvs.drawImage(groupRankOn, 0, 0, groupRankOn.width, groupRankOn.height, this.computedSizeW(96), this.computedSizeH(172), this.computedSizeW(558), this.computedSizeH(120));
 
-
-    const btn = wx.createImage();
-    btn.src = 'images/btn.png';
-    this.cvs.drawImage(btn, 0, 0, btn.width, btn.height, this.computedSizeW(445), this.computedSizeH(1150), this.computedSizeW(216), this.computedSizeH(80));
-    this.cvs.fillStyle = "#fff";
-    this.cvs.font = `bold ${this.computedSizeW(30)}px xszt`;
-    this.cvs.fillText('我也要玩', this.computedSizeW(550), this.computedSizeH(1194));
+    const iPlayBtn = wx.createImage();
+    iPlayBtn.src = 'images/i-play-btn.png';
+    this.cvs.drawImage(iPlayBtn, 0, 0, iPlayBtn.width, iPlayBtn.height, this.computedSizeW(481), this.computedSizeH(1139), this.computedSizeW(174), this.computedSizeH(63));
   }
 
 }

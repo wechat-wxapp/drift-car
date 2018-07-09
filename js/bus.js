@@ -74,6 +74,9 @@ const basicData = {
     lastScore: 0,
     // 转弯多少次
     turn: 0,
+    // 点击转弯减速的判断
+    isTurning: false,
+    oldSpeed: '',
 
     // 最后的道路key
     // lastBoxType: 'r6',
@@ -200,8 +203,25 @@ const basicData = {
         qrBtn: 'images/qr-btn.png',
         qrcode: 'images/qrcode.png',
 
-        // 排行
+        //排行
         rankOne: 'images/rankOne.png',
+        friendRankOn: 'images/friend-rank-on.png',
+        friendRankOff: 'images/friend-rank-off.png',
+        worldRankOn: 'images/world-rank-on.png',
+        worldRankOff: 'images/world-rank-off.png',
+        groupRankOn: 'images/group-rank-on.png',
+        iPLayBtn: 'images/i-play-btn.png',
+
+        //上下一页的激活和未激活按钮
+        prePageN: 'images/pre-page-n.png',
+        prePageDis: 'images/pre-page-dis.png',
+        nextPageN: 'images/next-page-n.png',
+        nextPageDis: 'images/next-page-dis.png',
+
+        //查看群排行按钮
+        goGroupRank: 'images/go-group-rank.png',
+        //方形返回按钮
+        backBtn: `images/back-btn.png`,
 
         // 车库
         carPane: 'images/car-pane.png',
@@ -226,7 +246,7 @@ const basicData = {
     //世界排行榜下一页启动
     worldRankNextSwitch: true,
     // 请求数量,limit
-    requestLimit: 6
+    requestLimit: 5
 };
 
 // 可重置变量
