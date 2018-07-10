@@ -34,7 +34,7 @@ export default class Beyond extends Init {
 
         const currentData = friendRankData.find(v => {
             const val = v.KVDataList[0].value;
-            return score > Number(val) - 40 && val > this.currentScore;
+            return score > Number(val) && val > this.currentScore;
         });
 
         if (currentData) {

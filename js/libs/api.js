@@ -1,4 +1,4 @@
-const API_HOST = 'test';
+const API_HOST = 'prod';
 let host;
 
 switch (API_HOST) {
