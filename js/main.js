@@ -173,33 +173,74 @@ export default class Main extends UTIL {
         }
     }
 
+    _changeX(speed) {
+        car.position.x += speed;
+        carBodys.position.x += speed;
+        camera.position.x += speed;
+
+        speedRecord.x += speed;
+        // 2d canvas
+        scoreCanvasSprite.position.x += speed;
+    }
+
+    _changeZ(speed) {
+        car.position.z -= speed;
+        carBodys.position.z -= speed;
+        camera.position.z -= speed;
+
+        speedRecord.z += speed;
+        // 2d canvas
+        scoreCanvasSprite.position.z -= speed;
+    }
     /*
      * 更新车辆和摄像机未知
      */
     updateAnimation() {
         if (startKey) {
 
+            if(isTurning) {
+                
+                if(oldSpeed <= 0) oldSpeed = 0;
+                else oldSpeed = oldSpeed - speed * 0.0625;
+                if(oldSpeed2 >= speed) oldSpeed2 = speed;
+                else oldSpeed2 = oldSpeed2 + speed * 0.0625;
+                
+                if(movekey === 'z') {
+                    currentW = currentW - speed / 30;
+                    this._changeX(oldSpeed2);
+                    this._changeZ(oldSpeed);
+                    // this._changeZ(speed);
+                } else {
+                    currentW = currentW + speed / 30;
+                    this._changeZ(oldSpeed2)
+                    this._changeX(oldSpeed)
+                    // this._changeX(speed)
+                }
+                if(currentW <= -1.57) {
+                    isTurning = false;
+                    currentW = -1.57;
+                    movekey = 'x'
+                }
+                if(currentW >= 0) {
+                    isTurning = false;
+                    currentW = 0;
+                    movekey = 'z';
+                }
+                carBodys.quaternion.setFromAxisAngle(new CANNON.Vec3(0, 1, 0), currentW)
+            }else {
+                oldSpeed = speed;
+                oldSpeed2 = 0;
+            
             if (movekey === 'x') {
-                car.position.x += speed;
-                carBodys.position.x += speed;
-                camera.position.x += speed;
+                this._changeX(speed);
 
-                speedRecord.x += speed;
-
-                // 2d canvas
-                scoreCanvasSprite.position.x += speed;
                 // beyondCanvasSprite.position.x += speed;
             } else {
-                car.position.z -= speed;
-                carBodys.position.z -= speed;
-                camera.position.z -= speed;
-
-                speedRecord.z += speed;
-
-                // 2d canvas
-                scoreCanvasSprite.position.z -= speed;
+                this._changeZ(speed);
                 // beyondCanvasSprite.position.z -= speed;
             }
+        }
+        
         }
 
         // cannonDebugRenderer && cannonDebugRenderer.update();
@@ -254,7 +295,7 @@ export default class Main extends UTIL {
                 level++;
                 // levelSpeed.splice(0, 1);
                 this.updateLevelSpeed();
-                // console.log(`---加速 当前区间 ${level}---`);
+                // console.log(`---加速 当前区间 ${level}---`,speed);
             }
         }
     }

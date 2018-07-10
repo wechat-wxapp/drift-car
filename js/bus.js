@@ -80,6 +80,7 @@ const basicData = {
     // 点击转弯减速的判断
     isTurning: false,
     oldSpeed: '',
+    oldSpeed2: 0,
 
     // 最后的道路key
     // lastBoxType: 'r6',
