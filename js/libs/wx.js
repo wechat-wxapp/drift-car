@@ -42,8 +42,9 @@ export default class WX extends UTIL {
         // wx.onHide(() => {
         // });
 
-        // wx.onShow(() => {
-        // });
+        wx.onShow(() => {
+            this.playBgm();
+        });
 
         const { title, imageUrl } = this.shareObj;
         wx.onShareAppMessage(() => ({ title, imageUrl }))

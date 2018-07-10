@@ -16,7 +16,7 @@ export default class Resurgence extends Init {
 
         const endHeader = wx.createImage();
         endHeader.src = 'images/end-header.png';
-        this.cvs.drawImage(endHeader, 0, 0, endHeader.width, endHeader.height, this.computedSizeW(95), this.computedSizeH(238), this.computedSizeW(endHeader.width), this.computedSizeW(endHeader.height));
+        this.cvs.drawImage(endHeader, 0, 0, endHeader.width, endHeader.height, this.computedSizeW(95), this.computedSizeH(239), this.computedSizeW(endHeader.width), this.computedSizeH(endHeader.height));
 
         // 白色背景
         this.cvs.fillStyle = "#fff";

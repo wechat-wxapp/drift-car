@@ -50,6 +50,9 @@ export default class Main extends UTIL {
         // 实例化主屏2d
         pageClass = new page();
 
+        // 播放背景音乐
+        this.playBgm();
+
         // 渲染
         this.loop();
     }
@@ -58,7 +61,7 @@ export default class Main extends UTIL {
      * 初始化3D世界
      * */
     initThree() {
-        const ctx = canvas.getContext('webgl', { antialias: true, preserveDrawingBuffer: true });
+        ctx = canvas.getContext('webgl', { antialias: true, preserveDrawingBuffer: true });
 
         scene = new THREE.Scene();
         renderer = new THREE.WebGLRenderer({ context: ctx, canvas });
@@ -185,7 +188,7 @@ export default class Main extends UTIL {
 
                 // 2d canvas
                 scoreCanvasSprite.position.x += speed;
-                // beyondCanvasSprite.position.x += speed;
+                beyondCanvasSprite.position.x += speed;
             } else {
                 car.position.z -= speed;
                 carBodys.position.z -= speed;
@@ -195,11 +198,11 @@ export default class Main extends UTIL {
 
                 // 2d canvas
                 scoreCanvasSprite.position.z -= speed;
-                // beyondCanvasSprite.position.z -= speed;
+                beyondCanvasSprite.position.z -= speed;
             }
         }
 
-        cannonDebugRenderer && cannonDebugRenderer.update();
+        // cannonDebugRenderer && cannonDebugRenderer.update();
 
         renderer.setClearColor('#428bca', 1.0);
         renderer.render(scene, camera)

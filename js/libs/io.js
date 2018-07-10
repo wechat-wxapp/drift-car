@@ -48,12 +48,15 @@ export default {
     /**
      * 获取车库
      * */
-    getunlock: () => {
+    getunlock: (params) => {
         const { openid } = localStorage.getItem('accessToken');
 
         return request(API.GET_UNLOCK, {
             method: 'POST',
-            data: { openid }
+            data: {
+                openid,
+                ...params
+            }
         });
     },
 

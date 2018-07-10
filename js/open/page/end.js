@@ -26,7 +26,7 @@ export default class Loader extends Init {
 
         const endHeader = wx.createImage();
         endHeader.src = 'images/end-header.png';
-        this.cvs.drawImage(endHeader, 0, 0, endHeader.width, endHeader.height, this.computedSizeW(95), this.computedSizeH(181), this.computedSizeW(endHeader.width), this.computedSizeW(endHeader.height));
+        this.cvs.drawImage(endHeader, 0, 0, endHeader.width, endHeader.height, this.computedSizeW(95), this.computedSizeH(182), this.computedSizeW(endHeader.width), this.computedSizeH(endHeader.height));
 
         this.cvs.fillStyle = "#fff";
         this.cvs.fillRect(this.computedSizeW(95), this.computedSizeH(395), this.computedSizeW(560), this.computedSizeH(510));
@@ -88,7 +88,7 @@ export default class Loader extends Init {
                     this.circleImg(this.cvs, avatar,  this.computedSizeW(180), this.computedSizeH(642), this.computedSizeW(42), this.computedSizeW(42));
 
                     // 名次背景
-                    this.cvs.drawImage(rankBg, 0, 0, rankBg.width, rankBg.height, this.computedSizeW(168), this.computedSizeH(620), this.computedSizeW(rankBg.width), this.computedSizeW(rankBg.height));
+                    this.cvs.drawImage(rankBg, 0, 0, rankBg.width, rankBg.height, this.computedSizeW(168), this.computedSizeH(645) - this.computedSizeW(24), this.computedSizeW(rankBg.width), this.computedSizeW(rankBg.height));
 
                     //名次
                     this.cvs.font = `${this.computedSizeW(24)}px Arial`;
@@ -101,7 +101,7 @@ export default class Loader extends Init {
                     this.circleImg(this.cvs, avatar1,  this.computedSizeW(332), this.computedSizeH(642), this.computedSizeW(42), this.computedSizeW(42));
 
                     // 名次背景
-                    this.cvs.drawImage(rankBg, 0, 0, rankBg.width, rankBg.height, this.computedSizeW(322), this.computedSizeH(620), this.computedSizeW(rankBg.width), this.computedSizeW(rankBg.height));
+                    this.cvs.drawImage(rankBg, 0, 0, rankBg.width, rankBg.height, this.computedSizeW(322), this.computedSizeH(645) - this.computedSizeW(24), this.computedSizeW(rankBg.width), this.computedSizeW(rankBg.height));
 
                     //名次
                     this.cvs.font = `${this.computedSizeW(24)}px Arial`;
@@ -114,7 +114,7 @@ export default class Loader extends Init {
                     this.circleImg(this.cvs, avatar2,  this.computedSizeW(490), this.computedSizeH(642), this.computedSizeW(42), this.computedSizeW(42));
 
                     // 名次背景
-                    this.cvs.drawImage(rankBg, 0, 0, rankBg.width, rankBg.height, this.computedSizeW(478), this.computedSizeH(620), this.computedSizeW(rankBg.width), this.computedSizeW(rankBg.height));
+                    this.cvs.drawImage(rankBg, 0, 0, rankBg.width, rankBg.height, this.computedSizeW(478), this.computedSizeH(645) - this.computedSizeW(24), this.computedSizeW(rankBg.width), this.computedSizeW(rankBg.height));
 
                     //名次
                     this.cvs.font = `${this.computedSizeW(24)}px Arial`;
@@ -167,7 +167,7 @@ export default class Loader extends Init {
                     this.circleImg(this.cvs, avatar,  this.winWidth / 4 * 3 - this.computedSizeW(84), this.computedSizeH(642), this.computedSizeW(42), this.computedSizeW(42));
 
                     // 名次背景
-                    this.cvs.drawImage(rankBg, 0, 0, rankBg.width, rankBg.height, this.computedSizeW(470), this.computedSizeH(620), this.computedSizeW(rankBg.width), this.computedSizeW(rankBg.height));
+                    this.cvs.drawImage(rankBg, 0, 0, rankBg.width, rankBg.height, this.computedSizeW(468), this.computedSizeH(620) - this.computedSizeW(24), this.computedSizeW(rankBg.width), this.computedSizeW(rankBg.height));
 
                     this.cvs.font = `${this.computedSizeW(24)}px Arial`;
                     this.cvs.fillStyle = '#2FBF2E';
@@ -179,7 +179,7 @@ export default class Loader extends Init {
                     this.circleImg(this.cvs, avatar1, this.winWidth / 4, this.computedSizeH(642), this.computedSizeW(42), this.computedSizeW(42));
 
                     // 名次背景
-                    this.cvs.drawImage(rankBg, 0, 0, rankBg.width, rankBg.height, this.computedSizeW(175), this.computedSizeH(620), this.computedSizeW(rankBg.width), this.computedSizeW(rankBg.height));
+                    this.cvs.drawImage(rankBg, 0, 0, rankBg.width, rankBg.height, this.computedSizeW(178), this.computedSizeH(620) - this.computedSizeW(24), this.computedSizeW(rankBg.width), this.computedSizeW(rankBg.height));
 
                     this.cvs.font = `${this.computedSizeW(24)}px Arial`;
                     this.cvs.fillStyle = '#2FBF2E';
@@ -206,7 +206,7 @@ export default class Loader extends Init {
                     this.circleImg(this.cvs, avatar,  this.computedSizeW(332), this.computedSizeH(642), this.computedSizeW(42), this.computedSizeW(42));
 
                     // 名次背景
-                    this.cvs.drawImage(rankBg, 0, 0, rankBg.width, rankBg.height, this.computedSizeW(325), this.computedSizeH(620), this.computedSizeW(rankBg.width), this.computedSizeW(rankBg.height));
+                    this.cvs.drawImage(rankBg, 0, 0, rankBg.width, rankBg.height, this.computedSizeW(325), this.computedSizeH(620) - this.computedSizeW(24), this.computedSizeW(rankBg.width), this.computedSizeW(rankBg.height));
 
                     // 名次
                     this.cvs.font = `${this.computedSizeW(24)}px Arial`;

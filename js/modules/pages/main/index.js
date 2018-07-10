@@ -19,7 +19,7 @@ export default class Page extends UTIL {
         this.page();
 
         sharedClass = new Shared();
-        // beyondClass = new Beyond();
+        beyondClass = new Beyond();
 
         // 实例化加载页
         loadingPage = new pageLoading();
@@ -29,7 +29,7 @@ export default class Page extends UTIL {
      * 创建2d画布
      */
     page() {
-        const offCanvas = wx.createCanvas();
+        offCanvas = wx.createCanvas();
 
         offCanvas.height = winHeight * window.devicePixelRatio;
         offCanvas.width = winWidth * window.devicePixelRatio;

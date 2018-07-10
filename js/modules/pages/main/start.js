@@ -88,9 +88,16 @@ export default class Start extends UTIL {
             cb: () => {
                 const isMusic = $cache.getGameData('music');
 
-                $cache.setGameData('music', !isMusic);
+                const resultMusic = !isMusic
 
-                music.pusedMusic();
+                $cache.setGameData('music', resultMusic);
+
+                if (resultMusic) {
+                    music.playBgm();
+                } else {
+                    music.pusedMusic();
+
+                }
 
                 this.setTexture();
             }
@@ -207,18 +214,11 @@ export default class Start extends UTIL {
         //     return false;
         // }
 
-        $loader.show();
-        // 获取车库
-        $io.getunlock()
+        carportPage.getList()
             .then(e => {
                 $wx.startBtn.hide();
 
-                const { payload: { data } } = e;
-
-                carportPage.list = data;
                 carportPage.setTexture();
-
-                $loader.hide();
             });
     }
 

@@ -23,6 +23,9 @@ const basicData = {
     ground: '',
     groundBody: '',
 
+    // 全局canvas对象
+    ctx: '',
+
     // 汽车列表
     carList: [],
 
@@ -221,14 +224,14 @@ const basicData = {
         //查看群排行按钮
         goGroupRank: 'images/go-group-rank.png',
         //方形返回按钮
-        backBtn: `images/back-btn.png`,
+        backBtn: 'images/back-btn.png',
 
         // 车库
+        carHeader: 'images/car-header.png',
         carPane: 'images/car-pane.png',
         carPaneOn: 'images/car-pane-on.png',
+        carPaneOff: 'images/car-pane-off.png',
         carNew: 'images/car-new.png',
-        carportPane: 'images/carport-pane.png',
-        selectedIcon: 'images/selected-icon.png',
         unlockPane: 'images/unlock-pane.png',
         unlockGame: 'images/unlock-game.png',
         unlockCn: 'images/unlock-cn.png',
@@ -240,6 +243,8 @@ const basicData = {
 
     // 计时器组
     timerArr: [],
+
+    offCanvas: '',
 
     // 排行榜当前页数
     rankCurrentPage: 1,
@@ -343,7 +348,7 @@ export default class Bus{
         // 分数
         scoreCanvasSprite.position.set(-10, 82.8, 9);
         // 超越好友
-        // beyondCanvasSprite.position.set(-11.75, 78.44, 20);
+        beyondCanvasSprite.position.set(-11.75, 78.44, 20);
         // sharedCanvasSprite.position.set(-11.75, 78.44, 20);
 
         camera.position.set(-16.738086885462103, 90.533387653514225, 28.513221776822927);

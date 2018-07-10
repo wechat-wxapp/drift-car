@@ -169,8 +169,6 @@ export default class Shared extends UTIL {
                 isSharedLoop = false;
                 this.clear2d();
                 this.restart(true);
-
-                currentPage = 'gamePage';
             }
         });
     }

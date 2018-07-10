@@ -9,10 +9,10 @@ export default class Carport extends UTIL {
 
         this.carPane = imgList.carPane;
         this.carPaneOn = imgList.carPaneOn;
+        this.carPaneOff = imgList.carPaneOff;
         this.carNew = imgList.carNew;
-        this.carportPane = imgList.carportPane;
-        this.selectedIcon = imgList.selectedIcon;
-        this.backIcon = imgList.backIcon;
+        this.carHeader = imgList.carHeader;
+        this.backBtn = imgList.backBtn;
         this.unlockPane = imgList.unlockPane;
         this.unlockBtn = imgList.unlockBtn;
         this.gift100 = imgList.gift100;
@@ -22,6 +22,14 @@ export default class Carport extends UTIL {
         this.unlockCn = imgList.unlockCn;
         this.closeBtn = imgList.closeBtn;
 
+        this.prePageN = imgList.prePageN;
+        this.prePageDis = imgList.prePageDis;
+        this.nextPageN = imgList.nextPageN;
+        this.nextPageDis = imgList.nextPageDis;
+
+        this.headerOffsetTop = this.computedSizeH(133.032);
+        this.bgOffsetTop = this.headerOffsetTop + this.computedSizeW(115.368);
+        
         this.buildPage();
     }
 
@@ -37,6 +45,10 @@ export default class Carport extends UTIL {
         this.bindCarUseBtn();
         // 车库详情页面关闭按钮
         this.bindCarContentCloseBtn();
+        // 上一页
+        this.bindCarPrePage();
+        // 下一页
+        this.bindCarNextPage();
     }
 
     /**
@@ -73,13 +85,65 @@ export default class Carport extends UTIL {
     }
 
     /**
+     * 绑定车辆详细页面上一页按钮
+     * */
+    bindCarPrePage() {
+        const x1 = this.computedSizeW(107);
+        const x2 = this.computedSizeW(203);
+        const y1 = this.bgOffsetTop + this.computedSizeH(254.731);
+        const y2 = this.bgOffsetTop + this.computedSizeH(289.731);
+
+        events.click({
+            name: 'carPrePageBtn',
+            pageName: 'carportPage',
+            point: [x1, y1, x2, y2],
+            cb: () => {
+                if (this.page <= 1) return false;
+
+                const offset = (this.page - 2) * this.limit;
+
+                this.getList({ offset })
+                .then(e => {
+                    carportPage.setTexture();
+                });
+            }
+        });
+    }
+
+    /**
+     * 绑定车辆详细页面下一页按钮
+     * */
+    bindCarNextPage() {
+        const x1 = this.computedSizeW(217);
+        const x2 = this.computedSizeW(315);
+        const y1 = this.bgOffsetTop + this.computedSizeH(252.731);
+        const y2 = this.bgOffsetTop + this.computedSizeH(289.731);
+
+        events.click({
+            name: 'carNextPageBtn',
+            pageName: 'carportPage',
+            point: [x1, y1, x2, y2],
+            cb: () => {
+                if (!this.hasNext) return false;
+
+                const offset = this.page * this.limit;
+
+                this.getList({ offset })
+                    .then(e => {
+                        carportPage.setTexture();
+                    });
+            }
+        });
+    }
+
+    /**
      * 绑定车辆页面返回按钮
      * */
     bindCarBackBtn() {
-        const x1 = this.computedSizeW(45);
-        const x2 = this.computedSizeW(70);
-        const y1 = this.computedSizeH(635);
-        const y2 = this.computedSizeH(660);
+        const x1 = this.computedSizeW(37);
+        const x2 = this.computedSizeW(137);
+        const y1 = this.computedSizeH(574);
+        const y2 = this.computedSizeH(621);
 
         events.click({
             name: 'carBackBtn',
@@ -146,6 +210,30 @@ export default class Carport extends UTIL {
     }
 
     /**
+     * 获取车库列表
+     * */
+    getList(params = {}) {
+        $loader.show();
+
+        const require = Object.assign({}, { offset:  0, limit: 6 }, params);
+
+        return $io.getunlock(require).then(e => {
+            const { payload: { hasNext, limit, offset, page, data } } = e;
+
+            $loader.hide();
+
+            carportPage.list = data;
+            carportPage.hasNext = hasNext;
+            carportPage.limit = limit;
+            carportPage.offset = offset;
+            carportPage.page = page;
+
+
+            return e;
+        });
+    }
+
+    /**
      * 更新页面内容
      * */
     setTexture() {
@@ -158,7 +246,14 @@ export default class Carport extends UTIL {
         offCanvas2d.fillStyle = 'rgba(0, 0, 0, .8)';
         offCanvas2d.fillRect(0, 0, winWidth, winHeight);
 
-        offCanvas2d.drawImage(this.carportPane, 0, 0, this.carportPane.width, this.carportPane.height, winWidth / 2 - this.computedSizeW(326.784) / 2, this.computedSizeH(139), this.computedSizeW(327), this.computedSizeH(460));
+        // 白色背景
+        offCanvas2d.fillStyle = '#fff';
+        offCanvas2d.fillRect(this.computedSizeW(41.4), this.bgOffsetTop, this.computedSizeW(331.2), this.computedSizeH(310));
+
+        // 头部
+        offCanvas2d.drawImage(this.carHeader, 0, 0, this.carHeader.width, this.carHeader.height, this.computedSizeW(41.4), this.headerOffsetTop, this.computedSizeW(331.2), this.computedSizeW(115.368));
+
+        console.log('this.bgOffsetTop: ', this.bgOffsetTop);
 
         // 车辆列表
         this.list.map((v, k) => {
@@ -174,33 +269,43 @@ export default class Carport extends UTIL {
 
                 // 是否已选择
                 if (carId === currentCarId) {
-                    offCanvas2d.drawImage(this.carPaneOn, 0, 0, this.carPaneOn.width, this.carPaneOn.height, this.computedSizeW(67 + x * 97), this.computedSizeH(240 + pkey * 107), this.computedSizeW(90), this.computedSizeH(103));
+                    offCanvas2d.drawImage(this.carPaneOn, 0, 0, this.carPaneOn.width, this.carPaneOn.height, this.computedSizeW(54 + x * 105), this.bgOffsetTop + this.computedSizeH(11.731 + pkey * 120), this.computedSizeW(97.152), this.computedSizeH(118.68));
                 }
 
-                // 汽车背景
-                offCanvas2d.drawImage(this.carPane, 0, 0, this.carPane.width, this.carPane.height, this.computedSizeW(73 + x * 97), this.computedSizeH(245 + pkey * 107), this.computedSizeW(80), this.computedSizeH(93));
-
                 // 汽车
-                offCanvas2d.drawImage(carPane, 0, 0, carPane.width, carPane.height, this.computedSizeW(75 + x * 97), this.computedSizeH(247 + pkey * 107), this.computedSizeW(75), this.computedSizeH(88));
+                offCanvas2d.drawImage(carPane, 0, 0, carPane.width, carPane.height, this.computedSizeW(55 + x * 105), this.bgOffsetTop + this.computedSizeH(15.731 + pkey * 120), this.computedSizeW(97.152), this.computedSizeH(118.68));
 
                 // 缓存已经加载完的图片
                 this.list[k].imgUrlObj = carPane;
 
                 if (isNew) {
-                    offCanvas2d.drawImage(this.carNew, 0, 0, this.carNew.width, this.carNew.height, this.computedSizeW(140 + x * 97), this.computedSizeH(240 + pkey * 107), this.carNew.width / 2, this.carNew.height / 2);
+                    offCanvas2d.drawImage(this.carNew, 0, 0, this.carNew.width, this.carNew.height, this.computedSizeW(140 + x * 97), this.computedSizeH(270 + pkey * 107), this.carNew.width / 2, this.carNew.height / 2);
                 } else {
                     // 如果已解锁
-                    unlock && offCanvas2d.drawImage(this.selectedIcon, 0, 0, this.selectedIcon.width, this.selectedIcon.height, this.computedSizeW(140 + x * 97), this.computedSizeH(240 + pkey * 107), this.selectedIcon.width / 2, this.selectedIcon.height / 2);
+                    !unlock && offCanvas2d.drawImage(this.carPaneOff, 0, 0, this.carPaneOff.width, this.carPaneOff.height, this.computedSizeW(54 + x * 105), this.bgOffsetTop + this.computedSizeH(11.731 + pkey * 120), this.computedSizeW(97.152), this.computedSizeH(118.68));
                 }
 
                 texture2d.needsUpdate = true;
             }
         });
 
-        texture2d.needsUpdate = true;
+        // 分页按钮
+        if (this.page !== 1) {
+            offCanvas2d.drawImage(this.prePageDis, 0, 0, this.prePageDis.width, this.prePageDis.height, this.computedSizeW(110), this.bgOffsetTop + this.computedSizeH(258.731), this.computedSizeW(89.424), this.computedSizeW(34.776));
+        } else {
+            offCanvas2d.drawImage(this.prePageN, 0, 0, this.prePageN.width, this.prePageN.height, this.computedSizeW(110), this.bgOffsetTop + this.computedSizeH(258.731), this.computedSizeW(89.424), this.computedSizeW(34.776));
+        }
+
+        if (this.hasNext) {
+            offCanvas2d.drawImage(this.nextPageDis, 0, 0, this.nextPageDis.width, this.nextPageDis.height, this.computedSizeW(220), this.bgOffsetTop + this.computedSizeH(258.731), this.computedSizeW(89.424), this.computedSizeW(34.776));
+        } else {
+            offCanvas2d.drawImage(this.nextPageN, 0, 0, this.nextPageN.width, this.nextPageN.height, this.computedSizeW(220), this.bgOffsetTop + this.computedSizeH(258.731), this.computedSizeW(89.424), this.computedSizeW(34.776));
+        }
 
         // 返回按钮
-        offCanvas2d.drawImage(this.backIcon, 0, 0, this.backIcon.width, this.backIcon.height, this.computedSizeW(46), this.computedSizeH(634), this.backIcon.width / 2, this.backIcon.height / 2);
+        offCanvas2d.drawImage(this.backBtn, 0, 0, this.backBtn.width, this.backBtn.height, this.computedSizeW(41.4), this.computedSizeH(580), this.computedSizeW(89.424), this.computedSizeW(34.776));
+
+        texture2d.needsUpdate = true;
     }
 
     setContent() {

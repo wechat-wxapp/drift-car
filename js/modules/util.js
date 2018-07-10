@@ -84,7 +84,7 @@ export default class UTIL {
         // this.restart();
 
         // 清除超越好友
-        // beyondClass.clear2d();
+        beyondClass.clear2d();
 
         // 显示结束页
         this.endPageTimer = $timer(() => {
@@ -154,7 +154,7 @@ export default class UTIL {
             // 失败重新开始
             this.end();
             // 清除超越好友数据判断
-            // beyondClass.reset();
+            beyondClass.reset();
         }
 
         // 重置页面分数
@@ -225,10 +225,13 @@ export default class UTIL {
                 return false;
             }
 
+            // 手动释放内存
+            wx.triggerGC();
+
             score++;
 
             // 检测超越好友
-            // beyondClass.beyondPage();
+            beyondClass.beyondPage();
             scorePage.setTexture();
         }, 1000);
     }
@@ -236,13 +239,49 @@ export default class UTIL {
     /**
      * 首次开始音效
      * */
-    // 关闭小程序后再进入
     readyMusic() {
-        music.pauseBgm();
+        // const a = (key = 0) => {
+        //     console.log(key);
+        //     setTimeout(() => {
+        //         if (key >= 3) {
+        //             music.playGo();
+        //
+        //             // 设置开启key
+        //             startKey = true;
+        //
+        //             // 更新分数
+        //             this.updateScore();
+        //
+        //             // 清空倒计时
+        //             gamePage.page();
+        //
+        //             // 设置页面target
+        //             currentPage = 'gamePage';
+        //
+        //             // 关闭倒计时器
+        //             // this.musicTimer.closeTimeout();
+        //
+        //             isBeyondLoop = true;
+        //
+        //             return false;
+        //         } else {
+        //             // 倒计时
+        //             gamePage.page(3 - key);
+        //
+        //             music.playReady();
+        //
+        //             a(key + 1);
+        //         }
+        //     }, 1500);
+        // }
+        // a();
+        //
+        // gamePage.page(3);
+        // music.playReady();
+
 
         this.musicTimer = $timer(({ key }) => {
             if (key >= 3) {
-                music.playBgm();
                 music.playGo();
 
                 // 设置开启key
@@ -271,6 +310,17 @@ export default class UTIL {
 
         gamePage.page(3);
         music.playReady();
+    }
+
+    /**
+     * 开启背景音乐
+     * */
+    playBgm() {
+        const isMusic = $cache.getGameData('music');
+
+        if (isMusic) {
+            music.playBgm();
+        }
     }
 
     /**

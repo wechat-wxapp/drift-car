@@ -42,7 +42,7 @@ export default class Music {
     }
 
     playBgm() {
-        this.bgmAudio.currentTime = 0;
+        // this.bgmAudio.currentTime = 0;
         this.playMusic(this.bgmAudio);
     }
 
