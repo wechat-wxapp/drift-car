@@ -19,7 +19,7 @@ export default class Page extends UTIL {
         this.page();
 
         sharedClass = new Shared();
-        beyondClass = new Beyond();
+        // beyondClass = new Beyond();
 
         // 实例化加载页
         loadingPage = new pageLoading();

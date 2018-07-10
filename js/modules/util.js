@@ -84,7 +84,7 @@ export default class UTIL {
         // this.restart();
 
         // 清除超越好友
-        beyondClass.clear2d();
+        // beyondClass.clear2d();
 
         // 显示结束页
         this.endPageTimer = $timer(() => {
@@ -154,7 +154,7 @@ export default class UTIL {
             // 失败重新开始
             this.end();
             // 清除超越好友数据判断
-            beyondClass.reset();
+            // beyondClass.reset();
         }
 
         // 重置页面分数
@@ -228,7 +228,7 @@ export default class UTIL {
             score++;
 
             // 检测超越好友
-            beyondClass.beyondPage();
+            // beyondClass.beyondPage();
             scorePage.setTexture();
         }, 1000);
     }

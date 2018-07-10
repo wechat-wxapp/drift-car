@@ -188,7 +188,7 @@ export default class Main extends UTIL {
 
                 // 2d canvas
                 scoreCanvasSprite.position.x += speed;
-                beyondCanvasSprite.position.x += speed;
+                // beyondCanvasSprite.position.x += speed;
             } else {
                 car.position.z -= speed;
                 carBodys.position.z -= speed;
@@ -198,7 +198,7 @@ export default class Main extends UTIL {
 
                 // 2d canvas
                 scoreCanvasSprite.position.z -= speed;
-                beyondCanvasSprite.position.z -= speed;
+                // beyondCanvasSprite.position.z -= speed;
             }
         }
 
