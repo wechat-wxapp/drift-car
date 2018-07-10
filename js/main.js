@@ -181,6 +181,7 @@ export default class Main extends UTIL {
         speedRecord.x += speed;
         // 2d canvas
         scoreCanvasSprite.position.x += speed;
+        beyondCanvasSprite.position.x += speed;
     }
 
     _changeZ(speed) {
@@ -191,6 +192,7 @@ export default class Main extends UTIL {
         speedRecord.z += speed;
         // 2d canvas
         scoreCanvasSprite.position.z -= speed;
+        beyondCanvasSprite.position.z -= speed;
     }
     /*
      * 更新车辆和摄像机未知

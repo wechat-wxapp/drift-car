@@ -349,7 +349,7 @@ export default class Bus{
         // 分数
         scoreCanvasSprite.position.set(-10, 82.8, 9);
         // 超越好友
-        // beyondCanvasSprite.position.set(-11.75, 78.44, 20);
+        beyondCanvasSprite.position.set(-11.75, 78.44, 20);
         // sharedCanvasSprite.position.set(-11.75, 78.44, 20);
 
         camera.position.set(-16.738086885462103, 90.533387653514225, 28.513221776822927);
