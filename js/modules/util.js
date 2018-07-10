@@ -225,9 +225,6 @@ export default class UTIL {
                 return false;
             }
 
-            // 手动释放内存
-            wx.triggerGC();
-
             score++;
 
             // 检测超越好友
@@ -307,6 +304,9 @@ export default class UTIL {
                 music.playReady();
             }
         }, 1500);
+
+        // 手动释放内存
+        // wx.triggerGC();
 
         gamePage.page(3);
         music.playReady();
