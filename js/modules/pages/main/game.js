@@ -36,40 +36,40 @@ export default class Game extends UTIL {
 
             // 增加转弯次数
             turn++;
-            // isTurning = true;
-            const localW = currentW;
+            isTurning = true;
+            // const localW = currentW;
             if (!clickKey) {
-                Speeder((percent, status) => {
-                    currentW = localW - percent * localW;
+                // Speeder((percent, status) => {
+                //     currentW = localW - percent * localW;
 
-                    carBodys.quaternion.setFromAxisAngle(new CANNON.Vec3(0, 1, 0), currentW);
+                //     carBodys.quaternion.setFromAxisAngle(new CANNON.Vec3(0, 1, 0), currentW);
 
-                    if (percent >= 1) {
-                        movekey = 'z';
-                    }
+                //     if (percent >= 1) {
+                //         movekey = 'z';
+                //     }
 
-                    if (status === 'done') {
-                        currentW = 0;
-                        // isTurning = false;
-                    }
-                });
+                //     if (status === 'done') {
+                //         currentW = 0;
+                //         // isTurning = false;
+                //     }
+                // });
                 // carBodys.quaternion.setFromAxisAngle(new CANNON.Vec3(0, 1, 0), 0);
                 // movekey = 'z';
                 clickKey = true;
             } else {
-                Speeder((percent, status) => {
-                    currentW = localW + percent * (-1.57 - localW);
+                // Speeder((percent, status) => {
+                //     currentW = localW + percent * (-1.57 - localW);
 
-                    carBodys.quaternion.setFromAxisAngle(new CANNON.Vec3(0, 1, 0), currentW);
-                    if (percent >= 1) {
-                        movekey = 'x';
-                    }
+                //     carBodys.quaternion.setFromAxisAngle(new CANNON.Vec3(0, 1, 0), currentW);
+                //     if (percent >= 1) {
+                //         movekey = 'x';
+                //     }
 
-                    if (status === 'done') {
-                        currentW = -1.57;
-                        // isTurning = false;
-                    }
-                });
+                //     if (status === 'done') {
+                //         currentW = -1.57;
+                //         // isTurning = false;
+                //     }
+                // });
                 // carBodys.quaternion.setFromAxisAngle(new CANNON.Vec3(0, 1, 0), -1.57);
                 // movekey = 'x';
                 clickKey = false;

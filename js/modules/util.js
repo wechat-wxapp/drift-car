@@ -77,7 +77,7 @@ export default class UTIL {
         collideKey = true;
 
         startKey = false;
-        window.speeder && clearTimeout(window.speeder);
+        // window.speeder && clearTimeout(window.speeder);
         music.playExplosion();
 
         // 重启游戏
@@ -86,13 +86,33 @@ export default class UTIL {
         // 清除超越好友
         // beyondClass.clear2d();
 
+        currentW = 0;
+        oldSpeed = '';
+        oldSpeed2 = 0;
+        isTurning = false;
+
+        const cameraX = camera.position.x;
+        const cameraY = camera.position.y;
+        const cameraZ = camera.position.z;
+
+        this.i = 0;
+        this.shakeCamera = $timer(() => {
+            camera.position.set(cameraX + 5 - (Math.random() * 10), cameraY, cameraZ + 5 - (Math.random() * 10))
+            this.i ++;
+            if(this.i === 16) {
+                this.i = 0;
+                camera.position.set(cameraX, cameraY, cameraZ)
+                this.shakeCamera.closeTimeout();
+            }
+        }, 16);
+        
         // 显示结束页
         this.endPageTimer = $timer(() => {
+            // this.restart();
+            // camera.position.set(obj.x,obj.y,obj.z)
             this.showReseurPage();
             this.endPageTimer.closeTimeout();
         }, 1000);
-        // oldSpeed = '';
-        // isTurning = false;
         console.log('---结束游戏---');
     };
 
