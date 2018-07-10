@@ -60,10 +60,6 @@ export default class Rank extends Init {
     backBtn.src = `images/back-btn.png`;
     this.cvs.drawImage(backBtn, 0, 0, backBtn.width, backBtn.height, this.computedSizeW(95), this.computedSizeH(1139), this.computedSizeW(162), this.computedSizeH(63));
 
-    // const btn = wx.createImage();
-    // btn.src = 'images/btn.png';
-    // this.cvs.drawImage(btn, 0, 0, btn.width, btn.height, this.computedSizeW(445), this.computedSizeH(1150), this.computedSizeW(216), this.computedSizeH(80));
-    // this.canvasScale()
   }
 
   /**
