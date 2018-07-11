@@ -311,15 +311,34 @@ export default class Init {
      * @params score {Number} 需要更新的分数
      * @return {Object} 返回更新后的排行榜对象
      * */
-    setRankData(rankName, score) {
-        const { list, self } = wx.HWData[rankName];
-        const index = list.findIndex(e => e.nickname === self.nickname);
-        list[index].KVDataList[0].value = score;
+    setRankData(score) {
+        const { friendRank, groupRank, worldRank } = wx.HWData;
 
-        const newList = rankName === 'groupRank' ? this.sort(list, 'asc', 1) : this.sort(list, 'asc');
-        const newSelf = this.normalizeSelf(newList, self.nickname);
+        const list = [{
+                name: 'friendRank',
+                data: friendRank,
+            },{
+                name: 'groupRank',
+                data: groupRank,
+            },{
+                name: 'worldRank',
+                data: worldRank,
+            }];
 
-        return { list: newList, self: newSelf };
+        list.map((v, k) => {
+            const { name, data } = v;
+            const { list, self } = data;
+
+            const index = list.findIndex(e => e.nickname === self.nickname);
+            list[index].KVDataList[0].value = score;
+
+            const newList = k === 1 ? this.sort(list, 'asc', 1) : this.sort(list, 'asc');
+            const newSelf = this.normalizeSelf(newList, self.nickname);
+
+            this.setHWData(name, { list: newList, self: newSelf });
+        });
+
+        console.log(this.getHWData());
     }
 }
 

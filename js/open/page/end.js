@@ -14,8 +14,6 @@ export default class EndPage extends Init {
     setTexture(data) {
         this.clearCvs();
 
-        this.setRankData('friendRank', 99);
-
         let maxScore = data.score;
 
         if (this.selfData) {
