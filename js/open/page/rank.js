@@ -77,9 +77,12 @@ export default class Rank extends Init {
         }, 500);
         return false;
       }
+      // const data = this.refreshRankData(type, this.showData.bind(this))
+      // getRankData = data;
+      // return false;
     }
 
-    console.log('群:',getRankData,this.selfData)
+    console.log('群:', getRankData, this.selfData)
     if(!getRankData.list) return;
     this.rankData = getRankData.list;
     this.total = this.rankData.length;
@@ -148,13 +151,9 @@ export default class Rank extends Init {
         that.cvs.fillText(i + 1, that.computedSizeW(132), that.computedSizeH(402 + (i - (rankCurrentPage - 1) * this.counts) * 110));
         // 头像
         let j = data.rankCurrentPage ? i % 5 : i;
-        // let avatar = wx.createImage();
-        // avatar.src = that.rankData[j].avatarUrl;
-        // avatar.onload = () => {
-        //   that.circleImg(this.cvs, avatar, this.computedSizeW(176), that.computedSizeH(356 + (i - (rankCurrentPage - 1) * this.counts) * 110), this.computedSizeW(39.5))
-        //   that.cvs.closePath();
-        // }
-        that.circleImg(this.cvs, that.rankData[j].avatarObj, this.computedSizeW(176), that.computedSizeH(356 + (i - (rankCurrentPage - 1) * this.counts) * 110), this.computedSizeW(39.5))
+
+        if(that.rankData[j].avatarUrl)
+          that.circleImg(this.cvs, that.rankData[j].avatarObj, this.computedSizeW(176), that.computedSizeH(356 + (i - (rankCurrentPage - 1) * this.counts) * 110), this.computedSizeW(39.5))
       }
     }
 
@@ -182,26 +181,21 @@ export default class Rank extends Init {
     
     //底部白色自己排名
     this.selfData = getRankData.self;
-    // let avatar = wx.createImage();
-    // if (this.selfData.avatarUrl) {
-    //   avatar.src = this.selfData.avatarUrl
-    //   avatar.onload = () => {
-    //     this.circleImg(this.cvs,avatar, this.computedSizeW(190), this.computedSizeH(1024), this.computedSizeW(30), this.computedSizeH(39))
-    //     this.cvs.beginPath();
-    //   }
-    //   if(this.total !== 0){
-    //     this.cvs.fillStyle = '#7f2409';
-    //     this.cvs.fillText(this.selfData.rank, this.computedSizeW(132), this.computedSizeH(1064));
-    //   }
-    //   if(this.total !== 0){
-    //     this.cvs.fillStyle = '#8a8a8a';
-    //     this.cvs.fillText(this.selfData.nickname, this.computedSizeW(275), this.computedSizeH(1064), this.computedSizeW(146));
-    //   }
-    //   if(this.selfData.KVDataList.length > 0){
-    //     this.cvs.fillStyle = '#2a2a2a';
-    //     this.cvs.fillText(this.selfData.KVDataList[0].value, this.computedSizeW(583), this.computedSizeH(1064));
-    //   }
-    // }
+    if (this.selfData.avatarUrl) {
+      this.circleImg(this.cvs,this.selfData.avatarObj, this.computedSizeW(190), this.computedSizeH(1024), this.computedSizeW(30), this.computedSizeH(39))
+      if(this.total !== 0){
+        this.cvs.fillStyle = '#7f2409';
+        this.cvs.fillText(this.selfData.rank, this.computedSizeW(132), this.computedSizeH(1064));
+      }
+      if(this.total !== 0){
+        this.cvs.fillStyle = '#8a8a8a';
+        this.cvs.fillText(this.selfData.nickname, this.computedSizeW(275), this.computedSizeH(1064), this.computedSizeW(146));
+      }
+      if(this.selfData.KVDataList.length > 0){
+        this.cvs.fillStyle = '#2a2a2a';
+        this.cvs.fillText(this.selfData.KVDataList[0].value, this.computedSizeW(583), this.computedSizeH(1064));
+      }
+    }
     
   }
     

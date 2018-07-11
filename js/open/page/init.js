@@ -353,8 +353,10 @@ export default class Init {
     refreshRankData(key, cb, duration = 500) {
         const rank = this.getHWData(key);
         if (Object.keys(rank).length <= 0) {
+            console.log('qwe: ', rank);
             setTimeout(cb, duration);
         } else {
+            console.log('aaa: ', rank);
             return rank;
         }
     }
