@@ -35,10 +35,10 @@ export default class HWData extends Init {
                 });
 
             // 初始化群组排行榜数据
-            this.initGroupRankData(shareTicket)
-                .then(({ rank, self }) => {
-                    this.setHWData('groupRank', { list: rank, self });
-                });
+            // this.initGroupRankData(shareTicket)
+            //     .then(({ rank, self }) => {
+            //         this.setHWData('groupRank', { list: rank, self });
+            //     });
 
             // 初始化世界排行榜
             const { rank, self } = this.initWorldRankData(worldRank);

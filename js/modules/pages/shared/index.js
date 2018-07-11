@@ -205,23 +205,25 @@ export default class Shared extends UTIL {
             pageName: 'worldRank',
             point: [x1, y1, x2, y2],
             cb: () => {
-                if (rankCurrentPage === 1) return;
-                worldRankNextSwitch = true;
-                rankCurrentPage -= 1;
-                let offset =  ((rankCurrentPage - 1) * requestLimit);
-                $io.getWorldRank({ offset: offset }).then(e =>{
-                    this.showPage('worldRank',{
-                        hasPrePage: rankCurrentPage !== 1 ,
-                        rankCurrentPage: rankCurrentPage,
-                        hasNextPage: 1,
-                        common: 0 ,
-                        isDriving : 'pre',
-                        ranks:e.payload.ranks ,
-                        user:e.payload.user
-                    });
-                    // sharedTexture2d.needsUpdate = true;
-                    currentPage = 'worldRank';
-                })
+                // if (rankCurrentPage === 1) return;
+                // worldRankNextSwitch = true;
+                // rankCurrentPage -= 1;
+                // let offset =  ((rankCurrentPage - 1) * requestLimit);
+                // $io.getWorldRank({ offset: offset }).then(e =>{
+                //     this.showPage('worldRank',{
+                //         hasPrePage: rankCurrentPage !== 1 ,
+                //         rankCurrentPage: rankCurrentPage,
+                //         hasNextPage: 1,
+                //         common: 0 ,
+                //         isDriving : 'pre',
+                //         ranks:e.payload.ranks ,
+                //         user:e.payload.user
+                //     });
+                //     // sharedTexture2d.needsUpdate = true;
+                //     currentPage = 'worldRank';
+                // })
+                $wx.sendMessage('worldRank',{ page: rankCurrentPage, common: 0 , isDriving : 'pre'})
+                sharedTexture2d.needsUpdate = true;
             }
         })
     }
@@ -238,18 +240,20 @@ export default class Shared extends UTIL {
             pageName: 'friendRank',
             point: [x1, y1, x2, y2],
             cb: () => {
-                isSharedLoop = true;
                 rankCurrentPage = 1
-                $io.getWorldRank({ offset: rankCurrentPage - 1 }).then(e=>{
-                    this.showPage('worldRank',{
-                        ranks:e.payload.ranks ,
-                        hasNextPage: e.payload.hasNext,
-                        user:e.payload.user
-                    });
-                    // sharedTexture2d.needsUpdate = true;
-                    console.log('goWorldRank')
-                    currentPage = 'worldRank';
-                })
+                $wx.sendMessage('worldRank',{ page: rankCurrentPage })
+                currentPage = 'worldRank';
+                isSharedLoop = true;
+                // $io.getWorldRank({ offset: rankCurrentPage - 1 }).then(e=>{
+                //     this.showPage('worldRank',{
+                //         ranks:e.payload.ranks ,
+                //         hasNextPage: e.payload.hasNext,
+                //         user:e.payload.user
+                //     });
+                //     // sharedTexture2d.needsUpdate = true;
+                //     console.log('goWorldRank')
+                //     currentPage = 'worldRank';
+                // })
             }
         })
     }
@@ -265,23 +269,23 @@ export default class Shared extends UTIL {
             pageName: 'worldRank',
             point: [x1, y1, x2, y2],
             cb: () => {
-                if(!worldRankNextSwitch) return;
-                let offset = rankCurrentPage * requestLimit;
-                rankCurrentPage += 1;
-                $io.getWorldRank({ offset: offset }).then(e=>{
-                    worldRankNextSwitch = e.payload.hasNext ? true : false;
-                    this.showPage('worldRank',{
-                        hasPrePage: rankCurrentPage !== 1,
-                        rankCurrentPage: rankCurrentPage,
-                        hasNextPage: e.payload.hasNext,
-                        common: 1 ,
-                        ranks:e.payload.ranks,
-                        user:e.payload.user,
-                        isDriving : 'next'
-                    });
-                    sharedTexture2d.needsUpdate = true;
-                    currentPage = 'worldRank';
-                })
+                // if(!worldRankNextSwitch) return;
+                // let offset = rankCurrentPage * requestLimit;
+                // rankCurrentPage += 1;
+                // $io.getWorldRank({ offset: offset }).then(e=>{
+                //     worldRankNextSwitch = e.payload.hasNext ? true : false;
+                //     this.showPage('worldRank',{
+                //         hasPrePage: rankCurrentPage !== 1,
+                //         rankCurrentPage: rankCurrentPage,
+                //         hasNextPage: e.payload.hasNext,
+                //         common: 1 ,
+                //         ranks:e.payload.ranks,
+                //         user:e.payload.user,
+                //         isDriving : 'next'
+                //     });
+                // })
+                $wx.sendMessage('worldRank',{ common: 1 , isDriving : 'next'})
+                sharedTexture2d.needsUpdate = true;
             }
         })
     }

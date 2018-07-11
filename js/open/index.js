@@ -37,25 +37,29 @@ wx.onMessage(({ command, data = {}}) => {
         case 'friendRank':
             if(!data.isDriving || (data.isDriving == 'next' && !friendRankPage.noNext) || (data.isDriving == 'pre' && !friendRankPage.noPre)) {
                 friendRankPage.setTexture(1, data.noScale)
-                friendRankPage.initFriendRankData(data)
-                    .then((res) => {
-                        friendRankPage.showData(data, res)
-                    })
+                console.log('--',wx.HWData)
+                // friendRankPage.friendRankData();
+                // friendRankPage.initFriendRankData(data)
+                //     .then((res) => {
+                        friendRankPage.showData(data, 'friend', wx.HWData.friendRank)
+                    // })
             }
             break;
         case 'worldRank':
             if(!data.isDriving || (data.isDriving == 'next' && !worldRankPage.noNext) || (data.isDriving == 'pre' && !worldRankPage.noPre)) {
                 worldRankPage.setTexture(3, data)
-                worldRankPage.initWorldRankData(data)
-                worldRankPage.showData(data, 'world')
+                // worldRankPage.initWorldRankData(data)
+                worldRankPage.showData(data, 'world', wx.HWData.worldRank)
+                console.log('212312',data,worldRankPage.noNext)
             }
             break;
         case 'groupRank':
             if(!data.isDriving || (data.isDriving == 'next' && !groupRankPage.noNext) || (data.isDriving == 'pre' && !groupRankPage.noPre)) {
                 groupRankPage.setTexture(2)
+                console.log('=======',data)
                 groupRankPage.initGroupRankData(data)
                     .then((res) => {
-                        groupRankPage.showData(data, res)
+                        groupRankPage.showData(data, 'group', res)
                 });
             }
             break;

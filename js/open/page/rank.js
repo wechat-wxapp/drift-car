@@ -65,8 +65,14 @@ export default class Rank extends Init {
   /**
    * 更新页面内容数据
    * */
-  showData(data, type) {
-    this.total = this.rankData.length;
+  showData(data, type, rankData) {
+    if(type === 'group'){
+      this.rankData = rankData.rank;
+      this.total = this.rankData.length;
+    }else {
+      this.rankData = rankData.list;
+      this.total = this.rankData.length;
+    }
     this.totalPages = data.rankCurrentPage ? data.rankCurrentPage : Math.ceil(this.total / this.counts);
     // 当前页数
     switch (data.common) {
@@ -86,21 +92,17 @@ export default class Rank extends Init {
     //是否有下一页和上一页
     let hasNextPage = data.hasNextPage || (this.totalPages > rankCurrentPage);
     let hasPrePage = data.hasPrePage || rankCurrentPage > 1;
-
+    
     // let { isDriving } = data;
     let isLastPage = rankCurrentPage === this.totalPages;
     let isFristPage = rankCurrentPage === 1;
-    if(type === 'world') {
-      this.noNext = !data.hasNextPage;
-    } else {
+    // if(type === 'world') {
+      //   this.noNext = !data.hasNextPage;
+      // } else {
+        console.log('111sss',this.totalPages ,rankCurrentPage)
       this.noNext = isLastPage ? 1 : 0;
-    }
-    this.noPre = isFristPage ? 1 : 0;
-
-    // this.cvs.fillStyle = this.themeBule;
-    // if (rankCurrentPage == 1) {
-    //   this.cvs.fillStyle = "#808080";
     // }
+    this.noPre = isFristPage ? 1 : 0;
 
     /**
      * 上下一页
@@ -135,13 +137,13 @@ export default class Rank extends Init {
         // 排名
         that.cvs.fillText(i + 1, that.computedSizeW(132), that.computedSizeH(402 + (i - (rankCurrentPage - 1) * this.counts) * 110));
         // 头像
-        let avatar = wx.createImage();
-        let j = data.rankCurrentPage ? i % 5 : i;
-        avatar.src = that.rankData[j].avatarUrl;
-        avatar.onload = () => {
-          that.circleImg(this.cvs, avatar, this.computedSizeW(176), that.computedSizeH(356 + (i - (rankCurrentPage - 1) * this.counts) * 110), this.computedSizeW(39.5))
-          that.cvs.closePath();
-        }
+        // let avatar = wx.createImage();
+        // let j = data.rankCurrentPage ? i % 5 : i;
+        // avatar.src = that.rankData[j].avatarUrl;
+        // avatar.onload = () => {
+        //   that.circleImg(this.cvs, avatar, this.computedSizeW(176), that.computedSizeH(356 + (i - (rankCurrentPage - 1) * this.counts) * 110), this.computedSizeW(39.5))
+        //   that.cvs.closePath();
+        // }
       }
     }
 
@@ -168,26 +170,26 @@ export default class Rank extends Init {
     }
     
     //底部白色自己排名
-    let avatar = wx.createImage();
-    if (this.selfData.avatarUrl) {
-      avatar.src = this.selfData.avatarUrl
-      avatar.onload = () => {
-        this.circleImg(this.cvs,avatar, this.computedSizeW(190), this.computedSizeH(1024), this.computedSizeW(30), this.computedSizeH(39))
-        this.cvs.beginPath();
-      }
-      if(this.total !== 0){
-        this.cvs.fillStyle = '#7f2409';
-        this.cvs.fillText(this.selfData.rank, this.computedSizeW(132), this.computedSizeH(1064));
-      }
-      if(this.total !== 0){
-        this.cvs.fillStyle = '#8a8a8a';
-        this.cvs.fillText(this.selfData.nickname, this.computedSizeW(275), this.computedSizeH(1064), this.computedSizeW(146));
-      }
-      if(this.selfData.KVDataList.length > 0){
-        this.cvs.fillStyle = '#2a2a2a';
-        this.cvs.fillText(this.selfData.KVDataList[0].value, this.computedSizeW(583), this.computedSizeH(1064));
-      }
-    }
+    // let avatar = wx.createImage();
+    // if (this.selfData.avatarUrl) {
+    //   avatar.src = this.selfData.avatarUrl
+    //   avatar.onload = () => {
+    //     this.circleImg(this.cvs,avatar, this.computedSizeW(190), this.computedSizeH(1024), this.computedSizeW(30), this.computedSizeH(39))
+    //     this.cvs.beginPath();
+    //   }
+    //   if(this.total !== 0){
+    //     this.cvs.fillStyle = '#7f2409';
+    //     this.cvs.fillText(this.selfData.rank, this.computedSizeW(132), this.computedSizeH(1064));
+    //   }
+    //   if(this.total !== 0){
+    //     this.cvs.fillStyle = '#8a8a8a';
+    //     this.cvs.fillText(this.selfData.nickname, this.computedSizeW(275), this.computedSizeH(1064), this.computedSizeW(146));
+    //   }
+    //   if(this.selfData.KVDataList.length > 0){
+    //     this.cvs.fillStyle = '#2a2a2a';
+    //     this.cvs.fillText(this.selfData.KVDataList[0].value, this.computedSizeW(583), this.computedSizeH(1064));
+    //   }
+    // }
     
   }
     
