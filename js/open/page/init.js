@@ -308,7 +308,6 @@ export default class Init {
 
     /**
      * 设置排行榜数据
-     * @params rankName {String} 排行榜类型, friendRank: 好友排行榜; groupRank: 群排行榜数据; worldRank: 世界排行榜数据
      * @params score {Number} 需要更新的分数
      * @return {Object} 返回更新后的排行榜对象
      * */
@@ -338,8 +337,22 @@ export default class Init {
 
             this.setHWData(name, { list: newList, self: newSelf });
         });
+    }
 
-        console.log(this.getHWData());
+    /**
+     * 重新回调获取排行榜数据
+     * @params key {String} 需要获取的排行榜下标
+     * @params cb {Function} 递归方法
+     * @params duration {Number} 精确到毫秒, 递归延迟时间, 默认500毫秒
+     * @return {Object} 返回最新的排行榜对象
+     * */
+    refreshRankData(key, cb, duration = 500) {
+        const rank = this.getHWData(key);
+        if (Object.keys(rank).length <= 0) {
+            setTimeout(cb, duration);
+        } else {
+            return rank;
+        }
     }
 }
 
