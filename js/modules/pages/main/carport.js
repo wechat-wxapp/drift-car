@@ -253,8 +253,6 @@ export default class Carport extends UTIL {
         // 头部
         offCanvas2d.drawImage(this.carHeader, 0, 0, this.carHeader.width, this.carHeader.height, this.computedSizeW(41.4), this.headerOffsetTop, this.computedSizeW(331.2), this.computedSizeW(115.368));
 
-        console.log('this.bgOffsetTop: ', this.bgOffsetTop);
-
         // 车辆列表
         this.list.map((v, k) => {
             const { isNew, carId, unlock, imgUrl } = v;
@@ -279,7 +277,7 @@ export default class Carport extends UTIL {
                 this.list[k].imgUrlObj = carPane;
 
                 if (isNew) {
-                    offCanvas2d.drawImage(this.carNew, 0, 0, this.carNew.width, this.carNew.height, this.computedSizeW(140 + x * 97), this.computedSizeH(270 + pkey * 107), this.carNew.width / 2, this.carNew.height / 2);
+                    offCanvas2d.drawImage(this.carNew, 0, 0, this.carNew.width, this.carNew.height, this.computedSizeW(130 + x * 97), this.bgOffsetTop + this.computedSizeH(18.731 + pkey * 107), this.carNew.width / 2, this.carNew.height / 2);
                 } else {
                     // 如果已解锁
                     !unlock && offCanvas2d.drawImage(this.carPaneOff, 0, 0, this.carPaneOff.width, this.carPaneOff.height, this.computedSizeW(54 + x * 105), this.bgOffsetTop + this.computedSizeH(11.731 + pkey * 120), this.computedSizeW(97.152), this.computedSizeH(118.68));

@@ -94,9 +94,9 @@ export default class Game extends UTIL {
         isSharedLoop = false;
 
         // 开始游戏
-        this.restart();
+        // this.restart();
 
-        // sharedClass.reseurPage();
+        sharedClass.endPage();
         // beyondClass.beyondPage();
     }
 

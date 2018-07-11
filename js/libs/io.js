@@ -85,8 +85,8 @@ export default {
         return request(API.GET_WORLD_RANK, {
             method: 'POST',
             data: { openid,
-                offset: data.offset,
-                limit: requestLimit
+                offset: 0,
+                limit: 99
              }
         });
     }

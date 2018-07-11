@@ -5,6 +5,9 @@ import WechatMPPage from './page/wechatMP';
 import QrPage from './page/qr';
 import BeyondPage from './page/beyond';
 import Init from './page/init';
+import HWData from './page/hwdata';
+
+const init = new Init();
 
 const endPage = new EndPage();
 const reseurPage = new ReseurPage();
@@ -14,30 +17,15 @@ const worldRankPage = new RankPage();
 const wechatMPPage = new WechatMPPage();
 const qrPage = new QrPage();
 const beyondPage = new BeyondPage();
-const init = new Init();
-
-wx.HWData = {};
-
-init.initFriendRankData().then(e => {
-    wx.HWData.friendRankData = e;
-
-    wx.HWData.friendRankData.map((v, k) => {
-        const avatar = wx.createImage();
-        avatar.src = v.avatarUrl;
-        avatar.onload = () => {
-            wx.HWData.friendRankData[k].avatarObj = avatar;
-        };
-    });
-});
 
 wx.onMessage(({ command, data = {}}) => {
     switch (command) {
         case 'end':
-            endPage.setTexture(data)
-            endPage.initFriendRankData()
-                .then((e) => {
-                    endPage.setTexture(data);
-                })
+            endPage.setTexture(data);
+            // endPage.initFriendRankData()
+            //     .then((e) => {
+            //         endPage.setTexture(data);
+            //     })
             break;
         case 'reseur':
             reseurPage.setTexture(data)
@@ -85,6 +73,9 @@ wx.onMessage(({ command, data = {}}) => {
             break;
         case 'beyondReset':
             beyondPage.reset();
+            break;
+        case 'initHwData':
+            new HWData(data);
             break;
         case 'clear':
             init.clearCvs(true, true);
