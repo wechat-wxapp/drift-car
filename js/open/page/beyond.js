@@ -28,11 +28,11 @@ export default class Beyond extends Init {
         //     this.cvs.drawImage(avatar, 0, 0, avatar.width, avatar.height, 1, 1, this.computedSizeW(50), this.computedSizeH(50));
         // };
 
-        const { friendRankData } = this.getHWData();
+        const { list } = this.getHWData('friendRank');
 
-        if (!friendRankData) return false;
+        if (!list) return false;
 
-        const currentData = friendRankData.find(v => {
+        const currentData = list.find(v => {
             const val = v.KVDataList[0].value;
             return score > Number(val) - 40 && val > this.currentScore;
         });
@@ -56,7 +56,8 @@ export default class Beyond extends Init {
             }
 
             this.cvs.fillStyle = "#fff";
-            this.cvs.font = 'bold 24px Arial';
+            this.cvs.textAlign = 'left';
+            this.cvs.font = `bold ${this.computedSizeW(18)}px Arial`;
             this.cvs.fillText('超越好友', 0, 145);
         } else if (!currentData || this.timerKey >= 2) {
             this.timerKey = 0;

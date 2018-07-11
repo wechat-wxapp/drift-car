@@ -312,9 +312,9 @@ export default class Init {
      * @return {Object} 返回更新后的排行榜对象
      * */
     setRankData(score) {
-        const { friendRank, groupRank, worldRank } = wx.HWData;
+        const { friendRank, groupRank, worldRank } = this.getHWData();
 
-        const list = [{
+        const rankList = [{
                 name: 'friendRank',
                 data: friendRank,
             },{
@@ -325,8 +325,11 @@ export default class Init {
                 data: worldRank,
             }];
 
-        list.map((v, k) => {
+        for (let [k, v] of rankList.entries()) {
             const { name, data } = v;
+
+            if (Object.keys(data).length <= 0) continue;
+
             const { list, self } = data;
 
             const index = list.findIndex(e => e.nickname === self.nickname);
@@ -336,7 +339,7 @@ export default class Init {
             const newSelf = this.normalizeSelf(newList, self.nickname);
 
             this.setHWData(name, { list: newList, self: newSelf });
-        });
+        }
     }
 
     /**

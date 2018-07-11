@@ -14,6 +14,10 @@ export default class EndPage extends Init {
     setTexture(data) {
         this.clearCvs();
 
+        const { list, self } = this.getHWData('friendRank');
+        this.rankData = list;
+        this.selfData = self;
+
         let maxScore = data.score;
 
         if (this.selfData) {
@@ -22,9 +26,11 @@ export default class EndPage extends Init {
             } else {
                 maxScore = this.selfData['KVDataList'][0].value;
             }
-        } else {
+        }/* else {
             // this.updateWxScore(data.score);
-        }
+            this.setRankData(data.score);
+            return false;
+        }*/
 
         const endHeader = wx.createImage();
         endHeader.src = 'images/end-header.png';

@@ -22,17 +22,9 @@ wx.onMessage(({ command, data = {}}) => {
     switch (command) {
         case 'end':
             endPage.setTexture(data);
-            // endPage.initFriendRankData()
-            //     .then((e) => {
-            //         endPage.setTexture(data);
-            //     })
             break;
         case 'reseur':
-            reseurPage.setTexture(data)
-            reseurPage.initFriendRankData()
-                .then((e) => {
-                    reseurPage.setTexture(data);
-                })
+            reseurPage.setTexture(data);
             break;
         case 'friendRank':
             if(!data.isDriving || (data.isDriving == 'next' && !friendRankPage.noNext) || (data.isDriving == 'pre' && !friendRankPage.noPre)) {

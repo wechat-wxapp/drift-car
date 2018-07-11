@@ -12,13 +12,13 @@ export default class Music {
 
         this.bgmAudio = new Audio();
         this.bgmAudio.loop = true;
-        this.bgmAudio.src  = 'sound2/BGM.mp3';
+        this.bgmAudio.src  = 'sound/BGM.mp3';
 
         this.driftAudio = new Audio();
-        this.driftAudio.src = 'sound2/drift.mp3';
+        this.driftAudio.src = 'sound/drift.mp3';
 
         this.boomAudio = new Audio();
-        this.boomAudio.src = 'sound2/boom.mp3';
+        this.boomAudio.src = 'sound/boom.mp3';
 
         this.readyAudio = new Audio();
         this.readyAudio.src = 'sound/ready.mp3';
