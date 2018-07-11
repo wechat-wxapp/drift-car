@@ -79,7 +79,7 @@ export default class Rank extends Init {
       }
     }
 
-      console.log('群:', )
+    console.log('群:',getRankData,this.selfData)
     if(!getRankData.list) return;
     this.rankData = getRankData.list;
     this.total = this.rankData.length;
@@ -147,13 +147,14 @@ export default class Rank extends Init {
         // 排名
         that.cvs.fillText(i + 1, that.computedSizeW(132), that.computedSizeH(402 + (i - (rankCurrentPage - 1) * this.counts) * 110));
         // 头像
+        let j = data.rankCurrentPage ? i % 5 : i;
         // let avatar = wx.createImage();
-        // let j = data.rankCurrentPage ? i % 5 : i;
         // avatar.src = that.rankData[j].avatarUrl;
         // avatar.onload = () => {
         //   that.circleImg(this.cvs, avatar, this.computedSizeW(176), that.computedSizeH(356 + (i - (rankCurrentPage - 1) * this.counts) * 110), this.computedSizeW(39.5))
         //   that.cvs.closePath();
         // }
+        that.circleImg(this.cvs, that.rankData[j].avatarObj, this.computedSizeW(176), that.computedSizeH(356 + (i - (rankCurrentPage - 1) * this.counts) * 110), this.computedSizeW(39.5))
       }
     }
 
@@ -180,6 +181,7 @@ export default class Rank extends Init {
     }
     
     //底部白色自己排名
+    this.selfData = getRankData.self;
     // let avatar = wx.createImage();
     // if (this.selfData.avatarUrl) {
     //   avatar.src = this.selfData.avatarUrl
