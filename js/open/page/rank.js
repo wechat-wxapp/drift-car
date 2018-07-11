@@ -65,14 +65,25 @@ export default class Rank extends Init {
   /**
    * 更新页面内容数据
    * */
-  showData(data, type, rankData) {
-    if(type === 'group'){
-      this.rankData = rankData.rank;
-      this.total = this.rankData.length;
-    }else {
-      this.rankData = rankData.list;
-      this.total = this.rankData.length;
+  showData(data, type) {
+    let getRankData
+    if(type !== 'groupRank') {
+      getRankData = this.getHWData(type)
+    } else {
+      getRankData = this.getHWData(type);
+      if (Object.keys(getRankData).length <= 0) {
+        setTimeout(() => {
+          this.showData(data, type);
+        }, 500);
+        return false;
+      }
     }
+
+      console.log('群:', )
+    if(!getRankData.list) return;
+    this.rankData = getRankData.list;
+    this.total = this.rankData.length;
+    // }
     this.totalPages = data.rankCurrentPage ? data.rankCurrentPage : Math.ceil(this.total / this.counts);
     // 当前页数
     switch (data.common) {
@@ -99,7 +110,6 @@ export default class Rank extends Init {
     // if(type === 'world') {
       //   this.noNext = !data.hasNextPage;
       // } else {
-        console.log('111sss',this.totalPages ,rankCurrentPage)
       this.noNext = isLastPage ? 1 : 0;
     // }
     this.noPre = isFristPage ? 1 : 0;

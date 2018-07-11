@@ -26,7 +26,7 @@
 			"list": []
 		},
 		"game": {
-			"current": -1,
+			"current": 0,
 			"list": [
 				{
 					"id": 0,
@@ -34,9 +34,9 @@
 					"query": "",
 					"scene": "1044",
 					"shareInfo": {
-						"groupName": "测试模拟群4",
-						"shareName": "OgY_UkkjeDUviHYpCwEGa2sFj6VDHl5Bf5OSGCeheXQ@cr4dev",
-						"shareKey": "-Fbd0KkTBRH-baqfgkQ3KJ7ocwvCot9gHzlpfdOh8mQuPueJ3yE4W1-Q9iCX_9DYrHJsxhP9uUs5LHeNC3yB6g~~"
+						"groupName": "测试模拟群2",
+						"shareName": "OgY_UkkjeDUviHYpCwEGaziam1yLsGVUkY0nvKyp7QQ@cr4dev",
+						"shareKey": "r4BRop7M81fNK1rNciT-OZj_SdrqUP972LGceaN6JTCXXOIWCRdCIZ5YnmEAN3qanVOBevI8De-4FcChpKtV_g~~"
 					}
 				}
 			]

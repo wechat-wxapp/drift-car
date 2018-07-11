@@ -37,19 +37,11 @@ export default class HWData extends Init {
                 .then(({ rank, self }) => {
                     this.setRankCache('friendRank', { list: rank, self });
                 });
-
             // 初始化群组排行榜数据
-<<<<<<< HEAD
-            // this.initGroupRankData(shareTicket)
-            //     .then(({ rank, self }) => {
-            //         this.setHWData('groupRank', { list: rank, self });
-            //     });
-=======
             this.initGroupRankData(shareTicket)
                 .then(({ rank, self }) => {
-                    this.setRankCache('groupRank', { list: rank, self });
+                    this.setHWData('groupRank', { list: rank, self });
                 });
->>>>>>> d54e90887ef640d9b29da1de2ced9b890dc0e6e4
 
             // 初始化世界排行榜
             const { rank, self } = this.initWorldRankData(worldRank);

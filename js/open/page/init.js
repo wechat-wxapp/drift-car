@@ -120,13 +120,16 @@ export default class Init {
     /**
      * 初始化群排行榜数据并排序
      * */
-    initGroupRankData(data) {
-        let { shareTicket } = data;
+    initGroupRankData(shareTicket) {
         return new Promise((resolve, reject) => {
-            // if (!shareTicket) reject();
+
+            if(shareTicket === 'noStareTicket') {
+                reject();
+                return false;
+            }
 
             wx.getGroupCloudStorage({
-                shareTicket: shareTicket,
+                shareTicket,
                 keyList: ['score'],
                 success: res => {
                     const { data: rankData } = res;
