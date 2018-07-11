@@ -158,12 +158,13 @@ export default class Init {
             delete e.score;
         });
 
-        const { score, headimgurl } = this.getHWData('self');
+        const { score, headimgurl } = self;
 
         const selfData = self;
         selfData['KVDataList'] = [];
-        selfData['KVDataList'].push({value: score});
+        selfData['KVDataList'].push({ value: score });
         selfData.avatarUrl = headimgurl;
+        delete selfData.score;
 
         return { rank: rankData, self: selfData }
     }
