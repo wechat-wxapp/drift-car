@@ -91,30 +91,39 @@ export default class UTIL {
         oldSpeed2 = 0;
         isTurning = false;
 
+        this.i = 0;
+        this.shakeCamera();
+
+        // 显示结束页
+        // this.endPageTimer = $timer(() => {
+        //     // this.restart();
+        //     // camera.position.set(obj.x,obj.y,obj.z)
+        //     this.showReseurPage();
+        //     this.endPageTimer.closeTimeout();
+        // }, 1000);
+        console.log('---结束游戏---');
+    };
+
+    /**
+     * 撞车后抖镜头,并显示相关页面
+     */
+    shakeCamera() {
         const cameraX = camera.position.x;
         const cameraY = camera.position.y;
         const cameraZ = camera.position.z;
-
-        this.i = 0;
-        this.shakeCamera = $timer(() => {
-            camera.position.set(cameraX + 5 - (Math.random() * 10), cameraY, cameraZ + 5 - (Math.random() * 10))
-            this.i ++;
-            if(this.i === 16) {
+        const loopShake = $timer(() => {
+            if(this.i === 50) {
                 this.i = 0;
-                camera.position.set(cameraX, cameraY, cameraZ)
-                this.shakeCamera.closeTimeout();
+                loopShake.closeTimeout();
+                this.showReseurPage();
+            }else if(this.i === 15) {
+                camera.position.set(cameraX, cameraY, cameraZ);
+            }else if(this.i < 10) {
+                camera.position.set(cameraX + 3 - (Math.random() * 6), cameraY, cameraZ + 3 - (Math.random() * 6))
             }
+            this.i ++;
         }, 16);
-        
-        // 显示结束页
-        this.endPageTimer = $timer(() => {
-            // this.restart();
-            // camera.position.set(obj.x,obj.y,obj.z)
-            this.showReseurPage();
-            this.endPageTimer.closeTimeout();
-        }, 1000);
-        console.log('---结束游戏---');
-    };
+    }
 
     /**
      * 显示结束页面
@@ -160,6 +169,8 @@ export default class UTIL {
     restart(isReseur) {
         // 全屏不能点击
         currentPage = 'off';
+
+        isSharedLoop = false;
 
         this.clearWorld();
 

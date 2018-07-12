@@ -29,26 +29,20 @@ wx.onMessage(({ command, data = {}}) => {
         case 'friendRank':
             if(!data.isDriving || (data.isDriving == 'next' && !friendRankPage.noNext) || (data.isDriving == 'pre' && !friendRankPage.noPre)) {
                 friendRankPage.setTexture(1, data.noScale)
-                friendRankPage.initFriendRankData(data)
-                    .then((res) => {
-                        friendRankPage.showData(data, res)
-                    })
+                friendRankPage.showData(data, 'friendRank')
             }
             break;
         case 'worldRank':
             if(!data.isDriving || (data.isDriving == 'next' && !worldRankPage.noNext) || (data.isDriving == 'pre' && !worldRankPage.noPre)) {
                 worldRankPage.setTexture(3, data)
-                worldRankPage.initWorldRankData(data)
-                worldRankPage.showData(data, 'world')
+                worldRankPage.showData(data, 'worldRank')
             }
             break;
         case 'groupRank':
             if(!data.isDriving || (data.isDriving == 'next' && !groupRankPage.noNext) || (data.isDriving == 'pre' && !groupRankPage.noPre)) {
                 groupRankPage.setTexture(2)
-                groupRankPage.initGroupRankData(data)
-                    .then((res) => {
-                        groupRankPage.showData(data, res)
-                });
+                groupRankPage.showData(data, 'groupRank')
+            //    setTimeout(()=> groupRankPage.showData(data, 'group'),500)
             }
             break;
         case 'carport':

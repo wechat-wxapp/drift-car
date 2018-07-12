@@ -37,7 +37,6 @@ export default class HWData extends Init {
                 .then(({ rank, self }) => {
                     this.setRankCache('friendRank', { list: rank, self });
                 });
-
             // 初始化群组排行榜数据
             this.initGroupRankData(shareTicket)
                 .then(({ rank, self }) => {

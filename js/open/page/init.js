@@ -122,10 +122,14 @@ export default class Init {
      * */
     initGroupRankData(shareTicket) {
         return new Promise((resolve, reject) => {
-            if (!shareTicket) reject();
+
+            if(shareTicket === 'noStareTicket') {
+                reject();
+                return false;
+            }
 
             wx.getGroupCloudStorage({
-                shareTicket: shareTicket,
+                shareTicket,
                 keyList: ['score'],
                 success: res => {
                     const { data: rankData } = res;
@@ -352,8 +356,10 @@ export default class Init {
     refreshRankData(key, cb, duration = 500) {
         const rank = this.getHWData(key);
         if (Object.keys(rank).length <= 0) {
+            console.log('qwe: ', rank);
             setTimeout(cb, duration);
         } else {
+            console.log('aaa: ', rank);
             return rank;
         }
     }
