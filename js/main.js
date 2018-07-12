@@ -202,51 +202,62 @@ export default class Main extends UTIL {
 
             if(isTurning) {
                 
-                if(oldSpeed <= 0) oldSpeed = 0;
-                else oldSpeed = oldSpeed - speed * 0.0625;
-                if(oldSpeed2 >= speed) oldSpeed2 = speed;
-                else oldSpeed2 = oldSpeed2 + speed * 0.0625;
-                
+                if(!this.slowDownFlag) {
+                    currentSpeed -= speed / 48;
+                    if(currentSpeed <= (speed * 3 / 4)) this.slowDownFlag = true;
+                } 
                 if(movekey === 'z') {
-                    currentW = currentW - speed / 30;
-                    this._changeX(oldSpeed2);
-                    this._changeZ(oldSpeed);
-                    // this._changeZ(speed);
+                    currentW = currentW - currentSpeed / 30;
+                    this._changeX(currentSpeed / 8);
+                    this._changeZ(currentSpeed);
+                    if(currentW <= -1.62) {
+                        isTurning = false;
+                        movekey = 'x';
+                        this.turnSpringback = true;
+                    }
                 } else {
-                    currentW = currentW + speed / 30;
-                    this._changeZ(oldSpeed2)
-                    this._changeX(oldSpeed)
-                    // this._changeX(speed)
+                    currentW = currentW + currentSpeed / 30;
+                    this._changeZ(currentSpeed / 8)
+                    this._changeX(currentSpeed);
+                    if(currentW >= 0.05) {
+                        isTurning = false;
+                        movekey = 'z';
+                        this.turnSpringback = true;
+                    }
                 }
-                if(currentW <= -1.57) {
-                    isTurning = false;
-                    currentW = -1.57;
-                    movekey = 'x'
-                }
-                if(currentW >= 0) {
-                    isTurning = false;
-                    currentW = 0;
-                    movekey = 'z';
-                }
-                carBodys.quaternion.setFromAxisAngle(new CANNON.Vec3(0, 1, 0), currentW)
+               
             }else {
-                oldSpeed = speed;
-                oldSpeed2 = 0;
-            
-            if (movekey === 'x') {
-                this._changeX(speed);
-
-                // beyondCanvasSprite.position.x += speed;
-            } else {
-                this._changeZ(speed);
-                // beyondCanvasSprite.position.z -= speed;
+                this.slowDownFlag = false;
+                if(this.turnSpringback) {
+                    if(currentSpeed >= speed) {
+                        currentSpeed = speed;
+                        this.turnSpringback = false;
+                    }else {
+                        currentSpeed += speed / 36;
+                    }
+                }else {currentSpeed = speed;}
+                
+                if (movekey === 'x') {
+                    this._changeX(currentSpeed);
+                    currentW = currentW + currentSpeed / 240;
+                    if(currentW >= -1.57) {
+                        currentW = -1.57
+                    }
+                    // beyondCanvasSprite.position.x += speed;
+                } else {
+                    this._changeZ(currentSpeed);
+                        currentW = currentW - currentSpeed / 240;
+                        if(currentW <= 0) {
+                            currentW = 0
+                        }
+                    // beyondCanvasSprite.position.z -= speed;
+                }
             }
-        }
-        
+            
+            carBodys.quaternion.setFromAxisAngle(new CANNON.Vec3(0, 1, 0), currentW)
         }
 
         // cannonDebugRenderer && cannonDebugRenderer.update();
-
         renderer.setClearColor('#428bca', 1.0);
         renderer.render(scene, camera)
     }

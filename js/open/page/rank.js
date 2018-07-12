@@ -11,6 +11,42 @@ export default class Rank extends Init {
     this.counts = 5;
     // 总页数
     this.totalPages = 1;
+
+    //加载图片
+    //返回按钮
+    this.backBtn = wx.createImage();
+    this.backBtn.src = `images/back-btn.png`;
+    //上下页
+    this.prePageDis = wx.createImage();
+    this.prePageDis.src = 'images/pre-page-dis.png';
+    this.prePageN = wx.createImage();
+    this.prePageN.src = 'images/pre-page-n.png';
+    this.nextPageDis = wx.createImage();
+    this.nextPageDis.src = 'images/next-page-dis.png';
+    this.nextPageN = wx.createImage();
+    this.nextPageN.src = 'images/next-page-n.png';
+
+    //好友排行榜的页面图片
+    this.friendRankOn = wx.createImage();
+    this.friendRankOn.src = 'images/friend-rank-on.png';
+    this.worldRankOff = wx.createImage();
+    this.worldRankOff.src = 'images/world-rank-off.png';
+
+    //世界排行榜的页面图片
+    this.friendRankOff = wx.createImage();
+    this.friendRankOff.src = 'images/friend-rank-off.png';
+    this.worldRankOn = wx.createImage();
+    this.worldRankOn.src = 'images/world-rank-on.png';
+
+    //世界和好友排行右下的查看群按键
+    this.goGroupRank = wx.createImage();
+    this.goGroupRank.src = 'images/go-group-rank.png';
+
+    //群排行榜的页面图片
+    this.groupRankOn = wx.createImage();
+    this.groupRankOn.src = 'images/group-rank-on.png';
+    this.iPlayBtn = wx.createImage();
+    this.iPlayBtn.src = 'images/i-play-btn.png';
   }
 
   /**
@@ -56,9 +92,7 @@ export default class Rank extends Init {
     this.cvs.fillRect(this.winWidth / 2 - this.computedSizeW(560) / 2, this.computedSizeH(999), this.computedSizeW(560), this.computedSizeH(110));
 
     //返回按钮
-    const backBtn = wx.createImage();
-    backBtn.src = `images/back-btn.png`;
-    this.cvs.drawImage(backBtn, 0, 0, backBtn.width, backBtn.height, this.computedSizeW(95), this.computedSizeH(1139), this.computedSizeW(162), this.computedSizeH(63));
+    this.cvs.drawImage(this.backBtn, 0, 0, this.backBtn.width, this.backBtn.height, this.computedSizeW(95), this.computedSizeH(1139), this.computedSizeW(162), this.computedSizeH(63));
 
   }
 
@@ -67,9 +101,9 @@ export default class Rank extends Init {
    * */
   showData(data, type) {
     let getRankData
-    if(type !== 'groupRank') {
-      getRankData = this.getHWData(type)
-    } else {
+    // if(type !== 'groupRank') {
+    //   getRankData = this.getHWData(type)
+    // } else {
       getRankData = this.getHWData(type);
       if (Object.keys(getRankData).length <= 0) {
         setTimeout(() => {
@@ -80,9 +114,8 @@ export default class Rank extends Init {
       // const data = this.refreshRankData(type, this.showData.bind(this))
       // getRankData = data;
       // return false;
-    }
+    // }
 
-    console.log('群:', getRankData, this.selfData)
     if(!getRankData.list) return;
     this.rankData = getRankData.list;
     this.total = this.rankData.length;
@@ -122,22 +155,14 @@ export default class Rank extends Init {
      */
     // hasPrePage ? this.cvs.fillStyle = this.themeBule : this.cvs.fillStyle = "#808080";
     if(hasPrePage) {
-      const prePageDis = wx.createImage();
-      prePageDis.src = 'images/pre-page-dis.png';
-      this.cvs.drawImage(prePageDis, 0, 0, prePageDis.width, prePageDis.height, this.computedSizeW(201), this.computedSizeH(902), this.computedSizeW(154), this.computedSizeH(63));
+      this.cvs.drawImage(this.prePageDis, 0, 0, this.prePageDis.width, this.prePageDis.height, this.computedSizeW(201), this.computedSizeH(902), this.computedSizeW(154), this.computedSizeH(63));
     }else {
-      const prePageN = wx.createImage();
-      prePageN.src = 'images/pre-page-n.png';
-      this.cvs.drawImage(prePageN, 0, 0, prePageN.width, prePageN.height, this.computedSizeW(201), this.computedSizeH(902), this.computedSizeW(154), this.computedSizeH(63));
+      this.cvs.drawImage(this.prePageN, 0, 0, this.prePageN.width, this.prePageN.height, this.computedSizeW(201), this.computedSizeH(902), this.computedSizeW(154), this.computedSizeH(63));
     }
     if(hasNextPage) {
-      const nextPageDis = wx.createImage();
-      nextPageDis.src = 'images/next-page-dis.png';
-      this.cvs.drawImage(nextPageDis, 0, 0, nextPageDis.width, nextPageDis.height, this.computedSizeW(394), this.computedSizeH(902), this.computedSizeW(154), this.computedSizeH(63));
+      this.cvs.drawImage(this.nextPageDis, 0, 0, this.nextPageDis.width, this.nextPageDis.height, this.computedSizeW(394), this.computedSizeH(902), this.computedSizeW(154), this.computedSizeH(63));
     }else {
-      const nextPageN = wx.createImage();
-      nextPageN.src = 'images/next-page-n.png';
-      this.cvs.drawImage(nextPageN, 0, 0, nextPageN.width, nextPageN.height, this.computedSizeW(394), this.computedSizeH(902), this.computedSizeW(154), this.computedSizeH(63));
+      this.cvs.drawImage(this.nextPageN, 0, 0, this.nextPageN.width, this.nextPageN.height, this.computedSizeW(394), this.computedSizeH(902), this.computedSizeW(154), this.computedSizeH(63));
     }
 
     // 排名
@@ -201,42 +226,26 @@ export default class Rank extends Init {
     
 
   friendRank(){
-    const friendRankOn = wx.createImage();
-    friendRankOn.src = 'images/friend-rank-on.png';
-    this.cvs.drawImage(friendRankOn, 0, 0, friendRankOn.width, friendRankOn.height, this.computedSizeW(95), this.computedSizeH(172), this.computedSizeW(280), this.computedSizeH(119));
+    this.cvs.drawImage(this.friendRankOn, 0, 0, this.friendRankOn.width, this.friendRankOn.height, this.computedSizeW(95), this.computedSizeH(172), this.computedSizeW(280), this.computedSizeH(119));
     
-    const worldRankOff = wx.createImage();
-    worldRankOff.src = 'images/world-rank-off.png';
-    this.cvs.drawImage(worldRankOff, 0, 0, worldRankOff.width, worldRankOff.height, this.computedSizeW(376), this.computedSizeH(172), this.computedSizeW(280), this.computedSizeH(119));
+    this.cvs.drawImage(this.worldRankOff, 0, 0, this.worldRankOff.width, this.worldRankOff.height, this.computedSizeW(376), this.computedSizeH(172), this.computedSizeW(280), this.computedSizeH(119));
     
-    const goGroupRank = wx.createImage();
-    goGroupRank.src = 'images/go-group-rank.png';
-    this.cvs.drawImage(goGroupRank, 0, 0, goGroupRank.width, goGroupRank.height, this.computedSizeW(481), this.computedSizeH(1139), this.computedSizeW(174), this.computedSizeH(63));
+    this.cvs.drawImage(this.goGroupRank, 0, 0, this.goGroupRank.width, this.goGroupRank.height, this.computedSizeW(481), this.computedSizeH(1139), this.computedSizeW(174), this.computedSizeH(63));
   }
 
   worldRank(){
-    const friendRankOff = wx.createImage();
-    friendRankOff.src = 'images/friend-rank-off.png';
-    this.cvs.drawImage(friendRankOff, 0, 0, friendRankOff.width, friendRankOff.height, this.computedSizeW(95), this.computedSizeH(172), this.computedSizeW(280), this.computedSizeH(119));
+    this.cvs.drawImage(this.friendRankOff, 0, 0, this.friendRankOff.width, this.friendRankOff.height, this.computedSizeW(95), this.computedSizeH(172), this.computedSizeW(280), this.computedSizeH(119));
     
-    const worldRankOn = wx.createImage();
-    worldRankOn.src = 'images/world-rank-on.png';
-    this.cvs.drawImage(worldRankOn, 0, 0, worldRankOn.width, worldRankOn.height, this.computedSizeW(376), this.computedSizeH(172), this.computedSizeW(280), this.computedSizeH(119));
+    this.cvs.drawImage(this.worldRankOn, 0, 0, this.worldRankOn.width, this.worldRankOn.height, this.computedSizeW(376), this.computedSizeH(172), this.computedSizeW(280), this.computedSizeH(119));
     
-    const goGroupRank = wx.createImage();
-    goGroupRank.src = 'images/go-group-rank.png';
-    this.cvs.drawImage(goGroupRank, 0, 0, goGroupRank.width, goGroupRank.height, this.computedSizeW(481), this.computedSizeH(1139), this.computedSizeW(174), this.computedSizeH(63));
+    this.cvs.drawImage(this.goGroupRank, 0, 0, this.goGroupRank.width, this.goGroupRank.height, this.computedSizeW(481), this.computedSizeH(1139), this.computedSizeW(174), this.computedSizeH(63));
 
   }
 
   groupRank(){
-    const groupRankOn = wx.createImage();
-    groupRankOn.src = 'images/group-rank-on.png';
-    this.cvs.drawImage(groupRankOn, 0, 0, groupRankOn.width, groupRankOn.height, this.computedSizeW(96), this.computedSizeH(172), this.computedSizeW(558), this.computedSizeH(120));
+    this.cvs.drawImage(this.groupRankOn, 0, 0, this.groupRankOn.width, this.groupRankOn.height, this.computedSizeW(96), this.computedSizeH(172), this.computedSizeW(558), this.computedSizeH(120));
 
-    const iPlayBtn = wx.createImage();
-    iPlayBtn.src = 'images/i-play-btn.png';
-    this.cvs.drawImage(iPlayBtn, 0, 0, iPlayBtn.width, iPlayBtn.height, this.computedSizeW(481), this.computedSizeH(1139), this.computedSizeW(174), this.computedSizeH(63));
+    this.cvs.drawImage(this.iPlayBtn, 0, 0, this.iPlayBtn.width, this.iPlayBtn.height, this.computedSizeW(481), this.computedSizeH(1139), this.computedSizeW(174), this.computedSizeH(63));
   }
 
 }
