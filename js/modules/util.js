@@ -112,13 +112,13 @@ export default class UTIL {
         const cameraY = camera.position.y;
         const cameraZ = camera.position.z;
         const loopShake = $timer(() => {
-            if(this.i === 50) {
+            if(this.i >= 50) {
                 this.i = 0;
                 loopShake.closeTimeout();
                 this.showReseurPage();
             }else if(this.i === 15) {
                 camera.position.set(cameraX, cameraY, cameraZ);
-            }else if(this.i < 10) {
+            }else if(this.i < 5) {
                 camera.position.set(cameraX + 3 - (Math.random() * 6), cameraY, cameraZ + 3 - (Math.random() * 6))
             }
             this.i ++;
@@ -170,6 +170,7 @@ export default class UTIL {
         // 全屏不能点击
         currentPage = 'off';
 
+        // 开始游戏关闭开放域帧循环
         isSharedLoop = false;
 
         this.clearWorld();
@@ -268,46 +269,6 @@ export default class UTIL {
      * 首次开始音效
      * */
     readyMusic() {
-        // const a = (key = 0) => {
-        //     console.log(key);
-        //     setTimeout(() => {
-        //         if (key >= 3) {
-        //             music.playGo();
-        //
-        //             // 设置开启key
-        //             startKey = true;
-        //
-        //             // 更新分数
-        //             this.updateScore();
-        //
-        //             // 清空倒计时
-        //             gamePage.page();
-        //
-        //             // 设置页面target
-        //             currentPage = 'gamePage';
-        //
-        //             // 关闭倒计时器
-        //             // this.musicTimer.closeTimeout();
-        //
-        //             isBeyondLoop = true;
-        //
-        //             return false;
-        //         } else {
-        //             // 倒计时
-        //             gamePage.page(3 - key);
-        //
-        //             music.playReady();
-        //
-        //             a(key + 1);
-        //         }
-        //     }, 1500);
-        // }
-        // a();
-        //
-        // gamePage.page(3);
-        // music.playReady();
-
-
         this.musicTimer = $timer(({ key }) => {
             if (key >= 3) {
                 music.playGo();
@@ -337,7 +298,7 @@ export default class UTIL {
         }, 1500);
 
         // 手动释放内存
-        // wx.triggerGC();
+        wx.triggerGC();
 
         gamePage.page(3);
         music.playReady();

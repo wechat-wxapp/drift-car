@@ -90,13 +90,10 @@ export default class Game extends UTIL {
         // 清除其余2d画布
         pageClass.clear2d();
 
-        // 默认关闭开放域循环
-        isSharedLoop = false;
-
         // 开始游戏
-        // this.restart();
+        this.restart();
 
-        sharedClass.endPage();
+        // sharedClass.endPage();
         // beyondClass.beyondPage();
     }
 
