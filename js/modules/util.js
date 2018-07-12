@@ -87,12 +87,12 @@ export default class UTIL {
         beyondClass.clear2d();
 
         currentW = 0;
-        oldSpeed = '';
-        oldSpeed2 = 0;
+        currentSpeed = 0;
         isTurning = false;
 
         this.i = 0;
         this.shakeCamera();
+        // sharedClass.reseurPage();
 
         // 显示结束页
         // this.endPageTimer = $timer(() => {
@@ -111,15 +111,23 @@ export default class UTIL {
         const cameraX = camera.position.x;
         const cameraY = camera.position.y;
         const cameraZ = camera.position.z;
-        const loopShake = $timer(() => {
+        this.loopShakeTimer = $timer(() => {
             if(this.i >= 50) {
                 this.i = 0;
-                loopShake.closeTimeout();
-                this.showReseurPage();
-            }else if(this.i === 15) {
+                this.loopShakeTimer.closeTimeout();
                 camera.position.set(cameraX, cameraY, cameraZ);
-            }else if(this.i < 5) {
-                camera.position.set(cameraX + 3 - (Math.random() * 6), cameraY, cameraZ + 3 - (Math.random() * 6))
+                this.showReseurPage();
+            }
+            // else if(this.i >= 15) {
+            //     camera.position.set(cameraX, cameraY, cameraZ);
+            // }
+            else if(this.i <= 5) {
+                // camera.position.set(cameraX + 0.5 - (Math.random() * 1), cameraY, cameraZ + 0.5 - (Math.random() * 1))
+                camera.position.set(cameraX - 0.05 * this.i, cameraY, cameraZ - 0.05 * this.i)
+            }else if(this.i <=15) {
+                camera.position.set(cameraX - 0.05 * (-1 * this.i + 5), cameraY, cameraZ - 0.05 * (-1 * this.i + 5))
+            }else if(this.i <= 20) {
+                camera.position.set(cameraX - 0.05 * (this.i - 20), cameraY, cameraZ - 0.05 * (this.i - 20))
             }
             this.i ++;
         }, 16);
@@ -129,6 +137,7 @@ export default class UTIL {
      * 显示结束页面
      * */
     showReseurPage() {
+        this.loopShakeTimer.closeTimeout();
         if (reseurNum === 0) {
             sharedClass.endPage();
         } else {
