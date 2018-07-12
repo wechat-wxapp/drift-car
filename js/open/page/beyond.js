@@ -21,11 +21,16 @@ export default class Beyond extends Init {
     setTexture({ score }) {
         this.clearCvs(true);
 
+        // this.cvs.fillStyle = "#fff";
+        //     this.cvs.textAlign = 'left';
+        //     this.cvs.font = `bold ${this.computedSizeW(18)}px Arial`;
+        //     this.cvs.fillText('超越好友', 0, this.computedSizeH(20));
+        //
         // const avatar = wx.createImage();
         // avatar.src = 'images/car-pane.png';
         //
         // avatar.onload = () => {
-        //     this.cvs.drawImage(avatar, 0, 0, avatar.width, avatar.height, 1, 1, this.computedSizeW(50), this.computedSizeH(50));
+        //     this.cvs.drawImage(avatar, 0, 0, avatar.width, avatar.height, 0, this.computedSizeH(25), this.computedSizeW(70), this.computedSizeH(70));
         // };
 
         const { list } = this.getHWData('friendRank');
@@ -45,20 +50,20 @@ export default class Beyond extends Init {
                 this.currentScore = currentData.KVDataList[0].value;
             }
 
+            this.cvs.fillStyle = "#fff";
+            this.cvs.textAlign = 'left';
+            this.cvs.font = `bold ${this.computedSizeW(18)}px Arial`;
+            this.cvs.fillText('超越好友', 0, this.computedSizeH(18));
+
             if (currentData.avatarObj) {
-                this.cvs.drawImage(currentData.avatarObj, 0, 0, currentData.avatarObj.width, currentData.avatarObj.height, 0, 0, this.computedSizeW(70), this.computedSizeH(70));
+                this.cvs.drawImage(currentData.avatarObj, 0, 0, currentData.avatarObj.width, currentData.avatarObj.height, 0, this.computedSizeH(23), this.computedSizeW(70), this.computedSizeH(70));
             } else {
                 const avatar = wx.createImage();
                 avatar.src = currentData.avatarUrl;
                 avatar.onload = () => {
-                    this.cvs.drawImage(avatar, 0, 0, avatar.width, avatar.height, 0, 0, this.computedSizeW(70), this.computedSizeH(70));
+                    this.cvs.drawImage(avatar, 0, 0, avatar.width, avatar.height, 0, this.computedSizeH(23), this.computedSizeW(70), this.computedSizeH(70));
                 };
             }
-
-            this.cvs.fillStyle = "#fff";
-            this.cvs.textAlign = 'left';
-            this.cvs.font = `bold ${this.computedSizeW(18)}px Arial`;
-            this.cvs.fillText('超越好友', 0, 145);
         } else if (!currentData || this.timerKey >= 2) {
             this.timerKey = 0;
             this.clearCvs(true, true);
