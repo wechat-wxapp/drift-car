@@ -242,7 +242,7 @@ export default class Start extends UTIL {
         const isMuisc = $cache.getGameData('music');
         const musicBtn = isMuisc ? this.musicOn : this.musicOff;
 
-        offCanvas2d.drawImage(musicBtn, 0, 0, musicBtn.width, musicBtn.height, winWidth / 2 - this.computedSizeW(180), this.computedSizeH(24), this.computedSizeW(musicBtn.width / 2), this.computedSizeH(musicBtn.height / 2));
+        offCanvas2d.drawImage(musicBtn, 0, 0, musicBtn.width, musicBtn.height, winWidth / 2 - this.computedSizeW(180), this.computedSizeH(24), this.computedSizeW(musicBtn.width / 2), this.computedSizeW(musicBtn.height / 2));
 
         // 如果已经登录
         if ($wx.isLogin) {

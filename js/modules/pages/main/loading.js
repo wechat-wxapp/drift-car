@@ -176,10 +176,11 @@ export default class Loader extends UTIL {
      * 预加载排行榜
      * */
     loadWorldRank() {
+        console.log('开始缓存世界排行榜...');
         return $io.getWorldRank()
-            .then(({ payload: { user, ranks } }) =>{
+            .then(({ payload: { ranks, user } }) =>{
                 const { openid } = $cache.getCache('accessToken');
-
+                console.log('缓存世界排行榜成功: ', { ranks, user });
                 $wx.sendMessage('initHwData', {
                     openId: openid,
                     shareTicket: $wx.shareTicket,
