@@ -14,6 +14,10 @@ export default class Resurgence extends Init {
     setTexture(data) {
         this.clearCvs();
 
+        const { list, self } = this.getHWData('friendRank');
+        this.rankData = list;
+        this.selfData = self;
+
         const endHeader = wx.createImage();
         endHeader.src = 'images/end-header.png';
         this.cvs.drawImage(endHeader, 0, 0, endHeader.width, endHeader.height, this.computedSizeW(95), this.computedSizeH(239), this.computedSizeW(endHeader.width), this.computedSizeH(endHeader.height));

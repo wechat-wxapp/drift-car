@@ -25,6 +25,9 @@ export default class Loader extends UTIL {
             text: '正在抽取图片...',
             load: this.loadImg
         }, {
+            text: '正在加载排行榜...',
+            load: this.loadWorldRank
+        }, {
             text: '正在挖地基...',
             load: this.buildScenery
         }, {
@@ -37,7 +40,7 @@ export default class Loader extends UTIL {
             text: '正在给路涂色...',
             load: this.buildTurnRoad
         }, {
-            text: '正在把太阳放出来...',
+            text: '正在帮太阳充气...',
             load: this.buildTurnRoadSmall
         }];
 
@@ -167,6 +170,17 @@ export default class Loader extends UTIL {
                 res(image);
             }
         });
+    }
+
+    /**
+     * 预加载排行榜
+     * */
+    loadWorldRank() {
+        return $io.getWorldRank()
+            .then(({ payload: { user, ranks } }) =>{
+
+                $wx.sendMessage('initHwData', { shareTicket: $wx.shareTicket, worldRank: { list: ranks, self: user } });
+            });
     }
 
     /**

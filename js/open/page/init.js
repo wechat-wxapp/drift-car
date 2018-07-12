@@ -34,6 +34,8 @@ export default class Init {
         // this._initSelf();
     }
 
+
+
     /**
      * 计算当前屏幕相对于 375 * 667 的结果
      * */
@@ -89,85 +91,102 @@ export default class Init {
         cxt.closePath();
     }
 
-    // 初始化好友排行榜数据并排序
-    initFriendRankData(data) {
+    /**
+     * 初始化好友排行榜数据并排序
+     * */
+    friendRankData() {
         return new Promise((resolve, reject) => {
-            // if(this.rankData) return resolve(data);
-            let that = this;
             wx.getFriendCloudStorage({
                 keyList: ['score'],
-                success: res => {
-                    let tempRankData = res.data
-                    // 排序
-                    that.rankData = that.sort(tempRankData, 'asc');
-                    // 请求个人数据
-                    that.initSelf().then(() => {
-                        // 保存个人数据
-                        that.selfData = that.normalizeSelf(that.rankData, that.self.nickName);
-                        resolve(that.rankData)
-                    })
+                success: (res) => {
+                    const { data: randData } = res;
+                    const { nickName } = this.getHWData('self');
+
+                    // 倒序排序
+                    const rank = this.sort(randData, 'asc');
+
+                    // 获取自己相对排行榜的数据
+                    const self = this.normalizeSelf(rank, nickName);
+                    resolve({ rank, self });
                 },
                 fail: res => {
-                    console.log('获取排行榜数据失败...', res)
+                    console.log('获取排行榜数据失败...', res);
+                    reject(res);
                 }
             })
         })
     }
 
-    // 初始化群排行榜数据并排序
-    initGroupRankData(data) {
-        const { shareTicket } = data;
+    /**
+     * 初始化群排行榜数据并排序
+     * */
+    initGroupRankData(shareTicket) {
         return new Promise((resolve, reject) => {
-            if(this.rankData) return resolve(data);
-            const that = this;
+
+            if(shareTicket === 'noStareTicket') {
+                reject();
+                return false;
+            }
+
             wx.getGroupCloudStorage({
-                shareTicket: shareTicket,
+                shareTicket,
                 keyList: ['score'],
                 success: res => {
-                    let tempRankData = res.data
-                    // 排序
-                    that.rankData = that.sort(tempRankData, 'asc', 1)
-                    // 请求个人数据
-                    console.log('请求群排行榜', that.rankData)
-                    that.initSelf().then(() => {
-                        // 保存个人数据
-                        // that.selfData = that.rankData
-                        that.selfData = that.normalizeSelf(that.rankData, that.self.nickName)
-                        console.log('群排行数据内部个人数据请求',that.selfData)
-                        resolve()
-                    })
+                    const { data: rankData } = res;
+                    const { nickName } = this.getHWData('self');
+
+                    // 倒序排序
+                    const rank = this.sort(rankData, 'asc', 1);
+
+                    // 获取自己相对排行榜的数据
+                    const self = this.normalizeSelf(rank, nickName);
+                    resolve({ rank, self });
                 },
-                fail: res => console.log('获取群的排行榜数据失败...')
+                fail: res => {
+                    console.log('获取群的排行榜数据失败...', res);
+                    reject(res);
+                }
             })
         })
     }
 
-        
-    initWorldRankData(data) {
-        this.rankData = data.ranks
-        this.rankData.map(e=>{
-            e['KVDataList'] = []
-            e['KVDataList'].push({value: e.score})
-            e.avatarUrl = e.headimgurl
-        })
-        this.selfData = data.user
-        this.selfData['KVDataList'] = []
-        this.selfData['KVDataList'].push({value: this.selfData.score})
-        this.selfData.avatarUrl = this.selfData.headimgurl
+    /**
+     * 初始化世界排行榜
+     * */
+    initWorldRankData({ list, self }) {
+        const rankData = list;
+        rankData.map(e =>{
+            e['KVDataList'] = [];
+            e['KVDataList'].push({ value: e.score });
+            e.avatarUrl = e.headimgurl;
+            delete e.score;
+        });
+
+        const { score, headimgurl } = self;
+
+        const selfData = self;
+        selfData['KVDataList'] = [];
+        selfData['KVDataList'].push({ value: score });
+        selfData.avatarUrl = headimgurl;
+        delete selfData.score;
+
+        return { rank: rankData, self: selfData }
     }
 
-    // 初始化个人信息
+    /**
+     * 初始化个人信息
+     * */
     initSelf() {
-        return new Promise((resolve) => {
-            let that = this;
+        return new Promise((resolve, reject) => {
             wx.getUserInfo({
                 openIdList: ['selfOpenId'],
                 success: res => {
-                    that.self = res.data[0];
-                    resolve()
+                    const self = res.data[0];
+                    resolve(self);
                 },
-                fail: () => {
-                    console.log('请求个人信息失败...')
+                fail: (res) => {
+                    console.log('请求个人信息失败...');
+                    reject(res);
                 }
             })
         })
@@ -219,9 +238,9 @@ export default class Init {
     // 获取排行中的用户数据，并添加排名
     normalizeSelf (arr, nickname) {
         for (var i = 0; i < arr.length; i++) {
-            if (arr[i].nickname == nickname) {
+            if (arr[i].nickname === nickname) {
                 arr[i].rank = i + 1;
-                return arr[i]
+                return arr[i];
             }
         }
         console.log('没有分数记录...')
@@ -273,8 +292,76 @@ export default class Init {
         // }
     }
 
-    getHWData() {
-        return wx.HWData;
+    /**
+     * 获取HWData数据
+     * @params key {String} 数据下标
+     * @return {Object} 如果不传"key"那么返回所有,否则返回指定下标
+     * */
+    getHWData(key) {
+        return key ? wx.HWData[key] : wx.HWData;
+    }
+
+    /**
+     * 设置HWData数据
+     * @params key {String} 数据下标
+     * @params value {String} 数据内容
+     * */
+    setHWData(key, value) {
+        wx.HWData[key] = value;
+    }
+
+    /**
+     * 设置排行榜数据
+     * @params score {Number} 需要更新的分数
+     * @return {Object} 返回更新后的排行榜对象
+     * */
+    setRankData(score) {
+        const { friendRank, groupRank, worldRank } = this.getHWData();
+
+        const rankList = [{
+                name: 'friendRank',
+                data: friendRank,
+            },{
+                name: 'groupRank',
+                data: groupRank,
+            },{
+                name: 'worldRank',
+                data: worldRank,
+            }];
+
+        for (let [k, v] of rankList.entries()) {
+            const { name, data } = v;
+
+            if (Object.keys(data).length <= 0) continue;
+
+            const { list, self } = data;
+
+            const index = list.findIndex(e => e.nickname === self.nickname);
+            list[index].KVDataList[0].value = score;
+
+            const newList = k === 1 ? this.sort(list, 'asc', 1) : this.sort(list, 'asc');
+            const newSelf = this.normalizeSelf(newList, self.nickname);
+
+            this.setHWData(name, { list: newList, self: newSelf });
+        }
+    }
+
+    /**
+     * 重新回调获取排行榜数据
+     * @params key {String} 需要获取的排行榜下标
+     * @params cb {Function} 递归方法
+     * @params duration {Number} 精确到毫秒, 递归延迟时间, 默认500毫秒
+     * @return {Object} 返回最新的排行榜对象
+     * */
+    refreshRankData(key, cb, duration = 500) {
+        const rank = this.getHWData(key);
+        if (Object.keys(rank).length <= 0) {
+            console.log('qwe: ', rank);
+            setTimeout(cb, duration);
+        } else {
+            console.log('aaa: ', rank);
+            return rank;
+        }
     }
 }
 

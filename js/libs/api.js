@@ -1,4 +1,4 @@
-const API_HOST = 'prod';
+const API_HOST = 'test';
 let host;
 
 switch (API_HOST) {
@@ -7,7 +7,7 @@ switch (API_HOST) {
         break;
     case 'test':
         // 泓骅地址
-        host = 'http://192.168.6.183:3000';
+        host = 'http://192.168.6.183:2002';
         break;
     default:
         // 强子地址

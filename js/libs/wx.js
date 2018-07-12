@@ -119,7 +119,7 @@ export default class WX extends UTIL {
                     this.code = code;
 
                     this.getAccessToken()
-                        .then(e => {
+                        .finally(() => {
                             $loader.hide();
                         });
 
