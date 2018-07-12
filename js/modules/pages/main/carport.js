@@ -169,8 +169,6 @@ export default class Carport extends UTIL {
             pageName: 'carportContentPage',
             point: [x1, y1, x2, y2],
             cb: () => {
-                console.log(this.list[this.index]);
-
                 const { carId, modelUrl, modelPic, modelSize, modelRealSize, unlock, speed, speedMax, speedStep, levelSpeed, speedStepMax } = this.list[this.index];
 
                 if (unlock) {
