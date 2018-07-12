@@ -101,7 +101,6 @@ export default class Init {
                 success: (res) => {
                     const { data: randData } = res;
                     const { nickName } = this.getHWData('self');
-
                     // 倒序排序
                     const rank = this.sort(randData, 'asc');
 
@@ -143,7 +142,7 @@ export default class Init {
                     resolve({ rank, self });
                 },
                 fail: res => {
-                    console.log('获取群的排行榜数据失败...', res);
+                    console.log('获取群排行榜数据失败...', res);
                     reject(res);
                 }
             })
@@ -176,10 +175,10 @@ export default class Init {
     /**
      * 初始化个人信息
      * */
-    initSelf() {
+    initSelf(openId) {
         return new Promise((resolve, reject) => {
             wx.getUserInfo({
-                openIdList: ['selfOpenId'],
+                openIdList: [openId],
                 success: res => {
                     const self = res.data[0];
                     resolve(self);
@@ -274,22 +273,19 @@ export default class Init {
 
     /**
      * 更新微信分数
+     * @params {Number} 提交的分数
      * */
     updateWxScore(score) {
-        // const { KVDataList } = this.selfData;
-        // const { value } = KVDataList[0];
-        //
-        // if (score > value) {
         wx.setUserCloudStorage({
             KVDataList: [{ key: "score", value: String(score) }],
             success: (e) => {
-                console.log('更新数分成功: ', score)
+                console.log('更新分数成功: ', score);
             },
-            fail: () => {
+            fail: (e) => {
+                console.log('更新分数: ', e);
             },
             complete: () => {}
         })
-        // }
     }
 
     /**
@@ -337,7 +333,12 @@ export default class Init {
             const { list, self } = data;
 
             const index = list.findIndex(e => e.nickname === self.nickname);
-            list[index].KVDataList[0].value = score;
+            if (index < 0) {
+                const newSelfRankData = this.setNewRankData(score);
+                list.push(newSelfRankData);
+            } else {
+                list[index].KVDataList[0].value = score;
+            }
 
             const newList = k === 1 ? this.sort(list, 'asc', 1) : this.sort(list, 'asc');
             const newSelf = this.normalizeSelf(newList, self.nickname);
@@ -347,21 +348,23 @@ export default class Init {
     }
 
     /**
-     * 重新回调获取排行榜数据
-     * @params key {String} 需要获取的排行榜下标
-     * @params cb {Function} 递归方法
-     * @params duration {Number} 精确到毫秒, 递归延迟时间, 默认500毫秒
-     * @return {Object} 返回最新的排行榜对象
+     * 设置首次玩游戏的数据
+     * @params {String} 分数
+     * @return {Object} 根据个人信息生成的排行榜数据
      * */
-    refreshRankData(key, cb, duration = 500) {
-        const rank = this.getHWData(key);
-        if (Object.keys(rank).length <= 0) {
-            console.log('qwe: ', rank);
-            setTimeout(cb, duration);
-        } else {
-            console.log('aaa: ', rank);
-            return rank;
-        }
+    setNewRankData(score) {
+        const { avatarObj, avatarUrl, nickName, openId } = this.getHWData('self');
+
+        return {
+            KVDataList: [{
+                key: 'score',
+                value: score
+            }],
+            avatarObj,
+            avatarUrl,
+            nickname: nickName,
+            openid: openId
+        };
     }
 }
 

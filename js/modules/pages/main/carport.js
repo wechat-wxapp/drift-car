@@ -169,7 +169,9 @@ export default class Carport extends UTIL {
             pageName: 'carportContentPage',
             point: [x1, y1, x2, y2],
             cb: () => {
-                const { carId, modelUrl, modelPic, modelSize, modelRealSize, unlock } = this.list[this.index];
+                console.log(this.list[this.index]);
+
+                const { carId, modelUrl, modelPic, modelSize, modelRealSize, unlock, speed, speedMax, speedStep, levelSpeed, speedStepMax } = this.list[this.index];
 
                 if (unlock) {
                     const model = {
@@ -177,12 +179,17 @@ export default class Carport extends UTIL {
                         model: modelUrl,
                         material: modelPic,
                         modelSize: modelSize,
-                        physicalSize: modelRealSize
+                        physicalSize: modelRealSize,
+                        speed,
+                        speedMax,
+                        speedStep,
+                        levelSpeed,
+                        speedStepMax
                     };
 
                     $cache.setGameData('car', model);
 
-                    carClass.createCar(model);
+                    carClass.createCar();
                 }
 
                 this.setTexture();

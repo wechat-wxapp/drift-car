@@ -9,11 +9,6 @@ import pageLoading from './loading';
  * 2d canvas函数
  */
 export default class Page extends UTIL {
-    currentSpeedRecord = {
-        x: 0,
-        z: 0
-    };
-
     constructor() {
         super();
         this.page();
@@ -67,10 +62,6 @@ export default class Page extends UTIL {
      * 设置当前未知
      * */
     setPosition() {
-        // offCanvasSprite.position.x += speedRecord.x - this.currentSpeedRecord.x;
-        // offCanvasSprite.position.z -= speedRecord.z - this.currentSpeedRecord.z;
-        //
-        // this.currentSpeedRecord = speedRecord;
         offCanvasSprite.position.set(-11.75, 78.44, 20);
         offCanvasSprite.position.x += speedRecord.x;
         offCanvasSprite.position.z -= speedRecord.z;

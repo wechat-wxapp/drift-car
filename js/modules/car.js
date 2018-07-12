@@ -15,20 +15,16 @@ export default class Car extends UTIL {
     /**
      * 创建车模型
      */
-    createCar(data) {
-        // const material = "https://static.cdn.24haowan.com/24haowan/test/js/newcar1.png";
-        // const model = 'https://static.cdn.24haowan.com/24haowan/test/js/newcar1.obj';
-        // // const material = "https://static.cdn.24haowan.com/24haowan/test/js/car2.png";
-        // // const model = 'https://static.cdn.24haowan.com/24haowan/test/js/car4.obj';
-
+    createCar() {
         if (carBodys && car) this.removeCar();
 
         const carCache = $cache.getGameData('car');
 
-        const currentModel = data || carCache;
+        // 设置车辆速度属性
+        this.setCarSpeed();
 
         if (carList.length > 0) {
-            const cacheCar = carList.find(v => v.data.id === currentModel.id);
+            const cacheCar = carList.find(v => v.data.id === carCache.id);
             if (cacheCar) {
                 const { car: carCache, physical } = cacheCar;
 
@@ -43,11 +39,24 @@ export default class Car extends UTIL {
         }
 
         // 加载汽车
-        return this.loadCar(currentModel);
+        return this.loadCar(carCache);
+    }
+
+    /**
+     * 设置车辆速度属性
+     * */
+    setCarSpeed() {
+        const { speed: s, speedMax: sm, speedStep: ss, levelSpeed: ls, speedStepMax: ssm } = $cache.getGameData('car');
+        speed = s;
+        speedMax = sm;
+        speedStep = ss;
+        levelSpeed = ls;
+        speedStepMax = ssm;
     }
 
     /**
      * 开始加载汽车
+     * @params {Object} 模型配置
      * */
     loadCar(modelData) {
         const { model, material, modelSize, physicalSize } = modelData;

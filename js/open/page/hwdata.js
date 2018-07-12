@@ -26,30 +26,35 @@ export default class HWData extends Init {
      * @params {Object} 参数, 格式: { shareTicket: 群组排行榜key, worldRank: 世界排行榜数据 }
      * */
     initData(data) {
-        const { shareTicket, worldRank } = data;
+        const { openId, shareTicket, worldRank } = data;
 
         // 初始化个人数据
-        this.initSelf().then(e => {
-            wx.HWData.self = e;
+        this.initSelf(openId)
+            .then(e => {
+                // 预加载个人信息头像
+                this.loadSelfImg(e)
+                    .then(val => {
+                        wx.HWData.self = val;
+                    });
 
-            // 初始化好友排行榜数据
-            this.friendRankData()
-                .then(({ rank, self }) => {
-                    this.setRankCache('friendRank', { list: rank, self });
-                });
-            // 初始化群组排行榜数据
-            this.initGroupRankData(shareTicket)
-                .then(({ rank, self }) => {
-                    this.setRankCache('groupRank', { list: rank, self });
-                })
-                .catch(e => {
-                    console.log('缓存排行榜失败: ', e);
-                });
+                // 初始化好友排行榜数据
+                this.friendRankData()
+                    .then(({ rank, self }) => {
+                        this.setRankCache('friendRank', { list: rank, self });
+                    });
+                // 初始化群组排行榜数据
+                this.initGroupRankData(shareTicket)
+                    .then(({ rank, self }) => {
+                        this.setRankCache('groupRank', { list: rank, self });
+                    })
+                    .catch(e => {
+                        console.log('缓存群排行榜失败: ', e);
+                    });
 
-            // 初始化世界排行榜
-            const { rank, self } = this.initWorldRankData(worldRank);
-            this.setRankCache('worldRank', { list: rank, self });
-        });
+                // 初始化世界排行榜
+                const { rank, self } = this.initWorldRankData(worldRank);
+                this.setRankCache('worldRank', { list: rank, self });
+            });
     }
 
     /**
@@ -59,12 +64,36 @@ export default class HWData extends Init {
      * */
     setRankCache(key, data) {
         const { list, self } = data;
-        this.loadImg(list)
+        this.loadRankImg(list)
             .then((e) => {
-                const { avatarObj } = list.find(v => v.nickname === self.nickname);
-                avatarObj && (self.avatarObj = avatarObj);
-                this.setHWData(key, { list: e, self });
+                try {
+                    const { avatarObj } = list.find(v => v.nickname === self.nickname);
+                    avatarObj && (self.avatarObj = avatarObj);
+                    this.setHWData(key, { list: e, self });
+                } catch (err) {
+                    const newUser = this.setNewRankData(0);
+                    e.push(newUser);
+                    const rankUser = this.normalizeSelf(e, newUser.nickname);
+                    this.setHWData(key, { list: e, self: rankUser });
+                }
             });
+    }
+
+    /**
+     * 缓存个人信息数据
+     * @params {Object} 个人数据对象
+     * @return {Object} 缓存后的个人数据对象, 缓存头像保存在 avatarObj
+     * */
+    loadSelfImg(self) {
+        return new Promise((res, rej) => {
+            const { avatarUrl } = self;
+            const img = wx.createImage();
+            img.src = avatarUrl;
+            img.onload = () => {
+                self.avatarObj = img;
+                res(self);
+            };
+        });
     }
 
     /**
@@ -72,7 +101,7 @@ export default class HWData extends Init {
      * @params {Array} 排行榜数组
      * @return {Array} 预加载后排行榜数组, 加载后图片对象保存在 avatarObj 字段
      * */
-    loadImg(list) {
+    loadRankImg(list) {
         let loadLength = 0;
         return new Promise((res, rej) => {
             for (let [k, v] of list.entries()) {

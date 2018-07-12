@@ -6,6 +6,15 @@ import Init from './init';
 export default class Resurgence extends Init {
     constructor() {
         super();
+
+        this.endHeader = wx.createImage();
+        this.endHeader.src = 'images/end-header.png';
+
+        this.rankOne = wx.createImage();
+        this.rankOne.src = 'images/rankOne.png';
+
+        this.rePlay = wx.createImage();
+        this.rePlay.src = 'images/reseur-rePlay.png';
     }
 
     /**
@@ -18,9 +27,9 @@ export default class Resurgence extends Init {
         this.rankData = list;
         this.selfData = self;
 
-        const endHeader = wx.createImage();
-        endHeader.src = 'images/end-header.png';
-        this.cvs.drawImage(endHeader, 0, 0, endHeader.width, endHeader.height, this.computedSizeW(95), this.computedSizeH(239), this.computedSizeW(endHeader.width), this.computedSizeH(endHeader.height));
+        // const endHeader = wx.createImage();
+        // endHeader.src = 'images/end-header.png';
+        this.cvs.drawImage(this.endHeader, 0, 0, this.endHeader.width, this.endHeader.height, this.computedSizeW(95), this.computedSizeH(239), this.computedSizeW(this.endHeader.width), this.computedSizeH(this.endHeader.height));
 
         // 白色背景
         this.cvs.fillStyle = "#fff";
@@ -47,9 +56,9 @@ export default class Resurgence extends Init {
             });
 
             if (myFri === null) {
-                const rankOne = wx.createImage();
-                rankOne.src = 'images/rankOne.png';
-                this.cvs.drawImage(rankOne, 0, 0, rankOne.width, rankOne.height, this.winWidth / 2 - this.computedSizeW(326) / 2, this.computedSizeH(456), this.computedSizeW(326), this.computedSizeH(25));
+                // const rankOne = wx.createImage();
+                // rankOne.src = 'images/rankOne.png';
+                this.cvs.drawImage(this.rankOne, 0, 0, this.rankOne.width, this.rankOne.height, this.winWidth / 2 - this.computedSizeW(326) / 2, this.computedSizeH(456), this.computedSizeW(326), this.computedSizeH(25));
             } else {
                 this.cvs.fillStyle = "#999";
                 this.cvs.font = `${this.computedSizeW(26)}px Arial`;
@@ -75,9 +84,9 @@ export default class Resurgence extends Init {
             }
         }
 
-        const rePlay = wx.createImage();
-        rePlay.src = 'images/reseur-rePlay.png';
-        this.cvs.drawImage(rePlay, 0, 0, rePlay.width, rePlay.height, this.computedSizeW(155), this.computedSizeH(877), this.computedSizeW(440), this.computedSizeH(100));
+        // const rePlay = wx.createImage();
+        // rePlay.src = 'images/reseur-rePlay.png';
+        this.cvs.drawImage(this.rePlay, 0, 0, this.rePlay.width, this.rePlay.height, this.computedSizeW(155), this.computedSizeH(877), this.computedSizeW(440), this.computedSizeH(100));
         // this.cvs.fillStyle = "#fff";
         // this.cvs.font = `bold ${this.computedSizeW(36)}px Arial`;
         // this.cvs.textAlign = "center";

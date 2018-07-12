@@ -220,6 +220,8 @@ export default class UTIL {
      * 失败重置信息
      * */
     end() {
+        const { speed: s } = $cache.getGameData('car');
+
         // 重置分数
         score = 0;
 
@@ -227,7 +229,7 @@ export default class UTIL {
         level = 0;
 
         // 重置速度
-        speed = 2.5;
+        speed = s;
         speedKey = 0;
         lastSpeedKey = 0;
 

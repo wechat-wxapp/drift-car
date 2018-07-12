@@ -178,8 +178,13 @@ export default class Loader extends UTIL {
     loadWorldRank() {
         return $io.getWorldRank()
             .then(({ payload: { user, ranks } }) =>{
+                const { openid } = $cache.getCache('accessToken');
 
-                $wx.sendMessage('initHwData', { shareTicket: $wx.shareTicket, worldRank: { list: ranks, self: user } });
+                $wx.sendMessage('initHwData', {
+                    openId: openid,
+                    shareTicket: $wx.shareTicket,
+                    worldRank: { list: ranks, self: user }
+                });
             });
     }
 

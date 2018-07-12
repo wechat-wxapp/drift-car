@@ -21,7 +21,7 @@ const beyondPage = new BeyondPage();
 wx.onMessage(({ command, data = {}}) => {
     switch (command) {
         case 'end':
-            endPage.setTexture(data);
+            endPage.setData(data);
             break;
         case 'reseur':
             reseurPage.setTexture(data);
