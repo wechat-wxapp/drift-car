@@ -11,7 +11,6 @@ export default class Beyond extends Init {
     }
 
     reset() {
-        this.timerKey = 0;
         this.currentScore = 0;
     }
 
@@ -33,22 +32,18 @@ export default class Beyond extends Init {
         //     this.cvs.drawImage(avatar, 0, 0, avatar.width, avatar.height, 0, this.computedSizeH(25), this.computedSizeW(70), this.computedSizeH(70));
         // };
 
-        const { list } = this.getHWData('friendRank');
+        const { list, self } = this.getHWData('friendRank');
 
         if (!list) return false;
 
         const currentData = list.find(v => {
-            const val = v.KVDataList[0].value;
-            return score > Number(val) && val > this.currentScore;
+            const val = Number(v.KVDataList[0].value);
+            return score > val && val > Number(this.currentScore) && self.openid !== v.openid;
         });
 
         if (currentData) {
 
-            this.timerKey += 1;
-
-            if (this.timerKey >= 2) {
-                this.currentScore = currentData.KVDataList[0].value;
-            }
+            this.currentScore = currentData.KVDataList[0].value;
 
             this.cvs.fillStyle = "#fff";
             this.cvs.textAlign = 'left';
@@ -64,8 +59,7 @@ export default class Beyond extends Init {
                     this.cvs.drawImage(avatar, 0, 0, avatar.width, avatar.height, 0, this.computedSizeH(23), this.computedSizeW(70), this.computedSizeH(70));
                 };
             }
-        } else if (!currentData || this.timerKey >= 2) {
-            this.timerKey = 0;
+        } else if (!currentData) {
             this.clearCvs(true, true);
         }
     }
