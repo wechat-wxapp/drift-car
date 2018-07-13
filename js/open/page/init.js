@@ -99,7 +99,6 @@ export default class Init {
             wx.getFriendCloudStorage({
                 keyList: ['score'],
                 success: (res) => {
-                    console.log(res);
                     const { data: randData } = res;
                     const { nickName } = this.getHWData('self');
                     // 倒序排序
