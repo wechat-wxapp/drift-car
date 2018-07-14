@@ -34,7 +34,7 @@ export default class Main extends UTIL {
 
         // 创建全局绑定对象
         events = new bindEvent();
-        
+
         // 创建音乐播放器
         music = new Music();
 
@@ -213,7 +213,7 @@ export default class Main extends UTIL {
                     if(currentW <= -1.62) {
                         isTurning = false;
                         movekey = 'x';
-                        this.turnSpringback = true;
+                        turnSpringback = true;
                     }
                 } else {
                     currentW = currentW + currentSpeed / 30;
@@ -222,16 +222,16 @@ export default class Main extends UTIL {
                     if(currentW >= 0.05) {
                         isTurning = false;
                         movekey = 'z';
-                        this.turnSpringback = true;
+                        turnSpringback = true;
                     }
                 }
                
             }else {
                 this.slowDownFlag = false;
-                if(this.turnSpringback) {
+                if(turnSpringback) {
                     if(currentSpeed >= speed) {
                         currentSpeed = speed;
-                        this.turnSpringback = false;
+                        turnSpringback = false;
                     }else {
                         currentSpeed += speed / 36;
                     }
@@ -246,17 +246,17 @@ export default class Main extends UTIL {
                     // beyondCanvasSprite.position.x += speed;
                 } else {
                     this._changeZ(currentSpeed);
-                        currentW = currentW - currentSpeed / 240;
-                        if(currentW <= 0) {
-                            currentW = 0
-                        }
+                    currentW = currentW - currentSpeed / 240;
+                    if(currentW <= 0) {
+                        currentW = 0
+                    }
                     // beyondCanvasSprite.position.z -= speed;
                 }
             }
             
             carBodys.quaternion.setFromAxisAngle(new CANNON.Vec3(0, 1, 0), currentW)
+            // console.log(`=======,当前speed速度${speed},当前currentSpeed速度${currentSpeed}`)
         }
-
         // cannonDebugRenderer && cannonDebugRenderer.update();
         renderer.setClearColor('#428bca', 1.0);
         renderer.render(scene, camera)

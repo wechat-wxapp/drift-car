@@ -86,10 +86,6 @@ export default class UTIL {
         // 清除超越好友
         beyondClass.clear2d();
 
-        currentW = 0;
-        currentSpeed = 0;
-        isTurning = false;
-
         this.i = 0;
         this.shakeCamera();
         // sharedClass.reseurPage();
@@ -101,7 +97,7 @@ export default class UTIL {
         //     this.showReseurPage();
         //     this.endPageTimer.closeTimeout();
         // }, 1000);
-        console.log('---结束游戏---');
+        console.log('---结束游戏---',speed,currentSpeed);
     };
 
     /**
@@ -257,7 +253,7 @@ export default class UTIL {
         // 扣减复活数
         reseurNum--;
 
-        console.log(`---成功复活 剩余复活次数: ${reseurNum} 当前分数: ${score} 当前速度: ${speed}---`);
+        console.log(`---成功复活 剩余复活次数: ${reseurNum} 当前分数: ${score} 当前speed速度: ${speed} 当前currentSpeed速度: ${currentSpeed}---`);
     }
 
     updateScore() {
@@ -280,29 +276,35 @@ export default class UTIL {
      * 首次开始音效
      * */
     readyMusic() {
+        this.startMusicTimer = $timer(({ key }) => {
+            gamePage.page(4 - key);
+            music.playReady();
+            this.startMusicTimer.closeTimeout();
+        },32);
+
         this.musicTimer = $timer(({ key }) => {
             if (key >= 3) {
                 music.playGo();
-
+                
                 // 设置开启key
                 startKey = true;
 
                 // 更新分数
                 this.updateScore();
-
+                
                 // 清空倒计时
                 gamePage.page();
-
+                
                 // 设置页面target
                 currentPage = 'gamePage';
-
+                
                 // 关闭倒计时器
                 this.musicTimer.closeTimeout();
-
+                
                 return false;
             } else {
                 // 倒计时
-                gamePage.page(3 - key);
+                gamePage.page(3 - key)
 
                 music.playReady();
             }
@@ -311,8 +313,8 @@ export default class UTIL {
         // 手动释放内存
         wx.triggerGC();
 
-        gamePage.page(3);
-        music.playReady();
+        // gamePage.page(3);
+        // music.playReady();
     }
 
     /**

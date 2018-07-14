@@ -14,13 +14,13 @@ export default class Music {
         this.bgmAudio.loop = true;
         this.bgmAudio.src  = 'sound/BGM.mp3';
 
-        this.driftAudio = new Audio();
+        this.driftAudio = wx.createInnerAudioContext();
         this.driftAudio.src = 'sound/drift.mp3';
 
         this.boomAudio = new Audio();
         this.boomAudio.src = 'sound/boom.mp3';
 
-        this.readyAudio = new Audio();
+        this.readyAudio = wx.createInnerAudioContext();
         this.readyAudio.src = 'sound/ready.mp3';
 
         this.goAudio = new Audio();
@@ -51,8 +51,11 @@ export default class Music {
     }
 
     playDrift() {
-        this.driftAudio.currentTime = 0;
-        this.playMusic(this.driftAudio);
+        // this.driftAudio.currentTime = 0;
+        this.driftAudio.seek(0);
+        this.driftAudio.stop();
+        // this.playMusic(this.driftAudio);
+        this.driftAudio.play();
     }
 
     playExplosion() {
@@ -62,7 +65,8 @@ export default class Music {
 
     playReady() {
         // this.readyAudio.pause();
-        this.readyAudio.currentTime = 0;
+        // this.readyAudio.currentTime = 0;
+        this.readyAudio.stop();
         this.playMusic(this.readyAudio);
     }
 
