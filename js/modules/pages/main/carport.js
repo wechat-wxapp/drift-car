@@ -171,6 +171,8 @@ export default class Carport extends UTIL {
             pageName: 'carportContentPage',
             point: [x1, y1, x2, y2],
             cb: () => {
+                $loader.show('正在加载车辆...');
+
                 const { carId, modelUrl, modelPic, modelSize, modelRealSize, unlock, speed, speedMax, speedStep, levelSpeed, speedStepMax } = this.list[this.index];
 
                 if (unlock) {
@@ -189,7 +191,14 @@ export default class Carport extends UTIL {
 
                     $cache.setGameData('car', model);
 
-                    carClass.createCar();
+                    carClass.createCar()
+                        .then(() => {
+                            $loader.hide();
+
+                            this.setTexture();
+                        });
+
+                    return false;
                 }
 
                 this.setTexture();

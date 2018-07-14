@@ -16,30 +16,35 @@ export default class Car extends UTIL {
      * 创建车模型
      */
     createCar() {
-        if (carBodys && car) this.removeCar();
+        return new Promise((resolve, reject) => {
+            if (carBodys && car) this.removeCar();
 
-        const carCache = $cache.getGameData('car');
+            const carCache = $cache.getGameData('car');
 
-        // 设置车辆速度属性
-        this.setCarSpeed();
+            // 设置车辆速度属性
+            this.setCarSpeed();
 
-        if (carList.length > 0) {
-            const cacheCar = carList.find(v => v.data.id === carCache.id);
-            if (cacheCar) {
-                const { car: carCache, physical } = cacheCar;
+            if (carList.length > 0) {
+                const cacheCar = carList.find(v => v.data.id === carCache.id);
+                if (cacheCar) {
+                    const { car: carCache, physical } = cacheCar;
 
-                car = carCache;
-                carBodys = physical;
+                    car = carCache;
+                    carBodys = physical;
 
-                // 添加车辆
-                this.addCar();
-
-                return false;
+                    // 添加车辆
+                    this.addCar();
+                    resolve();
+                    return false;
+                }
             }
-        }
 
-        // 加载汽车
-        return this.loadCar(carCache);
+            // 加载汽车
+            this.loadCar(carCache)
+                .then(() => {
+                    resolve();
+                });
+        });
     }
 
     /**
@@ -61,7 +66,7 @@ export default class Car extends UTIL {
     loadCar(modelData) {
         const { model, material, modelSize, physicalSize } = modelData;
 
-        return new Promise((res, rej) => {
+        return new Promise((resolve, reject) => {
             this.createObj(model, material, (obj) => {
                 car = obj;
 
@@ -79,7 +84,7 @@ export default class Car extends UTIL {
                 // 添加车辆
                 this.addCar();
 
-                res();
+                resolve();
             });
         });
     }
