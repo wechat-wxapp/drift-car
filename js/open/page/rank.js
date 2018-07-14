@@ -115,9 +115,7 @@ export default class Rank extends Init {
     }
     const middlewareTimer = ()=> {
       setTimeout(() => {
-        console.log('aaa')
         if(wx.HWData.loadingKey) {
-          console.log('000000',wx.HWData.loadingKey)
           middlewareTimer();
         }else {
           if(!data.isDriving || (data.isDriving === 'next' && !this.noNext) || (data.isDriving === 'pre' && !this.noPre)) {

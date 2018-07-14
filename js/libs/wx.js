@@ -28,7 +28,7 @@ export default class WX extends UTIL {
         openDataContext = wx.getOpenDataContext();
         wx.showShareMenu({ withShareTicket: true });
 
-        this.shareTicket = wx.getLaunchOptionsSync().shareTicket || 'noStareTicket';
+        this.shareTicket = wx.getLaunchOptionsSync().shareTicket || 'noShareTicket';
 
         openDataContext.postMessage({
             command: 'init',

@@ -104,7 +104,7 @@ export default class Init {
     initGroupRankData(shareTicket) {
         return new Promise((resolve, reject) => {
 
-            if(shareTicket === 'noStareTicket') {
+            if(shareTicket === 'noShareTicket') {
                 reject();
                 return false;
             }

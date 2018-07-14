@@ -537,7 +537,7 @@ export default class Shared extends UTIL {
      * 群排行榜页面
      * */
     showGroupRankPage() {
-        if($wx.shareTicket !== 'noStareTicket') {
+        if($wx.shareTicket !== 'noShareTicket') {
             $wx.startBtn.hide();
 
             isSharedLoop = true;
@@ -635,7 +635,7 @@ export default class Shared extends UTIL {
         isSharedLoop = true;
         currentPage = 'friendRank';
         //禁止从这里进去缩放
-        this.showPage('friendRank', { noScale: $wx.shareTicket === 'noShareTicket' }, true);
+        this.showPage('friendRank', { noScale: $wx.shareTicket !== 'noShareTicket' }, true);
     }
 
     /**
