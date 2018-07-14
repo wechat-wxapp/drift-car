@@ -232,8 +232,8 @@ export default class Start extends UTIL {
 
         offCanvas2d.clearRect(0, 0, winWidth, winHeight);
 
-        offCanvas2d.fillStyle = "#647fdc";
-        offCanvas2d.fillRect(0, 0, winWidth, winHeight);
+        // offCanvas2d.fillStyle = "#647fdc";
+        // offCanvas2d.fillRect(0, 0, winWidth, winHeight);
 
         offCanvas2d.drawImage(this.bg, 0, 0, this.bg.width, this.bg.height, 0, 0, winWidth, winHeight);
 

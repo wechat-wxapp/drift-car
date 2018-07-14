@@ -27,8 +27,6 @@ export default class Resurgence extends Init {
         this.rankData = list;
         this.selfData = self;
 
-        // const endHeader = wx.createImage();
-        // endHeader.src = 'images/end-header.png';
         this.cvs.drawImage(this.endHeader, 0, 0, this.endHeader.width, this.endHeader.height, this.computedSizeW(95), this.computedSizeH(239), this.computedSizeW(this.endHeader.width), this.computedSizeH(this.endHeader.height));
 
         // 白色背景

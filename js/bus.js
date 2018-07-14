@@ -10,7 +10,11 @@ const constantData = {
 
 // 普通变量
 const basicData = {
+    // 3d场景
     scene: '',
+    // 普通2d场景
+    uiScene: '',
+    sceneTarget: '2d',
     renderer: '',
     camera: '',
     car: '',
@@ -244,8 +248,8 @@ const basicData = {
 
     // 计时器组
     timerArr: [],
-
-    offCanvas: '',
+    // 计时器锁
+    timerKey: true,
 
     // 排行榜当前页数
     rankCurrentPage: 1,
@@ -356,7 +360,7 @@ export default class Bus{
         carBodys.quaternion.setFromAxisAngle(new CANNON.Vec3(0, 1, 0), 0);
 
         // 普通画布
-        offCanvasSprite.position.set(-11.75, 78.44, 20);
+        // offCanvasSprite.position.set(-11.75, 78.44, 20);
         // 分数
         scoreCanvasSprite.position.set(-10, 82.8, 9);
         // 超越好友
@@ -365,5 +369,11 @@ export default class Bus{
 
         camera.position.set(-16.738086885462103, 90.533387653514225, 28.513221776822927);
         camera.rotation.set(-0.9577585082113045, -0.3257201862210706, -0.42691147594250245);
+
+        // 全屏不能点击
+        currentPage = 'off';
+
+        // 开始游戏关闭开放域帧循环
+        isSharedLoop = false;
     }
 }

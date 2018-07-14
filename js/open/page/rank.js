@@ -226,11 +226,11 @@ export default class Rank extends Init {
     
 
   friendRank(){
-    this.cvs.drawImage(this.friendRankOn, 0, 0, this.friendRankOn.width, this.friendRankOn.height, this.computedSizeW(95), this.computedSizeH(172), this.computedSizeW(280), this.computedSizeH(119));
+    this.cvs.drawImage(this.friendRankOn, 0, 0, this.friendRankOn.width, this.friendRankOn.height, this.computedSizeW(95), this.computedSizeH(172), this.computedSizeW(280), this.computedSizeW(119));
     
-    this.cvs.drawImage(this.worldRankOff, 0, 0, this.worldRankOff.width, this.worldRankOff.height, this.computedSizeW(376), this.computedSizeH(172), this.computedSizeW(280), this.computedSizeH(119));
+    this.cvs.drawImage(this.worldRankOff, 0, 0, this.worldRankOff.width, this.worldRankOff.height, this.computedSizeW(376), this.computedSizeH(172), this.computedSizeW(280), this.computedSizeW(119));
     
-    this.cvs.drawImage(this.goGroupRank, 0, 0, this.goGroupRank.width, this.goGroupRank.height, this.computedSizeW(481), this.computedSizeH(1139), this.computedSizeW(174), this.computedSizeH(63));
+    this.cvs.drawImage(this.goGroupRank, 0, 0, this.goGroupRank.width, this.goGroupRank.height, this.computedSizeW(481), this.computedSizeH(1139), this.computedSizeW(174), this.computedSizeW(63));
   }
 
   worldRank(){

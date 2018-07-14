@@ -33,6 +33,7 @@ export default class EndPage extends Init {
      * @params {Object} 分数对象
      * */
     setData(data) {
+        console.log();
         this.setClassData();
         const { score } = data;
 
@@ -81,10 +82,10 @@ export default class EndPage extends Init {
     setTexture({ score, maxScore }) {
         this.clearCvs();
 
-        this.cvs.drawImage(this.endHeader, 0, 0, this.endHeader.width, this.endHeader.height, this.computedSizeW(95), this.computedSizeH(182), this.computedSizeW(this.endHeader.width), this.computedSizeH(this.endHeader.height));
-
         this.cvs.fillStyle = "#fff";
-        this.cvs.fillRect(this.computedSizeW(95), this.computedSizeH(395), this.computedSizeW(560), this.computedSizeH(510));
+        this.cvs.fillRect(this.computedSizeW(95), this.computedSizeH(240), this.computedSizeW(560), this.computedSizeH(680));
+
+        this.cvs.drawImage(this.endHeader, 0, 0, this.endHeader.width, this.endHeader.height, this.computedSizeW(95), this.computedSizeH(181), this.computedSizeW(this.endHeader.width), this.computedSizeW(this.endHeader.height));
 
         this.cvs.fillStyle = "#333";
         this.cvs.textAlign = "center";

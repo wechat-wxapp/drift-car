@@ -83,6 +83,9 @@ export default class UTIL {
         // 重启游戏
         // this.restart();
 
+        // 设置渲染场景
+        sceneTarget = '2d';
+
         // 清除超越好友
         beyondClass.clear2d();
 
@@ -92,15 +95,6 @@ export default class UTIL {
 
         this.i = 0;
         this.shakeCamera();
-        // sharedClass.reseurPage();
-
-        // 显示结束页
-        // this.endPageTimer = $timer(() => {
-        //     // this.restart();
-        //     // camera.position.set(obj.x,obj.y,obj.z)
-        //     this.showReseurPage();
-        //     this.endPageTimer.closeTimeout();
-        // }, 1000);
         console.log('---结束游戏---');
     };
 
@@ -137,7 +131,6 @@ export default class UTIL {
      * 显示结束页面
      * */
     showReseurPage() {
-        this.loopShakeTimer.closeTimeout();
         if (reseurNum === 0) {
             sharedClass.endPage();
         } else {
@@ -176,12 +169,6 @@ export default class UTIL {
      * 重置游戏
      * */
     restart(isReseur) {
-        // 全屏不能点击
-        currentPage = 'off';
-
-        // 开始游戏关闭开放域帧循环
-        isSharedLoop = false;
-
         this.clearWorld();
 
         // 重置变量
@@ -308,6 +295,9 @@ export default class UTIL {
             }
         }, 1500);
 
+        // 设置渲染场景
+        sceneTarget = '3d';
+
         // 手动释放内存
         wx.triggerGC();
 
@@ -327,13 +317,63 @@ export default class UTIL {
     }
 
     /**
-     * 计算当前屏幕相对于 414 * 736 的结果
+     * 创建基于Three.js的离屏canvas
+     * */
+    createCanvas2d(type, block, width, height) {
+        const cvs = block === 'shared' ? openDataContext.canvas : wx.createCanvas();
+        let cvs2d, texture2d, mesh;
+
+        if (type === '3d') {
+            texture2d = new THREE.Texture(cvs);
+            texture2d.minFilter = THREE.LinearFilter;
+
+            const spriteMaterial = new THREE.SpriteMaterial({
+                map: texture2d
+            });
+
+            mesh = new THREE.Sprite(spriteMaterial);
+        } else {
+            texture2d = new THREE.CanvasTexture(cvs);
+            texture2d.minFilter = texture2d.magFilter = THREE.LinearFilter;
+
+            const geometry = new THREE.PlaneGeometry(width, height);
+            const material = new THREE.MeshBasicMaterial({ map: texture2d, transparent: true });
+
+            mesh = new THREE.Mesh(geometry, material);
+        }
+
+        if (width && height) {
+            cvs.width = width * window.devicePixelRatio;
+            cvs.height = height * window.devicePixelRatio;
+
+            cvs2d = cvs.getContext("2d");
+
+            cvs2d.scale(window.devicePixelRatio, window.devicePixelRatio);
+        }
+
+        return {
+            cvs,
+            cvs2d,
+            texture2d,
+            mesh
+        };
+    }
+
+    /**
+     * 计算当前屏幕相对于 414 * 736 的宽
+     * @parasm {Number} 被计算的值
      * */
     computedSizeW(size) {
         return size * winWidth / 414;
     }
 
+    /**
+     * 计算当前屏幕相对于 414 * 736 的高
+     * @parasm {Number} 被计算的值
+     * */
     computedSizeH(size) {
         return size * winHeight / 736;
     }
+
+
 }
