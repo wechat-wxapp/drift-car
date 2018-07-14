@@ -46,7 +46,7 @@ export default class Car extends UTIL {
      * 设置车辆速度属性
      * */
     setCarSpeed() {
-        const { speed: s, speedMax: sm, speedStep: ss, levelSpeed: ls, speedStepMax: ssm } = $cache.getGameData('car');
+        const { speed: s, speedMax: sm, speedStep: ss, levelSpeed: ls, speedStepMax: ssm } = $cache.getCarSpeed();
         speed = s;
         speedMax = sm;
         speedStep = ss;

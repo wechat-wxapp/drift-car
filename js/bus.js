@@ -5,7 +5,18 @@ import TIMER from './libs/timer';
 // 不可变常量, 不参与全局挂载
 const constantData = {
     // 复活次数, 默认 1 次
-    reseurNum: 1
+    reseurNum: 1,
+
+    // 加速区间
+    levelSpeed: [5, 20, 40, 60, 80, 90, 120, 160, 200, 250],
+    // 初始速度
+    speed: 2.5,
+    // 最大速度
+    speedMax: 5,
+    // 每次加速步长
+    speedStep: 0.01,
+    // 累计加速步长最大值
+    speedStepMax: 0.08
 };
 
 // 普通变量
@@ -14,7 +25,7 @@ const basicData = {
     scene: '',
     // 普通2d场景
     uiScene: '',
-    sceneTarget: '2d',
+
     renderer: '',
     camera: '',
     car: '',

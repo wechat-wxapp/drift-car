@@ -16,8 +16,6 @@ import UTIL from "./modules/util";
 // 2d画布
 import page from './modules/pages/main/index';
 
-let a = 0;
-
 /**
  * 游戏主函数
  */
@@ -340,24 +338,22 @@ export default class Main extends UTIL {
     loop(progress) {
         renderer.clear();
 
+        // 渲染3d场景
         renderer.render(scene, camera);
 
-        if (sceneTarget === '3d') {
-            // 更新物理世界
-            loadKey && this.updateWorld();
-            // 生成路面
-            loadKey && this.updateRoad();
-            // 更新汽车动画
-            this.updateAnimation();
-            // 加速
-            this.updateSpeed();
-            // 回收路面
-            this.removeObj();
-        }
+        // 渲染2d场景
+        !startKey && pageClass.render();
 
-        if (!startKey) {
-            pageClass.render();
-        }
+        // 更新物理世界
+        loadKey && this.updateWorld();
+        // 生成路面
+        loadKey && this.updateRoad();
+        // 更新汽车动画
+        this.updateAnimation();
+        // 加速
+        this.updateSpeed();
+        // 回收路面
+        this.removeObj();
 
         // 刷新开放域
         this.sharedLoop();
