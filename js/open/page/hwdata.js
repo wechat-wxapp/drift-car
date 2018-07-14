@@ -44,7 +44,6 @@ export default class HWData extends Init {
                     .then(({ rank, self }) => {
                         console.log('缓存好友排行榜成功: ', { rank, self });
                         this.setRankCache('friendRank', { list: rank, self });
-                        console.log('qwe: ', this.getHWData());
                     });
                 // 初始化群组排行榜数据
                 this.initGroupRankData(shareTicket)

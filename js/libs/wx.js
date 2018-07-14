@@ -90,13 +90,25 @@ export default class WX extends UTIL {
         return new Promise((resolve, reject) => {
             const { openid, session_key } = $cache.getCache('accessToken');
             if (!openid || !session_key) {
-                this.wxLogin().then(() => {
-                    resolve();
-                });
+                this.wxLogin()
+                    .then(() => {
+                        resolve();
+                    });
             } else {
-                this.isLogin = true;
-                this.updateDate();
-                resolve();
+                this.updateDate()
+                    .then(e => {
+                        const { payload: { unknow } } = e;
+
+                        if (unknow) {
+                            this.wxLogin()
+                                .then(() => {
+                                    resolve();
+                                });
+                        } else {
+                            this.isLogin = true;
+                            resolve();
+                        }
+                    });
             }
         });
     }
@@ -105,16 +117,23 @@ export default class WX extends UTIL {
      * 更新每日
      * */
     updateDate() {
-        const accessToken = localStorage.getItem('accessToken');
+        return new Promise((resolve, reject) => {
+            const accessToken = localStorage.getItem('accessToken');
 
-        if (accessToken) {
-            $io.unlockCar({ day: true })
-            .then(e => {
-                const { payload: { hasNew } } = e;
-                $cache.setGameData('hasNew', hasNew);
-                startPage && startPage.setTexture();
-            });
-        }
+            if (accessToken) {
+                $io.unlockCar({ day: true })
+                    .then(e => {
+                        console.log('提交每日次数: ', e);
+                        const { payload: { hasNew } } = e;
+                        $cache.setGameData('hasNew', hasNew);
+                        startPage && startPage.setTexture();
+
+                        resolve(e);
+                    });
+                return false;
+            }
+            reject();
+        });
     }
 
     /**
@@ -131,11 +150,11 @@ export default class WX extends UTIL {
                         this.code = code;
 
                         this.getAccessToken()
-                        .finally(() => {
-                            $loader.hide();
+                            .finally(() => {
+                                $loader.hide();
 
-                            resolve();
-                        });
+                                resolve();
+                            });
 
                     } else {
                         $loader.hide();
@@ -159,30 +178,31 @@ export default class WX extends UTIL {
      * */
     getAccessToken() {
         console.log('当前wx.code: ', this.code);
+
         return new Promise((res, rej) => {
             $io.getAccessToken(this.code)
-            .then(token => {
-                const { code, payload: { data } } = token;
+                .then(token => {
+                    const { code, payload: { data } } = token;
 
-                console.log('成功获取openid: ', data);
+                    console.log('成功获取openid: ', data);
 
-                if (code === '0') {
+                    if (code === '0') {
+                        const { session_key, openid } = data;
 
-                    const { session_key, openid } = data;
+                        if (session_key && openid) {
+                            // 缓存openid, session_key
+                            localStorage.setItem('accessToken', data);
+                            this.updateDate();
 
-                    if (session_key && openid) {
-                        // 缓存openid, session_key
-                        localStorage.setItem('accessToken', data);
-                        this.updateDate();
-                        res(data);
+                            res(data);
+                        } else {
+                            rej();
+                        }
                     } else {
+                        console.log('接口出错: ', token);
                         rej();
                     }
-                } else {
-                    console.log('接口出错: ', token);
-                    rej();
-                }
-            });
+                });
         })
     }
 

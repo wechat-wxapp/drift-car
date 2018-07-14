@@ -16,7 +16,10 @@ export default class Scenery extends UTIL {
             this.s4(),
             this.s5(),
             this.s6(),
-            this.s7()
+            this.s7(),
+            this.s8(),
+            this.s9(),
+            this.sTree()
         ]);
     }
 
@@ -25,10 +28,8 @@ export default class Scenery extends UTIL {
      */
     s1() {
         return new Promise((res, rej) => {
-            const material = "https://static.cdn.24haowan.com/24haowan/test/js/b01.png";
-            const model = 'https://static.cdn.24haowan.com/24haowan/test/js/b01.obj';
-            // const material = "https://static.cdn.24haowan.com/24haowan/test/js/testb.png";
-            // const model = 'https://static.cdn.24haowan.com/24haowan/test/js/testb.obj';
+            const material = "https://static.cdn.24haowan.com/24haowan/test/js/b0001.png";
+            const model = 'https://static.cdn.24haowan.com/24haowan/test/js/b001.obj';
 
             this.createObj(model, material, (obj) => {
                 const scenery = obj;
@@ -47,8 +48,8 @@ export default class Scenery extends UTIL {
      * */
     s2() {
         return new Promise((res, rej) => {
-            const material = "https://static.cdn.24haowan.com/24haowan/test/js/b02.png";
-            const model = 'https://static.cdn.24haowan.com/24haowan/test/js/b02.obj';
+            const material = "https://static.cdn.24haowan.com/24haowan/test/js/b0002.png";
+            const model = 'https://static.cdn.24haowan.com/24haowan/test/js/b002.obj';
 
             this.createObj(model, material, (obj) => {
                 const scenery = obj;
@@ -68,8 +69,8 @@ export default class Scenery extends UTIL {
      * */
     s3() {
         return new Promise((res, rej) => {
-            const material = "https://static.cdn.24haowan.com/24haowan/test/js/b03.png";
-            const model = 'https://static.cdn.24haowan.com/24haowan/test/js/b03.obj';
+            const material = "https://static.cdn.24haowan.com/24haowan/test/js/b0003.png";
+            const model = 'https://static.cdn.24haowan.com/24haowan/test/js/b003.obj';
 
             this.createObj(model, material, (obj) => {
                 const scenery = obj;
@@ -89,8 +90,8 @@ export default class Scenery extends UTIL {
      * */
     s4() {
         return new Promise((res, rej) => {
-            const material = "https://static.cdn.24haowan.com/24haowan/test/js/b04.png";
-            const model = 'https://static.cdn.24haowan.com/24haowan/test/js/b04.obj';
+            const material = "https://static.cdn.24haowan.com/24haowan/test/js/b0004.png";
+            const model = 'https://static.cdn.24haowan.com/24haowan/test/js/b004.obj';
 
             this.createObj(model, material, (obj) => {
                 const scenery = obj;
@@ -110,8 +111,8 @@ export default class Scenery extends UTIL {
      * */
     s5() {
         return new Promise((res, rej) => {
-            const material = "https://static.cdn.24haowan.com/24haowan/test/js/b05.png";
-            const model = 'https://static.cdn.24haowan.com/24haowan/test/js/b05.obj';
+            const material = "https://static.cdn.24haowan.com/24haowan/test/js/b0005.png";
+            const model = 'https://static.cdn.24haowan.com/24haowan/test/js/b005.obj';
 
             this.createObj(model, material, (obj) => {
                 const scenery = obj;
@@ -131,8 +132,8 @@ export default class Scenery extends UTIL {
      * */
     s6() {
         return new Promise((res, rej) => {
-            const material = "https://static.cdn.24haowan.com/24haowan/test/js/b06.png";
-            const model = 'https://static.cdn.24haowan.com/24haowan/test/js/b06.obj';
+            const material = "https://static.cdn.24haowan.com/24haowan/test/js/b0006.png";
+            const model = 'https://static.cdn.24haowan.com/24haowan/test/js/b006.obj';
 
             this.createObj(model, material, (obj) => {
                 const scenery = obj;
@@ -149,12 +150,74 @@ export default class Scenery extends UTIL {
 
     /**
      * 风景7
-     * 小风景
      * */
     s7() {
         return new Promise((res, rej) => {
-            const material = "https://static.cdn.24haowan.com/24haowan/test/js/b-small.png";
-            const model = 'https://static.cdn.24haowan.com/24haowan/test/js/b-small.obj';
+            const material = "https://static.cdn.24haowan.com/24haowan/test/js/b0007.png";
+            const model = 'https://static.cdn.24haowan.com/24haowan/test/js/b007.obj';
+
+            this.createObj(model, material, (obj) => {
+                const scenery = obj;
+                scenery.scale.set(1.2, 1.2, 1.2);
+                scenery.size = { width: 120, height: 120 };
+                scenery.rang = { x: 54.8, z: -54.8 };
+
+                sceneryListArr.push(scenery);
+
+                res();
+            });
+        });
+    }
+
+    /**
+     * 风景8
+     * */
+    s8() {
+        return new Promise((res, rej) => {
+            const material = "https://static.cdn.24haowan.com/24haowan/test/js/b0008.png";
+            const model = 'https://static.cdn.24haowan.com/24haowan/test/js/b008.obj';
+
+            this.createObj(model, material, (obj) => {
+                const scenery = obj;
+                scenery.scale.set(1.2, 1.2, 1.2);
+                scenery.size = { width: 120, height: 120 };
+                scenery.rang = { x: 54.8, z: -54.8 };
+
+                sceneryListArr.push(scenery);
+
+                res();
+            });
+        });
+    }
+
+    /**
+     * 风景9
+     * */
+    s9() {
+        return new Promise((res, rej) => {
+            const material = "https://static.cdn.24haowan.com/24haowan/test/js/b0009.png";
+            const model = 'https://static.cdn.24haowan.com/24haowan/test/js/b009.obj';
+
+            this.createObj(model, material, (obj) => {
+                const scenery = obj;
+                scenery.scale.set(1.2, 1.2, 1.2);
+                scenery.size = { width: 120, height: 120 };
+                scenery.rang = { x: 54.8, z: -54.8 };
+
+                sceneryListArr.push(scenery);
+
+                res();
+            });
+        });
+    }
+
+    /**
+     * 风景树
+     * */
+    sTree() {
+        return new Promise((res, rej) => {
+            const material = "https://static.cdn.24haowan.com/24haowan/test/js/tree01.png";
+            const model = 'https://static.cdn.24haowan.com/24haowan/test/js/tree.obj';
 
             this.createObj(model, material, (obj) => {
                 const scenery = obj;

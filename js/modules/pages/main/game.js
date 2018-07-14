@@ -90,8 +90,16 @@ export default class Game extends UTIL {
         // 清除其余2d画布
         pageClass.clear2d();
 
-        // 开始游戏
-        this.restart();
+        // 第一次进行游戏(并不是判断是否新用户)
+        if (restartKey) {
+            restartKey = false;
+
+            this.end();
+            this.readyMusic();
+        } else {
+            // 开始游戏
+            this.restart();
+        }
 
         // sharedClass.endPage();
         // beyondClass.beyondPage();

@@ -189,6 +189,9 @@ export default class UTIL {
         this.readyMusic();
     }
 
+    /**
+     * 获取随机数
+     * */
     getRandomInt(min, max) {
         min = Math.ceil(min);
         max = Math.floor(max);
@@ -294,6 +297,9 @@ export default class UTIL {
 
         // 手动释放内存
         wx.triggerGC();
+
+        // 全屏不能点击
+        currentPage = 'off';
 
         gamePage.page(3);
         music.playReady();

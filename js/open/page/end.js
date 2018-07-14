@@ -33,7 +33,6 @@ export default class EndPage extends Init {
      * @params {Object} 分数对象
      * */
     setData(data) {
-        console.log();
         this.setClassData();
         const { score } = data;
 

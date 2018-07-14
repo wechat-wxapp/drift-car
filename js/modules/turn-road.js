@@ -16,7 +16,7 @@ export default class Road extends UTIL {
      * 创建转弯道路
      */
     createTurnRoad() {
-        const material = "https://static.cdn.24haowan.com/24haowan/test/js/newroad002.png";
+        const material = "https://static.cdn.24haowan.com/24haowan/test/js/nr0002.png";
         const model = 'https://static.cdn.24haowan.com/24haowan/test/js/newroad002.obj';
         // const model = 'https://static.cdn.24haowan.com/24haowan/test/js/newroad002.obj';
 
