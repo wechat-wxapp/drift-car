@@ -94,8 +94,9 @@ const basicData = {
     turn: 0,
     // 点击转弯减速的判断
     isTurning: false,
-    // 转弯计算的当前速度
+    // 转弯计算的当前速度,车模型实际利用的速度变量
     currentSpeed: 0,
+    turnSpringback: true,
 
     // 最后的道路key
     // lastBoxType: 'r6',
@@ -188,6 +189,7 @@ const basicData = {
         //loading页
         logo: 'images/logo.png',
         loadingBg: 'images/loading-bg.png',
+        isLoading: 'images/is-loading.png',
 
         // 开始页
         indexBg: 'images/index.png',
@@ -290,7 +292,13 @@ const varData = {
     key: 0,
     maxKey: 5,
     movekey: 'z',
-    clickKey: true,
+
+    //重置转弯的角度、是否正在转弯变量、当前速度
+    currentW: 0,
+    isTurning: false,
+    currentSpeed: 0,
+    turnSpringback: true,
+
     // 是否开始
     startKey: false,
 

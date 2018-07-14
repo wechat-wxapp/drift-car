@@ -6,25 +6,29 @@ import Init from './init';
 export default class wechatMP extends Init {
   constructor() {
     super();
+    this.guide = wx.createImage();
+    this.guide.src = 'images/guide.png';
+    this.point = wx.createImage();
+    this.point.src = 'images/point.png';
+    this.backIcon = wx.createImage();
+    this.backIcon.src = `images/back-icon.png`;
   }
 
+  relativeSizeH(num) {
+    return this.computedSizeH(85) + this.computedSizeW(num - 85)
+  }
+  
   /**
    * 更新页面内容
    * */
   setTexture(data) {
     this.clearCvs();
 
-    const guide = wx.createImage();
-    guide.src = 'images/guide.png';
-    this.cvs.drawImage(guide, 0, 0, guide.width, guide.height, this.computedSizeW(95), this.computedSizeH(270), this.computedSizeW(560), this.computedSizeH(824));
+    this.cvs.drawImage(this.point, 0, 0, this.point.width, this.point.height, this.computedSizeW(500), this.computedSizeH(85), this.computedSizeW(54), this.computedSizeW(66));
 
-    const point = wx.createImage();
-    point.src = 'images/point.png';
-    this.cvs.drawImage(point, 0, 0, point.width, point.height, this.computedSizeW(500), this.computedSizeH(85), this.computedSizeW(54), this.computedSizeH(66));
+    this.cvs.drawImage(this.guide, 0, 0, this.guide.width, this.guide.height, this.computedSizeW(95), this.relativeSizeH(270), this.computedSizeW(560), this.computedSizeW(824));
 
-    const backIcon1 = wx.createImage();
-    backIcon1.src = `images/back-icon.png`;
-    this.cvs.drawImage(backIcon1, 0, 0, backIcon1.width, backIcon1.height, this.computedSizeW(84), this.computedSizeH(1150), this.computedSizeW(62), this.computedSizeH(62));
+    this.cvs.drawImage(this.backIcon, 0, 0, this.backIcon.width, this.backIcon.height, this.computedSizeW(84), this.relativeSizeH(1150), this.computedSizeW(62), this.computedSizeW(62));
   }
   
 }

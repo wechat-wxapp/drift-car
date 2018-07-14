@@ -17,6 +17,10 @@ export default class Resurgence extends Init {
         this.rePlay.src = 'images/reseur-rePlay.png';
     }
 
+    relativeSizeH(num) {
+        return this.computedSizeH(239) + this.computedSizeW(num - 239)
+    }
+    
     /**
      * 更新页面内容
      * */
@@ -27,21 +31,21 @@ export default class Resurgence extends Init {
         this.rankData = list;
         this.selfData = self;
 
-        this.cvs.drawImage(this.endHeader, 0, 0, this.endHeader.width, this.endHeader.height, this.computedSizeW(95), this.computedSizeH(239), this.computedSizeW(this.endHeader.width), this.computedSizeH(this.endHeader.height));
+        this.cvs.drawImage(this.endHeader, 0, 0, this.endHeader.width, this.endHeader.height, this.computedSizeW(95), this.computedSizeH(239), this.computedSizeW(this.endHeader.width), this.computedSizeW(this.endHeader.height));
 
         // 白色背景
         this.cvs.fillStyle = "#fff";
-        this.cvs.fillRect(this.computedSizeW(95), this.computedSizeH(452), this.computedSizeW(560), this.computedSizeH(565));
+        this.cvs.fillRect(this.computedSizeW(95), this.relativeSizeH(452), this.computedSizeW(560), this.computedSizeW(565));
 
         // 得分
         this.cvs.fillStyle = "#333";
         this.cvs.textAlign = "center";
         this.cvs.font = `bold ${this.computedSizeW(150)}px Arial`;
-        this.cvs.fillText(data.score, this.winWidth / 2, this.computedSizeH(630));
+        this.cvs.fillText(data.score, this.winWidth / 2, this.computedSizeW(630));
 
         // 横线
         this.cvs.fillStyle = "#DFC48D";
-        this.cvs.fillRect(this.computedSizeW(155), this.computedSizeH(711), this.computedSizeW(440), this.computedSizeH(2));
+        this.cvs.fillRect(this.computedSizeW(155), this.relativeSizeH(711), this.computedSizeW(440), this.computedSizeW(2));
 
         if (this.rankData !== null ) {
             let myFri = null;
@@ -56,12 +60,12 @@ export default class Resurgence extends Init {
             if (myFri === null) {
                 // const rankOne = wx.createImage();
                 // rankOne.src = 'images/rankOne.png';
-                this.cvs.drawImage(this.rankOne, 0, 0, this.rankOne.width, this.rankOne.height, this.winWidth / 2 - this.computedSizeW(326) / 2, this.computedSizeH(456), this.computedSizeW(326), this.computedSizeH(25));
+                this.cvs.drawImage(this.rankOne, 0, 0, this.rankOne.width, this.rankOne.height, this.winWidth / 2 - this.computedSizeW(326) / 2, this.relativeSizeH(456), this.computedSizeW(326), this.computedSizeW(25));
             } else {
                 this.cvs.fillStyle = "#999";
                 this.cvs.font = `${this.computedSizeW(26)}px Arial`;
                 this.cvs.textAlign = "left";
-                this.cvs.fillText(`还差${scoreLess}分超越:`, this.computedSizeW(155), this.computedSizeH(795));
+                this.cvs.fillText(`还差${scoreLess}分超越:`, this.computedSizeW(155), this.relativeSizeH(795));
 
                 if (myFri.nickname.length > 15) {
                     myFri.nickname = myFri.nickname.slice(0,13) + '..'
@@ -70,13 +74,13 @@ export default class Resurgence extends Init {
                 // 获取文字长度
                 // this.cvs.measureText('asdasdasdasdasdas').width
 
-                this.cvs.fillText(myFri.nickname, this.computedSizeW(513), this.computedSizeH(795), 237.0595703125);
+                this.cvs.fillText(myFri.nickname, this.computedSizeW(513), this.relativeSizeH(795), 237.0595703125);
                 this.cvs.fill();
 
                 const avatar = wx.createImage();
                 avatar.src = myFri.avatarUrl;
                 avatar.onload = () => {
-                    this.circleImg(this.cvs, avatar, this.computedSizeW(409), this.computedSizeH(746), this.computedSizeW(42), this.computedSizeW(42));
+                    this.circleImg(this.cvs, avatar, this.computedSizeW(409), this.relativeSizeH(746), this.computedSizeW(42), this.computedSizeW(42));
                     this.cvs.beginPath();
                 }
             }
@@ -84,17 +88,17 @@ export default class Resurgence extends Init {
 
         // const rePlay = wx.createImage();
         // rePlay.src = 'images/reseur-rePlay.png';
-        this.cvs.drawImage(this.rePlay, 0, 0, this.rePlay.width, this.rePlay.height, this.computedSizeW(155), this.computedSizeH(877), this.computedSizeW(440), this.computedSizeH(100));
+        this.cvs.drawImage(this.rePlay, 0, 0, this.rePlay.width, this.rePlay.height, this.computedSizeW(155), this.relativeSizeH(877), this.computedSizeW(440), this.computedSizeW(100));
         // this.cvs.fillStyle = "#fff";
         // this.cvs.font = `bold ${this.computedSizeW(36)}px Arial`;
         // this.cvs.textAlign = "center";
-        // this.cvs.fillText('免 费 复 活', this.winWidth / 2, this.computedSizeH(716));
+        // this.cvs.fillText('免 费 复 活', this.winWidth / 2, this.relativeSizeH(716));
 
         this.cvs.fillStyle = "#999";
         this.cvs.textAlign = 'center';
         this.cvs.font = `${this.computedSizeW(26)}px Arial`;
-        this.cvs.fillText('点击跳过', this.winWidth / 2, this.computedSizeH(1070));
-        this.cvs.fillRect(this.computedSizeW(320), this.computedSizeH(1074), this.computedSizeW(110), 2);
+        this.cvs.fillText('点击跳过', this.winWidth / 2, this.relativeSizeH(1070));
+        this.cvs.fillRect(this.computedSizeW(320), this.relativeSizeH(1074), this.computedSizeW(110), 2);
     }
 
 }

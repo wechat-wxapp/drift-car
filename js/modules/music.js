@@ -52,7 +52,10 @@ export default class Music {
 
     playDrift() {
         this.driftAudio.currentTime = 0;
+        // this.driftAudio.seek(0);
+        // this.driftAudio.stop();
         this.playMusic(this.driftAudio);
+        // this.driftAudio.play();
     }
 
     playExplosion() {
@@ -63,6 +66,7 @@ export default class Music {
     playReady() {
         // this.readyAudio.pause();
         this.readyAudio.currentTime = 0;
+        // this.readyAudio.stop();
         this.playMusic(this.readyAudio);
     }
 

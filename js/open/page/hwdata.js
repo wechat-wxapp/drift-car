@@ -15,7 +15,12 @@ export default class HWData extends Init {
             // 世界排行榜数据
             worldRank: {},
             // 个人信息
-            self: ''
+            self: '',
+
+            //用来判断只进行一次canvas缩放
+            hasScaled: 0,
+            //是否显示加载图片
+            loadingKey: true
         };
 
         this.initData(data);
@@ -27,7 +32,7 @@ export default class HWData extends Init {
      * */
     initData(data) {
         const { openId, shareTicket, worldRank } = data;
-
+        shareTicket !== 'noShareTicket' && (this.shareTicket = shareTicket);
         // 初始化个人数据
         this.initSelf(openId)
             .then(e => {
@@ -44,12 +49,16 @@ export default class HWData extends Init {
                     .then(({ rank, self }) => {
                         console.log('缓存好友排行榜成功: ', { rank, self });
                         this.setRankCache('friendRank', { list: rank, self });
+                        // wx.HWData.loadingKey = false;
+                        this.checkLoading()
                     });
                 // 初始化群组排行榜数据
                 this.initGroupRankData(shareTicket)
                     .then(({ rank, self }) => {
                         console.log('缓存群排行榜成功: ', { rank, self });
                         this.setRankCache('groupRank', { list: rank, self });
+                        // wx.HWData.loadingKey = false;
+                        this.checkLoading();
                     })
                     .catch(e => {
                         console.log('缓存群排行榜失败: ', e);
@@ -74,6 +83,7 @@ export default class HWData extends Init {
         this.loadRankImg(list)
             .then((e) => {
                 this.setRankUserCache(key, { list: e, self});
+                this.checkLoading()
             });
     }
 
@@ -139,6 +149,21 @@ export default class HWData extends Init {
                 };
             }
         });
+    }
+
+    checkLoading() {
+        let _temp;
+        try {
+            if(this.getHWData('friendRank').list.length > 0 && this.getHWData('friendRank').list[0].avatarObj) {
+                _temp = this.shareTicket ? (this.getHWData('groupRank').list.length > 0 && this.getHWData('groupRank').list[0].avatarObj) : true
+                // _temp = this.shareTicket ? this.getHWData('groupRank').list[0].avatarObj : true
+            }else {
+                _temp = false;
+            }
+        } catch (error) {
+            console.log('检查loadingKey改变',error)
+        }
+        this.setHWData('loadingKey', !_temp)
     }
 }
 

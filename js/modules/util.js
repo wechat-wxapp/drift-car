@@ -86,10 +86,6 @@ export default class UTIL {
         // 清除超越好友
         beyondClass.clear2d();
 
-        currentW = 0;
-        currentSpeed = 0;
-        isTurning = false;
-
         this.i = 0;
         this.shakeCamera();
         console.log('---结束游戏---');
@@ -244,7 +240,7 @@ export default class UTIL {
         // 扣减复活数
         reseurNum--;
 
-        console.log(`---成功复活 剩余复活次数: ${reseurNum} 当前分数: ${score} 当前速度: ${speed}---`);
+        console.log(`---成功复活 剩余复活次数: ${reseurNum} 当前分数: ${score} 当前speed速度: ${speed} 当前currentSpeed速度: ${currentSpeed}---`);
     }
 
     updateScore() {
@@ -267,6 +263,12 @@ export default class UTIL {
      * 首次开始音效
      * */
     readyMusic() {
+        this.startMusicTimer = $timer(({ key }) => {
+            gamePage.page(4 - key);
+            music.playReady();
+            this.startMusicTimer.closeTimeout();
+        },32);
+
         this.musicTimer = $timer(({ key }) => {
             if (key >= 3) {
                 music.playGo();
@@ -289,7 +291,7 @@ export default class UTIL {
                 return false;
             } else {
                 // 倒计时
-                gamePage.page(3 - key);
+                gamePage.page(3 - key)
 
                 music.playReady();
             }
@@ -301,8 +303,8 @@ export default class UTIL {
         // 全屏不能点击
         currentPage = 'off';
 
-        gamePage.page(3);
-        music.playReady();
+        // gamePage.page(3);
+        // music.playReady();
     }
 
     /**

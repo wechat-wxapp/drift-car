@@ -9,29 +9,16 @@ export default class Init {
         const sharedCanvas = wx.getSharedCanvas();
         this.cvs = sharedCanvas.getContext('2d');
 
-        //用来判断只进行一次canvas缩放
-        wx.hasScaled = 0;
-
-        this.themeBule = `rgba(73,116,235,1)`;
         // 排行榜数据
-        // this.rankData = null;
         this.rankData = null;
-        // this.groupRankData = null;
-        // this.worldRankData = null;
+        
         // 排行榜里面的个人成绩数据
         this.selfData = null;
         // 个人信息
         this.self = null;
 
-        // 好友排行榜数据
-        // this.initFriendRankData();
-        // 群排行榜的数据
-        // this.initGroupRankData(data.shareTicket);
-
         // 当前页
         this.rankCurrentPage = 1;
-        // this._initSelfData();
-        // this._initSelf();
     }
 
 
@@ -52,15 +39,10 @@ export default class Init {
      * */
     clearCvs(noTransBg, noScale) {
         this.cvs.clearRect(0, 0, this.winWidth, this.winHeight);
-        if(wx.hasScaled === 0 && !noScale) {
+        if(wx.HWData.hasScaled === 0 && !noScale) {
             this.canvasScale();
-            wx.hasScaled++;
+            wx.HWData.hasScaled++;
         }
-        // else if(this.hasScaled === 1) {
-        //     console.log('44444444',this.hasScaled)
-        //     this.canvasScale(1);
-        //     this.hasScaled++;
-        // }
         if(noTransBg) return;
         this.cvs.fillStyle = 'rgba(0, 0, 0, .8)';
         this.cvs.fillRect(0, 0, this.winWidth, this.winHeight);
@@ -103,7 +85,7 @@ export default class Init {
                     const { nickName } = this.getHWData('self');
                     // 倒序排序
                     const rank = this.sort(randData, 'asc');
-
+                    
                     // 获取自己相对排行榜的数据
                     const self = this.normalizeSelf(rank, nickName);
                     resolve({ rank, self });
@@ -122,7 +104,7 @@ export default class Init {
     initGroupRankData(shareTicket) {
         return new Promise((resolve, reject) => {
 
-            if(shareTicket === 'noStareTicket') {
+            if(shareTicket === 'noShareTicket') {
                 reject();
                 return false;
             }
@@ -181,6 +163,7 @@ export default class Init {
                 openIdList: [openId],
                 success: res => {
                     const self = res.data[0];
+                    console.log('初始化个人',self)
                     resolve(self);
                 },
                 fail: (res) => {

@@ -76,12 +76,16 @@ export default class Shared extends UTIL {
         this.goGroupRank();
     }
 
+    ralativeClickSizeH(num) {
+        return this.computedSizeH(96) + this.computedSizeW(num - 96)
+    }
+
     // 结束页-再玩一次
     bindReStart() {
         const x1 = this.computedSizeW(60);
         const x2 = this.computedSizeW(356);
-        const y1 = this.computedSizeH(531);
-        const y2 = this.computedSizeH(570);
+        const y1 = this.ralativeClickSizeH(531);
+        const y2 = this.ralativeClickSizeH(570);
 
         events.click({
             name: 'restartBtn',
@@ -99,8 +103,8 @@ export default class Shared extends UTIL {
     bindGoHome() {
         const x1 = this.computedSizeW(56);
         const x2 = this.computedSizeW(176);
-        const y1 = this.computedSizeH(596);
-        const y2 = this.computedSizeH(632);
+        const y1 = this.ralativeClickSizeH(596);
+        const y2 = this.ralativeClickSizeH(632);
 
         events.click({
             name: 'goHomeBtn',
@@ -121,8 +125,8 @@ export default class Shared extends UTIL {
     endFriendRank() {
         const x1 = this.computedSizeW(232);
         const x2 = this.computedSizeW(327);
-        const y1 = this.computedSizeH(456);
-        const y2 = this.computedSizeH(494);
+        const y1 = this.ralativeClickSizeH(456);
+        const y2 = this.ralativeClickSizeH(494);
 
         events.click({
             name: 'endFriendRank',
@@ -141,8 +145,8 @@ export default class Shared extends UTIL {
     showYourScore() {
         const x1 = this.computedSizeW(238);
         const x2 = this.computedSizeW(357);
-        const y1 = this.computedSizeH(596);
-        const y2 = this.computedSizeH(632);
+        const y1 = this.ralativeClickSizeH(596);
+        const y2 = this.ralativeClickSizeH(632);
 
         events.click({
             name: 'showYourScore',
@@ -158,8 +162,8 @@ export default class Shared extends UTIL {
     bindReseur() {
         const x1 = this.computedSizeW(82);
         const x2 = this.computedSizeW(341);
-        const y1 = this.computedSizeH(482);
-        const y2 = this.computedSizeH(549);
+        const y1 = this.ralativeClickSizeH(482);
+        const y2 = this.ralativeClickSizeH(549);
 
         events.click({
             name: 'reseurBtn',
@@ -177,8 +181,8 @@ export default class Shared extends UTIL {
     bindSkip() {
         const x1 = this.computedSizeW(170);
         const x2 = this.computedSizeW(255);
-        const y1 = this.computedSizeH(570);
-        const y2 = this.computedSizeH(604);
+        const y1 = this.ralativeClickSizeH(570);
+        const y2 = this.ralativeClickSizeH(604);
 
         events.click({
             name: 'skipBtn',
@@ -197,63 +201,16 @@ export default class Shared extends UTIL {
     bindWorldRankPrePage() {
         const x1 = this.computedSizeW(110);
         const x2 = this.computedSizeW(195);
-        const y1 = this.computedSizeH(500);
-        const y2 = this.computedSizeH(528);
+        const y1 = this.ralativeClickSizeH(500);
+        const y2 = this.ralativeClickSizeH(528);
 
         events.click({
             name: 'worldRankPrePage',
             pageName: 'worldRank',
             point: [x1, y1, x2, y2],
             cb: () => {
-                // if (rankCurrentPage === 1) return;
-                // worldRankNextSwitch = true;
-                // rankCurrentPage -= 1;
-                // let offset =  ((rankCurrentPage - 1) * requestLimit);
-                // $io.getWorldRank({ offset: offset }).then(e =>{
-                //     this.showPage('worldRank',{
-                //         hasPrePage: rankCurrentPage !== 1 ,
-                //         rankCurrentPage: rankCurrentPage,
-                //         hasNextPage: 1,
-                //         common: 0 ,
-                //         isDriving : 'pre',
-                //         ranks:e.payload.ranks ,
-                //         user:e.payload.user
-                //     });
-                //     // sharedTexture2d.needsUpdate = true;
-                //     currentPage = 'worldRank';
-                // })
                 $wx.sendMessage('worldRank',{ page: rankCurrentPage, common: 0 , isDriving : 'pre'})
                 sharedTexture2d.needsUpdate = true;
-            }
-        })
-    }
-
-    //查看世界排行
-    goWorldRank() {
-        const x1 = this.computedSizeW(234);
-        const x2 = this.computedSizeW(360);
-        const y1 = this.computedSizeH(96);
-        const y2 = this.computedSizeH(148);
-
-        events.click({
-            name: 'goWorldRank',
-            pageName: 'friendRank',
-            point: [x1, y1, x2, y2],
-            cb: () => {
-                rankCurrentPage = 1
-                $wx.sendMessage('worldRank',{ page: rankCurrentPage })
-                currentPage = 'worldRank';
-                isSharedLoop = true;
-                // $io.getWorldRank({ offset: rankCurrentPage - 1 }).then(e=>{
-                //     this.showPage('worldRank',{
-                //         ranks:e.payload.ranks ,
-                //         hasNextPage: e.payload.hasNext,
-                //         user:e.payload.user
-                //     });
-                //     // sharedTexture2d.needsUpdate = true;
-                //     console.log('goWorldRank')
-                //     currentPage = 'worldRank';
-                // })
             }
         })
     }
@@ -262,28 +219,13 @@ export default class Shared extends UTIL {
     bindWorldRankNextPage() {
         const x1 = this.computedSizeW(220);
         const x2 = this.computedSizeW(300);
-        const y1 = this.computedSizeH(500);
-        const y2 = this.computedSizeH(528);
+        const y1 = this.ralativeClickSizeH(500);
+        const y2 = this.ralativeClickSizeH(528);
         events.click({
             name: 'worldRankNextPage',
             pageName: 'worldRank',
             point: [x1, y1, x2, y2],
             cb: () => {
-                // if(!worldRankNextSwitch) return;
-                // let offset = rankCurrentPage * requestLimit;
-                // rankCurrentPage += 1;
-                // $io.getWorldRank({ offset: offset }).then(e=>{
-                //     worldRankNextSwitch = e.payload.hasNext ? true : false;
-                //     this.showPage('worldRank',{
-                //         hasPrePage: rankCurrentPage !== 1,
-                //         rankCurrentPage: rankCurrentPage,
-                //         hasNextPage: e.payload.hasNext,
-                //         common: 1 ,
-                //         ranks:e.payload.ranks,
-                //         user:e.payload.user,
-                //         isDriving : 'next'
-                //     });
-                // })
                 $wx.sendMessage('worldRank',{ common: 1 , isDriving : 'next'})
                 sharedTexture2d.needsUpdate = true;
             }
@@ -294,8 +236,8 @@ export default class Shared extends UTIL {
     bindGroupRankPrePage() {
         const x1 = this.computedSizeW(110);
         const x2 = this.computedSizeW(195);
-        const y1 = this.computedSizeH(500);
-        const y2 = this.computedSizeH(528);
+        const y1 = this.ralativeClickSizeH(500);
+        const y2 = this.ralativeClickSizeH(528);
 
         events.click({
             name: 'groupRankPrePage',
@@ -312,8 +254,8 @@ export default class Shared extends UTIL {
     bindGroupRankNextPage() {
         const x1 = this.computedSizeW(220);
         const x2 = this.computedSizeW(300);
-        const y1 = this.computedSizeH(500);
-        const y2 = this.computedSizeH(528);
+        const y1 = this.ralativeClickSizeH(500);
+        const y2 = this.ralativeClickSizeH(528);
         events.click({
             name: 'groupRankNextPage',
             pageName: 'groupRank',
@@ -329,8 +271,8 @@ export default class Shared extends UTIL {
     bindFriendRankPrePage() {
         const x1 = this.computedSizeW(110);
         const x2 = this.computedSizeW(195);
-        const y1 = this.computedSizeH(500);
-        const y2 = this.computedSizeH(528);
+        const y1 = this.ralativeClickSizeH(500);
+        const y2 = this.ralativeClickSizeH(528);
 
         events.click({
             name: 'friendRankPrePage',
@@ -347,8 +289,8 @@ export default class Shared extends UTIL {
     bindFriendRankNextPage() {
         const x1 = this.computedSizeW(220);
         const x2 = this.computedSizeW(300);
-        const y1 = this.computedSizeH(500);
-        const y2 = this.computedSizeH(528);
+        const y1 = this.ralativeClickSizeH(500);
+        const y2 = this.ralativeClickSizeH(528);
         events.click({
             name: 'friendRankNextPage',
             pageName: 'friendRank',
@@ -364,8 +306,8 @@ export default class Shared extends UTIL {
     bindQrBack() {
         const x1 = this.computedSizeW(45);
         const x2 = this.computedSizeW(85);
-        const y1 = this.computedSizeH(630);
-        const y2 = this.computedSizeH(670);
+        const y1 = this.ralativeClickSizeH(630);
+        const y2 = this.ralativeClickSizeH(670);
 
         events.click({
             name: 'qrBackBtn',
@@ -382,8 +324,8 @@ export default class Shared extends UTIL {
     saveQrcode() {
         const x1 = this.computedSizeW(130);
         const x2 = this.computedSizeW(275);
-        const y1 = this.computedSizeH(540);
-        const y2 = this.computedSizeH(570);
+        const y1 = this.ralativeClickSizeH(540);
+        const y2 = this.ralativeClickSizeH(570);
 
         events.click({
             name: 'saveQrcode',
@@ -407,8 +349,8 @@ export default class Shared extends UTIL {
     bindWechatBack() {
         const x1 = this.computedSizeW(45);
         const x2 = this.computedSizeW(80);
-        const y1 = this.computedSizeH(630);
-        const y2 = this.computedSizeH(670);
+        const y1 = this.ralativeClickSizeH(630);
+        const y2 = this.ralativeClickSizeH(670);
 
         events.click({
             name: 'wechatBackBtn',
@@ -422,13 +364,13 @@ export default class Shared extends UTIL {
     }
 
     /**
-     * 查看好友排行榜按钮
+     * 世界排行榜-查看好友排行榜按钮
      * */
     goFriendRank() {
         const x1 = this.computedSizeW(52);
         const x2 = this.computedSizeW(178);
         const y1 = this.computedSizeH(96);
-        const y2 = this.computedSizeH(145);
+        const y2 = this.ralativeClickSizeH(145); // 145
 
         events.click({
             name: 'friendRankBtn',
@@ -440,12 +382,32 @@ export default class Shared extends UTIL {
         });
     }
 
+    //好友排行榜-查看世界排行
+    goWorldRank() {
+        const x1 = this.computedSizeW(234);
+        const x2 = this.computedSizeW(360);
+        const y1 = this.computedSizeH(96);
+        const y2 = this.ralativeClickSizeH(148);
+
+        events.click({
+            name: 'goWorldRank',
+            pageName: 'friendRank',
+            point: [x1, y1, x2, y2],
+            cb: () => {
+                rankCurrentPage = 1
+                $wx.sendMessage('worldRank',{ page: rankCurrentPage })
+                currentPage = 'worldRank';
+                isSharedLoop = true;
+            }
+        })
+    }
+
     //查看群排行
     goGroupRank() {
         const x1 = this.computedSizeW(268);
         const x2 = this.computedSizeW(358);
-        const y1 = this.computedSizeH(628);
-        const y2 = this.computedSizeH(660);
+        const y1 = this.ralativeClickSizeH(628);
+        const y2 = this.ralativeClickSizeH(660);
 
         events.click({
             name: 'goGroupRankFromFriend',
@@ -469,8 +431,8 @@ export default class Shared extends UTIL {
     iWantToPlay() {
         const x1 = this.computedSizeW(265);
         const x2 = this.computedSizeW(358);
-        const y1 = this.computedSizeH(628);
-        const y2 = this.computedSizeH(660);
+        const y1 = this.ralativeClickSizeH(628);
+        const y2 = this.ralativeClickSizeH(660);
 
         events.click({
             name: 'iWantToPlay',
@@ -488,8 +450,8 @@ export default class Shared extends UTIL {
     friendRankGoBack() {
         const x1 = this.computedSizeW(50);
         const x2 = this.computedSizeW(140);
-        const y1 = this.computedSizeH(630);
-        const y2 = this.computedSizeH(660);
+        const y1 = this.ralativeClickSizeH(630);
+        const y2 = this.ralativeClickSizeH(660);
 
         events.click({
             name: 'friendRankGoBack',
@@ -510,8 +472,8 @@ export default class Shared extends UTIL {
     groupRankGoBack() {
         const x1 = this.computedSizeW(50);
         const x2 = this.computedSizeW(140);
-        const y1 = this.computedSizeH(630);
-        const y2 = this.computedSizeH(660);
+        const y1 = this.ralativeClickSizeH(630);
+        const y2 = this.ralativeClickSizeH(660);
         events.click({
             name: 'groupRankGoBack',
             pageName: 'groupRank',
@@ -531,8 +493,8 @@ export default class Shared extends UTIL {
     worldRankGoBack() {
         const x1 = this.computedSizeW(50);
         const x2 = this.computedSizeW(140);
-        const y1 = this.computedSizeH(630);
-        const y2 = this.computedSizeH(660);
+        const y1 = this.ralativeClickSizeH(630);
+        const y2 = this.ralativeClickSizeH(660);
         events.click({
             name: 'worldRankGoBack',
             pageName: 'worldRank',
@@ -575,7 +537,7 @@ export default class Shared extends UTIL {
      * 群排行榜页面
      * */
     showGroupRankPage() {
-        if($wx.shareTicket !== 'noStareTicket') {
+        if($wx.shareTicket !== 'noShareTicket') {
             $wx.startBtn.hide();
 
             isSharedLoop = true;
@@ -673,7 +635,7 @@ export default class Shared extends UTIL {
         isSharedLoop = true;
         currentPage = 'friendRank';
         //禁止从这里进去缩放
-        this.showPage('friendRank', { noScale: $wx.shareTicket === 'noShareTicket' }, true);
+        this.showPage('friendRank', { noScale: $wx.shareTicket !== 'noShareTicket' }, true);
     }
 
     /**
