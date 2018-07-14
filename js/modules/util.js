@@ -83,9 +83,6 @@ export default class UTIL {
         // 重启游戏
         // this.restart();
 
-        // 设置渲染场景
-        sceneTarget = '2d';
-
         // 清除超越好友
         beyondClass.clear2d();
 
@@ -212,7 +209,7 @@ export default class UTIL {
      * 失败重置信息
      * */
     end() {
-        const { speed: s } = $cache.getGameData('car');
+        const { speed: s } = $cache.getCarSpeed();
 
         // 重置分数
         score = 0;
@@ -221,7 +218,7 @@ export default class UTIL {
         level = 0;
 
         // 重置速度
-        speed = s;
+        speed = s || 2.5;
         speedKey = 0;
         lastSpeedKey = 0;
 
@@ -296,9 +293,6 @@ export default class UTIL {
                 music.playReady();
             }
         }, 1500);
-
-        // 设置渲染场景
-        sceneTarget = '3d';
 
         // 手动释放内存
         wx.triggerGC();

@@ -10,8 +10,8 @@ export default class WX extends UTIL {
     };
 
     shareObj = {
-        title: '漂移大师',
-        imageUrl: 'https://static.cdn.24haowan.com/24haowan/test/js/share.png'
+        title: '昨晚我输给一辆AE86，他用惯性漂移过弯，是你吗？',
+        imageUrl: 'https://static.cdn.24haowan.com/24haowan/test/js/share.png?v=1.0.0'
     };
 
     isLogin = false;
@@ -21,7 +21,6 @@ export default class WX extends UTIL {
         super();
 
         this.init();
-        this.checkLogin();
         this.createStartBtn();
     }
 
@@ -43,6 +42,11 @@ export default class WX extends UTIL {
         // });
 
         wx.onShow(() => {
+            timerKey = false;
+            this.playBgm();
+        });
+
+        wx.onAudioInterruptionEnd(function () {
             timerKey = false;
             this.playBgm();
         });
@@ -83,13 +87,18 @@ export default class WX extends UTIL {
      * 判断KEY是否有效
      * */
     checkLogin() {
-        const { openid, session_key } = $cache.getCache('accessToken');
-        if (!openid || !session_key) {
-            this.wxLogin();
-        } else {
-            this.isLogin = true;
-            this.updateDate();
-        }
+        return new Promise((resolve, reject) => {
+            const { openid, session_key } = $cache.getCache('accessToken');
+            if (!openid || !session_key) {
+                this.wxLogin().then(() => {
+                    resolve();
+                });
+            } else {
+                this.isLogin = true;
+                this.updateDate();
+                resolve();
+            }
+        });
     }
 
     /**
@@ -113,28 +122,35 @@ export default class WX extends UTIL {
      * */
     wxLogin() {
         $loader.show();
-        wx.login({
-            success: (res) => {
-                const { code } = res;
-                if (code) {
-                    this.code = code;
 
-                    this.getAccessToken()
+        return new Promise((resolve, reject) => {
+            wx.login({
+                success: (res) => {
+                    const { code } = res;
+                    if (code) {
+                        this.code = code;
+
+                        this.getAccessToken()
                         .finally(() => {
                             $loader.hide();
+
+                            resolve();
                         });
 
-                } else {
-                    $loader.hide();
+                    } else {
+                        $loader.hide();
 
-                    console.log('登录失败: ' + res.errMsg);
+                        console.log('登录失败: ' + res.errMsg);
+                        reject();
+                    }
+                },
+                fail: () => {
+                    console.log('登录失败error: ' + res.errMsg);
+                    reject();
+                },
+                complete: () => {
                 }
-            },
-            fail: () => {
-                console.log('登录失败error: ' + res.errMsg);
-            },
-            complete: () => {
-            }
+            });
         });
     }
 
@@ -148,7 +164,7 @@ export default class WX extends UTIL {
             .then(token => {
                 const { code, payload: { data } } = token;
 
-                console.log('接口返回openid', data);
+                console.log('成功获取openid: ', data);
 
                 if (code === '0') {
 
@@ -206,4 +222,8 @@ export default class WX extends UTIL {
             imageUrl: shareImg
         })
     }
+
+    /**
+     *
+     * */
 }

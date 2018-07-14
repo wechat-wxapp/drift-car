@@ -335,10 +335,10 @@ export default class Shared extends UTIL {
                 wx.saveImageToPhotosAlbum({
                     filePath: 'images/qrcode.png',
                     success: function() {
-                        wx.showToast({ title:'保存成功' });
+                        $loader.toast('保存成功', 'success');
                     },
                     fail: function() {
-                        wx.showToast({ title:'保存失败' });
+                        $loader.toast('保存失败', 'error');
                     }
                 })
             }
@@ -642,6 +642,12 @@ export default class Shared extends UTIL {
      * 泡妞神器
      * */
     qrPage() {
+        localStorage.removeItem('accessToken')
+        localStorage.removeItem('gameData')
+
+        console.log(localStorage.getItem('accessToken'));
+        console.log(localStorage.getItem('gameData'));
+
         currentPage = 'qrPage';
         this.showPage('qr', {}, true);
     }

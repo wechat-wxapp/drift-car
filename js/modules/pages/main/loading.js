@@ -25,6 +25,9 @@ export default class Loader extends UTIL {
             text: '正在抽取图片...',
             load: this.loadImg
         }, {
+            text: '正在检查身份证...',
+            load: this.wxLogin
+        }, {
             text: '正在加载排行榜...',
             load: this.loadWorldRank
         }, {
@@ -170,6 +173,13 @@ export default class Loader extends UTIL {
                 res(image);
             }
         });
+    }
+
+    /**
+     * 获取微信身份
+     * */
+    wxLogin() {
+        return $wx.checkLogin();
     }
 
     /**
