@@ -48,6 +48,10 @@ export default class Rank extends Init {
     this.iPlayBtn = wx.createImage();
     this.iPlayBtn.src = 'images/i-play-btn.png';
 
+    //正在加载的图片
+    this.isLoading = wx.createImage();
+    this.isLoading.src = 'images/is-loading.png';
+    
     this.headerOffsetTop = this.computedSizeH(172);
   }
 
@@ -61,11 +65,11 @@ export default class Rank extends Init {
    * @param {Number} type 
    * @param {*} noScale 
    */
-  setTexture(type, noScale) {
+  setTexture(type, { noScale }) {
     this.clearCvs(null, noScale);
-    if(type == 1) {
+    if(type === 'friendRank') {
       this.friendRank()
-    }else if(type == 2) {
+    }else if(type === 'groupRank') {
       // this.initGroupRankData(data.shareTicket);
       this.groupRank();
     }else {
@@ -84,14 +88,14 @@ export default class Rank extends Init {
     this.cvs.fillRect(this.winWidth / 2 - this.computedSizeW(560) / 2, this.relativeSizeH(166), this.computedSizeW(560), this.computedSizeW(640)); //338
 
     //分割线
-    this.cvs.lineWidth = 2; 
-    this.cvs.strokeStyle = '#e7e7e7';
-    const that = this;
-    for (let i = 0; i < 4; i++) {
-      that.cvs.moveTo(this.computedSizeW(125), this.relativeSizeH(276 + i * 110)); // 448
-      that.cvs.lineTo(this.computedSizeW(625), this.relativeSizeH(276 + i * 110));
-    }
-    this.cvs.stroke();
+    // this.cvs.lineWidth = 2; 
+    // this.cvs.strokeStyle = '#e7e7e7';
+    // const that = this;
+    // for (let i = 0; i < 4; i++) {
+    //   that.cvs.moveTo(this.computedSizeW(125), this.relativeSizeH(276 + i * 110)); // 448
+    //   that.cvs.lineTo(this.computedSizeW(625), this.relativeSizeH(276 + i * 110));
+    // }
+    // this.cvs.stroke();
 
     //个人成绩背景板
     // this.cvs.beginPath();
@@ -103,26 +107,63 @@ export default class Rank extends Init {
 
   }
 
+  //判断是否渲染函数的中间件函数
+  dataMiddleware(type, data) {
+    if(!data.isDriving) {
+      this.setTexture(type, data)
+      this.cvs.drawImage(this.isLoading, 0, 0, this.isLoading.width, this.isLoading.height, this.computedSizeW(361) / 2, this.relativeSizeH(380), this.computedSizeW(361), this.computedSizeW(87));
+    }
+    const middlewareTimer = ()=> {
+      setTimeout(() => {
+        console.log('aaa')
+        if(wx.HWData.loadingKey) {
+          console.log('000000',wx.HWData.loadingKey)
+          middlewareTimer();
+        }else {
+          if(!data.isDriving || (data.isDriving === 'next' && !this.noNext) || (data.isDriving === 'pre' && !this.noPre)) {
+            //再画一次中央白板
+            this.cvs.fillStyle = "#fff";
+            this.cvs.fillRect(this.winWidth / 2 - this.computedSizeW(560) / 2, this.relativeSizeH(166), this.computedSizeW(560), this.computedSizeW(640));
+            this.cvs.lineWidth = 2; 
+            this.cvs.strokeStyle = '#e7e7e7';
+            const that = this;
+            for (let i = 0; i < 4; i++) {
+              that.cvs.moveTo(this.computedSizeW(125), this.relativeSizeH(276 + i * 110)); // 448
+              that.cvs.lineTo(this.computedSizeW(625), this.relativeSizeH(276 + i * 110));
+            }
+            this.cvs.stroke();
+    
+            wx.HWData.loadingKey = false;
+            this.showData(type, data)
+            clearTimeout(middlewareTimer)
+          }
+        }
+      }, 100);
+    }
+    middlewareTimer()
+  }
+
+
+
   /**
    * 更新页面内容数据
    * */
-  showData(data, type) {
+  showData(type, data) {
     let getRankData
-    if(type !== 'groupRank') {
-      getRankData = this.getHWData(type)
-    } else {
+    // if(type !== 'groupRank') {
+    //   getRankData = this.getHWData(type)
+    // } else {
       getRankData = this.getHWData(type);
-      if (Object.keys(getRankData).length <= 0) {
+      if (getRankData === undefined || Object.keys(getRankData).length <= 0) {
         setTimeout(() => {
           this.showData(data, type);
-        }, 500);
+        }, 50);
         return false;
       }
       // const data = this.refreshRankData(type, this.showData.bind(this))
       // getRankData = data;
       // return false;
-    }
-
+    // }
     if(!getRankData.list) return;
     this.rankData = getRankData.list;
     this.total = this.rankData.length;

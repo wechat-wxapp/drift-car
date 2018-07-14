@@ -27,23 +27,13 @@ wx.onMessage(({ command, data = {}}) => {
             reseurPage.setTexture(data);
             break;
         case 'friendRank':
-            if(!data.isDriving || (data.isDriving == 'next' && !friendRankPage.noNext) || (data.isDriving == 'pre' && !friendRankPage.noPre)) {
-                friendRankPage.setTexture(1, data.noScale)
-                friendRankPage.showData(data, 'friendRank')
-            }
+            friendRankPage.dataMiddleware('friendRank', data)
             break;
         case 'worldRank':
-            if(!data.isDriving || (data.isDriving == 'next' && !worldRankPage.noNext) || (data.isDriving == 'pre' && !worldRankPage.noPre)) {
-                worldRankPage.setTexture(3, data)
-                worldRankPage.showData(data, 'worldRank')
-            }
+            worldRankPage.dataMiddleware('worldRank', data)
             break;
         case 'groupRank':
-            if(!data.isDriving || (data.isDriving == 'next' && !groupRankPage.noNext) || (data.isDriving == 'pre' && !groupRankPage.noPre)) {
-                groupRankPage.setTexture(2)
-                groupRankPage.showData(data, 'groupRank')
-            //    setTimeout(()=> groupRankPage.showData(data, 'group'),500)
-            }
+            groupRankPage.dataMiddleware('groupRank', data)
             break;
         case 'carport':
             carportPage.setTexture(data);

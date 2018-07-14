@@ -15,7 +15,12 @@ export default class HWData extends Init {
             // 世界排行榜数据
             worldRank: {},
             // 个人信息
-            self: ''
+            self: '',
+
+            //用来判断只进行一次canvas缩放
+            hasScaled: 0,
+            //是否显示加载图片
+            loadingKey: true
         };
 
         this.initData(data);
