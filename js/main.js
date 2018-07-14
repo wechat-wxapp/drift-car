@@ -16,6 +16,8 @@ import UTIL from "./modules/util";
 // 2d画布
 import page from './modules/pages/main/index';
 
+let a = 0;
+
 /**
  * 游戏主函数
  */
@@ -48,13 +50,16 @@ export default class Main extends UTIL {
         $wx = new WX();
 
         // 实例化主屏2d
-        pageClass = new page();
+        pageClass = new page(renderer);
 
         // 播放背景音乐
         this.playBgm();
 
         // 渲染
         this.loop();
+
+        this.currentTime = 0;
+        this.start = null;
     }
 
     /**
@@ -65,6 +70,8 @@ export default class Main extends UTIL {
 
         scene = new THREE.Scene();
         renderer = new THREE.WebGLRenderer({ context: ctx, canvas });
+        renderer.setClearColor('#428bca', 1);
+        renderer.autoClear = false;
 
         const cameraAspect = winWidth / winHeight;
 
@@ -73,9 +80,11 @@ export default class Main extends UTIL {
 
         console.log("屏幕尺寸: " + winWidth + " x " + winHeight);
 
-        camera = new THREE.PerspectiveCamera(75, cameraAspect, .1, 10500);
+        camera = new THREE.PerspectiveCamera(75, cameraAspect, .1, 10000);
         camera.position.set(-16.738086885462103, 90.533387653514225, 28.513221776822927);
         camera.rotation.set(-0.9577585082113045, -0.3257201862210706, -0.42691147594250245);
+
+        // camera = new THREE.OrthographicCamera(winWidth / -2, winWidth / 2, winHeight / 2, winHeight / -2, 0, 10000)
 
         // 添加环境光 0x999999
         const ambientLight = new THREE.AmbientLight('#7c7c7c');
@@ -258,8 +267,6 @@ export default class Main extends UTIL {
             // console.log(`=======,当前speed速度${speed},当前currentSpeed速度${currentSpeed}`)
         }
         // cannonDebugRenderer && cannonDebugRenderer.update();
-        renderer.setClearColor('#428bca', 1.0);
-        renderer.render(scene, camera)
     }
 
     /**
@@ -321,6 +328,7 @@ export default class Main extends UTIL {
 
     timer(progress) {
         if (timerArr.length <= 0) return false;
+
         timerArr.map(v => {
             Object.values(v)[0](progress);
         })
@@ -330,16 +338,26 @@ export default class Main extends UTIL {
      * 实现帧循环
      * */
     loop(progress) {
-        // 更新物理世界
-        loadKey && this.updateWorld();
-        // 生成路面
-        loadKey && this.updateRoad();
-        // 更新汽车动画
-        this.updateAnimation();
-        // 加速
-        this.updateSpeed();
-        // 回收路面
-        this.removeObj();
+        renderer.clear();
+
+        renderer.render(scene, camera);
+
+        if (sceneTarget === '3d') {
+            // 更新物理世界
+            loadKey && this.updateWorld();
+            // 生成路面
+            loadKey && this.updateRoad();
+            // 更新汽车动画
+            this.updateAnimation();
+            // 加速
+            this.updateSpeed();
+            // 回收路面
+            this.removeObj();
+        }
+
+        if (!startKey) {
+            pageClass.render();
+        }
 
         // 刷新开放域
         this.sharedLoop();

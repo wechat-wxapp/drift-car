@@ -29,6 +29,8 @@ export default class Carport extends UTIL {
 
         this.headerOffsetTop = this.computedSizeH(133.032);
         this.bgOffsetTop = this.headerOffsetTop + this.computedSizeW(115.368);
+
+        this.loadNum = 0;
         
         this.buildPage();
     }
@@ -225,8 +227,6 @@ export default class Carport extends UTIL {
         return $io.getunlock(require).then(e => {
             const { payload: { hasNext, limit, offset, page, data } } = e;
 
-            $loader.hide();
-
             carportPage.list = data;
             carportPage.hasNext = hasNext;
             carportPage.limit = limit;
@@ -243,6 +243,8 @@ export default class Carport extends UTIL {
      * */
     setTexture() {
         currentPage = 'carportPage';
+
+        this.loadNum = 0;
 
         const currentCarId = $cache.getGameData('car').id;
 
@@ -286,6 +288,13 @@ export default class Carport extends UTIL {
                 } else {
                     // 如果已解锁
                     !unlock && offCanvas2d.drawImage(this.carPaneOff, 0, 0, this.carPaneOff.width, this.carPaneOff.height, this.computedSizeW(54 + x * 105), this.bgOffsetTop + this.computedSizeH(11.731 + pkey * 120), this.computedSizeW(97.152), this.computedSizeH(118.68));
+                }
+
+                this.loadNum++;
+
+                // 加载成功后, 清除loading
+                if (this.loadNum === this.list.length) {
+                    $loader.hide();
                 }
 
                 texture2d.needsUpdate = true;

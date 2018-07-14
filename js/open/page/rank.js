@@ -108,9 +108,9 @@ export default class Rank extends Init {
    * */
   showData(data, type) {
     let getRankData
-    // if(type !== 'groupRank') {
-    //   getRankData = this.getHWData(type)
-    // } else {
+    if(type !== 'groupRank') {
+      getRankData = this.getHWData(type)
+    } else {
       getRankData = this.getHWData(type);
       if (Object.keys(getRankData).length <= 0) {
         setTimeout(() => {
@@ -121,7 +121,7 @@ export default class Rank extends Init {
       // const data = this.refreshRankData(type, this.showData.bind(this))
       // getRankData = data;
       // return false;
-    // }
+    }
 
     if(!getRankData.list) return;
     this.rankData = getRankData.list;
@@ -174,7 +174,7 @@ export default class Rank extends Init {
 
     // 排名
     this.cvs.beginPath();
-    this.cvs.fillStyle = this.themeBule;
+    this.cvs.font = `${this.computedSizeW(20)}px Yahei`;
     const that = this;
     if(this.total !== 0){
       for(let i = (rankCurrentPage - 1) * this.counts; i < current_count + (rankCurrentPage - 1) * this.counts; i++) {

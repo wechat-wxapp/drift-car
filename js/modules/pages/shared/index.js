@@ -84,8 +84,8 @@ export default class Shared extends UTIL {
     bindReStart() {
         const x1 = this.computedSizeW(60);
         const x2 = this.computedSizeW(356);
-        const y1 = this.computedSizeH(531);
-        const y2 = this.computedSizeH(570);
+        const y1 = this.ralativeClickSizeH(531);
+        const y2 = this.ralativeClickSizeH(570);
 
         events.click({
             name: 'restartBtn',
@@ -103,8 +103,8 @@ export default class Shared extends UTIL {
     bindGoHome() {
         const x1 = this.computedSizeW(56);
         const x2 = this.computedSizeW(176);
-        const y1 = this.computedSizeH(596);
-        const y2 = this.computedSizeH(632);
+        const y1 = this.ralativeClickSizeH(596);
+        const y2 = this.ralativeClickSizeH(632);
 
         events.click({
             name: 'goHomeBtn',
@@ -114,7 +114,7 @@ export default class Shared extends UTIL {
                 isSharedLoop = false;
                 this.clear2d();
 
-                pageClass.setPosition();
+                // pageClass.setPosition();
 
                 startPage.setTexture();
             }
@@ -125,8 +125,8 @@ export default class Shared extends UTIL {
     endFriendRank() {
         const x1 = this.computedSizeW(232);
         const x2 = this.computedSizeW(327);
-        const y1 = this.computedSizeH(456);
-        const y2 = this.computedSizeH(494);
+        const y1 = this.ralativeClickSizeH(456);
+        const y2 = this.ralativeClickSizeH(494);
 
         events.click({
             name: 'endFriendRank',
@@ -145,8 +145,8 @@ export default class Shared extends UTIL {
     showYourScore() {
         const x1 = this.computedSizeW(238);
         const x2 = this.computedSizeW(357);
-        const y1 = this.computedSizeH(596);
-        const y2 = this.computedSizeH(632);
+        const y1 = this.ralativeClickSizeH(596);
+        const y2 = this.ralativeClickSizeH(632);
 
         events.click({
             name: 'showYourScore',
@@ -162,8 +162,8 @@ export default class Shared extends UTIL {
     bindReseur() {
         const x1 = this.computedSizeW(82);
         const x2 = this.computedSizeW(341);
-        const y1 = this.computedSizeH(482);
-        const y2 = this.computedSizeH(549);
+        const y1 = this.ralativeClickSizeH(482);
+        const y2 = this.ralativeClickSizeH(549);
 
         events.click({
             name: 'reseurBtn',
@@ -181,8 +181,8 @@ export default class Shared extends UTIL {
     bindSkip() {
         const x1 = this.computedSizeW(170);
         const x2 = this.computedSizeW(255);
-        const y1 = this.computedSizeH(570);
-        const y2 = this.computedSizeH(604);
+        const y1 = this.ralativeClickSizeH(570);
+        const y2 = this.ralativeClickSizeH(604);
 
         events.click({
             name: 'skipBtn',
@@ -306,8 +306,8 @@ export default class Shared extends UTIL {
     bindQrBack() {
         const x1 = this.computedSizeW(45);
         const x2 = this.computedSizeW(85);
-        const y1 = this.computedSizeH(630);
-        const y2 = this.computedSizeH(670);
+        const y1 = this.ralativeClickSizeH(630);
+        const y2 = this.ralativeClickSizeH(670);
 
         events.click({
             name: 'qrBackBtn',
@@ -324,8 +324,8 @@ export default class Shared extends UTIL {
     saveQrcode() {
         const x1 = this.computedSizeW(130);
         const x2 = this.computedSizeW(275);
-        const y1 = this.computedSizeH(540);
-        const y2 = this.computedSizeH(570);
+        const y1 = this.ralativeClickSizeH(540);
+        const y2 = this.ralativeClickSizeH(570);
 
         events.click({
             name: 'saveQrcode',
@@ -349,8 +349,8 @@ export default class Shared extends UTIL {
     bindWechatBack() {
         const x1 = this.computedSizeW(45);
         const x2 = this.computedSizeW(80);
-        const y1 = this.computedSizeH(630);
-        const y2 = this.computedSizeH(670);
+        const y1 = this.ralativeClickSizeH(630);
+        const y2 = this.ralativeClickSizeH(670);
 
         events.click({
             name: 'wechatBackBtn',
@@ -461,7 +461,7 @@ export default class Shared extends UTIL {
                 this.clear2d();
                 isSharedLoop = false;
 
-                pageClass.setPosition();
+                // pageClass.setPosition();
 
                 startPage.setTexture();
             }
@@ -482,7 +482,7 @@ export default class Shared extends UTIL {
                 this.clear2d();
                 isSharedLoop = false;
 
-                pageClass.setPosition();
+                // pageClass.setPosition();
 
                 startPage.setTexture();
             }
@@ -503,7 +503,7 @@ export default class Shared extends UTIL {
                 isSharedLoop = false;
                 this.clear2d();
 
-                pageClass.setPosition();
+                // pageClass.setPosition();
 
                 startPage.setTexture();
             }
@@ -552,30 +552,51 @@ export default class Shared extends UTIL {
      * 创建2d画布
      */
     page() {
-        this.sharedCanvas = openDataContext.canvas;
+        // this.sharedCanvas = openDataContext.canvas;
+        //
+        // this.sharedCanvas.width = winWidth * window.devicePixelRatio;
+        // this.sharedCanvas.height = winHeight * window.devicePixelRatio;
+        //
+        // const sharedCanvas2d = this.sharedCanvas.getContext("2d");
+        //
+        // sharedCanvas2d.scale(window.devicePixelRatio, window.devicePixelRatio);
+        //
+        // // sharedTexture2d = new THREE.Texture(this.sharedCanvas);
+        // // sharedTexture2d.minFilter = THREE.LinearFilter;
+        // //
+        // // const spriteMaterial = new THREE.SpriteMaterial({
+        // //     map: sharedTexture2d
+        // // });
+        // //
+        // // sharedCanvasSprite = new THREE.Sprite(spriteMaterial);
+        // // sharedCanvasSprite.position.set(-11.75, 78.44, 20);
+        // //
+        // // const scaleX = Math.floor(winHeight / winWidth * 10) / 10 === 1.7 ? 13.5 : this.computedSizeW(13.5);
+        // //
+        // // sharedCanvasSprite.scale.set(scaleX, 23.95, 1);
+        // //
+        // // scene.add(sharedCanvasSprite);
+        //
+        // sharedTexture2d = new THREE.CanvasTexture(this.sharedCanvas)
+        //
+        // sharedTexture2d.minFilter = sharedTexture2d.magFilter = THREE.LinearFilter
+        // // texture2d.needsUpdate = true
+        //
+        // let geometry = new THREE.PlaneGeometry(winWidth, winHeight);
+        //
+        // let material = new THREE.MeshBasicMaterial({ map: sharedTexture2d, transparent: true })
+        //
+        // sharedCanvasSprite = new THREE.Mesh(geometry, material)
+        //
+        // uiScene.add(sharedCanvasSprite);
 
-        this.sharedCanvas.width = winWidth * window.devicePixelRatio;
-        this.sharedCanvas.height = winHeight * window.devicePixelRatio;
+        const {cvs, cvs2d, texture2d, mesh} = this.createCanvas2d('2d', 'shared', winWidth, winHeight);
 
-        const sharedCanvas2d = this.sharedCanvas.getContext("2d");
+        this.sharedCanvas = cvs;
+        sharedTexture2d = texture2d;
+        sharedCanvasSprite = mesh;
 
-        sharedCanvas2d.scale(window.devicePixelRatio, window.devicePixelRatio);
-
-        sharedTexture2d = new THREE.Texture(this.sharedCanvas);
-        sharedTexture2d.minFilter = THREE.LinearFilter;
-
-        const spriteMaterial = new THREE.SpriteMaterial({
-            map: sharedTexture2d
-        });
-
-        sharedCanvasSprite = new THREE.Sprite(spriteMaterial);
-        sharedCanvasSprite.position.set(-11.75, 78.44, 20);
-
-        const scaleX = Math.floor(winHeight / winWidth * 10) / 10 === 1.7 ? 13.5 : this.computedSizeW(13.5);
-
-        sharedCanvasSprite.scale.set(scaleX, 23.95, 1);
-
-        scene.add(sharedCanvasSprite);
+        uiScene.add(sharedCanvasSprite);
     }
 
     /**
@@ -659,7 +680,7 @@ export default class Shared extends UTIL {
 
         clear && pageClass.clear2d();
 
-        this.setPosition();
+        // this.setPosition();
 
         sharedTexture2d.needsUpdate = true;
     }

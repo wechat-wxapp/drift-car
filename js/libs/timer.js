@@ -3,7 +3,7 @@
  * */
 class TIMER {
     constructor(cb, duration) {
-        this.startKey = true;
+        // 动画运行了多少次
         this.currentTime = 0;
         this.start = null;
 
@@ -14,7 +14,11 @@ class TIMER {
         this.timerKey = timerArr.length;
         const obj = {};
         obj[this.timerKey] = (progress) => {
-            if (!this.start) this.start = progress;
+            if (!this.start || !timerKey){
+                this.start = progress;
+                this.currentTime = 0;
+                timerKey = true;
+            }
             const currentTime = progress - this.start - this.currentTime * duration;
 
             if (currentTime >= duration) {
@@ -27,7 +31,6 @@ class TIMER {
     }
 
     closeTimeout() {
-        this.startKey = false;
         const arrIndex = timerArr.findIndex(v => {
             return Object.keys(v)[0] === String(this.timerKey);
         });

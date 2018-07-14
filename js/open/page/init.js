@@ -95,18 +95,20 @@ export default class Init {
      * 初始化好友排行榜数据并排序
      * */
     friendRankData() {
+        console.log('开始好友1')
         return new Promise((resolve, reject) => {
             wx.getFriendCloudStorage({
                 keyList: ['score'],
                 success: (res) => {
-                    console.log(res);
                     const { data: randData } = res;
                     const { nickName } = this.getHWData('self');
                     // 倒序排序
                     const rank = this.sort(randData, 'asc');
-
+                    
                     // 获取自己相对排行榜的数据
+                    console.log('开始好友2',rank,nickName)
                     const self = this.normalizeSelf(rank, nickName);
+                    console.log('开始好友3')
                     resolve({ rank, self });
                 },
                 fail: res => {

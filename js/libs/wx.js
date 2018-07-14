@@ -43,6 +43,7 @@ export default class WX extends UTIL {
         // });
 
         wx.onShow(() => {
+            timerKey = false;
             this.playBgm();
         });
 
