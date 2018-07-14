@@ -36,22 +36,25 @@ export default class HWData extends Init {
         // 初始化个人数据
         this.initSelf(openId)
             .then(e => {
+                this.setHWData('self', e);
+
                 // 预加载个人信息头像
                 this.loadSelfImg(e)
                     .then(val => {
-                        wx.HWData.self = val;
+                        this.setHWData('self', val);
                     });
 
                 // 初始化好友排行榜数据
                 this.friendRankData()
                     .then(({ rank, self }) => {
-                        console.log('缓存好友排行榜成功: ', rank, self);
+                        console.log('缓存好友排行榜成功: ', { rank, self });
                         this.setRankCache('friendRank', { list: rank, self });
+                        console.log('qwe: ', this.getHWData());
                     });
                 // 初始化群组排行榜数据
                 this.initGroupRankData(shareTicket)
                     .then(({ rank, self }) => {
-                        console.log('缓存群排行榜成功: ', rank, self);
+                        console.log('缓存群排行榜成功: ', { rank, self });
                         this.setRankCache('groupRank', { list: rank, self });
                     })
                     .catch(e => {
@@ -71,19 +74,31 @@ export default class HWData extends Init {
      * */
     setRankCache(key, data) {
         const { list, self } = data;
+
+        this.setRankUserCache(key, data);
+
         this.loadRankImg(list)
             .then((e) => {
-                try {
-                    const { avatarObj } = list.find(v => v.nickname === self.nickname);
-                    avatarObj && (self.avatarObj = avatarObj);
-                    this.setHWData(key, { list: e, self });
-                } catch (err) {
-                    const newUser = this.setNewRankData(0);
-                    e.push(newUser);
-                    const rankUser = this.normalizeSelf(e, newUser.nickname);
-                    this.setHWData(key, { list: e, self: rankUser });
-                }
+                this.setRankUserCache(key, { list: e, self});
             });
+    }
+
+    /**
+     * 设置缓存数据方法, 排行榜没有数据默认插入0分的个人数据
+     * */
+    setRankUserCache(key, data) {
+        const { list, self } = data;
+
+        try {
+            const { avatarObj } = list.find(v => v.nickname === self.nickname);
+            avatarObj && (self.avatarObj = avatarObj);
+            this.setHWData(key, { list, self });
+        } catch (err) {
+            const newUser = this.setNewRankData(0);
+            list.push(newUser);
+            const rankUser = this.normalizeSelf(list, newUser.nickname);
+            this.setHWData(key, { list, self: rankUser });
+        }
     }
 
     /**

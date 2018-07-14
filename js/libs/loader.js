@@ -8,7 +8,7 @@ export default class LOADER{
     show(title = '加载中...') {
         wx.showLoading({
             title,
-            mask: false
+            mask: true
         });
     }
 
