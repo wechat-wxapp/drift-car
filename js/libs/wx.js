@@ -199,7 +199,7 @@ export default class WX extends UTIL {
                             rej();
                         }
                     } else {
-                        console.log('接口出错: ', token);
+                        console.log('getAccessToken接口出错: ', token);
                         rej();
                     }
                 });

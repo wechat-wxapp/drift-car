@@ -642,11 +642,11 @@ export default class Shared extends UTIL {
      * 泡妞神器
      * */
     qrPage() {
-        localStorage.removeItem('accessToken')
-        localStorage.removeItem('gameData')
-
-        console.log(localStorage.getItem('accessToken'));
-        console.log(localStorage.getItem('gameData'));
+        // localStorage.removeItem('accessToken')
+        // localStorage.removeItem('gameData')
+        //
+        // console.log(localStorage.getItem('accessToken'));
+        // console.log(localStorage.getItem('gameData'));
 
         currentPage = 'qrPage';
         this.showPage('qr', {}, true);

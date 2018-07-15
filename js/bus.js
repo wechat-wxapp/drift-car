@@ -211,6 +211,7 @@ const basicData = {
         endBack: 'images/end-back.png',
         endShare: 'images/end-share.png',
         endRankBg: 'images/end-rank-bg.png',
+        newRecord: 'images/newrecord.png',
 
         // 复活页
         reseurRePlay: 'images/reseur-rePlay.png',
@@ -284,9 +285,6 @@ const varData = {
 
     // 风景对象
     sceneryArr: [],
-
-    // 当前旋转向量
-    currentW: 0,
 
     // 动画变量
     key: 0,

@@ -163,7 +163,7 @@ export default class Init {
                 openIdList: [openId],
                 success: res => {
                     const self = res.data[0];
-                    console.log('初始化个人',self)
+                    console.log('初始化个人信息: ', self);
                     resolve(self);
                 },
                 fail: (res) => {

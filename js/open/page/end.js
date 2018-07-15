@@ -26,6 +26,10 @@ export default class EndPage extends Init {
         // 名次背景
         this.rankBg = wx.createImage();
         this.rankBg.src = 'images/end-rank-bg.png';
+
+        // 新纪录
+        this.newRecord = wx.createImage();
+        this.newRecord.src = 'images/newrecord.png';
     }
 
     /**
@@ -37,10 +41,12 @@ export default class EndPage extends Init {
         const { score } = data;
 
         let maxScore = score;
+        let newRecord = false;
 
         if (this.selfData) {
             if (score > this.selfData['KVDataList'][0].value) {
                 this.updateRankScore(score);
+                newRecord = true;
             } else {
                 maxScore = this.selfData['KVDataList'][0].value;
             }
@@ -49,10 +55,11 @@ export default class EndPage extends Init {
             this.updateRankScore(score);
             // 重设分数
             this.setClassData();
+            newRecord = true;
         }
 
         // 渲染页面
-        this.setTexture({ ...data, maxScore });
+        this.setTexture({ ...data, maxScore, newRecord });
     }
 
     /**
@@ -82,7 +89,7 @@ export default class EndPage extends Init {
     /**
      * 更新页面内容
      * */
-    setTexture({ score, maxScore }) {
+    setTexture({ score, maxScore, newRecord }) {
         this.clearCvs();
 
         this.cvs.fillStyle = "#fff";
@@ -111,6 +118,9 @@ export default class EndPage extends Init {
 
         // 炫耀一下
         this.cvs.drawImage(this.endShare, 0, 0, this.endShare.width, this.endShare.height, this.computedSizeW(424.7), this.relativeSizeH(1074), this.computedSizeW(this.endShare.width), this.computedSizeW(this.endShare.height));
+
+        // 新纪录
+        newRecord && this.cvs.drawImage(this.newRecord, 0, 0, this.newRecord.width, this.newRecord.height, this.computedSizeW(510), this.relativeSizeH(400), this.computedSizeW(this.newRecord.width), this.computedSizeW(this.newRecord.height));
 
         if (this.rankData) {
             const rank = this.selfData.rank;
