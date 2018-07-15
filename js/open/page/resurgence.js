@@ -67,14 +67,10 @@ export default class Resurgence extends Init {
                 this.cvs.textAlign = "left";
                 this.cvs.fillText(`还差${scoreLess}分超越:`, this.computedSizeW(155), this.relativeSizeH(795));
 
-                if (myFri.nickname.length > 15) {
-                    myFri.nickname = myFri.nickname.slice(0,13) + '..'
-                }
+                // 超过长度省略名字
+                const clipNickName = this.textOverFlow(myFri.nickname, this.computedSizeW(80));
 
-                // 获取文字长度
-                // this.cvs.measureText('asdasdasdasdasdas').width
-
-                this.cvs.fillText(myFri.nickname, this.computedSizeW(513), this.relativeSizeH(795), 237.0595703125);
+                this.cvs.fillText(clipNickName, this.computedSizeW(513), this.relativeSizeH(795));
                 this.cvs.fill();
 
                 const avatar = wx.createImage();

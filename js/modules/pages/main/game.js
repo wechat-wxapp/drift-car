@@ -65,7 +65,7 @@ export default class Game extends UTIL {
             this.restart();
         }
 
-        // sharedClass.endPage();
+        // sharedClass.reseurPage();
         // beyondClass.beyondPage();
     }
 

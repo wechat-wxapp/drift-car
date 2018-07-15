@@ -255,8 +255,24 @@ export default class Init {
     }
 
     /**
+     * 超过长度截取文字
+     * @params text {String} 需要被截取的文字
+     * @params max {Number} 最长长度
+     * @params tail {String} 省略号
+     * @params isCb {Boolean} 是否进行过递归, 不需要传值, 如果传值可用来控制是否显示省略号
+     * @return {String} 返回裁剪过或不需要裁剪的文字
+     * */
+    textOverFlow(text, max, tail = '...', isCb) {
+        if (this.cvs.measureText(text).width <= max) {
+            return isCb ? `${text}${tail}` : text;
+        }
+
+        return this.textOverFlow(text.substr(0, text.length - 1), max, tail, true);
+    }
+
+    /**
      * 更新微信分数
-     * @params {Number} 提交的分数
+     * @params score {Number} 提交的分数
      * */
     updateWxScore(score) {
         wx.setUserCloudStorage({
@@ -332,7 +348,7 @@ export default class Init {
 
     /**
      * 设置首次玩游戏的数据
-     * @params {String} 分数
+     * @params score {String} 分数
      * @return {Object} 根据个人信息生成的排行榜数据
      * */
     setNewRankData(score) {
