@@ -30,6 +30,10 @@ export default class Carport extends UTIL {
         this.headerOffsetTop = this.computedSizeH(133.032);
         this.bgOffsetTop = this.headerOffsetTop + this.computedSizeW(115.368);
 
+        // 按钮相对于背景位置
+        this.btnOffsetTop = this.computedSizeH(263) + this.computedSizeW(203 - this.unlockBtn.height / 2);
+
+        // 图片加载进度
         this.loadNum = 0;
         
         this.buildPage();
@@ -57,10 +61,10 @@ export default class Carport extends UTIL {
      * 绑定车辆点击按钮
      * */
     bindCarBtn() {
-        const x1 = this.computedSizeW(70);
-        const x2 = this.computedSizeW(345);
-        const y1 = this.computedSizeH(245);
-        const y2 = this.computedSizeH(550);
+        const x1 = this.computedSizeW(41.4);
+        const x2 = this.computedSizeW(372.6);
+        const y1 = this.bgOffsetTop;
+        const y2 = this.bgOffsetTop + this.computedSizeW(258.731);
 
         events.click({
             name: 'carBtn',
@@ -69,8 +73,8 @@ export default class Carport extends UTIL {
             cb: (e) => {
                 const { pageX, pageY } = e.changedTouches[0];
 
-                const x = Math.floor((pageX - this.computedSizeW(70)) / (this.computedSizeW(345) - this.computedSizeW(70)) * 3);
-                const y = Math.floor((pageY - this.computedSizeH(245)) / (this.computedSizeH(550) - this.computedSizeH(245)) * 3);
+                const x = Math.floor((pageX - x1) / (x2 - x1) * 3);
+                const y = Math.floor((pageY - y1) / (y2 - y1) * 2);
 
                 this.index = x + y * 3;
 
@@ -92,8 +96,8 @@ export default class Carport extends UTIL {
     bindCarPrePage() {
         const x1 = this.computedSizeW(107);
         const x2 = this.computedSizeW(203);
-        const y1 = this.bgOffsetTop + this.computedSizeH(254.731);
-        const y2 = this.bgOffsetTop + this.computedSizeH(289.731);
+        const y1 = this.bgOffsetTop + this.computedSizeW(254.731);
+        const y2 = this.bgOffsetTop + this.computedSizeW(289.731);
 
         events.click({
             name: 'carPrePageBtn',
@@ -118,8 +122,8 @@ export default class Carport extends UTIL {
     bindCarNextPage() {
         const x1 = this.computedSizeW(217);
         const x2 = this.computedSizeW(315);
-        const y1 = this.bgOffsetTop + this.computedSizeH(252.731);
-        const y2 = this.bgOffsetTop + this.computedSizeH(289.731);
+        const y1 = this.bgOffsetTop + this.computedSizeW(252.731);
+        const y2 = this.bgOffsetTop + this.computedSizeW(289.731);
 
         events.click({
             name: 'carNextPageBtn',
@@ -144,8 +148,8 @@ export default class Carport extends UTIL {
     bindCarBackBtn() {
         const x1 = this.computedSizeW(37);
         const x2 = this.computedSizeW(137);
-        const y1 = this.computedSizeH(574);
-        const y2 = this.computedSizeH(621);
+        const y1 = this.bgOffsetTop + this.computedSizeW(320);
+        const y2 = this.bgOffsetTop + this.computedSizeW(371.4);
 
         events.click({
             name: 'carBackBtn',
@@ -163,8 +167,8 @@ export default class Carport extends UTIL {
     bindCarUseBtn() {
         const x1 = this.computedSizeW(160);
         const x2 = this.computedSizeW(250);
-        const y1 = this.computedSizeH(425);
-        const y2 = this.computedSizeH(450);
+        const y1 = this.btnOffsetTop - this.computedSizeW(5);
+        const y2 = this.btnOffsetTop + this.computedSizeW(this.unlockBtn.height / 2);
 
         events.click({
             name: 'carUseBtn',
@@ -253,6 +257,7 @@ export default class Carport extends UTIL {
     setTexture() {
         currentPage = 'carportPage';
 
+        // 重置加载进度
         this.loadNum = 0;
 
         const currentCarId = $cache.getGameData('car').id;
@@ -264,7 +269,7 @@ export default class Carport extends UTIL {
 
         // 白色背景
         offCanvas2d.fillStyle = '#fff';
-        offCanvas2d.fillRect(this.computedSizeW(41.4), this.bgOffsetTop, this.computedSizeW(331.2), this.computedSizeH(310));
+        offCanvas2d.fillRect(this.computedSizeW(41.4), this.bgOffsetTop, this.computedSizeW(331.2), this.computedSizeW(310));
 
         // 头部
         offCanvas2d.drawImage(this.carHeader, 0, 0, this.carHeader.width, this.carHeader.height, this.computedSizeW(41.4), this.headerOffsetTop, this.computedSizeW(331.2), this.computedSizeW(115.368));
@@ -283,20 +288,20 @@ export default class Carport extends UTIL {
 
                 // 是否已选择
                 if (carId === currentCarId) {
-                    offCanvas2d.drawImage(this.carPaneOn, 0, 0, this.carPaneOn.width, this.carPaneOn.height, this.computedSizeW(54 + x * 105), this.bgOffsetTop + this.computedSizeH(11.731 + pkey * 120), this.computedSizeW(97.152), this.computedSizeH(118.68));
+                    offCanvas2d.drawImage(this.carPaneOn, 0, 0, this.carPaneOn.width, this.carPaneOn.height, this.computedSizeW(54 + x * 105), this.bgOffsetTop + this.computedSizeH(11.731) + this.computedSizeW(pkey * 120), this.computedSizeW(97.152), this.computedSizeW(118.68));
                 }
 
                 // 汽车
-                offCanvas2d.drawImage(carPane, 0, 0, carPane.width, carPane.height, this.computedSizeW(55 + x * 105), this.bgOffsetTop + this.computedSizeH(15.731 + pkey * 120), this.computedSizeW(97.152), this.computedSizeH(118.68));
+                offCanvas2d.drawImage(carPane, 0, 0, carPane.width, carPane.height, this.computedSizeW(55 + x * 105), this.bgOffsetTop + this.computedSizeH(15.731) + this.computedSizeW(pkey * 120), this.computedSizeW(97.152), this.computedSizeW(118.68));
 
                 // 缓存已经加载完的图片
                 this.list[k].imgUrlObj = carPane;
 
                 if (isNew) {
-                    offCanvas2d.drawImage(this.carNew, 0, 0, this.carNew.width, this.carNew.height, this.computedSizeW(130 + x * 97), this.bgOffsetTop + this.computedSizeH(18.731 + pkey * 107), this.carNew.width / 2, this.carNew.height / 2);
+                    offCanvas2d.drawImage(this.carNew, 0, 0, this.carNew.width, this.carNew.height, this.computedSizeW(130 + x * 97), this.bgOffsetTop + this.computedSizeH(18.731) - this.computedSizeW(pkey * 107), this.carNew.width / 2, this.carNew.height / 2);
                 } else {
                     // 如果已解锁
-                    !unlock && offCanvas2d.drawImage(this.carPaneOff, 0, 0, this.carPaneOff.width, this.carPaneOff.height, this.computedSizeW(54 + x * 105), this.bgOffsetTop + this.computedSizeH(11.731 + pkey * 120), this.computedSizeW(97.152), this.computedSizeH(118.68));
+                    !unlock && offCanvas2d.drawImage(this.carPaneOff, 0, 0, this.carPaneOff.width, this.carPaneOff.height, this.computedSizeW(54 + x * 105), this.bgOffsetTop + this.computedSizeH(11.731) + this.computedSizeW(pkey * 120), this.computedSizeW(97.152), this.computedSizeW(118.68));
                 }
 
                 this.loadNum++;
@@ -312,19 +317,19 @@ export default class Carport extends UTIL {
 
         // 分页按钮
         if (this.page !== 1) {
-            offCanvas2d.drawImage(this.prePageDis, 0, 0, this.prePageDis.width, this.prePageDis.height, this.computedSizeW(110), this.bgOffsetTop + this.computedSizeH(258.731), this.computedSizeW(89.424), this.computedSizeW(34.776));
+            offCanvas2d.drawImage(this.prePageDis, 0, 0, this.prePageDis.width, this.prePageDis.height, this.computedSizeW(110), this.bgOffsetTop + this.computedSizeW(258.731), this.computedSizeW(89.424), this.computedSizeW(34.776));
         } else {
-            offCanvas2d.drawImage(this.prePageN, 0, 0, this.prePageN.width, this.prePageN.height, this.computedSizeW(110), this.bgOffsetTop + this.computedSizeH(258.731), this.computedSizeW(89.424), this.computedSizeW(34.776));
+            offCanvas2d.drawImage(this.prePageN, 0, 0, this.prePageN.width, this.prePageN.height, this.computedSizeW(110), this.bgOffsetTop + this.computedSizeW(258.731), this.computedSizeW(89.424), this.computedSizeW(34.776));
         }
 
         if (this.hasNext) {
-            offCanvas2d.drawImage(this.nextPageDis, 0, 0, this.nextPageDis.width, this.nextPageDis.height, this.computedSizeW(220), this.bgOffsetTop + this.computedSizeH(258.731), this.computedSizeW(89.424), this.computedSizeW(34.776));
+            offCanvas2d.drawImage(this.nextPageDis, 0, 0, this.nextPageDis.width, this.nextPageDis.height, this.computedSizeW(220), this.bgOffsetTop + this.computedSizeW(258.731), this.computedSizeW(89.424), this.computedSizeW(34.776));
         } else {
-            offCanvas2d.drawImage(this.nextPageN, 0, 0, this.nextPageN.width, this.nextPageN.height, this.computedSizeW(220), this.bgOffsetTop + this.computedSizeH(258.731), this.computedSizeW(89.424), this.computedSizeW(34.776));
+            offCanvas2d.drawImage(this.nextPageN, 0, 0, this.nextPageN.width, this.nextPageN.height, this.computedSizeW(220), this.bgOffsetTop + this.computedSizeW(258.731), this.computedSizeW(89.424), this.computedSizeW(34.776));
         }
 
         // 返回按钮
-        offCanvas2d.drawImage(this.backBtn, 0, 0, this.backBtn.width, this.backBtn.height, this.computedSizeW(41.4), this.computedSizeH(580), this.computedSizeW(89.424), this.computedSizeW(34.776));
+        offCanvas2d.drawImage(this.backBtn, 0, 0, this.backBtn.width, this.backBtn.height, this.computedSizeW(41.4), this.bgOffsetTop + this.computedSizeW(330), this.computedSizeW(89.424), this.computedSizeW(34.776));
 
         texture2d.needsUpdate = true;
     }
@@ -335,31 +340,32 @@ export default class Carport extends UTIL {
         const { unlock, imgUrlObj, unlockNum } = this.list[this.index];
 
         // 解锁背景
-        offCanvas2d.drawImage(this.unlockPane, 0, 0, this.unlockPane.width, this.unlockPane.height, this.computedSizeW(44), this.computedSizeH(263), this.computedSizeW(327), this.computedSizeH(223));
-
-        offCanvas2d.drawImage(this.unlockBtn, 0, 0, this.unlockBtn.width, this.unlockBtn.height, this.computedSizeW(160), this.computedSizeH(422), this.computedSizeW(95), this.computedSizeH(35));
+        offCanvas2d.drawImage(this.unlockPane, 0, 0, this.unlockPane.width, this.unlockPane.height, this.computedSizeW(44), this.computedSizeH(263), this.computedSizeW(327), this.computedSizeW(223));
 
         offCanvas2d.textAlign = 'left';
 
         // 汽车背景
-        offCanvas2d.drawImage(this.carPane, 0, 0, this.carPane.width, this.carPane.height, this.computedSizeW(87), this.computedSizeH(298), this.computedSizeW(80), this.computedSizeH(93));
+        offCanvas2d.drawImage(this.carPane, 0, 0, this.carPane.width, this.carPane.height, this.computedSizeW(87), this.computedSizeH(298), this.computedSizeW(80), this.computedSizeW(93));
 
         // 汽车
-        offCanvas2d.drawImage(imgUrlObj, 0, 0, imgUrlObj.width, imgUrlObj.height, this.computedSizeW(90), this.computedSizeH(301), this.computedSizeW(75), this.computedSizeH(88));
+        offCanvas2d.drawImage(imgUrlObj, 0, 0, imgUrlObj.width, imgUrlObj.height, this.computedSizeW(90), this.computedSizeH(301), this.computedSizeW(75), this.computedSizeW(88));
 
         // 解锁条件文字
         offCanvas2d.fillStyle = "#e9b320";
         offCanvas2d.font = `bold ${this.computedSizeW(14)}px Arial`;
         offCanvas2d.fillText('解锁条件：', this.computedSizeW(177), this.computedSizeH(314));
 
-        // 按钮
+        // 按钮背景
+        offCanvas2d.drawImage(this.unlockBtn, 0, 0, this.unlockBtn.width, this.unlockBtn.height, winWidth / 2 - this.computedSizeW(this.unlockBtn.width / 4), this.btnOffsetTop, this.computedSizeW(this.unlockBtn.width / 2), this.computedSizeW(this.unlockBtn.height / 2));
+
+        // 按钮文字
         offCanvas2d.fillStyle = '#fff';
         offCanvas2d.font = `bold ${this.computedSizeW(16)}px Arial`;
         const btnText = unlock ? '使 用' : '好 的';
-        offCanvas2d.fillText(btnText, this.computedSizeW(190), this.computedSizeH(444));
+        offCanvas2d.fillText(btnText, this.computedSizeW(190), this.btnOffsetTop + this.computedSizeW(21));
 
         // 关闭按钮
-        offCanvas2d.drawImage(this.closeBtn, 0, 0, this.closeBtn.width, this.closeBtn.height, this.computedSizeW(330), this.computedSizeH(275), this.computedSizeW(this.closeBtn.width / 2), this.computedSizeH(this.closeBtn.height / 2));
+        offCanvas2d.drawImage(this.closeBtn, 0, 0, this.closeBtn.width, this.closeBtn.height, this.computedSizeW(330), this.computedSizeH(275), this.computedSizeW(this.closeBtn.width / 2), this.computedSizeW(this.closeBtn.height / 2));
 
         // 解锁选项
         switch(unlockNum) {
@@ -407,6 +413,6 @@ export default class Carport extends UTIL {
         offCanvas2d.font = `${this.computedSizeW(14)}px Arial`;
         offCanvas2d.fillText(text, this.computedSizeW(180), this.computedSizeH(337));
 
-        offCanvas2d.drawImage(img, 0, 0, img.width, img.height, this.computedSizeW(179), this.computedSizeH(343), this.computedSizeW(131), this.computedSizeH(30));
+        offCanvas2d.drawImage(img, 0, 0, img.width, img.height, this.computedSizeW(179), this.computedSizeH(343), this.computedSizeW(131), this.computedSizeW(30));
     }
 }
