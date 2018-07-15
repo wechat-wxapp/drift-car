@@ -298,7 +298,7 @@ export default class Carport extends UTIL {
                 this.list[k].imgUrlObj = carPane;
 
                 if (isNew) {
-                    offCanvas2d.drawImage(this.carNew, 0, 0, this.carNew.width, this.carNew.height, this.computedSizeW(130 + x * 97), this.bgOffsetTop + this.computedSizeH(18.731) - this.computedSizeW(pkey * 107), this.carNew.width / 2, this.carNew.height / 2);
+                    offCanvas2d.drawImage(this.carNew, 0, 0, this.carNew.width, this.carNew.height, this.computedSizeW(130 + x * 100), this.bgOffsetTop + this.computedSizeH(18.731) + this.computedSizeW(pkey * 110), this.carNew.width / 2, this.carNew.height / 2);
                 } else {
                     // 如果已解锁
                     !unlock && offCanvas2d.drawImage(this.carPaneOff, 0, 0, this.carPaneOff.width, this.carPaneOff.height, this.computedSizeW(54 + x * 105), this.bgOffsetTop + this.computedSizeH(11.731) + this.computedSizeW(pkey * 120), this.computedSizeW(97.152), this.computedSizeW(118.68));

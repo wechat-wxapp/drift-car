@@ -95,10 +95,11 @@ export default class WX extends UTIL {
                         resolve();
                     });
             } else {
+                console.log('当前openid: ', { openid, session_key });
                 this.updateDate()
                     .then(e => {
                         const { payload: { unknow } } = e;
-
+                        console.log('是否需要重新授权: ', unknow);
                         if (unknow) {
                             this.wxLogin()
                                 .then(() => {

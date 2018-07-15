@@ -55,9 +55,6 @@ export default class Main extends UTIL {
 
         // 渲染
         this.loop();
-
-        this.currentTime = 0;
-        this.start = null;
     }
 
     /**

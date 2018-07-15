@@ -263,14 +263,8 @@ export default class UTIL {
      * 首次开始音效
      * */
     readyMusic() {
-        this.startMusicTimer = $timer(({ key }) => {
-            gamePage.page(4 - key);
-            music.playReady();
-            this.startMusicTimer.closeTimeout();
-        },32);
-
         this.musicTimer = $timer(({ key }) => {
-            if (key >= 3) {
+            if (key >= 4) {
                 music.playGo();
 
                 // 设置开启key
@@ -291,20 +285,24 @@ export default class UTIL {
                 return false;
             } else {
                 // 倒计时
-                gamePage.page(3 - key)
+                gamePage.page(4 - key);
 
                 music.playReady();
             }
-        }, 1500);
+        }, 1000);
+
+        // this.startMusicTimer = $timer(({ key }) => {
+        //     gamePage.page(4 - key);
+        //     music.playReady();
+        //     asd();
+        //     this.startMusicTimer.closeTimeout();
+        // }, 1000);
 
         // 手动释放内存
         wx.triggerGC();
 
         // 全屏不能点击
         currentPage = 'off';
-
-        // gamePage.page(3);
-        // music.playReady();
     }
 
     /**
@@ -376,6 +374,4 @@ export default class UTIL {
     computedSizeH(size) {
         return size * winHeight / 736;
     }
-
-
 }
