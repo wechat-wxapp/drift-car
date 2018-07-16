@@ -373,18 +373,18 @@ export default class Bus{
         carClass.removeCar();
         carClass.addCar();
 
-        carBodys.position.set(25, 15, -10);
+        carBodys.position.set(25, 15, -35);
         carBodys.quaternion.setFromAxisAngle(new CANNON.Vec3(0, 1, 0), 0);
 
         // 普通画布
         // offCanvasSprite.position.set(-11.75, 78.44, 20);
         // 分数
-        scoreCanvasSprite.position.set(-10, 82.8, 9);
+        scoreCanvasSprite.position.set(-20, 82.8, 9);
         // 超越好友
-        beyondCanvasSprite.position.set(-11.75, 78.44, 20);
+        beyondCanvasSprite.position.set(-21.75, 81, 20);
         // sharedCanvasSprite.position.set(-11.75, 78.44, 20);
 
-        camera.position.set(-16.738086885462103, 90.533387653514225, 28.513221776822927);
+        camera.position.set(-25.738086885462103, 90.533387653514225, 28.513221776822927);
         camera.rotation.set(-0.9577585082113045, -0.3257201862210706, -0.42691147594250245);
 
         // 开始游戏关闭开放域帧循环

@@ -17,36 +17,13 @@ export default class Score extends UTIL {
      * 创建2d画布
      */
     page() {
-        // const offCanvas = wx.createCanvas();
-        //
-        // offCanvas.height = 205 * window.devicePixelRatio;
-        // offCanvas.width = 105 * window.devicePixelRatio;
-        //
-        // scoreCanvas2d = offCanvas.getContext("2d");
-        //
-        // scoreCanvas2d.scale(window.devicePixelRatio, window.devicePixelRatio);
-        //
-        // scoreTexture2d = new THREE.Texture(offCanvas);
-        // scoreTexture2d.minFilter = THREE.LinearFilter;
-        //
-        // const spriteMaterial = new THREE.SpriteMaterial({
-        //     map: scoreTexture2d
-        // });
-        //
-        // scoreCanvasSprite = new THREE.Sprite(spriteMaterial);
-        // scoreCanvasSprite.position.set(-10, 82.8, 9);
-        //
-        // scoreCanvasSprite.scale.set(4, 7.5, 1);
-        //
-        // scene.add(scoreCanvasSprite);
-
         const {cvs, cvs2d, texture2d, mesh} = this.createCanvas2d('3d', 'main', 105, 205);
 
         scoreCanvas2d = cvs2d;
         scoreTexture2d = texture2d;
         scoreCanvasSprite = mesh;
 
-        scoreCanvasSprite.position.set(-10, 82.8, 9);
+        scoreCanvasSprite.position.set(-20, 82.8, 9);
         scoreCanvasSprite.scale.set(4, 7.5, 1);
 
         scene.add(scoreCanvasSprite);

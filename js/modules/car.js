@@ -71,7 +71,7 @@ export default class Car extends UTIL {
                 car = obj;
 
                 car.scale.set(modelSize[0], modelSize[1], modelSize[2]);
-                car.position.set(25, 15, -10);
+                car.position.set(25, 15, -35);
 
                 const boxShape = new CANNON.Box(new CANNON.Vec3(physicalSize[0], physicalSize[1], physicalSize[2]));
 

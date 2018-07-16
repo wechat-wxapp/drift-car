@@ -257,6 +257,9 @@ export default class Road extends UTIL {
         sceneryArr.push([scenery_1, scenery_2]);
     }
 
+    /**
+     * 连续短弯道
+     * */
     r6() {
         const { body } = turnRoadSmallClass.r3();
         const { body: body2 } = turnRoadSmallClass.r4();

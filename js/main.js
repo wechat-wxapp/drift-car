@@ -76,10 +76,8 @@ export default class Main extends UTIL {
         console.log("屏幕尺寸: " + winWidth + " x " + winHeight);
 
         camera = new THREE.PerspectiveCamera(75, cameraAspect, .1, 10000);
-        camera.position.set(-16.738086885462103, 90.533387653514225, 28.513221776822927);
+        camera.position.set(-25.738086885462103, 90.533387653514225, 28.513221776822927);
         camera.rotation.set(-0.9577585082113045, -0.3257201862210706, -0.42691147594250245);
-
-        // camera = new THREE.OrthographicCamera(winWidth / -2, winWidth / 2, winHeight / 2, winHeight / -2, 0, 10000)
 
         // 添加环境光 0x999999
         const ambientLight = new THREE.AmbientLight('#7c7c7c');
@@ -132,7 +130,7 @@ export default class Main extends UTIL {
     }
 
     /**
-     * 直路横向模型
+     * 连续短弯道
      */
     r8() {
         roadClass.r6();
@@ -143,11 +141,11 @@ export default class Main extends UTIL {
      */
     updateRoad() {
         if (key < maxKey) {
-            // if (key < 1) {
+        //     if (key < 1) {
 
-            if (key === 0) {
+            if (key < 2) {
                 this.r7();
-            } else if (key === 1) {
+            } else if (key === 2) {
                 this.r5();
             } else {
                 const currentRoadConfig = loopRoadConfig[lastBoxType];
@@ -158,9 +156,9 @@ export default class Main extends UTIL {
 
 
             // if (key < 1) {
-            //     this.r8();
+            //     this.r7();
             // } else if (key === 1) {
-            //     this.r5();
+            //     this.r7();
             // } else if (key === 2) {
             //     this.r6();
             // } else if (key === 3) {

@@ -29,29 +29,6 @@ export default class Shared extends UTIL {
      * 创建2d画布
      */
     page() {
-        // this.sharedCanvas = openDataContext.canvas;
-        //
-        // // this.sharedCanvas.width = 50 * window.devicePixelRatio;
-        // // this.sharedCanvas.height = 50 * window.devicePixelRatio;
-        //
-        // const sharedCanvas2d = this.sharedCanvas.getContext("2d");
-        //
-        // // sharedCanvas2d.scale(window.devicePixelRatio, window.devicePixelRatio);
-        //
-        // beyondTexture2d = new THREE.Texture(this.sharedCanvas);
-        // beyondTexture2d.minFilter = THREE.LinearFilter;
-        //
-        // const spriteMaterial = new THREE.SpriteMaterial({
-        //     map: beyondTexture2d
-        // });
-        //
-        // beyondCanvasSprite = new THREE.Sprite(spriteMaterial);
-        // beyondCanvasSprite.position.set(-11.75, 78.44, 20);
-        //
-        // beyondCanvasSprite.scale.set(2, 2, 1);
-        //
-        // scene.add(beyondCanvasSprite);
-
         const {cvs, cvs2d, texture2d, mesh} = this.createCanvas2d('3d', 'shared');
 
         this.sharedCanvas = cvs;
@@ -59,9 +36,9 @@ export default class Shared extends UTIL {
         beyondTexture2d = texture2d;
         beyondCanvasSprite = mesh;
 
-        beyondCanvasSprite.position.set(-11.75, 78.44, 20);
+        beyondCanvasSprite.position.set(-21.75, 81, 20);
 
-        beyondCanvasSprite.scale.set(2, 2, 1);
+        beyondCanvasSprite.scale.set(1.5, 1.5, 1);
 
         scene.add(beyondCanvasSprite);
     }

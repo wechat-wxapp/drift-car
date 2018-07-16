@@ -569,44 +569,6 @@ export default class Shared extends UTIL {
      * 创建2d画布
      */
     page() {
-        // this.sharedCanvas = openDataContext.canvas;
-        //
-        // this.sharedCanvas.width = winWidth * window.devicePixelRatio;
-        // this.sharedCanvas.height = winHeight * window.devicePixelRatio;
-        //
-        // const sharedCanvas2d = this.sharedCanvas.getContext("2d");
-        //
-        // sharedCanvas2d.scale(window.devicePixelRatio, window.devicePixelRatio);
-        //
-        // // sharedTexture2d = new THREE.Texture(this.sharedCanvas);
-        // // sharedTexture2d.minFilter = THREE.LinearFilter;
-        // //
-        // // const spriteMaterial = new THREE.SpriteMaterial({
-        // //     map: sharedTexture2d
-        // // });
-        // //
-        // // sharedCanvasSprite = new THREE.Sprite(spriteMaterial);
-        // // sharedCanvasSprite.position.set(-11.75, 78.44, 20);
-        // //
-        // // const scaleX = Math.floor(winHeight / winWidth * 10) / 10 === 1.7 ? 13.5 : this.computedSizeW(13.5);
-        // //
-        // // sharedCanvasSprite.scale.set(scaleX, 23.95, 1);
-        // //
-        // // scene.add(sharedCanvasSprite);
-        //
-        // sharedTexture2d = new THREE.CanvasTexture(this.sharedCanvas)
-        //
-        // sharedTexture2d.minFilter = sharedTexture2d.magFilter = THREE.LinearFilter
-        // // texture2d.needsUpdate = true
-        //
-        // let geometry = new THREE.PlaneGeometry(winWidth, winHeight);
-        //
-        // let material = new THREE.MeshBasicMaterial({ map: sharedTexture2d, transparent: true })
-        //
-        // sharedCanvasSprite = new THREE.Mesh(geometry, material)
-        //
-        // uiScene.add(sharedCanvasSprite);
-
         const {cvs, cvs2d, texture2d, mesh} = this.createCanvas2d('2d', 'shared', winWidth, winHeight);
 
         this.sharedCanvas = cvs;
