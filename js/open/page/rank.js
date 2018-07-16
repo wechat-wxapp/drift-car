@@ -52,6 +52,10 @@ export default class Rank extends Init {
     this.isLoading = wx.createImage();
     this.isLoading.src = 'images/is-loading.png';
     
+    //默认头像
+    this.staticAvater = wx.createImage();
+    this.staticAvater.src = 'images/static-avatar.png';
+
     this.headerOffsetTop = this.computedSizeH(172);
   }
 
@@ -109,16 +113,10 @@ export default class Rank extends Init {
 
   //判断是否渲染函数的中间件函数
   dataMiddleware(type, data) {
-    const { clearKey } = data;
-    if(clearKey) this.clearCvs(true, true);
-    if(!data.isDriving) {
-      this.setTexture(type, data)
-      this.cvs.drawImage(this.isLoading, 0, 0, this.isLoading.width, this.isLoading.height, this.computedSizeW(361) / 2, this.relativeSizeH(380), this.computedSizeW(361), this.computedSizeW(87));
-    }
-    const middlewareTimer = ()=> {
-      setTimeout(() => {
+    const innerMiddlewareFn = ()=> {
+      this.middlewareTimer = setTimeout(() => {
         if(wx.HWData.loadingKey) {
-          middlewareTimer();
+          innerMiddlewareFn();
         }else {
           if(!data.isDriving || (data.isDriving === 'next' && !this.noNext) || (data.isDriving === 'pre' && !this.noPre)) {
             //再画一次中央白板
@@ -135,12 +133,22 @@ export default class Rank extends Init {
     
             wx.HWData.loadingKey = false;
             this.showData(type, data)
-            clearTimeout(middlewareTimer)
+            clearTimeout(this.middlewareTimer)
           }
         }
       }, 100);
     }
-    middlewareTimer()
+    const { goBackKey } = data;
+    if(goBackKey) {
+      this.middlewareTimer && clearTimeout(this.middlewareTimer)
+      return;
+    }
+    if(!data.isDriving) {
+      this.setTexture(type, data)
+      this.cvs.drawImage(this.isLoading, 0, 0, this.isLoading.width, this.isLoading.height, this.computedSizeW(361) / 2, this.relativeSizeH(380), this.computedSizeW(361), this.computedSizeW(87));
+    }
+    
+    innerMiddlewareFn()
   }
 
 
@@ -225,8 +233,9 @@ export default class Rank extends Init {
         // 头像
         let j = data.rankCurrentPage ? i % 5 : i;
 
-        if(that.rankData[j].avatarUrl)
-          that.circleImg(this.cvs, that.rankData[j].avatarObj, this.computedSizeW(176), that.relativeSizeH(184 + (i - (rankCurrentPage - 1) * this.counts) * 110), this.computedSizeW(39.5)) // 356
+        //判断要不要用默认头像
+        let drawImg = that.rankData[j].avatarUrl ? that.rankData[j].avatarObj : that.staticAvater;
+        that.circleImg(this.cvs, drawImg, this.computedSizeW(176), that.relativeSizeH(184 + (i - (rankCurrentPage - 1) * this.counts) * 110), this.computedSizeW(39.5)) // 356
       }
     }
 
@@ -255,20 +264,19 @@ export default class Rank extends Init {
     
     //底部白色自己排名
     this.selfData = getRankData.self;
-    if (this.selfData.avatarUrl) {
-      this.circleImg(this.cvs,this.selfData.avatarObj, this.computedSizeW(190), this.relativeSizeH(852), this.computedSizeW(30), this.computedSizeH(39)) // 1024
-      if(this.total !== 0){
-        this.cvs.fillStyle = '#7f2409';
-        this.cvs.fillText(this.selfData.rank, this.computedSizeW(132), this.relativeSizeH(892)); //1064
-      }
-      if(this.total !== 0){
-        this.cvs.fillStyle = '#8a8a8a';
-        this.cvs.fillText(this.selfData.nickname, this.computedSizeW(275), this.relativeSizeH(892), this.computedSizeW(146)); // 1064
-      }
-      if(this.selfData.KVDataList.length > 0){
-        this.cvs.fillStyle = '#2a2a2a';
-        this.cvs.fillText(this.selfData.KVDataList[0].value, this.computedSizeW(583), this.relativeSizeH(892)); // 1064
-      }
+    let selfAvatar = this.selfData.avatarUrl ? this.selfData.avatarObj : this.staticAvater;
+    this.circleImg(this.cvs, selfAvatar, this.computedSizeW(190), this.relativeSizeH(852), this.computedSizeW(30), this.computedSizeH(39)) // 1024
+    if(this.total !== 0) {
+      this.cvs.fillStyle = '#7f2409';
+      this.cvs.fillText(this.selfData.rank, this.computedSizeW(132), this.relativeSizeH(892)); //1064
+    }
+    if(this.total !== 0) {
+      this.cvs.fillStyle = '#8a8a8a';
+      this.cvs.fillText(this.selfData.nickname, this.computedSizeW(275), this.relativeSizeH(892), this.computedSizeW(146)); // 1064
+    }
+    if(this.selfData.KVDataList.length > 0) {
+      this.cvs.fillStyle = '#2a2a2a';
+      this.cvs.fillText(this.selfData.KVDataList[0].value, this.computedSizeW(583), this.relativeSizeH(892)); // 1064
     }
     
   }

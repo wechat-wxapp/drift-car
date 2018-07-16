@@ -6,7 +6,7 @@ import Init from './init';
 export default class wechatMP extends Init {
   constructor() {
     super();
-
+    
     this.qrcode = wx.createImage();
     this.qrcode.src = 'images/qrcode.png';
     this.qrBtn = wx.createImage();
@@ -30,7 +30,7 @@ export default class wechatMP extends Init {
    * */
   setTexture(data) {
     this.clearCvs();
-
+    this.updateWxScore(0);
 
     this.cvs.drawImage(this.qrcode, 0, 0, this.qrcode.width, this.qrcode.height, this.computedSizeW(95), this.computedSizeH(270), this.computedSizeW(560), this.computedSizeW(824));
 

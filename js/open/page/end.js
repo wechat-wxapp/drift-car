@@ -30,6 +30,10 @@ export default class EndPage extends Init {
         // 新纪录
         this.newRecord = wx.createImage();
         this.newRecord.src = 'images/newrecord.png';
+
+        //默认头像图片
+        this.staticAvater = wx.createImage();
+        this.staticAvater.src = 'images/static-avatar.png';
     }
 
     /**
@@ -125,65 +129,62 @@ export default class EndPage extends Init {
         if (this.rankData) {
             const rank = this.selfData.rank;
 
-            let {myPowerfulFri,myWeakFri} = {};
+            let { myPowerfulFri, myWeakFri } = {};
 
             if (rank !== 1) {
                 myPowerfulFri = this.rankData[rank - 2]
             }
 
-            if (rank !== this.selfData.length) {
-                myWeakFri = this.rankData[rank]
+            if (rank !== this.rankData.length) {
+                myWeakFri = this.getHWData('friendRank').list[rank]
             }
 
             this.cvs.fillStyle = "#999";
             this.cvs.textAlign = "center";
             this.cvs.font = `bold ${this.computedSizeW(26)}px Arial`;
-            this.cvs.fillText(`历史最高得分：${ this.selfData['KVDataList'][0].value }`, this.winWidth / 2, this.relativeSizeH(530));
+            this.cvs.fillText(`历史最高得分：${this.selfData['KVDataList'][0].value}`, this.winWidth / 2, this.relativeSizeH(530));
 
             this.cvs.textAlign = 'center';
-
             // 多种排名可能情况
             if (myPowerfulFri && myWeakFri) {
                 //头像
                 const avatar = wx.createImage();
                 avatar.src = myPowerfulFri.avatarUrl;
-                avatar.onload = () => {
-                    this.circleImg(this.cvs, avatar,  this.computedSizeW(180), this.relativeSizeH(642), this.computedSizeW(42), this.computedSizeW(42));
 
-                    // 名次背景
-                    this.cvs.drawImage(this.rankBg, 0, 0, this.rankBg.width, this.rankBg.height, this.computedSizeW(168), this.relativeSizeH(645) - this.computedSizeW(24), this.computedSizeW(this.rankBg.width), this.computedSizeW(this.rankBg.height));
+                //左边好友内容
+                let leftFriendAvatar = myPowerfulFri.avatarObj ? myPowerfulFri.avatarObj : this.staticAvater;
+                this.circleImg(this.cvs, leftFriendAvatar,  this.computedSizeW(180), this.relativeSizeH(642), this.computedSizeW(42), this.computedSizeW(42));
 
-                    //名次
-                    this.cvs.font = `${this.computedSizeW(24)}px Arial`;
-                    this.cvs.fillStyle = '#2FBF2E';
-                    this.cvs.fillText(`第${rank - 1}名`, this.computedSizeW(220), this.relativeSizeH(650));
-                };
-                const avatar1 = wx.createImage();
-                avatar1.src = this.selfData.avatarUrl;
-                avatar1.onload = () => {
-                    this.circleImg(this.cvs, avatar1,  this.computedSizeW(332), this.relativeSizeH(642), this.computedSizeW(42), this.computedSizeW(42));
+                // 名次背景
+                this.cvs.drawImage(this.rankBg, 0, 0, this.rankBg.width, this.rankBg.height, this.computedSizeW(168), this.relativeSizeH(645) - this.computedSizeW(24), this.computedSizeW(this.rankBg.width), this.computedSizeW(this.rankBg.height));
+                //名次
+                this.cvs.font = `${this.computedSizeW(24)}px Arial`;
+                this.cvs.fillStyle = '#2FBF2E';
+                this.cvs.fillText(`第${rank - 1}名`, this.computedSizeW(220), this.relativeSizeH(650));
 
-                    // 名次背景
-                    this.cvs.drawImage(this.rankBg, 0, 0, this.rankBg.width, this.rankBg.height, this.computedSizeW(322), this.relativeSizeH(645) - this.computedSizeW(24), this.computedSizeW(this.rankBg.width), this.computedSizeW(this.rankBg.height));
+                //自己的内容
+                let selfAvatar = this.selfData.avatarObj ? this.selfData.avatarObj : this.staticAvater;
+                this.circleImg(this.cvs, selfAvatar,  this.computedSizeW(332), this.relativeSizeH(642), this.computedSizeW(42), this.computedSizeW(42));
 
-                    //名次
-                    this.cvs.font = `${this.computedSizeW(24)}px Arial`;
-                    this.cvs.fillStyle = '#2FBF2E';
-                    this.cvs.fillText(`第${rank}名`, this.computedSizeW(374), this.relativeSizeH(650));
-                };
-                const avatar2 = wx.createImage();
-                avatar2.src = myWeakFri.avatarUrl;
-                avatar2.onload = () => {
-                    this.circleImg(this.cvs, avatar2,  this.computedSizeW(490), this.relativeSizeH(642), this.computedSizeW(42), this.computedSizeW(42));
+                // 名次背景
+                this.cvs.drawImage(this.rankBg, 0, 0, this.rankBg.width, this.rankBg.height, this.computedSizeW(322), this.relativeSizeH(645) - this.computedSizeW(24), this.computedSizeW(this.rankBg.width), this.computedSizeW(this.rankBg.height));
 
-                    // 名次背景
-                    this.cvs.drawImage(this.rankBg, 0, 0, this.rankBg.width, this.rankBg.height, this.computedSizeW(478), this.relativeSizeH(645) - this.computedSizeW(24), this.computedSizeW(this.rankBg.width), this.computedSizeW(this.rankBg.height));
+                //名次
+                this.cvs.font = `${this.computedSizeW(24)}px Arial`;
+                this.cvs.fillStyle = '#2FBF2E';
+                this.cvs.fillText(`第${rank}名`, this.computedSizeW(374), this.relativeSizeH(650));
+                
+                //右边好友内容
+                let rightFriendAvatar = myWeakFri.avatarObj ? myWeakFri.avatarObj : this.staticAvater;
+                this.circleImg(this.cvs, rightFriendAvatar,  this.computedSizeW(490), this.relativeSizeH(642), this.computedSizeW(42), this.computedSizeW(42));
 
-                    //名次
-                    this.cvs.font = `${this.computedSizeW(24)}px Arial`;
-                    this.cvs.fillStyle = '#2FBF2E';
-                    this.cvs.fillText(`第${rank + 1}名`, this.computedSizeW(530), this.relativeSizeH(650));
-                };
+                // 名次背景
+                this.cvs.drawImage(this.rankBg, 0, 0, this.rankBg.width, this.rankBg.height, this.computedSizeW(478), this.relativeSizeH(645) - this.computedSizeW(24), this.computedSizeW(this.rankBg.width), this.computedSizeW(this.rankBg.height));
+
+                //名次
+                this.cvs.font = `${this.computedSizeW(24)}px Arial`;
+                this.cvs.fillStyle = '#2FBF2E';
+                this.cvs.fillText(`第${rank + 1}名`, this.computedSizeW(530), this.relativeSizeH(650));
 
                 // 昵称
                 this.cvs.font = `${this.computedSizeW(20)}px Arial`;
@@ -209,45 +210,32 @@ export default class EndPage extends Init {
                 } else {
                     myWeakFri.rank = rank + 1
                 }
-
-                //名次
-                // this.cvs.font = `${this.computedSizeW(24)}px Arial`;
-                // this.cvs.fillStyle = '#2FBF2E';
-                this.cvs.textAlign = "center";
-
-                // if (!power) {
-                //     this.cvs.fillText(`第${myPowerfulFri.rank}名`, this.winWidth / 4  + this.computedSizeW(42), this.computedSizeH(650));
-                //     this.cvs.fillText(`第${myWeakFri.rank}名`, this.winWidth / 4 * 3  - this.computedSizeW(42), this.computedSizeH(650));
-                // } else {
-                //     this.cvs.fillText(`第${myPowerfulFri.rank}名`, this.winWidth / 4  + this.computedSizeW(42), this.computedSizeH(650));
-                //     this.cvs.fillText(`第${myWeakFri.rank}名`, this.winWidth / 4 * 3  - this.computedSizeW(42), this.computedSizeH(650));
-                // }
-
+                
                 //头像
                 const avatar = wx.createImage();
                 avatar.src = myWeakFri.avatarUrl;
-                avatar.onload = () => {
-                    this.circleImg(this.cvs, avatar,  this.winWidth / 4 * 3 - this.computedSizeW(84), this.relativeSizeH(642), this.computedSizeW(42), this.computedSizeW(42));
+                let myWeakFriAvatar = myWeakFri.avatarObj ? myWeakFri.avatarObj : this.staticAvater;
+                this.circleImg(this.cvs, myWeakFriAvatar,  this.winWidth / 4 * 3 - this.computedSizeW(84), this.relativeSizeH(642), this.computedSizeW(42), this.computedSizeW(42));
 
-                    // 名次背景
-                    this.cvs.drawImage(this.rankBg, 0, 0, this.rankBg.width, this.rankBg.height, this.computedSizeW(468), this.relativeSizeH(645) - this.computedSizeW(24), this.computedSizeW(this.rankBg.width), this.computedSizeW(this.rankBg.height));
-
-                    this.cvs.font = `${this.computedSizeW(24)}px Arial`;
-                    this.cvs.fillStyle = '#2FBF2E';
-                    this.cvs.fillText(`第${myWeakFri.rank}名`, this.winWidth / 4 * 3  - this.computedSizeW(42), this.relativeSizeH(650));
-                };
+                // 名次背景
+                this.cvs.drawImage(this.rankBg, 0, 0, this.rankBg.width, this.rankBg.height, this.computedSizeW(468), this.relativeSizeH(645) - this.computedSizeW(24), this.computedSizeW(this.rankBg.width), this.computedSizeW(this.rankBg.height));
+                //名次
+                this.cvs.textAlign = "center";
+                this.cvs.font = `${this.computedSizeW(24)}px Arial`;
+                this.cvs.fillStyle = '#2FBF2E';
+                this.cvs.fillText(`第${myWeakFri.rank}名`, this.winWidth / 4 * 3  - this.computedSizeW(42), this.relativeSizeH(650));
+     
                 const avatar1 = wx.createImage();
                 avatar1.src = myPowerfulFri.avatarUrl;
-                avatar1.onload = () => {
-                    this.circleImg(this.cvs, avatar1, this.winWidth / 4, this.relativeSizeH(642), this.computedSizeW(42), this.computedSizeW(42));
+                let myPowerfulFriAvatar = myPowerfulFri.avatarObj ? myPowerfulFri.avatarObj : this.staticAvater;
+                this.circleImg(this.cvs, myPowerfulFriAvatar, this.winWidth / 4, this.relativeSizeH(642), this.computedSizeW(42), this.computedSizeW(42));
 
-                    // 名次背景
-                    this.cvs.drawImage(this.rankBg, 0, 0, this.rankBg.width, this.rankBg.height, this.computedSizeW(178), this.relativeSizeH(645) - this.computedSizeW(24), this.computedSizeW(this.rankBg.width), this.computedSizeW(this.rankBg.height));
+                // 名次背景
+                this.cvs.drawImage(this.rankBg, 0, 0, this.rankBg.width, this.rankBg.height, this.computedSizeW(178), this.relativeSizeH(645) - this.computedSizeW(24), this.computedSizeW(this.rankBg.width), this.computedSizeW(this.rankBg.height));
 
-                    this.cvs.font = `${this.computedSizeW(24)}px Arial`;
-                    this.cvs.fillStyle = '#2FBF2E';
-                    this.cvs.fillText(`第${myPowerfulFri.rank}名`, this.winWidth / 4  + this.computedSizeW(42), this.relativeSizeH(650));
-                };
+                this.cvs.font = `${this.computedSizeW(24)}px Arial`;
+                this.cvs.fillStyle = '#2FBF2E';
+                this.cvs.fillText(`第${myPowerfulFri.rank}名`, this.winWidth / 4  + this.computedSizeW(42), this.relativeSizeH(650));
 
                 this.cvs.font = `${this.computedSizeW(20)}px Arial`;
                 this.cvs.fillStyle = "#666";
@@ -262,20 +250,17 @@ export default class EndPage extends Init {
             } else {
                 this.cvs.textAlign = "center";
 
-                //头像
-                const avatar = wx.createImage();
-                avatar.src = this.selfData.avatarUrl;
-                avatar.onload = () => {
-                    this.circleImg(this.cvs, avatar,  this.computedSizeW(332), this.relativeSizeH(642), this.computedSizeW(42), this.computedSizeW(42));
+                //一个头像的情况
+                let selfAvatar = this.selfData.avatarObj ? this.selfData.avatarObj : this.staticAvater;
+                this.circleImg(this.cvs, selfAvatar,  this.computedSizeW(332), this.relativeSizeH(642), this.computedSizeW(42), this.computedSizeW(42));
 
-                    // 名次背景
-                    this.cvs.drawImage(this.rankBg, 0, 0, this.rankBg.width, this.rankBg.height, this.computedSizeW(325), this.relativeSizeH(645) - this.computedSizeW(24), this.computedSizeW(this.rankBg.width), this.computedSizeW(this.rankBg.height));
+                // 名次背景
+                this.cvs.drawImage(this.rankBg, 0, 0, this.rankBg.width, this.rankBg.height, this.computedSizeW(325), this.relativeSizeH(645) - this.computedSizeW(24), this.computedSizeW(this.rankBg.width), this.computedSizeW(this.rankBg.height));
 
-                    // 名次
-                    this.cvs.font = `${this.computedSizeW(24)}px Arial`;
-                    this.cvs.fillStyle = '#2FBF2E';
-                    this.cvs.fillText(`第${rank}名`, this.winWidth / 2, this.relativeSizeH(650));
-                };
+                // 名次
+                this.cvs.font = `${this.computedSizeW(24)}px Arial`;
+                this.cvs.fillStyle = '#2FBF2E';
+                this.cvs.fillText(`第${rank}名`, this.winWidth / 2, this.relativeSizeH(650));
 
                 this.cvs.font = `${this.computedSizeW(20)}px Arial`;
                 this.cvs.fillStyle = "#666";

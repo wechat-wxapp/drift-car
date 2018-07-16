@@ -186,6 +186,9 @@ const basicData = {
         backIcon: 'images/back-icon.png',
         closeBtn: 'images/close-btn.png',
 
+        //默认头像图片
+        staticAvater: 'images/static-avatar.png',
+
         //loading页
         logo: 'images/logo.png',
         loadingBg: 'images/loading-bg.png',

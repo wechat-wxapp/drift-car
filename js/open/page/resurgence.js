@@ -15,6 +15,10 @@ export default class Resurgence extends Init {
 
         this.rePlay = wx.createImage();
         this.rePlay.src = 'images/reseur-rePlay.png';
+
+        //默认头像图片
+        this.staticAvater = wx.createImage();
+        this.staticAvater.src = 'images/static-avatar.png';
     }
 
     relativeSizeH(num) {
@@ -73,12 +77,9 @@ export default class Resurgence extends Init {
                 this.cvs.fillText(clipNickName, this.computedSizeW(513), this.relativeSizeH(795));
                 this.cvs.fill();
 
-                const avatar = wx.createImage();
-                avatar.src = myFri.avatarUrl;
-                avatar.onload = () => {
-                    this.circleImg(this.cvs, avatar, this.computedSizeW(409), this.relativeSizeH(746), this.computedSizeW(42), this.computedSizeW(42));
-                    this.cvs.beginPath();
-                }
+                //要判断这 个人有没有头像
+                let beyondFriendAvatar = myFri.avatarObj ? myFri.avatarObj : this.staticAvater;
+                this.circleImg(this.cvs, beyondFriendAvatar, this.computedSizeW(409), this.relativeSizeH(746), this.computedSizeW(42), this.computedSizeW(42));
             }
         }
 
