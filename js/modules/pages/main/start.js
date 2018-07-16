@@ -230,6 +230,7 @@ export default class Start extends UTIL {
 
         // 默认清除开放域页面
         sharedClass.clear2d();
+        isSharedLoop = false;
 
         const hasNew = $cache.getGameData('hasNew');
 

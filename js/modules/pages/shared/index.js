@@ -80,6 +80,14 @@ export default class Shared extends UTIL {
         return this.computedSizeH(96) + this.computedSizeW(num - 96)
     }
 
+    //阻止排行榜切换下上页面太快
+    preventFastClick(pageName, d = 300) {
+        currentPage = 'off';
+        setTimeout(() => {
+            currentPage = pageName;
+        }, d)
+    }
+    
     // 结束页-再玩一次
     bindReStart() {
         const x1 = this.computedSizeW(60);
@@ -211,6 +219,7 @@ export default class Shared extends UTIL {
             cb: () => {
                 $wx.sendMessage('worldRank',{ page: rankCurrentPage, common: 0 , isDriving : 'pre'})
                 sharedTexture2d.needsUpdate = true;
+                this.preventFastClick('worldRank');
             }
         })
     }
@@ -227,7 +236,11 @@ export default class Shared extends UTIL {
             point: [x1, y1, x2, y2],
             cb: () => {
                 $wx.sendMessage('worldRank',{ common: 1 , isDriving : 'next'})
-                sharedTexture2d.needsUpdate = true;
+                // currentPage = 'off';
+                // setTimeout(() => {
+                //     currentPage = 'worldRank';
+                // }, 100)
+                this.preventFastClick('worldRank');
             }
         })
     }
@@ -246,6 +259,7 @@ export default class Shared extends UTIL {
             cb: () => {
                 $wx.sendMessage('groupRank',{ page: rankCurrentPage, common: 0 , shareTicket: $wx.shareTicket , isDriving : 'pre'});
                 sharedTexture2d.needsUpdate = true;
+                this.preventFastClick('groupRank');
             }
         })
     }
@@ -264,6 +278,7 @@ export default class Shared extends UTIL {
                 // rankCurrentPage = rankCurrentPage + 1;
                 $wx.sendMessage('groupRank',{ page: rankCurrentPage, common: 1 , shareTicket: $wx.shareTicket , isDriving : 'next'});
                 sharedTexture2d.needsUpdate = true;
+                this.preventFastClick('groupRank');
             }
         })
     }
@@ -281,6 +296,7 @@ export default class Shared extends UTIL {
             cb: () => {
                 $wx.sendMessage('friendRank',{ page: rankCurrentPage, common: 0 , isDriving : 'pre'});
                 sharedTexture2d.needsUpdate = true;
+                this.preventFastClick('friendRank');
             }
         })
     }
@@ -298,6 +314,7 @@ export default class Shared extends UTIL {
             cb: () => {
                 $wx.sendMessage('friendRank',{ page: rankCurrentPage, common: 1 , isDriving : 'next'} );
                 sharedTexture2d.needsUpdate = true;
+                this.preventFastClick('friendRank');
             }
         })
     }

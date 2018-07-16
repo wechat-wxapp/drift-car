@@ -109,6 +109,8 @@ export default class Rank extends Init {
 
   //判断是否渲染函数的中间件函数
   dataMiddleware(type, data) {
+    const { clearKey } = data;
+    if(clearKey) this.clearCvs(true, true);
     if(!data.isDriving) {
       this.setTexture(type, data)
       this.cvs.drawImage(this.isLoading, 0, 0, this.isLoading.width, this.isLoading.height, this.computedSizeW(361) / 2, this.relativeSizeH(380), this.computedSizeW(361), this.computedSizeW(87));
