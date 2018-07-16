@@ -40,13 +40,22 @@ export default class EndPage extends Init {
         this.setClassData();
         const { score } = data;
 
+        const { self: { KVDataList } } = this.getHWData('worldRank');
+
         let maxScore = score;
         let newRecord = false;
 
         if (this.selfData) {
-            if (score > this.selfData['KVDataList'][0].value) {
+            if (score > this.selfData['KVDataList'][0].value && score > KVDataList[0].value) {
+                // 更新分数
                 this.updateRankScore(score);
+                // 显示新纪录
                 newRecord = true;
+            } else if (score > this.selfData['KVDataList'][0].value) {
+                this.updateRankScore(score, 'friendRank');
+                newRecord = true;
+            } else if (score > KVDataList[0].value) {
+                this.setRankData(score, 'worldRank');
             } else {
                 maxScore = this.selfData['KVDataList'][0].value;
             }
@@ -64,11 +73,12 @@ export default class EndPage extends Init {
 
     /**
      * 更新分数
-     * @params {Number} 分数
+     * @params score {Number} 分数
+     * @params rankType {String} 需要更新的排行榜, 类型为 friendRank 会同时更新群排行榜, worldRank 更新世界排行榜
      * */
-    updateRankScore(score) {
+    updateRankScore(score, rankType) {
         // 设置缓存数据
-        this.setRankData(score);
+        this.setRankData(score, rankType);
         // 提交分数
         this.updateWxScore(score);
     }
@@ -83,7 +93,7 @@ export default class EndPage extends Init {
     }
 
     relativeSizeH(num) {
-        return this.computedSizeH(181) + this.computedSizeW(num - 181)   
+        return this.computedSizeH(181) + this.computedSizeW(num - 181);
     }
     
     /**

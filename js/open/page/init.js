@@ -159,10 +159,10 @@ export default class Init {
     initSelf(openId) {
         return new Promise((resolve, reject) => {
             wx.getUserInfo({
-                openIdList: [openId],
+                openIdList: [openId, 'o4eqt4pUjeDAbP4vRQaTpCldSOmE'],
                 success: res => {
                     const self = res.data[0];
-                    console.log('初始化个人信息: ', self);
+                    console.log('初始化个人信息: ', res);
                     resolve(self);
                 },
                 fail: (res) => {
@@ -313,21 +313,28 @@ export default class Init {
     /**
      * 设置排行榜数据
      * @params score {Number} 需要更新的分数
+     * @params rankType {String} 需要更新的排行榜, 类型为 friendRank 会同时更新群排行榜, worldRank 更新世界排行榜
      * @return {Object} 返回更新后的排行榜对象
      * */
-    setRankData(score) {
+    setRankData(score, rankType) {
         const { friendRank, groupRank, worldRank } = this.getHWData();
 
-        const rankList = [{
-                name: 'friendRank',
-                data: friendRank,
-            },{
-                name: 'groupRank',
-                data: groupRank,
-            },{
-                name: 'worldRank',
-                data: worldRank,
-            }];
+        // 更新好友排行榜和群排行榜
+        const friendRankKeys = [{
+            name: 'friendRank',
+            data: friendRank,
+        }, {
+            name: 'groupRank',
+            data: groupRank,
+        }];
+
+        // 更新世界排行榜
+        const worldRankKeys = [{
+            name: 'worldRank',
+            data: worldRank,
+        }];
+
+        const rankList = rankType === 'friendRank' ? friendRankKeys : rankType === 'worldRank' ? worldRankKeys : friendRankKeys.concat(worldRankKeys);
 
         for (let [k, v] of rankList.entries()) {
             const { name, data } = v;
