@@ -228,9 +228,6 @@ export default class Start extends UTIL {
     setTexture() {
         currentPage = 'startPage';
 
-        // 默认清除开放域页面
-        sharedClass.clear2d();
-
         const hasNew = $cache.getGameData('hasNew');
 
         offCanvas2d.clearRect(0, 0, winWidth, winHeight);

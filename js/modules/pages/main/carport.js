@@ -47,6 +47,8 @@ export default class Carport extends UTIL {
         this.bindCarUseBtn();
         // 车库详情页面关闭按钮
         this.bindCarContentCloseBtn();
+        // 车库详情页面返回按钮
+        this.bindCarContentBackBtn();
         // 上一页
         this.bindCarPrePage();
         // 下一页
@@ -221,6 +223,25 @@ export default class Carport extends UTIL {
             point: [x1, y1, x2, y2],
             cb: () => {
                 this.setTexture();
+            }
+        });
+    }
+
+    /**
+     * 绑定车辆详情页面返回按钮
+     * */
+    bindCarContentBackBtn() {
+        const x1 = this.computedSizeW(37);
+        const x2 = this.computedSizeW(137);
+        const y1 = this.bgOffsetTop + this.computedSizeW(320);
+        const y2 = this.bgOffsetTop + this.computedSizeW(371.4);
+
+        events.click({
+            name: 'carContentBackBtn',
+            pageName: 'carportContentPage',
+            point: [x1, y1, x2, y2],
+            cb: (e) => {
+                startPage.setTexture();
             }
         });
     }
