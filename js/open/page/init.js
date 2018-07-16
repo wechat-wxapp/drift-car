@@ -159,7 +159,7 @@ export default class Init {
     initSelf(openId) {
         return new Promise((resolve, reject) => {
             wx.getUserInfo({
-                openIdList: [openId, 'o4eqt4pUjeDAbP4vRQaTpCldSOmE'],
+                openIdList: [openId],
                 success: res => {
                     const self = res.data[0];
                     console.log('初始化个人信息: ', res);
