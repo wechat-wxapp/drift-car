@@ -85,7 +85,6 @@ export default class Init {
                     const { nickName } = this.getHWData('self');
                     // 倒序排序
                     const rank = this.sort(randData, 'asc');
-                    
                     // 获取自己相对排行榜的数据
                     const self = this.normalizeSelf(rank, nickName);
                     resolve({ rank, self });
@@ -189,15 +188,20 @@ export default class Init {
             return arr;
         }
 
-        // console.log('arr111',arr) arr[i].KVDataList.length == 0
         var num = Math.floor(arr.length/2);
         var middleArr = arr.splice(num, 1);
         var middleValue = middleArr[0].KVDataList.length > 0 ? middleArr[0].KVDataList[0].value : 0;
         var left = [];
         var right = [];
         
+        const checkScore = (arr) => {
+            if(arr.length === 0) {
+                arr.push({key: "score", value: "0"})
+            }
+        }
         if (des === 'des') {
             for(var i = 0; i < arr.length; i++){
+                checkScore(arr[i].KVDataList);
                 if(arr[i].KVDataList[0].value * 1 < middleValue * 1){
                     left.push(arr[i]);
                 }else{
@@ -206,6 +210,7 @@ export default class Init {
             }
         } else {
             for(var i = 0; i < arr.length; i++){
+                checkScore(arr[i].KVDataList);
                 if(arr[i].KVDataList[0].value * 1  > middleValue * 1){
                     left.push(arr[i]);
                 }else{

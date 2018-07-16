@@ -37,11 +37,11 @@ export default class HWData extends Init {
         this.initSelf(openId)
             .then(e => {
                 this.setHWData('self', e);
-
+                
                 // 预加载个人信息头像
                 this.loadSelfImg(e)
-                    .then(val => {
-                        this.setHWData('self', val);
+                .then(val => {
+                    this.setHWData('self', val);
                     });
 
                 // 初始化好友排行榜数据
@@ -151,12 +151,15 @@ export default class HWData extends Init {
         });
     }
 
+    /**
+     * 判断排行榜的loading图片是否要消失
+     */
     checkLoading() {
+        //传过去setloadingKey的变量
         let _temp;
         try {
             if(this.getHWData('friendRank').list.length > 0 && this.getHWData('friendRank').list[0].avatarObj) {
                 _temp = this.shareTicket ? (this.getHWData('groupRank').list.length > 0 && this.getHWData('groupRank').list[0].avatarObj) : true
-                // _temp = this.shareTicket ? this.getHWData('groupRank').list[0].avatarObj : true
             }else {
                 _temp = false;
             }
