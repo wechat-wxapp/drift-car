@@ -223,30 +223,31 @@ export default class Rank extends Init {
 
     // 排名
     this.cvs.beginPath();
-    this.cvs.font = `${this.computedSizeW(20)}px Yahei`;
-    const that = this;
+    // this.cvs.font = `${this.computedSizeW(20)}px Yahei`;
+    // const that = this;
     if(this.total !== 0){
       for(let i = (rankCurrentPage - 1) * this.counts; i < current_count + (rankCurrentPage - 1) * this.counts; i++) {
-        that.cvs.fillStyle = '#7f2409';
+        this.cvs.font = `${this.computedSizeW(20)}px Yahei`;
+        this.cvs.fillStyle = '#7f2409';
         // 排名
-        that.cvs.fillText(i + 1, that.computedSizeW(132), that.relativeSizeH(230 + (i - (rankCurrentPage - 1) * this.counts) * 110)); // 402
-        // 头像
-        let j = data.rankCurrentPage ? i % 5 : i;
-
-        //判断要不要用默认头像
-        let drawImg = that.rankData[j].avatarUrl ? that.rankData[j].avatarObj : that.staticAvater;
-        that.circleImg(this.cvs, drawImg, this.computedSizeW(176), that.relativeSizeH(184 + (i - (rankCurrentPage - 1) * this.counts) * 110), this.computedSizeW(39.5)) // 356
+        this.cvs.fillText(i + 1, this.computedSizeW(132), this.relativeSizeH(230 + (i - (rankCurrentPage - 1) * this.counts) * 110)); // 402
       }
+    }
+    for(let i = (rankCurrentPage - 1) * this.counts; i < current_count + (rankCurrentPage - 1) * this.counts; i++) {
+      let j = data.rankCurrentPage ? i % 5 : i;
+      //判断要不要用默认头像
+      let drawImg = this.rankData[j].avatarUrl ? this.rankData[j].avatarObj : this.staticAvater;
+      this.circleImg(this.cvs, drawImg, this.computedSizeW(176), this.relativeSizeH(184 + (i - (rankCurrentPage - 1) * this.counts) * 110), this.computedSizeW(39.5)) // 356
     }
 
     // 名字
-    this.cvs.font = `bold`;
-    this.cvs.textAlign = "left";
     if(this.total !== 0) {
       for(let i = (rankCurrentPage - 1) * this.counts; i < current_count + (rankCurrentPage - 1) * this.counts; i++){
         this.cvs.fillStyle = '#8a8a8a';
         let j = data.rankCurrentPage ? i % 5 : i;
         let nameText = this.rankData[j].nickname == undefined ? '游客玩家' : this.rankData[j].nickname;
+        this.cvs.textAlign = "left";
+        this.cvs.font = `${this.computedSizeW(20)}px Yahei`;
         this.cvs.fillText(nameText, this.computedSizeW(275), this.relativeSizeH(230 + (i - (rankCurrentPage - 1) * this.counts) * 110), this.computedSizeW(146)); // 402
       }
     }
@@ -258,6 +259,7 @@ export default class Rank extends Init {
       for(let i = (rankCurrentPage - 1) * this.counts; i < current_count + (rankCurrentPage - 1) * this.counts; i++){
         let j = data.rankCurrentPage ? i % 5 : i;
         if(this.rankData[j].KVDataList.length > 0)
+          this.cvs.font = `${this.computedSizeW(20)}px Yahei`;
           this.cvs.fillText(this.rankData[j].KVDataList[0].value, this.computedSizeW(583), this.relativeSizeH(230 + (i - (rankCurrentPage - 1) * this.counts) * 110)); //402
       }
     }
@@ -266,6 +268,7 @@ export default class Rank extends Init {
     this.selfData = getRankData.self;
     let selfAvatar = this.selfData.avatarUrl ? this.selfData.avatarObj : this.staticAvater;
     this.circleImg(this.cvs, selfAvatar, this.computedSizeW(190), this.relativeSizeH(852), this.computedSizeW(30), this.computedSizeH(39)) // 1024
+    this.cvs.font = `${this.computedSizeW(20)}px Yahei`;
     if(this.total !== 0) {
       this.cvs.fillStyle = '#7f2409';
       this.cvs.fillText(this.selfData.rank, this.computedSizeW(132), this.relativeSizeH(892)); //1064
