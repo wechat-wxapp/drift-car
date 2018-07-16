@@ -77,10 +77,14 @@ export default class Game extends UTIL {
         offCanvas2d.clearRect(0, 0, winWidth, winHeight);
 
         if (time) {
-            offCanvas2d.fillStyle = "#fff";
-
+            offCanvas2d.fillStyle = "#ff7700";
             offCanvas2d.font = "bold 70px Arial";
-            offCanvas2d.fillText(time, winWidth / 2, winHeight / 2);
+            offCanvas2d.fillText(time, winWidth / 2, winHeight / 2 - this.computedSizeW(65));
+
+            // 描边
+            offCanvas2d.strokeStyle = "#fff";
+            offCanvas2d.lineWidth = 3;
+            offCanvas2d.strokeText(time, winWidth / 2, winHeight / 2 - this.computedSizeW(65));
         }
 
         texture2d.needsUpdate = true;

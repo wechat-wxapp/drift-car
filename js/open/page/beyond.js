@@ -28,9 +28,7 @@ export default class Beyond extends Init {
         // const avatar = wx.createImage();
         // avatar.src = 'images/car-pane.png';
         //
-        // // avatar.onload = () => {
-        //     this.cvs.drawImage(avatar, 0, 0, avatar.width, avatar.height, 0, this.computedSizeH(25), this.computedSizeW(80), this.computedSizeW(80));
-        // // };
+        // this.cvs.drawImage(avatar, 0, 0, avatar.width, avatar.height, 0, this.computedSizeH(25), this.computedSizeW(80), this.computedSizeW(80));
 
         const { list, self } = this.getHWData('friendRank');
 
