@@ -394,6 +394,7 @@ export default class Shared extends UTIL {
             pageName: 'worldRank',
             point: [x1, y1, x2, y2],
             cb: () => {
+                $wx.sendMessage('worldRank', { goBackKey: true });
                 sharedClass.rankPage();
             }
         });
@@ -412,6 +413,7 @@ export default class Shared extends UTIL {
             point: [x1, y1, x2, y2],
             cb: () => {
                 rankCurrentPage = 1
+                $wx.sendMessage('friendRank', { goBackKey: true });
                 $wx.sendMessage('worldRank',{ page: rankCurrentPage })
                 currentPage = 'worldRank';
                 isSharedLoop = true;
@@ -431,6 +433,7 @@ export default class Shared extends UTIL {
             pageName: 'friendRank',
             point: [x1, y1, x2, y2],
             cb: () => {
+
                 this.groupRankPage()
             }
         })
@@ -457,7 +460,7 @@ export default class Shared extends UTIL {
             point: [x1, y1, x2, y2],
             cb: () => {
                 this.clear2d();
-                // isSharedLoop = false;
+                $wx.sendMessage('groupRank', { goBackKey: true });
                 startPage.setTexture();
             }
         })
@@ -476,10 +479,7 @@ export default class Shared extends UTIL {
             point: [x1, y1, x2, y2],
             cb: () => {
                 this.clear2d();
-                // isSharedLoop = false;
-
-                // pageClass.setPosition();
-
+                $wx.sendMessage('friendRank', { goBackKey: true });
                 startPage.setTexture();
             }
         })
@@ -497,10 +497,7 @@ export default class Shared extends UTIL {
             point: [x1, y1, x2, y2],
             cb: () => {
                 this.clear2d();
-                // isSharedLoop = false;
-
-                // pageClass.setPosition();
-
+                $wx.sendMessage('groupRank', { goBackKey: true });
                 startPage.setTexture();
             }
         })
@@ -518,10 +515,7 @@ export default class Shared extends UTIL {
             point: [x1, y1, x2, y2],
             cb: () => {
                 this.clear2d();
-                // isSharedLoop = false;
-
-                // pageClass.setPosition();
-
+                $wx.sendMessage('worldRank', { goBackKey: true });
                 startPage.setTexture();
             }
         })
