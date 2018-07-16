@@ -246,6 +246,7 @@ const basicData = {
         backBtn: 'images/back-btn.png',
 
         // 车库
+        carPane: 'images/car-pane.png',
         carHeader: 'images/car-header.png',
         carPaneOn: 'images/car-pane-on.png',
         carPaneOff: 'images/car-pane-off.png',

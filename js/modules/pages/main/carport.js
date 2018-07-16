@@ -7,6 +7,7 @@ export default class Carport extends UTIL {
     constructor() {
         super();
 
+        this.carPane = imgList.carPane;
         this.carPaneOn = imgList.carPaneOn;
         this.carPaneOff = imgList.carPaneOff;
         this.carNew = imgList.carNew;
@@ -218,7 +219,7 @@ export default class Carport extends UTIL {
         const y2 = this.bgOffsetTop + this.computedSizeW(40);
 
         events.click({
-            name: 'carContentBackBtn',
+            name: 'carContentCloseBtn',
             pageName: 'carportContentPage',
             point: [x1, y1, x2, y2],
             cb: () => {
@@ -371,7 +372,7 @@ export default class Carport extends UTIL {
         offCanvas2d.fillRect(carSize.left, carSize.top, carSize.width, carSize.height);
 
         // 解锁背景
-        unlock && offCanvas2d.drawImage(this.carPaneOn, 0, 0, this.carPaneOn.width, this.carPaneOn.height, carSize.left, carSize.top, carSize.width, carSize.height);
+        unlock && offCanvas2d.drawImage(this.carPane, 0, 0, this.carPane.width, this.carPane.height, carSize.left - this.computedSizeW(5), carSize.top - this.computedSizeW(8), carSize.width + this.computedSizeW(10), carSize.height + this.computedSizeW(10));
 
         // 汽车
         offCanvas2d.drawImage(imgUrlObj, 0, 0, imgUrlObj.width, imgUrlObj.height, carSize.left, carSize.top, carSize.width, carSize.height);
@@ -393,35 +394,35 @@ export default class Carport extends UTIL {
 
         // 解锁选项
         switch(unlockNum) {
-            case 1:
+            case 0:
                 this.createSimpleText('登录就送。');
                 break;
-            case 2:
+            case 1:
                 offCanvas2d.fillText('点击首页公众号按钮，按提示操作', winWidth / 2, this.bgOffsetTop + this.computedSizeW(210));
                 offCanvas2d.fillText('进行关注有车以后公众号。', winWidth / 2, this.bgOffsetTop + this.computedSizeW(230));
                 break;
-            case 3:
+            case 2:
                 this.createSimpleText('连续登录2天。');
                 break;
-            case 4:
+            case 3:
                 this.createSimpleText('连续登录5天。');
                 break;
-            case 5:
+            case 4:
                 this.createSimpleText('连续登录10天。');
                 break;
-            case 6:
+            case 5:
                 this.createSimpleText('一场比赛达到50分。');
                 break;
-            case 7:
+            case 6:
                 this.createSimpleText('一场比赛达到100分。');
                 break;
-            case 8:
+            case 7:
                 this.createSimpleText('一场比赛达到200分。');
                 break;
-            case 9:
+            case 8:
                 this.createSimpleText('一场比赛达到500分。');
                 break;
-            case 10:
+            case 9:
                 this.createSimpleText('一场比赛转弯200次。');
                 break;
         }
