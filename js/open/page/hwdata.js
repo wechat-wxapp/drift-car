@@ -96,7 +96,8 @@ export default class HWData extends Init {
         try {
             const { avatarObj } = list.find(v => v.nickname === self.nickname);
             avatarObj && (self.avatarObj = avatarObj);
-            this.setHWData(key, { list, self });
+            const rankUser = this.normalizeSelf(list, self.nickname);
+            this.setHWData(key, { list, self: rankUser });
         } catch (err) {
             const newUser = this.setNewRankData(0);
             list.push(newUser);
