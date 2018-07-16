@@ -235,7 +235,8 @@ export default class Rank extends Init {
       for(let i = (rankCurrentPage - 1) * this.counts; i < current_count + (rankCurrentPage - 1) * this.counts; i++){
         this.cvs.fillStyle = '#8a8a8a';
         let j = data.rankCurrentPage ? i % 5 : i;
-        this.cvs.fillText(this.rankData[j].nickname, this.computedSizeW(275), this.relativeSizeH(230 + (i - (rankCurrentPage - 1) * this.counts) * 110), this.computedSizeW(146)); // 402
+        let nameText = this.rankData[j].nickname == undefined ? '游客玩家' : this.rankData[j].nickname;
+        this.cvs.fillText(nameText, this.computedSizeW(275), this.relativeSizeH(230 + (i - (rankCurrentPage - 1) * this.counts) * 110), this.computedSizeW(146)); // 402
       }
     }
       // this.cvs.fillText(`this.rankData[i].nickname`, this.computedSizeW(286), this.computedSizeH(402 ), this.computedSizeW(146));

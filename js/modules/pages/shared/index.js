@@ -111,8 +111,8 @@ export default class Shared extends UTIL {
             pageName: 'endPage',
             point: [x1, y1, x2, y2],
             cb: () => {
-                isSharedLoop = false;
                 this.clear2d();
+                // isSharedLoop = false;
 
                 // pageClass.setPosition();
 
@@ -170,8 +170,8 @@ export default class Shared extends UTIL {
             pageName: 'reseurPage',
             point: [x1, y1, x2, y2],
             cb: () => {
-                isSharedLoop = false;
                 this.clear2d();
+                // isSharedLoop = false;
                 this.restart(true);
             }
         });
@@ -439,8 +439,8 @@ export default class Shared extends UTIL {
             pageName: 'groupRank',
             point: [x1, y1, x2, y2],
             cb: () => {
-                isSharedLoop = false;
                 this.clear2d();
+                // isSharedLoop = false;
                 startPage.setTexture();
             }
         })
@@ -459,7 +459,7 @@ export default class Shared extends UTIL {
             point: [x1, y1, x2, y2],
             cb: () => {
                 this.clear2d();
-                isSharedLoop = false;
+                // isSharedLoop = false;
 
                 // pageClass.setPosition();
 
@@ -480,7 +480,7 @@ export default class Shared extends UTIL {
             point: [x1, y1, x2, y2],
             cb: () => {
                 this.clear2d();
-                isSharedLoop = false;
+                // isSharedLoop = false;
 
                 // pageClass.setPosition();
 
@@ -500,8 +500,8 @@ export default class Shared extends UTIL {
             pageName: 'worldRank',
             point: [x1, y1, x2, y2],
             cb: () => {
-                isSharedLoop = false;
                 this.clear2d();
+                // isSharedLoop = false;
 
                 // pageClass.setPosition();
 
