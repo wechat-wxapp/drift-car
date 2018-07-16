@@ -69,7 +69,7 @@ export default class Scenery extends UTIL {
      * */
     s3() {
         return new Promise((res, rej) => {
-            const material = "https://static.cdn.24haowan.com/24haowan/test/js/b0003.png";
+            const material = "https://static.cdn.24haowan.com/24haowan/test/js/b00003.png";
             const model = 'https://static.cdn.24haowan.com/24haowan/test/js/b003.obj';
 
             this.createObj(model, material, (obj) => {
@@ -90,7 +90,7 @@ export default class Scenery extends UTIL {
      * */
     s4() {
         return new Promise((res, rej) => {
-            const material = "https://static.cdn.24haowan.com/24haowan/test/js/b0004.png";
+            const material = "https://static.cdn.24haowan.com/24haowan/test/js/b00004.png";
             const model = 'https://static.cdn.24haowan.com/24haowan/test/js/b004.obj';
 
             this.createObj(model, material, (obj) => {

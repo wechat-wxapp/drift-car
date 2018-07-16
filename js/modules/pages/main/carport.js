@@ -7,7 +7,6 @@ export default class Carport extends UTIL {
     constructor() {
         super();
 
-        this.carPane = imgList.carPane;
         this.carPaneOn = imgList.carPaneOn;
         this.carPaneOff = imgList.carPaneOff;
         this.carNew = imgList.carNew;
@@ -15,12 +14,9 @@ export default class Carport extends UTIL {
         this.backBtn = imgList.backBtn;
         this.unlockPane = imgList.unlockPane;
         this.unlockBtn = imgList.unlockBtn;
-        this.gift100 = imgList.gift100;
-        this.gift200 = imgList.gift200;
-        this.unlockGame = imgList.unlockGame;
-        this.curve = imgList.curve;
-        this.unlockCn = imgList.unlockCn;
         this.closeBtn = imgList.closeBtn;
+        this.carOk = imgList.carOk;
+        this.carUse = imgList.carUse;
 
         this.prePageN = imgList.prePageN;
         this.prePageDis = imgList.prePageDis;
@@ -31,7 +27,7 @@ export default class Carport extends UTIL {
         this.bgOffsetTop = this.headerOffsetTop + this.computedSizeW(115.368);
 
         // 按钮相对于背景位置
-        this.btnOffsetTop = this.computedSizeH(263) + this.computedSizeW(203 - this.unlockBtn.height / 2);
+        this.btnOffsetTop = this.bgOffsetTop + this.computedSizeW(280 - this.unlockBtn.height / 2);
 
         // 图片加载进度
         this.loadNum = 0;
@@ -175,11 +171,11 @@ export default class Carport extends UTIL {
             pageName: 'carportContentPage',
             point: [x1, y1, x2, y2],
             cb: () => {
-                $loader.show('正在加载车辆...');
-
                 const { carId, modelUrl, modelPic, modelSize, modelRealSize, unlock, speed, speedMax, speedStep, levelSpeed, speedStepMax } = this.list[this.index];
 
                 if (unlock) {
+                    $loader.show('正在加载车辆...');
+
                     const model = {
                         id: carId,
                         model: modelUrl,
@@ -216,8 +212,8 @@ export default class Carport extends UTIL {
     bindCarContentCloseBtn() {
         const x1 = this.computedSizeW(324);
         const x2 = this.computedSizeW(363);
-        const y1 = this.computedSizeH(264);
-        const y2 = this.computedSizeH(305);
+        const y1 = this.bgOffsetTop + this.computedSizeW(5);
+        const y2 = this.bgOffsetTop + this.computedSizeW(40);
 
         events.click({
             name: 'carContentBackBtn',
@@ -300,7 +296,7 @@ export default class Carport extends UTIL {
                 if (isNew) {
                     offCanvas2d.drawImage(this.carNew, 0, 0, this.carNew.width, this.carNew.height, this.computedSizeW(130 + x * 100), this.bgOffsetTop + this.computedSizeH(18.731) + this.computedSizeW(pkey * 110), this.carNew.width / 2, this.carNew.height / 2);
                 } else {
-                    // 如果已解锁
+                    // 如果未解锁
                     !unlock && offCanvas2d.drawImage(this.carPaneOff, 0, 0, this.carPaneOff.width, this.carPaneOff.height, this.computedSizeW(54 + x * 105), this.bgOffsetTop + this.computedSizeH(11.731) + this.computedSizeW(pkey * 120), this.computedSizeW(97.152), this.computedSizeW(118.68));
                 }
 
@@ -339,67 +335,74 @@ export default class Carport extends UTIL {
 
         const { unlock, imgUrlObj, unlockNum } = this.list[this.index];
 
-        // 解锁背景
-        offCanvas2d.drawImage(this.unlockPane, 0, 0, this.unlockPane.width, this.unlockPane.height, this.computedSizeW(44), this.computedSizeH(263), this.computedSizeW(327), this.computedSizeW(223));
+        const carSize = {
+            left: winWidth / 2 - this.computedSizeW(imgUrlObj.width / 4),
+            top: this.bgOffsetTop + this.computedSizeW(80),
+            width: this.computedSizeW(imgUrlObj.width / 2),
+            height: this.computedSizeW(imgUrlObj.height / 2)
+        };
 
-        offCanvas2d.textAlign = 'left';
+        // 背景
+        offCanvas2d.drawImage(this.unlockPane, 0, 0, this.unlockPane.width, this.unlockPane.height, this.computedSizeW(52.5), this.bgOffsetTop, this.computedSizeW(310), this.computedSizeW(295));
 
         // 汽车背景
-        offCanvas2d.drawImage(this.carPane, 0, 0, this.carPane.width, this.carPane.height, this.computedSizeW(87), this.computedSizeH(298), this.computedSizeW(80), this.computedSizeW(93));
+        offCanvas2d.fillStyle = '#fff';
+        offCanvas2d.fillRect(carSize.left, carSize.top, carSize.width, carSize.height);
+
+        // 解锁背景
+        unlock && offCanvas2d.drawImage(this.carPaneOn, 0, 0, this.carPaneOn.width, this.carPaneOn.height, carSize.left, carSize.top, carSize.width, carSize.height);
 
         // 汽车
-        offCanvas2d.drawImage(imgUrlObj, 0, 0, imgUrlObj.width, imgUrlObj.height, this.computedSizeW(90), this.computedSizeH(301), this.computedSizeW(75), this.computedSizeW(88));
+        offCanvas2d.drawImage(imgUrlObj, 0, 0, imgUrlObj.width, imgUrlObj.height, carSize.left, carSize.top, carSize.width, carSize.height);
 
-        // 解锁条件文字
-        offCanvas2d.fillStyle = "#e9b320";
-        offCanvas2d.font = `bold ${this.computedSizeW(14)}px Arial`;
-        offCanvas2d.fillText('解锁条件：', this.computedSizeW(177), this.computedSizeH(314));
+        // 未解锁背景
+        !unlock && offCanvas2d.drawImage(this.carPaneOff, 0, 0, this.carPaneOff.width, this.carPaneOff.height, carSize.left, carSize.top, carSize.width, carSize.height);
+
+        const carUseBtn = unlock ? this.carUse : this.carOk;
 
         // 按钮背景
-        offCanvas2d.drawImage(this.unlockBtn, 0, 0, this.unlockBtn.width, this.unlockBtn.height, winWidth / 2 - this.computedSizeW(this.unlockBtn.width / 4), this.btnOffsetTop, this.computedSizeW(this.unlockBtn.width / 2), this.computedSizeW(this.unlockBtn.height / 2));
-
-        // 按钮文字
-        offCanvas2d.fillStyle = '#fff';
-        offCanvas2d.font = `bold ${this.computedSizeW(16)}px Arial`;
-        const btnText = unlock ? '使 用' : '好 的';
-        offCanvas2d.fillText(btnText, this.computedSizeW(190), this.btnOffsetTop + this.computedSizeW(21));
+        offCanvas2d.drawImage(carUseBtn, 0, 0, carUseBtn.width, carUseBtn.height, winWidth / 2 - this.computedSizeW(carUseBtn.width / 4), this.btnOffsetTop, this.computedSizeW(carUseBtn.width / 2), this.computedSizeW(carUseBtn.height / 2));
 
         // 关闭按钮
-        offCanvas2d.drawImage(this.closeBtn, 0, 0, this.closeBtn.width, this.closeBtn.height, this.computedSizeW(330), this.computedSizeH(275), this.computedSizeW(this.closeBtn.width / 2), this.computedSizeW(this.closeBtn.height / 2));
+        unlock && offCanvas2d.drawImage(this.closeBtn, 0, 0, this.closeBtn.width, this.closeBtn.height, this.computedSizeW(330), this.bgOffsetTop + this.computedSizeW(10), this.computedSizeW(this.closeBtn.width / 2), this.computedSizeW(this.closeBtn.height / 2));
+
+        offCanvas2d.textAlign = "center";
+        offCanvas2d.fillStyle = '#92510A';
+        offCanvas2d.font = `bold ${this.computedSizeW(14)}px Arial`;
 
         // 解锁选项
         switch(unlockNum) {
-            case 0:
-                offCanvas2d.font = `${this.computedSizeW(14)}px Arial`;
-                offCanvas2d.fillText('登录就送!', this.computedSizeW(180), this.computedSizeH(337));
-                break;
             case 1:
-                offCanvas2d.font = `${this.computedSizeW(14)}px Arial`;
-                offCanvas2d.fillText('点击首页公众号按钮，按', this.computedSizeW(180), this.computedSizeH(337));
-
-                offCanvas2d.font = `${this.computedSizeW(14)}px Arial`;
-                offCanvas2d.fillText('提示操作进行关注有车以', this.computedSizeW(180), this.computedSizeH(356));
-
-                offCanvas2d.font = `${this.computedSizeW(14)}px Arial`;
-                offCanvas2d.fillText('后公众号。', this.computedSizeW(180), this.computedSizeH(376));
+                this.createSimpleText('登录就送。');
                 break;
             case 2:
-                this.createSimpleText('一场游戏达到一百分。', this.gift100);
+                offCanvas2d.fillText('点击首页公众号按钮，按提示操作', winWidth / 2, this.bgOffsetTop + this.computedSizeW(210));
+                offCanvas2d.fillText('进行关注有车以后公众号。', winWidth / 2, this.bgOffsetTop + this.computedSizeW(230));
                 break;
             case 3:
-                this.createSimpleText('一场游戏达到二百分。', this.gift200);
+                this.createSimpleText('连续登录2天。');
                 break;
             case 4:
-                this.createSimpleText('累计十五天参加游戏。', this.unlockGame);
+                this.createSimpleText('连续登录5天。');
                 break;
             case 5:
-                this.createSimpleText('一场游戏中转弯达到100次。', this.curve);
+                this.createSimpleText('连续登录10天。');
                 break;
-        }
-
-        // 已解锁
-        if (unlock) {
-            offCanvas2d.drawImage(this.unlockCn, 0, 0, this.unlockCn.width, this.unlockCn.height, this.computedSizeW(125), this.computedSizeH(286), this.computedSizeW(44), this.computedSizeH(24));
+            case 6:
+                this.createSimpleText('一场比赛达到50分。');
+                break;
+            case 7:
+                this.createSimpleText('一场比赛达到100分。');
+                break;
+            case 8:
+                this.createSimpleText('一场比赛达到200分。');
+                break;
+            case 9:
+                this.createSimpleText('一场比赛达到500分。');
+                break;
+            case 10:
+                this.createSimpleText('一场比赛转弯200次。');
+                break;
         }
 
         texture2d.needsUpdate = true;
@@ -408,11 +411,7 @@ export default class Carport extends UTIL {
     /**
      * 创建通用文案
      * */
-    createSimpleText(text, img) {
-        offCanvas2d.fillStyle = '#fff';
-        offCanvas2d.font = `${this.computedSizeW(14)}px Arial`;
-        offCanvas2d.fillText(text, this.computedSizeW(180), this.computedSizeH(337));
-
-        offCanvas2d.drawImage(img, 0, 0, img.width, img.height, this.computedSizeW(179), this.computedSizeH(343), this.computedSizeW(131), this.computedSizeW(30));
+    createSimpleText(text) {
+        offCanvas2d.fillText(text, winWidth / 2, this.bgOffsetTop + this.computedSizeW(220));
     }
 }

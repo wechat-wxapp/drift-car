@@ -193,12 +193,16 @@ export default class Init {
         var middleValue = middleArr[0].KVDataList.length > 0 ? middleArr[0].KVDataList[0].value : 0;
         var left = [];
         var right = [];
-
+        
+        const checkScore = (arr) => {
+            if(arr.length === 0) {
+                arr.push({key: "score", value: "0"})
+            }
+        }
         if (des === 'des') {
             for(var i = 0; i < arr.length; i++){
-                if(arr[i].KVDataList.length === 0) {
-                    right.push(arr[i]);
-                } else if(arr[i].KVDataList[0].value * 1 < middleValue * 1){
+                checkScore(arr[i].KVDataList);
+                if(arr[i].KVDataList[0].value * 1 < middleValue * 1){
                     left.push(arr[i]);
                 }else{
                     right.push(arr[i]);
@@ -206,9 +210,8 @@ export default class Init {
             }
         } else {
             for(var i = 0; i < arr.length; i++){
-                if(arr[i].KVDataList.length === 0) {
-                    right.push(arr[i]);
-                } else if(arr[i].KVDataList[0].value * 1  > middleValue * 1) {
+                checkScore(arr[i].KVDataList);
+                if(arr[i].KVDataList[0].value * 1  > middleValue * 1){
                     left.push(arr[i]);
                 }else{
                     right.push(arr[i]);
