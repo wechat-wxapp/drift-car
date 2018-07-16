@@ -247,17 +247,13 @@ const basicData = {
 
         // 车库
         carHeader: 'images/car-header.png',
-        carPane: 'images/car-pane.png',
         carPaneOn: 'images/car-pane-on.png',
         carPaneOff: 'images/car-pane-off.png',
         carNew: 'images/car-new.png',
         unlockPane: 'images/unlock-pane.png',
-        unlockGame: 'images/unlock-game.png',
-        unlockCn: 'images/unlock-cn.png',
         unlockBtn: 'images/unlock-btn.png',
-        gift100: 'images/gift-100.png',
-        gift200: 'images/gift-200.png',
-        curve: 'images/curve.png'
+        carOk: 'images/car-ok.png',
+        carUse: 'images/car-use.png'
     },
 
     // 计时器组
