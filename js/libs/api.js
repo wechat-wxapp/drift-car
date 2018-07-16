@@ -7,7 +7,7 @@ switch (API_HOST) {
         break;
     case 'test':
         // 泓骅地址
-        host = 'http://192.168.6.183:2002';
+        host = 'http://192.168.0.67:3000';
         break;
     default:
         // 强子地址

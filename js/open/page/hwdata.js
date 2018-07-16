@@ -28,7 +28,7 @@ export default class HWData extends Init {
 
     /**
      * 初始化缓存数据方法
-     * @params {Object} 参数, 格式: { shareTicket: 群组排行榜key, worldRank: 世界排行榜数据 }
+     * @params data {Object} 参数, 格式: { shareTicket: 群组排行榜key, worldRank: 世界排行榜数据 }
      * */
     initData(data) {
         const { openId, shareTicket, worldRank } = data;
@@ -49,7 +49,6 @@ export default class HWData extends Init {
                     .then(({ rank, self }) => {
                         console.log('缓存好友排行榜成功: ', { rank, self });
                         this.setRankCache('friendRank', { list: rank, self });
-                        // wx.HWData.loadingKey = false;
                         this.checkLoading()
                     });
                 // 初始化群组排行榜数据
@@ -57,7 +56,6 @@ export default class HWData extends Init {
                     .then(({ rank, self }) => {
                         console.log('缓存群排行榜成功: ', { rank, self });
                         this.setRankCache('groupRank', { list: rank, self });
-                        // wx.HWData.loadingKey = false;
                         this.checkLoading();
                     })
                     .catch(e => {
@@ -72,8 +70,8 @@ export default class HWData extends Init {
 
     /**
      * 缓存数据方法
-     * @params {String} 缓存数据下标
-     * @params {Object} 缓存对象, 格式: { list: 排行榜数组, self: 自己的名次数据 }
+     * @params key {String} 缓存数据下标
+     * @params data {Object} 缓存对象, 格式: { list: 排行榜数组, self: 自己的名次数据 }
      * */
     setRankCache(key, data) {
         const { list, self } = data;
@@ -89,6 +87,8 @@ export default class HWData extends Init {
 
     /**
      * 设置缓存数据方法, 排行榜没有数据默认插入0分的个人数据
+     * @params key {String} 缓存数据下标
+     * @params data {Object} 缓存对象, 格式: { list: 排行榜数组, self: 自己的名次数据 }
      * */
     setRankUserCache(key, data) {
         const { list, self } = data;
@@ -107,7 +107,7 @@ export default class HWData extends Init {
 
     /**
      * 缓存个人信息数据
-     * @params {Object} 个人数据对象
+     * @params self {Object} 个人数据对象
      * @return {Object} 缓存后的个人数据对象, 缓存头像保存在 avatarObj
      * */
     loadSelfImg(self) {
@@ -124,7 +124,7 @@ export default class HWData extends Init {
 
     /**
      * 预加载排行榜图片
-     * @params {Array} 排行榜数组
+     * @params list {Array} 排行榜数组
      * @return {Array} 预加载后排行榜数组, 加载后图片对象保存在 avatarObj 字段
      * */
     loadRankImg(list) {
