@@ -23,7 +23,7 @@ export default class Score extends UTIL {
         scoreTexture2d = texture2d;
         scoreCanvasSprite = mesh;
 
-        scoreCanvasSprite.position.set(-20, 82.8, 9);
+        scoreCanvasSprite.position.set(-6, 82.8, 9);
         scoreCanvasSprite.scale.set(4, 7.5, 1);
 
         scene.add(scoreCanvasSprite);

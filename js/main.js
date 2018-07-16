@@ -76,7 +76,7 @@ export default class Main extends UTIL {
         console.log("屏幕尺寸: " + winWidth + " x " + winHeight);
 
         camera = new THREE.PerspectiveCamera(75, cameraAspect, .1, 10000);
-        camera.position.set(-25.738086885462103, 90.533387653514225, 28.513221776822927);
+        camera.position.set(-12.738086885462103, 90.533387653514225, 28.513221776822927);
         camera.rotation.set(-0.9577585082113045, -0.3257201862210706, -0.42691147594250245);
 
         // 添加环境光 0x999999

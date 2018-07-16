@@ -67,6 +67,7 @@ export default class Game extends UTIL {
 
         // sharedClass.reseurPage();
         // beyondClass.beyondPage();
+        // beyondClass.beyondPage();
     }
 
     /**

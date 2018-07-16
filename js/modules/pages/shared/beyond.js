@@ -36,7 +36,7 @@ export default class Shared extends UTIL {
         beyondTexture2d = texture2d;
         beyondCanvasSprite = mesh;
 
-        beyondCanvasSprite.position.set(-21.75, 81, 20);
+        beyondCanvasSprite.position.set(-9.75, 81, 20);
 
         beyondCanvasSprite.scale.set(1.5, 1.5, 1);
 
