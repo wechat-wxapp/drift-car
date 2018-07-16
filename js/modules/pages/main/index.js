@@ -20,7 +20,7 @@ export default class Page extends UTIL {
         instance = this
 
         uiScene = new THREE.Scene();
-        this.renderer = renderer
+        this.renderer = renderer;
         this.camera = new THREE.OrthographicCamera(winWidth / -2, winWidth / 2, winHeight / 2, winHeight / -2, 0, 10000);
 
         this.page();
