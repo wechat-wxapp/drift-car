@@ -11,7 +11,7 @@ export default class WX extends UTIL {
 
     shareObj = {
         title: '昨晚我输给一辆AE86，他用惯性漂移过弯，是你吗？',
-        imageUrl: 'https://static.cdn.24haowan.com/24haowan/test/js/share.png?v=1.0.0'
+        imageUrl: 'https://static.cdn.24haowan.com/24haowan/test/js/share.png?v=1.0.2'
     };
 
     isLogin = false;
@@ -77,6 +77,7 @@ export default class WX extends UTIL {
         this.startBtn.hide();
 
         this.startBtn.onTap((res) => {
+            console.log('res: ', res);
             if (this.tapLock) return false;
             this.tapLock = true;
             this.wxUnionId(res);
