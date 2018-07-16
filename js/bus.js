@@ -112,6 +112,8 @@ const basicData = {
     speedMax: 5,
     speedStep: 0.01,
     speedStepMax: 0.08,
+    // 速度计算得分基准值
+    computedSpeed: 2,
     // 加速等级区间
     level: 0,
     levelSpeed: [5, 20, 40, 60, 80, 90, 120, 160, 200, 250],

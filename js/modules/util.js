@@ -251,7 +251,7 @@ export default class UTIL {
                 return false;
             }
 
-            score++;
+            score += Math.round(speed / computedSpeed);
 
             // 检测超越好友
             beyondClass.beyondPage();
