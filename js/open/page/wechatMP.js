@@ -11,7 +11,7 @@ export default class wechatMP extends Init {
     this.point = wx.createImage();
     this.point.src = 'images/point.png';
     this.backIcon = wx.createImage();
-    this.backIcon.src = `images/back-icon.png`;
+    this.backIcon.src = 'images/back-icon.png';
   }
 
   relativeSizeH(num) {
