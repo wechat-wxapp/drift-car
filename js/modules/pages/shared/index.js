@@ -4,11 +4,6 @@ import UTIL from "../../util";
  * 2d canvas函数
  */
 export default class Shared extends UTIL {
-    currentSpeedRecord = {
-        x: 0,
-        z: 0
-    };
-
     size = {
         width: winWidth,
         height: winHeight
@@ -120,10 +115,6 @@ export default class Shared extends UTIL {
             point: [x1, y1, x2, y2],
             cb: () => {
                 this.clear2d();
-                // isSharedLoop = false;
-
-                // pageClass.setPosition();
-
                 startPage.setTexture();
             }
         });
@@ -141,7 +132,7 @@ export default class Shared extends UTIL {
             pageName: 'endPage',
             point: [x1, y1, x2, y2],
             cb: () => {
-                isSharedLoop = true ;
+                isSharedLoop = true;
                 sharedClass.rankPage();
             }
         });
@@ -179,7 +170,6 @@ export default class Shared extends UTIL {
             point: [x1, y1, x2, y2],
             cb: () => {
                 this.clear2d();
-                // isSharedLoop = false;
                 this.restart(true);
             }
         });
@@ -358,6 +348,27 @@ export default class Shared extends UTIL {
                         $loader.toast('保存失败', 'error');
                     }
                 })
+                // canvas.toTempFilePath({
+                //     x: 0,
+                //     y: 0,
+                //     width: winWidth * 3,
+                //     height: winHeight * 3,
+                //     destWidth: winWidth,
+                //     destHeight: winHeight,
+                //     success (res) {
+                //         //.可以保存该截屏图片
+                //         console.log('saveImageToPhotosAlbum: ', res)
+                //         wx.saveImageToPhotosAlbum({
+                //             filePath: res.tempFilePath,
+                //             success: function() {
+                //                 $loader.toast('保存成功', 'success');
+                //             },
+                //             fail: function() {
+                //                 $loader.toast('保存失败', 'error');
+                //             }
+                //         })
+                //     }
+                // })
             }
         })
     }
@@ -615,12 +626,6 @@ export default class Shared extends UTIL {
      * 泡妞神器
      * */
     qrPage() {
-        // localStorage.removeItem('accessToken')
-        // localStorage.removeItem('gameData')
-        //
-        // console.log(localStorage.getItem('accessToken'));
-        // console.log(localStorage.getItem('gameData'));
-
         currentPage = 'qrPage';
         this.showPage('qr', {}, true);
     }
@@ -642,13 +647,6 @@ export default class Shared extends UTIL {
         this.sharedCanvas.width = winWidth * window.devicePixelRatio;
         this.sharedCanvas.height = winHeight * window.devicePixelRatio;
 
-        // if (!this.asd) {
-        //         const sharedCanvas2d = this.sharedCanvas.getContext("2d");
-        //
-        //         sharedCanvas2d.scale(window.devicePixelRatio, window.devicePixelRatio);
-        //         this.asd = true;
-        //     }
-
         currentShared = 'shared';
     }
 
@@ -659,20 +657,11 @@ export default class Shared extends UTIL {
 
         clear && pageClass.clear2d();
 
-        // this.setPosition();
-
         sharedTexture2d.needsUpdate = true;
     }
 
     clear2d() {
         $wx.sendMessage('clear');
         sharedTexture2d.needsUpdate = true;
-    }
-
-    setPosition() {
-        sharedCanvasSprite.position.x += speedRecord.x - this.currentSpeedRecord.x;
-        sharedCanvasSprite.position.z -= speedRecord.z - this.currentSpeedRecord.z;
-
-        this.currentSpeedRecord = speedRecord;
     }
 }

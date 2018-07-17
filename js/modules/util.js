@@ -4,6 +4,9 @@
 export default class UTIL {
     /**
      * 创建模型
+     * @params model {String} 需要加载的模型地址
+     * @params material {String} 需要加载的纹理地址
+     * @params callback {Function} 加载完成后回调方法
      */
     createObj(model, material, callback) {
         const manager = new THREE.LoadingManager();
@@ -154,6 +157,7 @@ export default class UTIL {
         if (!(realKey % 2)) {
             maxKey++;
         }
+
         speedKey++;
         lastSpeedKey = realKey;
     }
@@ -290,13 +294,6 @@ export default class UTIL {
                 music.playReady();
             }
         }, 1000);
-
-        // this.startMusicTimer = $timer(({ key }) => {
-        //     gamePage.page(4 - key);
-        //     music.playReady();
-        //     asd();
-        //     this.startMusicTimer.closeTimeout();
-        // }, 1000);
 
         // 手动释放内存
         wx.triggerGC();

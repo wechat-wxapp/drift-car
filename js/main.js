@@ -180,7 +180,6 @@ export default class Main extends UTIL {
         carBodys.position.x += speed;
         camera.position.x += speed;
 
-        speedRecord.x += speed;
         // 2d canvas
         scoreCanvasSprite.position.x += speed;
         beyondCanvasSprite.position.x += speed;
@@ -191,7 +190,6 @@ export default class Main extends UTIL {
         carBodys.position.z -= speed;
         camera.position.z -= speed;
 
-        speedRecord.z += speed;
         // 2d canvas
         scoreCanvasSprite.position.z -= speed;
         beyondCanvasSprite.position.z -= speed;
@@ -306,9 +304,8 @@ export default class Main extends UTIL {
             const levelScore = levelSpeed[level];
             if (levelScore && speedKey >= levelScore) {
                 level++;
-                // levelSpeed.splice(0, 1);
+
                 this.updateLevelSpeed();
-                // console.log(`---加速 当前区间 ${level}---`,speed);
             }
         }
     }
@@ -337,7 +334,7 @@ export default class Main extends UTIL {
         renderer.render(scene, camera);
 
         // 渲染2d场景
-        !startKey && pageClass.render();
+        (!startKey && pageClass) && pageClass.render();
 
         // 更新物理世界
         loadKey && this.updateWorld();

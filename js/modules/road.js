@@ -19,13 +19,10 @@ export default class Road extends UTIL {
     createRoad() {
         const material = "https://static.cdn.24haowan.com/24haowan/test/js/nr0001.png";
         const model = 'https://static.cdn.24haowan.com/24haowan/test/js/newroad001.obj';
-        // const material = "https://static.cdn.24haowan.com/24haowan/test/js/roadnnn3.png";
-        // const model = 'https://static.cdn.24haowan.com/24haowan/test/js/r.obj';
 
         return new Promise((res, rej) => {
             this.createObj(model, material, (obj) => {
                 road = obj;
-
 
                 road.scale.set(2, 2, 2);
 
@@ -50,7 +47,6 @@ export default class Road extends UTIL {
         const roadBoths = new CANNON.Body({ mass: 0, position: new CANNON.Vec3(roadObj.position.x, 8, roadObj.position.z) });
         roadBoths.addShape(roadLeftShape, new CANNON.Vec3(-29, 0, 0));
         roadBoths.addShape(roadRightShape, new CANNON.Vec3(29, 0, 0));
-
 
         // 撞墙
         roadBoths.addEventListener("collide", this.collide.bind(this));

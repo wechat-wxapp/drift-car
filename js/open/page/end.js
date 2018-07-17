@@ -66,10 +66,11 @@ export default class EndPage extends Init {
         } else {
             // 更新分数
             this.updateRankScore(score);
-            // 重设分数
-            this.setClassData();
             newRecord = true;
         }
+
+        // 重设分数
+        this.setClassData();
 
         // 渲染页面
         this.setTexture({ ...data, maxScore, newRecord });
@@ -146,7 +147,7 @@ export default class EndPage extends Init {
             }
 
             if (rank !== this.rankData.length) {
-                myWeakFri = this.getHWData('friendRank').list[rank]
+                myWeakFri = this.rankData[rank];
             }
 
             this.cvs.fillStyle = "#999";
@@ -155,6 +156,7 @@ export default class EndPage extends Init {
             this.cvs.fillText(`历史最高得分：${this.selfData['KVDataList'][0].value}`, this.winWidth / 2, this.relativeSizeH(530));
 
             this.cvs.textAlign = 'center';
+
             // 多种排名可能情况
             if (myPowerfulFri && myWeakFri) {
                 //头像

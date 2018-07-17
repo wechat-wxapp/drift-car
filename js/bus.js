@@ -311,13 +311,7 @@ const varData = {
     collideKey: false,
 
     // 最后的道路key
-    lastBoxType: 'r6',
-
-    // 碰撞后定位2d画布
-    speedRecord: {
-        x: 0,
-        z: 0
-    }
+    lastBoxType: 'r6'
 };
 
 /**
@@ -330,6 +324,16 @@ Promise.prototype.finally = function (callback) {
     reason => P.resolve(callback()).then(() => { throw reason })
     );
 };
+
+if (!Object.entries) {
+    Object.prototype.entries = function (obj) {
+        let arr = [];
+        for (let key of Object.keys(obj)) {
+            arr.push([key, obj[key]]);
+        }
+        return arr;
+    }
+}
 
 /**
  * 全部局变量bus函数
@@ -349,10 +353,6 @@ export default class Bus{
      */
     setWindowData(data) {
         const bus = Object.assign({}, data);
-
-        // for (let i in bus) {
-        //     console.log(i , bus[i]);
-        // }
 
         Object.entries(bus).map(([k, v]) => window[k] = v);
     };
@@ -385,16 +385,17 @@ export default class Bus{
         carBodys.position.set(25, 15, -10);
         carBodys.quaternion.setFromAxisAngle(new CANNON.Vec3(0, 1, 0), 0);
 
-        // 普通画布
-        // offCanvasSprite.position.set(-11.75, 78.44, 20);
+        camera.position.set(-10.738086885462103, 90.533387653514225, 52.513221776822927);
+        camera.rotation.set(-0.9577585082113045, -0.3257201862210706, -0.42691147594250245);
+
         // 分数
         scoreCanvasSprite.position.set(4, 73.8, 9);
         // 超越好友
         beyondCanvasSprite.position.set(0, 55, 20);
-        // sharedCanvasSprite.position.set(-11.75, 78.44, 20);
 
-        camera.position.set(-10.738086885462103, 90.533387653514225, 52.513221776822927);
-        camera.rotation.set(-0.9577585082113045, -0.3257201862210706, -0.42691147594250245);
+        // 默认清除2d页面
+        pageClass.clear2d();
+        sharedClass.clear2d();
 
         // 开始游戏关闭开放域帧循环
         isSharedLoop = false;

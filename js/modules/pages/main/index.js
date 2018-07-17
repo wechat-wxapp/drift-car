@@ -55,15 +55,6 @@ export default class Page extends UTIL {
         texture2d.needsUpdate = true;
     }
 
-    /**
-     * 设置当前未知
-     * */
-    setPosition() {
-        offCanvasSprite.position.set(-11.75, 78.44, 20);
-        offCanvasSprite.position.x += speedRecord.x;
-        offCanvasSprite.position.z -= speedRecord.z;
-    }
-
     render() {
         this.renderer.render(uiScene, this.camera)
     }
