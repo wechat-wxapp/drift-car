@@ -16,7 +16,7 @@ export default class LOADER{
         wx.hideLoading();
     }
 
-    toast(title = '出错了', icon = 'loading', duration = 1000) {
+    showToast(title = '出错了', icon = 'success', duration = 1000) {
         const toastObj = { title, duration };
 
         if (icon === 'error') {
@@ -26,5 +26,9 @@ export default class LOADER{
         }
 
         wx.showToast(toastObj);
+    }
+
+    hideToast() {
+        wx.hideToast();
     }
 }

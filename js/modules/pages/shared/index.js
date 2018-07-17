@@ -342,10 +342,10 @@ export default class Shared extends UTIL {
                 wx.saveImageToPhotosAlbum({
                     filePath: 'images/qrcode.png',
                     success: function() {
-                        $loader.toast('保存成功', 'success');
+                        $loader.showToast('保存成功');
                     },
                     fail: function() {
-                        $loader.toast('保存失败', 'error');
+                        $loader.showToast('保存失败', 'error');
                     }
                 })
                 // canvas.toTempFilePath({

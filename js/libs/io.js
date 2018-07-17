@@ -77,6 +77,21 @@ export default {
     },
 
     /**
+     * 解锁车辆, 消除红点
+     * */
+    takeCar: (params) => {
+        const { openid } = localStorage.getItem('accessToken');
+
+        return request(API.TAKE_CAR, {
+            method: 'POST',
+            data: {
+                openid,
+                ...params
+            }
+        });
+    },
+
+    /**
      * 获取世界排行
      * */
     getWorldRank: (data) => {

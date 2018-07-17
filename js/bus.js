@@ -259,7 +259,8 @@ const basicData = {
         unlockPane: 'images/unlock-pane.png',
         unlockBtn: 'images/unlock-btn.png',
         carOk: 'images/car-ok.png',
-        carUse: 'images/car-use.png'
+        carUse: 'images/car-use.png',
+        carProgressBg: 'images/car-progress-bg.png'
     },
 
     // 计时器组

@@ -28,7 +28,9 @@ const API = {
     'GET_WORLD_RANK': '/yc/rank/data',
 
     // 更新解锁车辆分数
-    'UNLOCK_CAR': '/yc/carport/unlockCar'
+    'UNLOCK_CAR': '/yc/carport/unlockCar',
+    // 解锁车辆,消除红点
+    'TAKE_CAR': '/yc/carport/takeCar'
 };
 
 Object.keys(API).forEach(api => {
