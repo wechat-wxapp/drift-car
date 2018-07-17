@@ -350,6 +350,10 @@ export default class Bus{
     setWindowData(data) {
         const bus = Object.assign({}, data);
 
+        // for (let i in bus) {
+        //     console.log(i , bus[i]);
+        // }
+
         Object.entries(bus).map(([k, v]) => window[k] = v);
     };
 

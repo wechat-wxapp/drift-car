@@ -10,13 +10,13 @@ export default class Cache {
             // 车辆标识
             id: 0,
             // 模型地址
-            model: 'https://static.cdn.24haowan.com/24haowan/test/js/newcar2.obj',
+            model: 'https://static.cdn.24haowan.com/24haowan/test/js/newcar3.obj',
             // 贴图地址
-            material: 'https://static.cdn.24haowan.com/24haowan/test/js/newcar2.png',
+            material: 'https://static.cdn.24haowan.com/24haowan/test/js/newcar3.png',
             // 模型尺寸
             modelSize: [ 2, 2, 2 ],
             // 物理模型尺寸
-            physicalSize: [ 4, 6, 4 ]
+            physicalSize: [ 4, 6, 6 ]
         }
     };
 
