@@ -136,6 +136,8 @@ export default class UTIL {
 
     /**
      * 得分
+     * @params key {Number} 当前路段数
+     * @params type {String} 道路类型, 目前只有删除类型, 即走过这段路时触发删除
      * */
     getScore(key, type) {
         const realKey = key - 2;
@@ -164,6 +166,7 @@ export default class UTIL {
 
     /**
      * 重置游戏
+     * @params isReseur {Boolean} 是否复活
      * */
     restart(isReseur) {
         this.clearWorld();
@@ -191,6 +194,8 @@ export default class UTIL {
 
     /**
      * 获取随机数
+     * @params min {Number} 最小值
+     * @params max {Number} 最大值
      * */
     getRandomInt(min, max) {
         min = Math.ceil(min);
@@ -315,6 +320,11 @@ export default class UTIL {
 
     /**
      * 创建基于Three.js的离屏canvas
+     * @params type {String} 属于哪个场景 [2d, 3d]
+     * @params block {String} 哪个域, 主域/开放域
+     * @params width {Number} canvas宽度
+     * @params height {Number} canvas高度
+     * @return {Object} { canvas对象, canvas上下文, 纹理对象, 3d对象 }
      * */
     createCanvas2d(type, block, width, height) {
         const cvs = block === 'shared' ? openDataContext.canvas : wx.createCanvas();
@@ -401,6 +411,7 @@ export default class UTIL {
     /**
      * 计算当前屏幕相对于 414 * 736 的宽
      * @parasm {Number} 被计算的值
+     * @return {Number} 相对值
      * */
     computedSizeW(size) {
         return size * winWidth / 414;
@@ -409,6 +420,7 @@ export default class UTIL {
     /**
      * 计算当前屏幕相对于 414 * 736 的高
      * @parasm {Number} 被计算的值
+     * @return {Number} 相对值
      * */
     computedSizeH(size) {
         return size * winHeight / 736;
@@ -416,6 +428,8 @@ export default class UTIL {
 
     /**
      * 计算背景适应屏幕位置和距离
+     * @params canvas {Object} 画布canvas对象
+     * @params img {Object} 背景图片
      * */
     bgCover(canvas, img) {
         const percent = 414 / 736;
