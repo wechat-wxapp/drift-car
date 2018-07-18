@@ -160,6 +160,8 @@ export default class UTIL {
             maxKey++;
         }
 
+        // 清空判断值
+        speedKeyNum = 0;
         speedKey++;
         lastSpeedKey = realKey;
     }
@@ -254,12 +256,18 @@ export default class UTIL {
 
     updateScore() {
         this.scoreTimer = $timer(() => {
-            if (!startKey) {
+            // 防止非正常游戏出现刷分
+            if (speedKeyNum >= 4) {
+                this.collide();
+            }
+
+            if (!startKey || speedKeyNum >= 4) {
                 // 关闭分数计时器
                 this.scoreTimer.closeTimeout();
                 return false;
             }
 
+            speedKeyNum++;
             score += Math.round(speed / computedSpeed);
 
             // 检测超越好友

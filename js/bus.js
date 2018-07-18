@@ -311,6 +311,9 @@ const varData = {
     // 碰撞锁
     collideKey: false,
 
+    // 判断是否正常比赛
+    speedKeyNum: 0,
+
     // 最后的道路key
     lastBoxType: 'r6'
 };
