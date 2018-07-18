@@ -193,7 +193,6 @@ const basicData = {
 
         //loading页
         logo: 'images/logo.png',
-        loadingBg: 'images/loading-bg.png',
         isLoading: 'images/is-loading.png',
 
         // 开始页
