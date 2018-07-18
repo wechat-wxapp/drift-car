@@ -232,10 +232,7 @@ export default class Start extends UTIL {
 
         offCanvas2d.clearRect(0, 0, winWidth, winHeight);
 
-        // offCanvas2d.fillStyle = "#647fdc";
-        // offCanvas2d.fillRect(0, 0, winWidth, winHeight);
-
-        offCanvas2d.drawImage(this.bg, 0, 0, this.bg.width, this.bg.height, 0, 0, winWidth, winHeight);
+        this.bgCover(offCanvas2d, this.bg);
 
         offCanvas2d.drawImage(this.logo, 0, 0, this.logo.width, this.logo.height, winWidth / 2 - this.computedSizeW(this.logo.width / 4), this.computedSizeH(72), this.computedSizeW(this.logo.width / 2), this.computedSizeW(this.logo.height / 2));
 

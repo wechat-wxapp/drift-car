@@ -371,4 +371,27 @@ export default class UTIL {
     computedSizeH(size) {
         return size * winHeight / 736;
     }
+
+    /**
+     * 计算背景适应屏幕位置和距离
+     * */
+    bgCover(canvas, img) {
+        const percent = 414 / 736;
+        const sWidth = img.width;
+        const sHeight = img.height;
+
+        let width = winWidth,
+            height = winHeight,
+            x = 0,
+            y = 0;
+
+        if (winWidth > winHeight) {
+            height = winWidth / percent;
+            y = winHeight / 2 - height / 2;
+        } else {
+            width = winHeight * percent;
+            x = winWidth / 2 - width / 2;
+        }
+        canvas.drawImage(img, 0, 0, sWidth, sHeight, x, y, width, height);
+    }
 }

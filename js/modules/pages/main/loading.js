@@ -81,7 +81,7 @@ export default class Loader extends UTIL {
             const bg = imgList.indexBg;
             const logo = imgList.logo;
 
-            offCanvas2d.drawImage(bg, 0, 0, bg.width, bg.height, 0, 0, winWidth, winHeight);
+            this.bgCover(offCanvas2d, bg);
             offCanvas2d.drawImage(logo, 0, 0, logo.width, logo.height, winWidth / 2 - this.computedSizeW(logo.width / 8), winHeight / 2 - this.computedSizeH(logo.height / 2) - 20, this.computedSizeW(logo.width / 4), this.computedSizeW(logo.height / 4));
         }
 
