@@ -348,27 +348,6 @@ export default class Shared extends UTIL {
                         $loader.showToast('保存失败', 'error');
                     }
                 })
-                // canvas.toTempFilePath({
-                //     x: 0,
-                //     y: 0,
-                //     width: winWidth * 3,
-                //     height: winHeight * 3,
-                //     destWidth: winWidth,
-                //     destHeight: winHeight,
-                //     success (res) {
-                //         //.可以保存该截屏图片
-                //         console.log('saveImageToPhotosAlbum: ', res)
-                //         wx.saveImageToPhotosAlbum({
-                //             filePath: res.tempFilePath,
-                //             success: function() {
-                //                 $loader.toast('保存成功', 'success');
-                //             },
-                //             fail: function() {
-                //                 $loader.toast('保存失败', 'error');
-                //             }
-                //         })
-                //     }
-                // })
             }
         })
     }
@@ -591,10 +570,10 @@ export default class Shared extends UTIL {
 
         // 更新解锁分数
         $io.unlockCar({ score, turn })
-        .then((e) => {
-            const { payload: { hasNew } } = e;
-            $cache.setGameData('hasNew', hasNew);
-        });
+            .then((e) => {
+                const { payload: { hasNew } } = e;
+                $cache.setGameData('hasNew', hasNew);
+            });
 
         isSharedLoop = true;
         currentPage = 'endPage';

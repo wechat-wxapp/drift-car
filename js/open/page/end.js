@@ -103,8 +103,12 @@ export default class EndPage extends Init {
     
     /**
      * 更新页面内容
+     * @params score {Number} 分数
+     * @params isShot {Boolean} 是否截屏
+     * @params maxScore {Number} 最高分数
+     * @params newRecord {boolean} 是否新纪录
      * */
-    setTexture({ score, maxScore, newRecord }) {
+    setTexture({ score, isShot, maxScore, newRecord }) {
         this.clearCvs();
 
         this.cvs.fillStyle = "#fff";

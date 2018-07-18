@@ -357,6 +357,48 @@ export default class UTIL {
     }
 
     /**
+     * 截图
+     * @params onload {Function} 截图完成后回调
+     * @params saved {Function} 保存完成后回调
+     * @params error {Function} 出错后回调
+     * */
+    screenShot({ onload, saved, error } = {}) {
+        // 有可能页面需要重新渲染再截图, 所以使用setTimeout避免必现没完成渲染就截图
+        setTimeout(() => {
+            $loader.show('正在截图...');
+
+            const width = winWidth * devicePixelRatio;
+            const height = winHeight * devicePixelRatio;
+
+            canvas.toTempFilePath({
+                x: 0,
+                y: 0,
+                width,
+                height,
+                destWidth: width * 2,
+                destHeight: height * 2,
+                success: (res) => {
+                    wx.saveImageToPhotosAlbum({
+                        filePath: res.tempFilePath,
+                        success: (e) => {
+                            $loader.showToast('保存成功');
+                            saved && saved(e);
+                        },
+                        fail: (e) => {
+                            $loader.hideToast('保存失败', 'error');
+                            error && error(e);
+                        }
+                    });
+                },
+                complete: (res) => {
+                    $loader.hide();
+                    onload && onload(res);
+                }
+            })
+        }, 100)
+    }
+
+    /**
      * 计算当前屏幕相对于 414 * 736 的宽
      * @parasm {Number} 被计算的值
      * */

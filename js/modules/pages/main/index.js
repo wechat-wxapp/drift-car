@@ -17,7 +17,7 @@ export default class Page extends UTIL {
         if (instance) {
             return instance
         }
-        instance = this
+        instance = this;
 
         uiScene = new THREE.Scene();
         this.renderer = renderer;
