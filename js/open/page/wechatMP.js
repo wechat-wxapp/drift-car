@@ -26,7 +26,7 @@ export default class wechatMP extends Init {
 
     this.cvs.drawImage(this.point, 0, 0, this.point.width, this.point.height, this.computedSizeW(500), this.computedSizeH(85), this.computedSizeW(54), this.computedSizeW(66));
 
-    this.cvs.drawImage(this.guide, 0, 0, this.guide.width, this.guide.height, this.computedSizeW(95), this.relativeSizeH(270), this.computedSizeW(560), this.computedSizeW(824));
+    this.cvs.drawImage(this.guide, 0, 0, this.guide.width, this.guide.height, this.computedSizeW(95), this.relativeSizeH(150), this.computedSizeW(560), this.computedSizeW(955));
 
     this.cvs.drawImage(this.backIcon, 0, 0, this.backIcon.width, this.backIcon.height, this.computedSizeW(84), this.relativeSizeH(1150), this.computedSizeW(62), this.computedSizeW(62));
   }
