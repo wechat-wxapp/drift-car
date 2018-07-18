@@ -207,13 +207,6 @@ export default class Start extends UTIL {
      * 加载车库列表
      * */
     asyncCarList() {
-        // const { session_key, openid } = localStorage.getItem('accessToken');
-        //
-        // if (!session_key || !openid) {
-        //     $loader.toast('请先进行授权');
-        //     return false;
-        // }
-
         carportPage.getList()
             .then(e => {
                 $wx.startBtn.hide();
