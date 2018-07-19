@@ -413,11 +413,10 @@ export default class Carport extends UTIL {
         switch(unlockNum) {
             case 0:
                 this.createSimpleText('登录就送。', { unlock: true });
-
                 break;
             case 1:
                 offCanvas2d.fillText('点击首页公众号按钮，按提示操作', winWidth / 2, this.contentBgOffsetTop + this.computedSizeW(210));
-                offCanvas2d.fillText('进行关注有车以后公众号。', winWidth / 2, this.contentBgOffsetTop + this.computedSizeW(230));
+                offCanvas2d.fillText('进行关注买车报价大全。', winWidth / 2, this.contentBgOffsetTop + this.computedSizeW(230));
                 this.createProgressText({ unlock });
                 break;
             case 2:
