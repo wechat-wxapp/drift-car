@@ -3,7 +3,10 @@ import API from './api';
 /**
  * 封装异步接口
  * */
-const request = (url, opts) => {
+const request = (url, opts = {}) => {
+    const { openid } = localStorage.getItem('accessToken');
+    opts.data && (opts.data.openid = openid);
+
     return new Promise((res, rej) => {
         wx.request({
             url,
@@ -40,8 +43,8 @@ export default {
      * */
     getUnionId: (data) => {
         return request(API.GET_UNIONID, {
-            data: { ...data },
-            method: 'POST'
+            method: 'POST',
+            data: { ...data }
         });
     },
 
@@ -49,14 +52,9 @@ export default {
      * 获取车库
      * */
     getunlock: (params) => {
-        const { openid } = localStorage.getItem('accessToken');
-
         return request(API.GET_UNLOCK, {
             method: 'POST',
-            data: {
-                openid,
-                ...params
-            }
+            data: params
         });
     },
 
@@ -80,14 +78,9 @@ export default {
      * 解锁车辆, 消除红点
      * */
     takeCar: (params) => {
-        const { openid } = localStorage.getItem('accessToken');
-
         return request(API.TAKE_CAR, {
             method: 'POST',
-            data: {
-                openid,
-                ...params
-            }
+            data: params
         });
     },
 
@@ -95,11 +88,9 @@ export default {
      * 获取世界排行
      * */
     getWorldRank: (data) => {
-        const { openid } = localStorage.getItem('accessToken');
-
         return request(API.GET_WORLD_RANK, {
             method: 'POST',
-            data: { openid,
+            data: {
                 offset: 0,
                 limit: 999
              }
