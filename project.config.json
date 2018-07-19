@@ -38,6 +38,11 @@
 						"shareName": "OgY_UkkjeDUviHYpCwEGaziam1yLsGVUkY0nvKyp7QQ@cr4dev",
 						"shareKey": "r4BRop7M81fNK1rNciT-OZj_SdrqUP972LGceaN6JTCXXOIWCRdCIZ5YnmEAN3qanVOBevI8De-4FcChpKtV_g~~"
 					}
+				},
+				{
+					"id": 1,
+					"name": "带参编译",
+					"query": "shareOpenid=asdasdasdasdasd"
 				}
 			]
 		},

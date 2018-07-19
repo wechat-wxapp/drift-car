@@ -26,9 +26,13 @@ export default class WX extends UTIL {
 
     init() {
         openDataContext = wx.getOpenDataContext();
-        wx.showShareMenu({ withShareTicket: true });
+        // 默认关闭转发按钮, 需要等待openid配置
+        wx.hideShareMenu();
 
-        this.shareTicket = wx.getLaunchOptionsSync().shareTicket || 'noShareTicket';
+        const { shareTicket, query: { shareOpenid } } = wx.getLaunchOptionsSync();
+
+        this.shareTicket = shareTicket || 'noShareTicket';
+        this.shareOpenid = shareOpenid;
 
         openDataContext.postMessage({
             command: 'init',
@@ -50,9 +54,16 @@ export default class WX extends UTIL {
             timerKey = false;
             this.playBgm();
         });
+    }
 
+    onShareAppMessage() {
         const { title, imageUrl } = this.shareObj;
-        wx.onShareAppMessage(() => ({ title, imageUrl }))
+        const { openid } = $cache.getCache('accessToken');
+
+        // 开启转发配置
+        wx.showShareMenu({ withShareTicket: true });
+
+        wx.onShareAppMessage(() => ({ title, imageUrl, query: `shareOpenid=${openid}` }))
     }
 
     sendMessage(command, data) {
@@ -122,16 +133,23 @@ export default class WX extends UTIL {
         return new Promise((resolve, reject) => {
             const accessToken = localStorage.getItem('accessToken');
 
-            if (accessToken) {
-                $io.unlockCar({ day: true })
-                    .then(e => {
-                        console.log('提交每日次数: ', e);
-                        const { payload: { hasNew } } = e;
-                        $cache.setGameData('hasNew', hasNew);
-                        startPage && startPage.setTexture();
+            console.log('分享者openid: ', this.shareOpenid);
 
-                        resolve(e);
-                    });
+            // 配置普通分享信息
+            this.onShareAppMessage();
+
+            if (accessToken) {
+                $io.unlockCar({
+                    shareOpenid: this.shareOpenid,
+                    day: true
+                }).then(e => {
+                    console.log('提交每日次数: ', e);
+                    const { payload: { hasNew } } = e;
+                    $cache.setGameData('hasNew', hasNew);
+                    startPage && startPage.setTexture();
+
+                    resolve(e);
+                });
                 return false;
             }
             reject();
@@ -234,18 +252,19 @@ export default class WX extends UTIL {
 
     /**
      * 触发分享
+     * @params title {String} 分享标题
+     * @params imageUrl {String} 分享图片
      * */
     shareAppMessage(title, imageUrl) {
+        const { openid } = $cache.getCache('accessToken');
+
         const shareTitle = title || this.shareObj.title;
         const shareImg = imageUrl || this.shareObj.imageUrl;
 
         wx.shareAppMessage({
             title: shareTitle,
-            imageUrl: shareImg
+            imageUrl: shareImg,
+            query: `shareOpenid=${openid}`
         })
     }
-
-    /**
-     *
-     * */
 }
