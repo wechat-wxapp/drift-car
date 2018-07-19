@@ -470,7 +470,7 @@ export default class Carport extends UTIL {
      * @params progress {Object} 进度对象
      * */
     createSimpleText(text, progress) {
-        this.writeText(text, this.computedSizeW(200), progress);
+        this.writeText(text, this.computedSizeW(220), progress);
     }
 
     /**
