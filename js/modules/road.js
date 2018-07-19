@@ -17,7 +17,8 @@ export default class Road extends UTIL {
      * 创建直线道路
      */
     createRoad() {
-        const material = "https://static.cdn.24haowan.com/24haowan/test/js/nr0001.png";
+        const material = "obj/nr0001.png";
+        // const material = "https://static.cdn.24haowan.com/24haowan/test/js/nr0001.png";
         const model = 'https://static.cdn.24haowan.com/24haowan/test/js/newroad001.obj';
 
         return new Promise((res, rej) => {

@@ -23,6 +23,7 @@ export default class UTIL {
 
             // var texture = THREE.ImageUtils.loadTexture(material);
 
+            // 加载模型
             const objLoader = new THREE.OBJLoader();
             objLoader.load(model, (obj) => {
                 // console.log('加载模型: ', model);
