@@ -270,8 +270,9 @@ export default class Rank extends Init {
 
         //底部白色自己排名
         this.selfData = getRankData.self;
-        let selfAvatar = this.selfData.avatarUrl ? this.selfData.avatarObj : this.staticAvater;
+        let selfAvatar = this.selfData.avatarObj ? this.selfData.avatarObj : this.staticAvater;
         this.circleImg(this.cvs, selfAvatar, this.computedSizeW(190), this.relativeSizeH(852), this.computedSizeW(30), this.computedSizeH(39)) // 1024
+
         this.cvs.font = `${this.computedSizeW(20)}px Yahei`;
         if(this.total !== 0) {
             this.cvs.fillStyle = '#7f2409';

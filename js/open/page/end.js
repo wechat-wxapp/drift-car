@@ -287,8 +287,11 @@ export default class EndPage extends Init {
                 this.cvs.fillStyle = "#000";
                 this.cvs.fillText(maxScore, this.computedSizeW(374), this.relativeSizeH(800));
             }
+        } else {
+            this.cvs.fillStyle = "#999";
+            this.cvs.font = `${this.computedSizeW(26)}px Arial`;
+            this.cvs.textAlign = "center";
+            this.cvs.fillText('缓存排行榜失败，请重启小程序再试', this.winWidth / 2, this.relativeSizeH(730));
         }
-
-
     }
 }

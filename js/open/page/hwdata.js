@@ -40,9 +40,10 @@ export default class HWData extends Init {
                 
                 // 预加载个人信息头像
                 this.loadSelfImg(e)
-                .then(val => {
-                    this.setHWData('self', val);
+                    .then(val => {
+                        this.setHWData('self', val);
                     });
+
 
                 // 初始化好友排行榜数据
                 this.friendRankData()
@@ -99,10 +100,23 @@ export default class HWData extends Init {
             const rankUser = this.normalizeSelf(list, self.nickname);
             this.setHWData(key, { list, self: rankUser });
         } catch (err) {
-            const newUser = this.setNewRankData(0);
-            list.push(newUser);
-            const rankUser = this.normalizeSelf(list, newUser.nickname);
-            this.setHWData(key, { list, self: rankUser });
+
+            // 世界排行榜不修改排名和分数
+            if (key === 'worldRank') {
+                const score = self.KVDataList[0].value;
+                const newUser = this.setNewRankData(score);
+                const worldUser = {
+                    ...newUser,
+                    rank: self.rank
+                };
+                this.setHWData(key, { list, self: worldUser });
+            } else {
+                const newUser = this.setNewRankData(0);
+                list.push(newUser);
+                const rankUser = this.normalizeSelf(list, newUser.nickname);
+                this.setHWData(key, { list, self: rankUser });
+            }
+
         }
     }
 

@@ -51,7 +51,7 @@ export default class Resurgence extends Init {
         this.cvs.fillStyle = "#DFC48D";
         this.cvs.fillRect(this.computedSizeW(155), this.relativeSizeH(711), this.computedSizeW(440), this.computedSizeW(2));
 
-        if (this.rankData !== null ) {
+        if (this.rankData) {
             let myFri = null;
             let scoreLess = 0;
             this.rankData.map((e, index)=>{
@@ -81,6 +81,11 @@ export default class Resurgence extends Init {
                 let beyondFriendAvatar = myFri.avatarObj ? myFri.avatarObj : this.staticAvater;
                 this.circleImg(this.cvs, beyondFriendAvatar, this.computedSizeW(409), this.relativeSizeH(746), this.computedSizeW(42), this.computedSizeW(42));
             }
+        } else {
+            this.cvs.fillStyle = "#999";
+            this.cvs.font = `${this.computedSizeW(26)}px Arial`;
+            this.cvs.textAlign = "center";
+            this.cvs.fillText('缓存排行榜失败，请重启小程序再试', this.winWidth / 2, this.relativeSizeH(795));
         }
 
         // const rePlay = wx.createImage();
