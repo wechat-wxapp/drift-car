@@ -85,6 +85,15 @@ export default {
     },
 
     /**
+     * 获取车辆解锁信息
+     * */
+    unlocklist: (params) => {
+        return request(API.UN_LOCK_LIST, {
+            data: params
+        });
+    },
+
+    /**
      * 获取世界排行
      * */
     getWorldRank: (data) => {

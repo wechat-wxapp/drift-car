@@ -207,7 +207,7 @@ export default class Start extends UTIL {
      * 加载车库列表
      * */
     asyncCarList() {
-        carportPage.getList()
+        carportPage.getCarListInfo()
             .then(e => {
                 $wx.startBtn.hide();
 

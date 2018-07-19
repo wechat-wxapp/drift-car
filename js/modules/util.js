@@ -281,7 +281,9 @@ export default class UTIL {
      * 首次开始音效
      * */
     readyMusic() {
-        this.musicTimer = $timer(({ key }) => {
+        let key = 0;
+        this.musicTimer = $timer(() => {
+            key++;
             if (key >= 4) {
                 music.playGo();
 

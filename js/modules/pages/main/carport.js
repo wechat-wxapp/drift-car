@@ -261,6 +261,16 @@ export default class Carport extends UTIL {
     }
 
     /**
+     * 获取车库列表信息
+     * */
+    getCarListInfo() {
+        const promiseList = [this.getList()];
+        !this.carLockInfo && promiseList.push(this.getLockInfo());
+
+        return Promise.all(promiseList);
+    }
+
+    /**
      * 获取车库列表
      * */
     getList(params = {}) {
@@ -268,18 +278,30 @@ export default class Carport extends UTIL {
 
         const require = Object.assign({}, { offset:  0, limit: 6 }, params);
 
-        return $io.getunlock(require).then(e => {
-            const { payload: { hasNext, limit, offset, page, data, high } } = e;
+        return $io.getunlock(require)
+            .then(e => {
+                const { payload: { hasNext, limit, offset, page, data, high } } = e;
 
-            this.list = data;
-            this.hasNext = hasNext;
-            this.limit = limit;
-            this.offset = offset;
-            this.page = page;
-            this.high = high;
+                this.list = data;
+                this.hasNext = hasNext;
+                this.limit = limit;
+                this.offset = offset;
+                this.page = page;
+                this.high = high;
 
-            return e;
-        });
+                return e;
+            });
+    }
+
+    /**
+     * 获取车库列表
+     * */
+    getLockInfo(params = {}) {
+        return $io.unlocklist()
+            .then(e => {
+                const { payload: { data } } = e;
+                this.carLockInfo = data;
+            });
     }
 
     /**
@@ -368,7 +390,9 @@ export default class Carport extends UTIL {
     setContent() {
         currentPage = 'carportContentPage';
 
-        const { days, highScore, highTurn } = this.high;
+        console.log('this.carLockInfo: ', this.carLockInfo);
+
+        const { days, highScore, highTurn, share } = this.high;
         const { unlock, imgUrlObj, unlockNum } = this.list[this.index];
 
         const carSize = {
@@ -394,9 +418,6 @@ export default class Carport extends UTIL {
         // 未解锁背景
         !unlock && offCanvas2d.drawImage(this.carPaneOff, 0, 0, this.carPaneOff.width, this.carPaneOff.height, carSize.left, carSize.top, carSize.width, carSize.height);
 
-        // 进度
-        offCanvas2d.drawImage(this.carProgressBg, 0, 0, this.carProgressBg.width, this.carProgressBg.height, winWidth / 2 - this.computedSizeW(this.carProgressBg.width / 4), this.contentBgOffsetTop + this.computedSizeW(240), this.computedSizeW(this.carProgressBg.width / 2), this.computedSizeW(this.carProgressBg.height / 2));
-
         const carUseBtn = unlock ? this.carUse : this.carOk;
 
         // 好的/使用按钮
@@ -409,39 +430,34 @@ export default class Carport extends UTIL {
         offCanvas2d.fillStyle = '#92510A';
         offCanvas2d.font = `bold ${this.computedSizeW(14)}px Arial`;
 
-        // 解锁选项
-        switch(unlockNum) {
-            case 0:
-                this.createSimpleText('登录就送。', { unlock: true });
+        let intro, type, upto, num2, max2;
+
+        this.carLockInfo.map(e => {
+            if (e.unlockNum === unlockNum){
+                if (!intro) {
+                    intro = e.intro;
+                    type = e.type;
+                    upto = e.upto;
+                } else {
+                    intro = `${intro}${e.intro}`;
+                    max2 = e.upto;
+                    num2 = e.type === 'days' ? days : e.type === 'score' ? 'highScore' : e.type === 'turn' ? highTurn : e.type === 'share' ? share : undefined;
+                }
+            }
+        });
+
+        switch(type) {
+            case 'days':
+                this.createSimpleText(intro, { num: days, max: upto, unlock, num2, max2 });
                 break;
-            case 1:
-                offCanvas2d.fillText('点击首页公众号按钮，按提示操作', winWidth / 2, this.contentBgOffsetTop + this.computedSizeW(210));
-                offCanvas2d.fillText('进行关注买车报价大全。', winWidth / 2, this.contentBgOffsetTop + this.computedSizeW(230));
-                this.createProgressText({ unlock });
+            case 'score':
+                this.createSimpleText(intro, { num: highScore, max: upto, unlock, num2, max2 });
                 break;
-            case 2:
-                this.createSimpleText('连续登录2天。', { num: days, max: 2, unlock });
+            case 'turn':
+                this.createSimpleText(intro, { num: highTurn, max: upto, unlock, num2, max2 });
                 break;
-            case 3:
-                this.createSimpleText('连续登录5天。', { num: days, max: 5, unlock });
-                break;
-            case 4:
-                this.createSimpleText('连续登录10天。', { num: days, max: 10, unlock });
-                break;
-            case 5:
-                this.createSimpleText('一场比赛达到50分。', { num: highScore, max: 50, unlock });
-                break;
-            case 6:
-                this.createSimpleText('一场比赛达到100分。', { num: highScore, max: 100, unlock });
-                break;
-            case 7:
-                this.createSimpleText('一场比赛达到200分。', { num: highScore, max: 200, unlock });
-                break;
-            case 8:
-                this.createSimpleText('一场比赛达到500分。', { num: highScore, max: 500, unlock });
-                break;
-            case 9:
-                this.createSimpleText('一场比赛转弯200次。', { num: highTurn, max: 200, unlock });
+            case 'other':
+                this.createSimpleText(intro, { unlock, num2, max2 });
                 break;
         }
 
@@ -450,29 +466,78 @@ export default class Carport extends UTIL {
 
     /**
      * 创建通用文案
+     * @params text {String} 文案内容
+     * @params progress {Object} 进度对象
      * */
     createSimpleText(text, progress) {
-        offCanvas2d.fillText(text, winWidth / 2, this.contentBgOffsetTop + this.computedSizeW(225));
+        this.writeText(text, this.computedSizeW(200), progress);
+    }
 
-        progress && this.createProgressText(progress);
+    /**
+     * 超过文字换行
+     * @params text {String} 需要被截取的文字
+     * @params max {Number} 最长长度
+     * @params progress {Object} 进度对象
+     * @params isCb {Boolean} 是否进行过递归, 不需要传值, 如果传值可用来控制是否显示省略号
+     * @params originText {String} 源文字内容
+     * */
+    writeText(text, max, progress, isCb, originText) {
+        !originText && (originText = text);
+        if (offCanvas2d.measureText(text).width <= max) {
+            if (isCb) {
+                offCanvas2d.fillText(text, winWidth / 2, this.contentBgOffsetTop + this.computedSizeW(210));
+                offCanvas2d.fillText(originText.substr(text.length), winWidth / 2, this.contentBgOffsetTop + this.computedSizeW(230));
+            } else {
+                offCanvas2d.fillText(text, winWidth / 2, this.contentBgOffsetTop + this.computedSizeW(225), this.computedSizeW(200));
+            }
+
+            progress && this.createProgressText(progress);
+
+            return false;
+        }
+
+        this.writeText(text.substr(0, text.length - 1), max, progress, true, originText);
     }
 
     /**
      * 创建进度文案
+     * @params num {Number} 当前进度
+     * @params max {Number} 目标进度
+     * @params unlock {Boolean} 是否解锁
+     * @params num2 {Number} 第二个条件进度
+     * @params max2 {Number} 第二个条件目标进度
      * */
-    createProgressText({ num, max, unlock }) {
+    createProgressText({ num, max, unlock, num2, max2 }) {
         offCanvas2d.fillStyle = '#fff';
+
+        if ((num2 === 0 || num2) && !unlock) {
+            this.writeProgressText({ num, max, unlock, overflow: -45 });
+            this.writeProgressText({ num: num2, max: max2, unlock, overflow: 45 });
+        } else {
+            this.writeProgressText({ num, max, unlock, overflow: 0 });
+        }
+    }
+
+    /**
+     * 输出进度
+     * @params num {Number} 当前进度
+     * @params max {Number} 目标进度
+     * @params unlock {Boolean} 是否解锁
+     * @params overflow {Number} 偏移值
+     * */
+    writeProgressText({ num, max, unlock, overflow }) {
+        offCanvas2d.drawImage(this.carProgressBg, 0, 0, this.carProgressBg.width, this.carProgressBg.height, winWidth / 2 - this.computedSizeW(this.carProgressBg.width / 4 - overflow), this.contentBgOffsetTop + this.computedSizeW(240), this.computedSizeW(this.carProgressBg.width / 2), this.computedSizeW(this.carProgressBg.height / 2));
 
         if (unlock) {
             offCanvas2d.fillText('已解锁', winWidth / 2, this.contentBgOffsetTop + this.computedSizeW(257));
         } else if (typeof num === 'number') {
             if (num < max) {
-                offCanvas2d.fillText(`${num} / ${max}`, winWidth / 2, this.contentBgOffsetTop + this.computedSizeW(257));
+                offCanvas2d.fillText(`${num} / ${max}`, winWidth / 2 + this.computedSizeW(overflow), this.contentBgOffsetTop + this.computedSizeW(257));
             } else {
-                offCanvas2d.fillText('已解锁', winWidth / 2, this.contentBgOffsetTop + this.computedSizeW(257));
+                offCanvas2d.fillText('已解锁', winWidth / 2 + this.computedSizeW(overflow), this.contentBgOffsetTop + this.computedSizeW(257));
             }
         } else {
-            offCanvas2d.fillText('待解锁', winWidth / 2, this.contentBgOffsetTop + this.computedSizeW(257));
+            offCanvas2d.fillText('待解锁', winWidth / 2 + this.computedSizeW(overflow), this.contentBgOffsetTop + this.computedSizeW(257));
         }
     }
 }

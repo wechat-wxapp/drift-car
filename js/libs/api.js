@@ -30,7 +30,9 @@ const API = {
     // 更新解锁车辆分数
     'UNLOCK_CAR': '/yc/carport/unlockCar',
     // 解锁车辆,消除红点
-    'TAKE_CAR': '/yc/carport/takeCar'
+    'TAKE_CAR': '/yc/carport/takeCar',
+    // 获取解锁相关信息
+    'UN_LOCK_LIST': '/yc/carport/unlocklist'
 };
 
 Object.keys(API).forEach(api => {
