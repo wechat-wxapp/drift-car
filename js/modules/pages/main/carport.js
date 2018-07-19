@@ -390,10 +390,9 @@ export default class Carport extends UTIL {
     setContent() {
         currentPage = 'carportContentPage';
 
-        console.log('this.carLockInfo: ', this.carLockInfo);
-
         const { days, highScore, highTurn, share } = this.high;
         const { unlock, imgUrlObj, unlockNum } = this.list[this.index];
+        let intro, type, upto, num2, max2;
 
         const carSize = {
             left: winWidth / 2 - this.computedSizeW(imgUrlObj.width / 4),
@@ -430,8 +429,7 @@ export default class Carport extends UTIL {
         offCanvas2d.fillStyle = '#92510A';
         offCanvas2d.font = `bold ${this.computedSizeW(14)}px Arial`;
 
-        let intro, type, upto, num2, max2;
-
+        // 遍历匹配对应unlockNum条件
         this.carLockInfo.map(e => {
             if (e.unlockNum === unlockNum){
                 if (!intro) {
@@ -446,6 +444,7 @@ export default class Carport extends UTIL {
             }
         });
 
+        // 匹配对应类型
         switch(type) {
             case 'days':
                 this.createSimpleText(intro, { num: days, max: upto, unlock, num2, max2 });
@@ -454,6 +453,9 @@ export default class Carport extends UTIL {
                 this.createSimpleText(intro, { num: highScore, max: upto, unlock, num2, max2 });
                 break;
             case 'turn':
+                this.createSimpleText(intro, { num: highTurn, max: upto, unlock, num2, max2 });
+                break;
+            case 'share':
                 this.createSimpleText(intro, { num: highTurn, max: upto, unlock, num2, max2 });
                 break;
             case 'other':
@@ -483,6 +485,7 @@ export default class Carport extends UTIL {
      * */
     writeText(text, max, progress, isCb, originText) {
         !originText && (originText = text);
+
         if (offCanvas2d.measureText(text).width <= max) {
             if (isCb) {
                 offCanvas2d.fillText(text, winWidth / 2, this.contentBgOffsetTop + this.computedSizeW(210));
