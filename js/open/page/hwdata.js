@@ -44,7 +44,6 @@ export default class HWData extends Init {
                         this.setHWData('self', val);
                     });
 
-
                 // 初始化好友排行榜数据
                 this.friendRankData()
                     .then(({ rank, self }) => {
