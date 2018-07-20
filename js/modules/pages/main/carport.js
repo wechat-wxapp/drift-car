@@ -98,7 +98,7 @@ export default class Carport extends UTIL {
                 const { isNew, unlockNum } = this.list[this.index];
 
                 // 如果可以解锁
-                if (!isNew) {
+                if (isNew) {
                     this.setSharePage();
                     $io.takeCar({ unlockNum });
                     return false;

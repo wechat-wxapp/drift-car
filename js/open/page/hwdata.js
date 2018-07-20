@@ -20,7 +20,7 @@ export default class HWData extends Init {
             self: '',
 
             // 当前星期
-            week: '2',
+            week: '3',
 
             //用来判断只进行一次canvas缩放
             hasScaled: 0,
