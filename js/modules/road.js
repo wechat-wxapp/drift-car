@@ -21,14 +21,9 @@ export default class Road extends UTIL {
         // const material = "https://static.cdn.24haowan.com/24haowan/test/js/nr0001.png";
         const model = 'https://static.cdn.24haowan.com/24haowan/test/js/newroad001.obj';
 
-        return new Promise((res, rej) => {
-            this.createObj(model, material, (obj) => {
-                road = obj;
-
-                road.scale.set(2, 2, 2);
-
-                res();
-            });
+        return new $loadModel(model, material, (obj) => {
+            road = obj;
+            road.scale.set(2, 2, 2);
         });
     }
 

@@ -1,6 +1,7 @@
 import * as CANNON from './libs/cannon';
 import IO from './libs/io';
 import TIMER from './libs/timer';
+import LoadModel from "./libs/loadModel";
 
 // 不可变常量, 不参与全局挂载
 const constantData = {
@@ -71,6 +72,8 @@ const basicData = {
 
     // 全局变量bus对象
     $bus: '',
+    // 全局加载模型类
+    $loadModel: LoadModel,
     // 全局缓存类
     $cache: '',
     // 全局微信类
@@ -276,8 +279,8 @@ const basicData = {
     rankCurrentPage: 1,
     //世界排行榜下一页启动
     worldRankNextSwitch: true,
-    // 请求数量,limit
-    requestLimit: 5
+
+    texture: ''
 };
 
 // 可重置变量
