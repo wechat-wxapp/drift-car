@@ -62,9 +62,8 @@ export default class Resurgence extends Init {
             });
 
             if (myFri === null) {
-                // const rankOne = wx.createImage();
-                // rankOne.src = 'images/rankOne.png';
-                this.cvs.drawImage(this.rankOne, 0, 0, this.rankOne.width, this.rankOne.height, this.winWidth / 2 - this.computedSizeW(326) / 2, this.relativeSizeH(456), this.computedSizeW(326), this.computedSizeW(25));
+                this.cvs.font = `${this.computedSizeW(26)}px Arial`;
+                this.cvs.fillText('恭喜你！目前好友排名第一。', this.winWidth / 2, this.relativeSizeH(795));
             } else {
                 this.cvs.fillStyle = "#999";
                 this.cvs.font = `${this.computedSizeW(26)}px Arial`;
@@ -82,10 +81,10 @@ export default class Resurgence extends Init {
                 this.circleImg(this.cvs, beyondFriendAvatar, this.computedSizeW(409), this.relativeSizeH(746), this.computedSizeW(42), this.computedSizeW(42));
             }
         } else {
-            this.cvs.fillStyle = "#999";
-            this.cvs.font = `${this.computedSizeW(26)}px Arial`;
-            this.cvs.textAlign = "center";
-            this.cvs.fillText('缓存排行榜失败，请重启小程序再试', this.winWidth / 2, this.relativeSizeH(795));
+            // this.cvs.fillStyle = "#999";
+            // this.cvs.font = `${this.computedSizeW(26)}px Arial`;
+            // this.cvs.textAlign = "center";
+            // this.cvs.fillText('缓存排行榜失败，请重启小程序再试', this.winWidth / 2, this.relativeSizeH(795));
         }
 
         // const rePlay = wx.createImage();

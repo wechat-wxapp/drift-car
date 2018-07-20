@@ -21,8 +21,6 @@ export default class Init {
         this.rankCurrentPage = 1;
     }
 
-
-
     /**
      * 计算当前屏幕相对于 375 * 667 的结果
      * */
@@ -73,16 +71,40 @@ export default class Init {
         cxt.closePath();
     }
 
+    formatWxRankData(list) {
+        const newList = [];
+        const currentWeek = this.getHWData('week');
+
+        list.map(v => {
+            const { KVDataList } = v;
+
+            const currentKV = KVDataList.findIndex(val => val.key === 'week' && val.value === currentWeek);
+            if (currentKV >= 0) {
+                const week = KVDataList.find(v => v.key === 'week');
+                const score = KVDataList.find(v => v.key === 'score');
+
+                v.KVDataList = [];
+                v.KVDataList.push(score);
+                v.KVDataList.push(week);
+                newList.push(v);
+            }
+        });
+
+        return newList;
+    }
+
     /**
      * 初始化好友排行榜数据并排序
      * */
     friendRankData() {
         return new Promise((resolve, reject) => {
             wx.getFriendCloudStorage({
-                keyList: ['score'],
+                keyList: ['score', 'week'],
                 success: (res) => {
-                    const { data: randData } = res;
+                    const { data: list } = res;
+                    const randData = this.formatWxRankData(list);
                     const { nickName } = this.getHWData('self');
+
                     // 倒序排序
                     const rank = this.sort(randData, 'asc');
                     // 获取自己相对排行榜的数据
@@ -280,8 +302,10 @@ export default class Init {
      * @params score {Number} 提交的分数
      * */
     updateWxScore(score) {
+        const currentWeek = this.getHWData('week');
+
         wx.setUserCloudStorage({
-            KVDataList: [{ key: "score", value: String(score) }],
+            KVDataList: [{ key: "score", value: String(score) }, { key: "week", value: currentWeek }],
             success: (e) => {
                 console.log('更新分数成功: ', score);
             },
@@ -338,7 +362,6 @@ export default class Init {
 
         for (let [k, v] of rankList.entries()) {
             const { name, data } = v;
-
             if (Object.keys(data).length <= 0) continue;
 
             const { list, self } = data;
@@ -365,11 +388,15 @@ export default class Init {
      * */
     setNewRankData(score) {
         const { avatarObj, avatarUrl, nickName, openId } = this.getHWData('self');
+        const currentWeek = this.getHWData('week');
 
         return {
             KVDataList: [{
                 key: 'score',
                 value: score
+            }, {
+                key: 'week',
+                value: currentWeek
             }],
             avatarObj,
             avatarUrl,

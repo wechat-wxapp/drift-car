@@ -9,13 +9,18 @@ export default class HWData extends Init {
 
         wx.HWData = {
             // 好友排行榜数据
-            friendRank: {},
+            friendRank: {
+                list: []
+            },
             // 群排行榜数据
             groupRank: {},
             // 世界排行榜数据
             worldRank: {},
             // 个人信息
             self: '',
+
+            // 当前星期
+            week: '2',
 
             //用来判断只进行一次canvas缩放
             hasScaled: 0,
@@ -36,35 +41,40 @@ export default class HWData extends Init {
         // 初始化个人数据
         this.initSelf(openId)
             .then(e => {
-                this.setHWData('self', e);
+                // this.setHWData('self', e);
                 
                 // 预加载个人信息头像
                 this.loadSelfImg(e)
                     .then(val => {
                         this.setHWData('self', val);
-                    });
 
-                // 初始化好友排行榜数据
-                this.friendRankData()
-                    .then(({ rank, self }) => {
-                        console.log('缓存好友排行榜成功: ', { rank, self });
-                        this.setRankCache('friendRank', { list: rank, self });
-                        this.checkLoading()
-                    });
-                // 初始化群组排行榜数据
-                this.initGroupRankData(shareTicket)
-                    .then(({ rank, self }) => {
-                        console.log('缓存群排行榜成功: ', { rank, self });
-                        this.setRankCache('groupRank', { list: rank, self });
-                        this.checkLoading();
-                    })
-                    .catch(e => {
-                        console.log('缓存群排行榜失败: ', e);
-                    });
+                        // 初始化好友排行榜数据
+                        this.friendRankData()
+                            .then(({ rank, self }) => {
+                                console.log('缓存好友排行榜成功: ', { rank, self });
+                                this.setRankCache('friendRank', { list: rank, self });
+                                this.checkLoading();
+                            }).catch((err) => {
+                                console.log('缓存好友排行榜失败: ', err);
+                                this.setRankCache('friendRank');
+                                this.checkLoading();
+                            });
 
-                // 初始化世界排行榜
-                const { rank, self } = this.initWorldRankData(worldRank);
-                this.setRankCache('worldRank', { list: rank, self });
+                        // 初始化群组排行榜数据
+                        this.initGroupRankData(shareTicket)
+                            .then(({ rank, self }) => {
+                                console.log('缓存群排行榜成功: ', { rank, self });
+                                this.setRankCache('groupRank', { list: rank, self });
+                                this.checkLoading();
+                            })
+                            .catch(e => {
+                                console.log('缓存群排行榜失败: ', e);
+                            });
+
+                        // 初始化世界排行榜
+                        const { rank, self } = this.initWorldRankData(worldRank);
+                        this.setRankCache('worldRank', { list: rank, self });
+                    });
             });
     }
 
@@ -74,14 +84,27 @@ export default class HWData extends Init {
      * @params data {Object} 缓存对象, 格式: { list: 排行榜数组, self: 自己的名次数据 }
      * */
     setRankCache(key, data) {
+        // 如果没有数据
+        if (!data) {
+            const list = [];
+            const newUser = this.setNewRankData(0);
+            list.push(newUser);
+            const rankUser = this.normalizeSelf(list, newUser.nickname);
+            this.setHWData(key, { list, self: rankUser });
+
+            return false;
+        }
+
         const { list, self } = data;
 
         this.setRankUserCache(key, data);
 
         this.loadRankImg(list)
             .then((e) => {
-                this.setRankUserCache(key, { list: e, self});
-                this.checkLoading()
+                const { self: newSelf } = this.getHWData(key);
+
+                this.setRankUserCache(key, { list: e, self: newSelf});
+                this.checkLoading();
             });
     }
 
@@ -99,7 +122,6 @@ export default class HWData extends Init {
             const rankUser = this.normalizeSelf(list, self.nickname);
             this.setHWData(key, { list, self: rankUser });
         } catch (err) {
-
             // 世界排行榜不修改排名和分数
             if (key === 'worldRank') {
                 const score = self.KVDataList[0].value;
