@@ -16,7 +16,9 @@ export default class Cache {
             // 模型尺寸
             modelSize: [ 2, 2, 2 ],
             // 物理模型尺寸
-            physicalSize: [ 4, 6, 6 ]
+            physicalSize: [ 4, 6, 6 ],
+            // 得分倍数
+            score: 1
         }
     };
 

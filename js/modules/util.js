@@ -223,8 +223,12 @@ export default class UTIL {
                 return false;
             }
 
+            const { score: carScore } = $cache.getGameData('car');
+
+            const carScoreNum = carScore || 1;
+
             speedKeyNum++;
-            score += Math.round(speed / computedSpeed);
+            score += Math.round(Math.round(speed / computedSpeed) * carScoreNum);
 
             // 检测超越好友
             beyondClass.beyondPage();

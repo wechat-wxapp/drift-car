@@ -88,7 +88,6 @@ export default class WX extends UTIL {
         this.startBtn.hide();
 
         this.startBtn.onTap((res) => {
-            console.log('res: ', res);
             if (this.tapLock) return false;
             this.tapLock = true;
             this.wxUnionId(res);

@@ -358,6 +358,22 @@ export default class Carport extends UTIL {
         // 头部
         offCanvas2d.drawImage(this.carHeader, 0, 0, this.carHeader.width, this.carHeader.height, this.computedSizeW(41.4), this.headerOffsetTop, this.computedSizeW(331.2), this.computedSizeW(this.carHeader.height / 2));
 
+        // 分页按钮
+        if (this.page !== 1) {
+            offCanvas2d.drawImage(this.prePageDis, 0, 0, this.prePageDis.width, this.prePageDis.height, this.computedSizeW(110), this.bgOffsetTop + this.computedSizeW(259), this.computedSizeW(89.424), this.computedSizeW(34.776));
+        } else {
+            offCanvas2d.drawImage(this.prePageN, 0, 0, this.prePageN.width, this.prePageN.height, this.computedSizeW(110), this.bgOffsetTop + this.computedSizeW(259), this.computedSizeW(89.424), this.computedSizeW(34.776));
+        }
+
+        if (this.hasNext) {
+            offCanvas2d.drawImage(this.nextPageDis, 0, 0, this.nextPageDis.width, this.nextPageDis.height, this.computedSizeW(220), this.bgOffsetTop + this.computedSizeW(259), this.computedSizeW(89.424), this.computedSizeW(34.776));
+        } else {
+            offCanvas2d.drawImage(this.nextPageN, 0, 0, this.nextPageN.width, this.nextPageN.height, this.computedSizeW(220), this.bgOffsetTop + this.computedSizeW(259), this.computedSizeW(89.424), this.computedSizeW(34.776));
+        }
+
+        // 返回按钮
+        offCanvas2d.drawImage(this.backBtn, 0, 0, this.backBtn.width, this.backBtn.height, this.computedSizeW(41.4), this.bgOffsetTop + this.computedSizeW(330), this.computedSizeW(89.424), this.computedSizeW(34.776));
+
         // 车辆列表
         this.list.map((v, k) => {
             const { isNew, carId, unlock, imgUrl } = v;
@@ -397,26 +413,9 @@ export default class Carport extends UTIL {
                     // 加载完执行回调函数
                     cb && cb();
                 }
-
                 texture2d.needsUpdate = true;
             }
         });
-
-        // 分页按钮
-        if (this.page !== 1) {
-            offCanvas2d.drawImage(this.prePageDis, 0, 0, this.prePageDis.width, this.prePageDis.height, this.computedSizeW(110), this.bgOffsetTop + this.computedSizeW(259), this.computedSizeW(89.424), this.computedSizeW(34.776));
-        } else {
-            offCanvas2d.drawImage(this.prePageN, 0, 0, this.prePageN.width, this.prePageN.height, this.computedSizeW(110), this.bgOffsetTop + this.computedSizeW(259), this.computedSizeW(89.424), this.computedSizeW(34.776));
-        }
-
-        if (this.hasNext) {
-            offCanvas2d.drawImage(this.nextPageDis, 0, 0, this.nextPageDis.width, this.nextPageDis.height, this.computedSizeW(220), this.bgOffsetTop + this.computedSizeW(259), this.computedSizeW(89.424), this.computedSizeW(34.776));
-        } else {
-            offCanvas2d.drawImage(this.nextPageN, 0, 0, this.nextPageN.width, this.nextPageN.height, this.computedSizeW(220), this.bgOffsetTop + this.computedSizeW(259), this.computedSizeW(89.424), this.computedSizeW(34.776));
-        }
-
-        // 返回按钮
-        offCanvas2d.drawImage(this.backBtn, 0, 0, this.backBtn.width, this.backBtn.height, this.computedSizeW(41.4), this.bgOffsetTop + this.computedSizeW(330), this.computedSizeW(89.424), this.computedSizeW(34.776));
 
         texture2d.needsUpdate = true;
     }
