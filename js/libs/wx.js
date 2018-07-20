@@ -71,6 +71,14 @@ export default class WX extends UTIL {
     }
 
     /**
+     * 跳转到小程序
+     * */
+    navigateToMiniProgram() {
+        const appid = 'wxd89b0def414d9163';
+        wx.navigateToMiniProgram({ appId: appid });
+    }
+
+    /**
      * 创建开始按钮
      * */
     createStartBtn() {
