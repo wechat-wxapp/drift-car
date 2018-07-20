@@ -428,7 +428,7 @@ export default class Carport extends UTIL {
 
         const { days, highScore, highTurn, share } = this.high;
         const { unlock, imgUrlObj, unlockNum } = this.list[this.index];
-        let intro, type, upto, num2, max2;
+        let intro, type, num, max, num2, max2;
 
         const carSize = {
             left: winWidth / 2 - this.computedSizeW(imgUrlObj.width / 4),
@@ -471,33 +471,17 @@ export default class Carport extends UTIL {
                 if (!intro) {
                     intro = e.intro;
                     type = e.type;
-                    upto = e.upto;
+                    num = e.type === 'days' ? days : e.type === 'score' ? highScore : e.type === 'turn' ? highTurn : e.type === 'share' ? share : undefined;
+                    max = e.upto;
                 } else {
                     intro = `${intro}${e.intro}`;
+                    num2 = e.type === 'days' ? days : e.type === 'score' ? highScore : e.type === 'turn' ? highTurn : e.type === 'share' ? share : undefined;
                     max2 = e.upto;
-                    num2 = e.type === 'days' ? days : e.type === 'score' ? 'highScore' : e.type === 'turn' ? highTurn : e.type === 'share' ? share : undefined;
                 }
             }
         });
 
-        // 匹配对应类型
-        switch(type) {
-            case 'days':
-                this.createSimpleText(intro, { num: days, max: upto, unlock, num2, max2 });
-                break;
-            case 'score':
-                this.createSimpleText(intro, { num: highScore, max: upto, unlock, num2, max2 });
-                break;
-            case 'turn':
-                this.createSimpleText(intro, { num: highTurn, max: upto, unlock, num2, max2 });
-                break;
-            case 'share':
-                this.createSimpleText(intro, { num: highTurn, max: upto, unlock, num2, max2 });
-                break;
-            case 'other':
-                this.createSimpleText(intro, { unlock, num2, max2 });
-                break;
-        }
+        this.createSimpleText(intro, { num: num, max: max, unlock, num2, max2 });
 
         texture2d.needsUpdate = true;
     }
