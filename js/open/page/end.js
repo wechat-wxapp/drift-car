@@ -136,7 +136,7 @@ export default class EndPage extends Init {
         this.cvs.drawImage(this.endBack, 0, 0, this.endBack.width, this.endBack.height, this.computedSizeW(95.7), this.relativeSizeH(1074), this.computedSizeW(this.endBack.width), this.computedSizeW(this.endBack.height));
 
         // 炫耀一下
-        this.cvs.drawImage(this.endShare, 0, 0, this.endShare.width, this.endShare.height, this.computedSizeW(424.7), this.relativeSizeH(1074), this.computedSizeW(this.endShare.width), this.computedSizeW(this.endShare.height));
+        this.cvs.drawImage(this.endShare, 0, 0, this.endShare.width, this.endShare.height, this.computedSizeW(395), this.relativeSizeH(1074), this.computedSizeW(this.endShare.width), this.computedSizeW(this.endShare.height));
 
         // 新纪录
         newRecord && this.cvs.drawImage(this.newRecord, 0, 0, this.newRecord.width, this.newRecord.height, this.computedSizeW(510), this.relativeSizeH(400), this.computedSizeW(this.newRecord.width), this.computedSizeW(this.newRecord.height));

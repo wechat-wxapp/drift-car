@@ -25,6 +25,10 @@ export default class Carport extends UTIL {
         this.nextPageN = imgList.nextPageN;
         this.nextPageDis = imgList.nextPageDis;
 
+        // 分享页
+        this.carUnlockShare = imgList.carUnlockShare;
+        this.carShareBtn = imgList.carShareBtn;
+
         this.headerOffsetTop = this.computedSizeH(133.032);
         this.bgOffsetTop = this.headerOffsetTop + this.computedSizeW(115.368);
 
@@ -57,6 +61,9 @@ export default class Carport extends UTIL {
         this.bindCarPrePage();
         // 下一页
         this.bindCarNextPage();
+
+        // 分享页炫耀一下
+        this.bindCarShareBtn();
     }
 
     /**
@@ -89,8 +96,9 @@ export default class Carport extends UTIL {
 
                 // 如果可以解锁
                 if (isNew) {
-                    $loader.showToast('恭喜解锁');
+                    this.setSharePage();
                     $io.takeCar({ unlockNum });
+                    return false;
                 }
 
                 this.list[this.index].isNew = false;
@@ -261,6 +269,29 @@ export default class Carport extends UTIL {
     }
 
     /**
+     * 绑定车辆分享页面炫耀一下
+     * */
+    bindCarShareBtn() {
+        const x1 = this.computedSizeW(50);
+        const x2 = this.computedSizeW(360);
+        const y1 = this.computedSizeW(515.5);
+        const y2 = this.computedSizeW(565.5);
+
+        events.click({
+            name: 'carShareBtn',
+            pageName: 'carportSharePage',
+            point: [x1, y1, x2, y2],
+            cb: (e) => {
+                const carSharePng = 'https://static.cdn.24haowan.com/24haowan/test/js/car-share.png';
+                const { name } = this.list[this.index];
+                $wx.shareAppMessage(`我解锁了新车: ${name}，快来围观一下`, carSharePng);
+
+                this.setTexture(this.setContent.bind(this));
+            }
+        });
+    }
+
+    /**
      * 获取车库列表信息
      * */
     getCarListInfo() {
@@ -305,9 +336,9 @@ export default class Carport extends UTIL {
     }
 
     /**
-     * 更新页面内容
+     * 车库列表页
      * */
-    setTexture() {
+    setTexture(cb) {
         currentPage = 'carportPage';
 
         // 重置加载进度
@@ -362,6 +393,9 @@ export default class Carport extends UTIL {
                 // 加载成功后, 清除loading
                 if (this.loadNum === this.list.length) {
                     $loader.hide();
+
+                    // 加载完执行回调函数
+                    cb && cb();
                 }
 
                 texture2d.needsUpdate = true;
@@ -387,6 +421,9 @@ export default class Carport extends UTIL {
         texture2d.needsUpdate = true;
     }
 
+    /**
+     * 车库详情页
+     * */
     setContent() {
         currentPage = 'carportContentPage';
 
@@ -462,6 +499,25 @@ export default class Carport extends UTIL {
                 this.createSimpleText(intro, { unlock, num2, max2 });
                 break;
         }
+
+        texture2d.needsUpdate = true;
+    }
+
+    /**
+     * 车库分享页
+     * */
+    setSharePage() {
+        currentPage = 'carportSharePage';
+
+        offCanvas2d.clearRect(0, 0, winWidth, winHeight);
+
+        offCanvas2d.fillStyle = 'rgba(0, 0, 0, .8)';
+        offCanvas2d.fillRect(0, 0, winWidth, winHeight);
+
+
+        offCanvas2d.drawImage(this.carUnlockShare, 0, 0, this.carUnlockShare.width, this.carUnlockShare.height, winWidth / 2 - this.computedSizeW(this.carUnlockShare.width / 4), this.computedSizeW(150), this.computedSizeW(this.carUnlockShare.width / 2), this.computedSizeW(this.carUnlockShare.height / 2));
+
+        offCanvas2d.drawImage(this.carShareBtn, 0, 0, this.carShareBtn.width, this.carShareBtn.height, winWidth / 2 - this.computedSizeW(this.carShareBtn.width / 4), this.computedSizeW(515.5), this.computedSizeW(this.carShareBtn.width / 2), this.computedSizeW(this.carShareBtn.height / 2));
 
         texture2d.needsUpdate = true;
     }
