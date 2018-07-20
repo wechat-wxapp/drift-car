@@ -12,7 +12,7 @@ export default class Cache {
             // 模型地址
             model: 'https://static.cdn.24haowan.com/24haowan/test/js/newcar3.obj',
             // 贴图地址
-            material: 'https://static.cdn.24haowan.com/24haowan/test/js/newcar3.png',
+            material: 'obj/newcar3.png',
             // 模型尺寸
             modelSize: [ 2, 2, 2 ],
             // 物理模型尺寸
