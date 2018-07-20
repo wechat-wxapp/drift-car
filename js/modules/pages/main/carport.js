@@ -28,6 +28,7 @@ export default class Carport extends UTIL {
         // 分享页
         this.carUnlockShare = imgList.carUnlockShare;
         this.carShareBtn = imgList.carShareBtn;
+        this.carShareCloseBtn = imgList.carShareCloseBtn;
 
         this.headerOffsetTop = this.computedSizeH(133.032);
         this.bgOffsetTop = this.headerOffsetTop + this.computedSizeW(115.368);
@@ -62,8 +63,10 @@ export default class Carport extends UTIL {
         // 下一页
         this.bindCarNextPage();
 
-        // 分享页炫耀一下
+        // 分享页-炫耀一下
         this.bindCarShareBtn();
+        // 分享页-关闭按钮
+        this.bindCarShareCloseBtn();
     }
 
     /**
@@ -95,7 +98,7 @@ export default class Carport extends UTIL {
                 const { isNew, unlockNum } = this.list[this.index];
 
                 // 如果可以解锁
-                if (isNew) {
+                if (!isNew) {
                     this.setSharePage();
                     $io.takeCar({ unlockNum });
                     return false;
@@ -285,7 +288,24 @@ export default class Carport extends UTIL {
                 const carSharePng = 'https://static.cdn.24haowan.com/24haowan/test/js/car-share.png';
                 const { name } = this.list[this.index];
                 $wx.shareAppMessage(`我解锁了新车: ${name}，快来围观一下`, carSharePng);
+            }
+        });
+    }
 
+    /**
+     * 绑定车辆分享页面关闭按钮
+     * */
+    bindCarShareCloseBtn() {
+        const x1 = this.computedSizeW(331);
+        const x2 = this.computedSizeW(361);
+        const y1 = this.computedSizeW(109);
+        const y2 = this.computedSizeW(136);
+
+        events.click({
+            name: 'carShareCloseBtn',
+            pageName: 'carportSharePage',
+            point: [x1, y1, x2, y2],
+            cb: (e) => {
                 this.setTexture(this.setContent.bind(this));
             }
         });
@@ -497,9 +517,13 @@ export default class Carport extends UTIL {
         offCanvas2d.fillStyle = 'rgba(0, 0, 0, .8)';
         offCanvas2d.fillRect(0, 0, winWidth, winHeight);
 
+        // 关闭按钮
+        offCanvas2d.drawImage(this.carShareCloseBtn, 0, 0, this.carShareCloseBtn.width, this.carShareCloseBtn.height, this.computedSizeW(330), this.computedSizeW(110), this.computedSizeW(this.carShareCloseBtn.width / 2), this.computedSizeW(this.carShareCloseBtn.height / 2));
 
+        // 背景
         offCanvas2d.drawImage(this.carUnlockShare, 0, 0, this.carUnlockShare.width, this.carUnlockShare.height, winWidth / 2 - this.computedSizeW(this.carUnlockShare.width / 4), this.computedSizeW(150), this.computedSizeW(this.carUnlockShare.width / 2), this.computedSizeW(this.carUnlockShare.height / 2));
 
+        // 炫耀一下
         offCanvas2d.drawImage(this.carShareBtn, 0, 0, this.carShareBtn.width, this.carShareBtn.height, winWidth / 2 - this.computedSizeW(this.carShareBtn.width / 4), this.computedSizeW(515.5), this.computedSizeW(this.carShareBtn.width / 2), this.computedSizeW(this.carShareBtn.height / 2));
 
         texture2d.needsUpdate = true;

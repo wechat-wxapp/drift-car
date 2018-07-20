@@ -264,7 +264,8 @@ const basicData = {
         carUse: 'images/car-use.png',
         carProgressBg: 'images/car-progress-bg.png',
         carShareBtn: 'images/car-share-btn.png',
-        carUnlockShare: 'images/car-unlock-share.png'
+        carUnlockShare: 'images/car-unlock-share.png',
+        carShareCloseBtn: 'images/car-share-close-btn.png'
     },
 
     // 计时器组
