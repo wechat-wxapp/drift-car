@@ -101,14 +101,13 @@ export default class Carport extends UTIL {
                 if (isNew) {
                     this.setSharePage();
                     $io.takeCar({ unlockNum });
-
-                    this.list[this.index].isNew = false;
-                    return false;
+                } else {
+                    this.setContent();
                 }
 
                 this.list[this.index].isNew = false;
 
-                this.setContent();
+
             }
         });
     }
