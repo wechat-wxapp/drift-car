@@ -197,7 +197,7 @@ export default class Carport extends UTIL {
             pageName: 'carportContentPage',
             point: [x1, y1, x2, y2],
             cb: () => {
-                const { carId, modelUrl, modelPic, modelSize, modelRealSize, unlock, speed, speedMax, speedStep, levelSpeed, speedStepMax } = this.list[this.index];
+                const { carId, modelUrl, modelPic, modelSize, modelRealSize, unlock, score, speed, speedMax, speedStep, levelSpeed, speedStepMax } = this.list[this.index];
                 $loader.hideToast();
 
                 if (unlock) {
@@ -209,6 +209,7 @@ export default class Carport extends UTIL {
                         material: modelPic,
                         modelSize: modelSize,
                         physicalSize: modelRealSize,
+                        score,
                         speed,
                         speedMax,
                         speedStep,
