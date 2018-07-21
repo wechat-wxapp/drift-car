@@ -63,6 +63,7 @@ export default class Music {
     playReady() {
         this.destroyAudio(this.readyAuio);
         this.readyAuio = this.createAudio('sound/ready.mp3');
+        this.readyAuio.volume = .5;
         this.playMusic(this.readyAuio);
     }
 
@@ -72,6 +73,7 @@ export default class Music {
     playGo() {
         this.destroyAudio(this.goAuio);
         this.goAuio = this.createAudio('sound/go.mp3');
+        this.goAuio.volume = .5;
         this.playMusic(this.goAuio);
     }
 
