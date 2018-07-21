@@ -156,6 +156,8 @@ export default class WX extends UTIL {
                     startPage && startPage.setTexture();
 
                     resolve(e);
+                }).catch(err => {
+                    console.log('提交每日次数报错: ', err);
                 });
                 return false;
             }

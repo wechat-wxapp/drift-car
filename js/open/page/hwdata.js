@@ -20,13 +20,15 @@ export default class HWData extends Init {
             self: '',
 
             // 当前星期
-            week: '3',
+            week: '5',
 
             //用来判断只进行一次canvas缩放
             hasScaled: 0,
             //是否显示加载图片
             loadingKey: true
         };
+
+        console.log('当前week: ', wx.HWData.week);
 
         this.initData(data);
     }

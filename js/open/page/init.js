@@ -102,11 +102,11 @@ export default class Init {
                 keyList: ['score', 'week'],
                 success: (res) => {
                     const { data: list } = res;
-                    const randData = this.formatWxRankData(list);
+                    const rankData = this.formatWxRankData(list);
                     const { nickName } = this.getHWData('self');
 
                     // 倒序排序
-                    const rank = this.sort(randData, 'asc');
+                    const rank = this.sort(rankData, 'asc');
                     // 获取自己相对排行榜的数据
                     const self = this.normalizeSelf(rank, nickName);
                     resolve({ rank, self });
@@ -132,9 +132,11 @@ export default class Init {
 
             wx.getGroupCloudStorage({
                 shareTicket,
-                keyList: ['score'],
+                keyList: ['score', 'week'],
                 success: res => {
-                    const { data: rankData } = res;
+                    const { data: list } = res;
+                    const rankData = this.formatWxRankData(list);
+
                     const { nickName } = this.getHWData('self');
 
                     // 倒序排序
