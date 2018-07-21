@@ -496,7 +496,7 @@ export default class Carport extends UTIL {
                     num = e.type === 'days' ? days : e.type === 'score' ? highScore : e.type === 'turn' ? highTurn : e.type === 'share' ? share : undefined;
                     max = e.upto;
                 } else {
-                    intro = `${intro} 或者 ${e.intro}`;
+                    intro = `${intro} 或 ${e.intro}`;
                     num2 = e.type === 'days' ? days : e.type === 'score' ? highScore : e.type === 'turn' ? highTurn : e.type === 'share' ? share : undefined;
                     max2 = e.upto;
                 }
