@@ -161,7 +161,7 @@ export default class Init {
         const rankData = list;
         rankData.map(e =>{
             e['KVDataList'] = [];
-            e['KVDataList'].push({ value: e.score });
+            e['KVDataList'].push({ key: 'score', value: e.score });
             e.avatarUrl = e.headimgurl;
             delete e.score;
         });
@@ -170,7 +170,7 @@ export default class Init {
 
         const selfData = self;
         selfData['KVDataList'] = [];
-        selfData['KVDataList'].push({ value: score });
+        selfData['KVDataList'].push({ key: 'score', value: score });
         selfData.avatarUrl = headimgurl;
         delete selfData.score;
 
