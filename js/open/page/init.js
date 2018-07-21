@@ -71,6 +71,9 @@ export default class Init {
         cxt.closePath();
     }
 
+    /**
+     * 获取当前周的分数数据
+     * */
     formatWxRankData(list) {
         const newList = [];
         const currentWeek = this.getHWData('week');
