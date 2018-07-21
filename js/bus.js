@@ -388,6 +388,9 @@ export default class Bus{
      * 重置模型,摄像头位置
      * */
     resetModel() {
+        // 全屏不能点击
+        currentPage = 'off';
+
         carClass.removeCar();
         carClass.addCar();
 

@@ -146,8 +146,15 @@ export default class UTIL {
         // 重置页面分数
         scorePage.setTexture();
 
-        // 重置背景音乐
-        this.readyMusic();
+        $loader.show('正在生成场景...');
+        this.reOpenGame = $timer(() => {
+            // 重置背景音乐
+            this.readyMusic();
+            $loader.hide();
+
+            this.reOpenGame.closeTimeout();
+        }, 100);
+
     }
 
     /**
@@ -240,6 +247,12 @@ export default class UTIL {
      * 首次开始音效
      * */
     readyMusic() {
+        // 手动释放内存
+        wx.triggerGC();
+
+        // 全屏不能点击
+        currentPage = 'off';
+
         let key = 0;
         this.musicTimer = $timer(() => {
             key++;
@@ -269,12 +282,6 @@ export default class UTIL {
                 music.playReady();
             }
         }, 1000);
-
-        // 手动释放内存
-        wx.triggerGC();
-
-        // 全屏不能点击
-        currentPage = 'off';
     }
 
     /**
