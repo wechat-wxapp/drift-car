@@ -75,7 +75,12 @@ export default class WX extends UTIL {
      * */
     navigateToMiniProgram() {
         const appid = 'wxd89b0def414d9163';
-        wx.navigateToMiniProgram({ appId: appid });
+        wx.navigateToMiniProgram({
+            appId: appid,
+            success: () => {},
+            fail: (err) => {},
+            complete: () => {}
+        });
     }
 
     /**
