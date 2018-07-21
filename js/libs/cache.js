@@ -10,7 +10,8 @@ export default class Cache {
             // 车辆标识
             id: 0,
             // 模型地址
-            model: 'https://static.cdn.24haowan.com/24haowan/test/js/newcar3.obj',
+            // model: 'https://static.cdn.24haowan.com/24haowan/test/js/newcar3.obj',
+            model: 'https://res.suv666.com/24haowan/pyds/newcar3.obj',
             // 贴图地址
             material: 'obj/newcar3.png',
             // 模型尺寸
