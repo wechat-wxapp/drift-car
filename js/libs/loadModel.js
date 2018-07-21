@@ -9,33 +9,35 @@ export default class LoadModel {
      * @params callback {Function} 加载完成后回调方法
      */
     constructor(model, material, callback) {
-        return Promise.all([this.loadMaterial(material), this.loadObj(model)])
-            .then(([texture, obj]) => {
-                callback(obj);
-            });
+        return this.loadMaterial(material, model).then(e => {
+            callback && callback(e);
+        });
     }
 
-    loadMaterial(material) {
+    loadMaterial(material, model) {
         return new Promise((resolve, reject) => {
             const manager = new THREE.LoadingManager();
             manager.onProgress = (item, loaded, total) => {
                 // console.log(item, loaded, total);
             };
 
-            this.texture = new THREE.Texture();
-            this.texture.minFilter = THREE.LinearFilter;
+            const texture = new THREE.Texture();
+            texture.minFilter = THREE.LinearFilter;
             const imgLoader = new THREE.ImageLoader(manager);
             imgLoader.load(material, (image) => {
-                this.texture.image = image;
-                this.texture.needsUpdate = true;
+                texture.image = image;
+                texture.needsUpdate = true;
 
                 // var texture = THREE.ImageUtils.loadTexture(material);
-                resolve(this.texture);
+
+                this.loadObj(texture, model).then(e => {
+                    resolve(e);
+                });
             });
         })
     }
 
-    loadObj(model) {
+    loadObj(texture, model) {
         return new Promise((resolve, reject) => {
             const objLoader = new THREE.OBJLoader();
             objLoader.load(model, (obj) => {
@@ -45,15 +47,13 @@ export default class LoadModel {
                 //   overdraw: 0.5
                 // });
 
-                this.obj = obj;
-
-                this.obj.traverse((child) => {
+                obj.traverse((child) => {
                     if (child instanceof THREE.Mesh) {
-                        child.material.map = this.texture;
+                        child.material.map = texture;
                     }
                 });
 
-                resolve(this.obj);
+                resolve(obj);
             }, (xhr) => {
                 console.log((xhr.loaded / xhr.total * 100) + '% loaded');
             }, (err) => {

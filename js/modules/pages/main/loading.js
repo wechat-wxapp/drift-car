@@ -115,9 +115,7 @@ export default class Loader extends UTIL {
     buildScenery() {
         scenery = new Scenery();
 
-        return new Promise((res, rej) => {
-            scenery.build().then(() => res());
-        })
+        return scenery.build();
     }
 
     /**
@@ -126,9 +124,7 @@ export default class Loader extends UTIL {
     buildCar() {
         carClass = new Car();
 
-        return new Promise((res, rej) => {
-            carClass.build().then(() => res());
-        })
+        return carClass.build();
     }
 
     /**
@@ -137,9 +133,7 @@ export default class Loader extends UTIL {
     buildRoad() {
         roadClass = new Road();
 
-        return new Promise((res, rej) => {
-            roadClass.build().then(() => res());
-        })
+        return roadClass.build();
     }
 
     /**
@@ -148,9 +142,7 @@ export default class Loader extends UTIL {
     buildTurnRoad() {
         turnRoadClass = new TurnRoad();
 
-        return new Promise((res, rej) => {
-            turnRoadClass.build().then(() => res());
-        })
+        return turnRoadClass.build();
     }
 
     /**
@@ -159,9 +151,7 @@ export default class Loader extends UTIL {
     buildTurnRoadSmall() {
         turnRoadSmallClass = new TurnRoadSmall();
 
-        return new Promise((res, rej) => {
-            turnRoadSmallClass.build().then(() => res());
-        })
+        return turnRoadSmallClass.build();
     }
 
     imgloading(img) {
