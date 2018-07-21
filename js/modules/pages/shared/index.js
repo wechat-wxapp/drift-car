@@ -547,7 +547,7 @@ export default class Shared extends UTIL {
             $wx.startBtn.hide();
 
             isSharedLoop = true;
-            pageClass.clear2d();
+            // pageClass.clear2d();
 
             $wx.sendMessage('groupRank',{ type: 2 , page: rankCurrentPage, common: 0 , shareTicket: $wx.shareTicket});
             currentPage = 'groupRank';
