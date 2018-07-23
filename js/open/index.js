@@ -1,43 +1,39 @@
-// let sharedCanvas = wx.getSharedCanvas()
-// let context = sharedCanvas.getContext('2d')
-// context.fillStyle = 'green'
-// context.fillRect(0, 0, 100, 100)
-
-// const sharedCanvas = wx.getSharedCanvas();
-// const cvs = sharedCanvas.getContext('2d');
-//
-// cvs.fillStyle = 'red'
-// cvs.fillRect(0, 0, 500, 500)
-
 import EndPage from './page/end';
 import ReseurPage from './page/resurgence.js';
 import RankPage from './page/rank';
-import CarportPage from './page/carport';
 import WechatMPPage from './page/wechatMP';
 import QrPage from './page/qr';
+import BeyondPage from './page/beyond';
 import Init from './page/init';
+import HWData from './page/hwdata';
+
+const init = new Init();
 
 const endPage = new EndPage();
 const reseurPage = new ReseurPage();
-const rankPage = new RankPage();
-const carportPage = new CarportPage();
+const friendRankPage = new RankPage();
+const groupRankPage = new RankPage();
+const worldRankPage = new RankPage();
 const wechatMPPage = new WechatMPPage();
 const qrPage = new QrPage();
-const init = new Init();
+const beyondPage = new BeyondPage();
 
-wx.onMessage(({ command, data }) => {
+wx.onMessage(({ command, data = {}}) => {
     switch (command) {
         case 'end':
-            // endPage.setTexture();
-
-            console.log('data', data)
-            rankPage.setTexture(data);
+            endPage.setData(data);
             break;
         case 'reseur':
-            reseurPage.setTexture();
+            reseurPage.setTexture(data);
             break;
-        case 'rank':
-            rankPage.setTexture(data);
+        case 'friendRank':
+            friendRankPage.dataMiddleware('friendRank', data)
+            break;
+        case 'worldRank':
+            worldRankPage.dataMiddleware('worldRank', data)
+            break;
+        case 'groupRank':
+            groupRankPage.dataMiddleware('groupRank', data)
             break;
         case 'carport':
             carportPage.setTexture(data);
@@ -48,17 +44,17 @@ wx.onMessage(({ command, data }) => {
         case 'qr':
             qrPage.setTexture();
             break;
+        case 'beyond':
+            beyondPage.setTexture(data);
+            break;
+        case 'beyondReset':
+            beyondPage.reset();
+            break;
+        case 'initHwData':
+            new HWData(data);
+            break;
         case 'clear':
-            init.clearCvs(true);
+            init.clearCvs(true, true);
             break;
     }
 });
-
-// function drawRankList (data) {
-//     cvs.fillStyle = "#647fdc";
-//     cvs.fillRect(0, 0, 100, 100);
-//     cvs.font = "bold 70px Arial";
-//     cvs.fillText('123', 100, 100);
-// }
-//
-//

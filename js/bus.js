@@ -1,8 +1,32 @@
 import * as CANNON from './libs/cannon';
+import IO from './libs/io';
+import TIMER from './libs/timer';
+import LoadModel from "./libs/loadModel";
 
-// 常量
+// 不可变常量, 不参与全局挂载
+const constantData = {
+    // 复活次数, 默认 1 次
+    reseurNum: 1,
+
+    // 加速区间
+    levelSpeed: [5, 20, 40, 60, 80, 90, 120, 160, 200, 250],
+    // 初始速度
+    speed: 2.5,
+    // 最大速度
+    speedMax: 5,
+    // 每次加速步长
+    speedStep: 0.01,
+    // 累计加速步长最大值
+    speedStepMax: 0.08
+};
+
+// 普通变量
 const basicData = {
+    // 3d场景
     scene: '',
+    // 普通2d场景
+    uiScene: '',
+
     renderer: '',
     camera: '',
     car: '',
@@ -14,6 +38,12 @@ const basicData = {
     cannonDebugRenderer: '',
     ground: '',
     groundBody: '',
+
+    // 全局canvas对象
+    ctx: '',
+
+    // 汽车列表
+    carList: [],
 
     // 车辆类
     carClass: '',
@@ -42,8 +72,18 @@ const basicData = {
 
     // 全局变量bus对象
     $bus: '',
+    // 全局加载模型类
+    $loadModel: LoadModel,
+    // 全局缓存类
+    $cache: '',
     // 全局微信类
     $wx: '',
+    // 全局异步函数
+    $io: IO,
+    // 全局loading类
+    $loader: '',
+    // 全局计时器
+    $timer: TIMER,
 
     // 加载锁
     loadKey: false,
@@ -53,6 +93,13 @@ const basicData = {
     // 得分
     score: 0,
     lastScore: 0,
+    // 转弯多少次
+    turn: 0,
+    // 点击转弯减速的判断
+    isTurning: false,
+    // 转弯计算的当前速度,车模型实际利用的速度变量
+    currentSpeed: 0,
+    turnSpringback: true,
 
     // 最后的道路key
     // lastBoxType: 'r6',
@@ -68,9 +115,11 @@ const basicData = {
     speedMax: 5,
     speedStep: 0.01,
     speedStepMax: 0.08,
+    // 速度计算得分基准值
+    computedSpeed: 2,
     // 加速等级区间
     level: 0,
-    levelSpeed: [5, 10, 15, 20, 25, 30, 35, 40, 45, 50],
+    levelSpeed: [5, 20, 40, 60, 80, 90, 120, 160, 200, 250],
 
     timeStep: 1.0 / 60.0,
 
@@ -94,7 +143,9 @@ const basicData = {
      * */
     eventPoint: {},
     // 当前页面标识(默认为开始页)
-    currentPage: 'startPage',
+    currentPage: '',
+    // 当前开放域标识
+    currentShared: 'shared',
 
     // 主页类
     pageClass: '',
@@ -102,6 +153,8 @@ const basicData = {
     scoreClass: '',
     // 开放域类
     sharedClass: '',
+    // 超越好友类
+    beyondClass: '',
 
     // 等待页对象
     loadingPage: '',
@@ -111,12 +164,18 @@ const basicData = {
     gamePage: '',
     // 分数栏对象
     scorePage: '',
+    // 车库对象
+    carportPage: '',
 
     // 微信公开域画布
+    isSharedLoop: false,
     openDataContext: '',
     sharedCanvas: '',
     sharedTexture2d: '',
     sharedCanvasSprite: '',
+    // 超越好友
+    beyondTexture2d: '',
+    beyondCanvasSprite: '',
     // 微信特有离屏画布
     offCanvas2d: '',
     texture2d: '',
@@ -129,34 +188,40 @@ const basicData = {
     // 预加载图片列表
     imgList: {
         btn: 'images/btn.png',
-        backIcon: `images/back-icon.png`,
-        carPane: `images/car-pane.png`,
-        carportPane: `images/carport-pane.png`,
-        selectedIcon: `images/selected-icon.png`,
-        unlockPane: 'images/unlock-pane.png',
-        unlockGame: 'images/unlock-game.png',
-        unlockCn: 'images/unlock-cn.png',
-        unlockBtn: 'images/unlock-btn.png',
-        gift100: 'images/gift-100.png',
-        gift200: 'images/gift-200.png',
-        curve: 'images/curve.png',
+        backIcon: 'images/back-icon.png',
+        closeBtn: 'images/close-btn.png',
+
+        //默认头像图片
+        staticAvater: 'images/static-avatar.png',
 
         //loading页
         logo: 'images/logo.png',
-        loadingBg: 'images/loading-bg.png',
+        isLoading: 'images/is-loading.png',
 
         // 开始页
         indexBg: 'images/index.png',
         startBtn: 'images/start-btn.png',
         leaderboard: 'images/leaderboard-btn.png',
-        checkLeaderboard: 'images/check-leaderboard-btn.png',
-        startBottomBtn1: 'images/start-bottom-btn-1.png',
-        startBottomBtn2: 'images/start-bottom-btn-2.png',
-        startBottomBtn3: 'images/start-bottom-btn-3.png',
-        startBottomBtn4: 'images/start-bottom-btn-4.png',
+        groupLeaderboard: 'images/group-leaderboard-btn.png',
+        musicOn: 'images/music-on.png',
+        musicOff: 'images/music-off.png',
+        qr: 'images/qr.png',
+        carport: 'images/carport.png',
+        wechat: 'images/wechat.png',
 
         // 游戏页
         scoreBg: 'images/score-bg.png',
+
+        // 结束页
+        endHeader: 'images/end-header.png',
+        endAgain: 'images/end-again.png',
+        endBack: 'images/end-back.png',
+        endShare: 'images/end-share.png',
+        endRankBg: 'images/end-rank-bg.png',
+        newRecord: 'images/newrecord.png',
+
+        // 复活页
+        reseurRePlay: 'images/reseur-rePlay.png',
 
         // 公众号
         point: 'images/point.png',
@@ -165,15 +230,62 @@ const basicData = {
         // 二维码
         qrLamp: 'images/qr-lamp.png',
         qrBtn: 'images/qr-btn.png',
-        qrcode: 'images/qrcode.png'
-    }
-};
+        qrcode: 'images/qrcode.png',
 
-// 变量
-const varData = {
+        //排行
+        rankOne: 'images/rankOne.png',
+        friendRankOn: 'images/friend-rank-on.png',
+        friendRankOff: 'images/friend-rank-off.png',
+        worldRankOn: 'images/world-rank-on.png',
+        worldRankOff: 'images/world-rank-off.png',
+        groupRankOn: 'images/group-rank-on.png',
+        iPLayBtn: 'images/i-play-btn.png',
+
+        //上下一页的激活和未激活按钮
+        prePageN: 'images/pre-page-n.png',
+        prePageDis: 'images/pre-page-dis.png',
+        nextPageN: 'images/next-page-n.png',
+        nextPageDis: 'images/next-page-dis.png',
+
+        //查看群排行按钮
+        goGroupRank: 'images/go-group-rank.png',
+        //方形返回按钮
+        backBtn: 'images/back-btn.png',
+
+        // 车库
+        carPane: 'images/car-pane.png',
+        carHeader: 'images/car-header.png',
+        carPaneOn: 'images/car-pane-on.png',
+        carPaneOff: 'images/car-pane-off.png',
+        carNew: 'images/car-new.png',
+        unlockPane: 'images/unlock-pane.png',
+        unlockBtn: 'images/unlock-btn.png',
+        carOk: 'images/car-ok.png',
+        carUse: 'images/car-use.png',
+        carProgressBg: 'images/car-progress-bg.png',
+        carShareBtn: 'images/car-share-btn.png',
+        carUnlockShare: 'images/car-unlock-share.png',
+        carShareCloseBtn: 'images/car-share-close-btn.png'
+    },
+
+    // 计时器组
+    timerArr: [],
+    // 计时器锁
+    timerKey: true,
+
+    // 是否重主页进入
+    restartKey: true,
+
     // 排行榜当前页数
     rankCurrentPage: 1,
-    
+    //世界排行榜下一页启动
+    worldRankNextSwitch: true,
+
+    texture: ''
+};
+
+// 可重置变量
+const varData = {
     // 模型变量
     roadArr: [],
     roadBodys: [],
@@ -182,14 +294,17 @@ const varData = {
     // 风景对象
     sceneryArr: [],
 
-    // 当前旋转向量
-    currentW: 0,
-
     // 动画变量
     key: 0,
     maxKey: 5,
     movekey: 'z',
-    clickKey: true,
+
+    //重置转弯的角度、是否正在转弯变量、当前速度
+    currentW: 0,
+    isTurning: false,
+    currentSpeed: 0,
+    turnSpringback: true,
+
     // 是否开始
     startKey: false,
 
@@ -201,17 +316,33 @@ const varData = {
     // 碰撞锁
     collideKey: false,
 
-    // 最后的道路key
-    lastBoxType: 'r6',
+    // 判断是否正常比赛
+    speedKeyNum: 0,
 
-    /**
-     * 碰撞后定位2d画布
-     * */
-    speedRecord: {
-        x: 0,
-        z: 0
-    }
+    // 最后的道路key
+    lastBoxType: 'r6'
 };
+
+/**
+ * hack Promise finally
+ * */
+Promise.prototype.finally = function (callback) {
+    let P = this.constructor;
+    return this.then(
+    value  => P.resolve(callback()).then(() => value),
+    reason => P.resolve(callback()).then(() => { throw reason })
+    );
+};
+
+if (!Object.entries) {
+    Object.prototype.entries = function (obj) {
+        let arr = [];
+        for (let key of Object.keys(obj)) {
+            arr.push([key, obj[key]]);
+        }
+        return arr;
+    }
+}
 
 /**
  * 全部局变量bus函数
@@ -220,6 +351,8 @@ export default class Bus{
     constructor() {
         this.basicData = basicData;
         this.varData = varData;
+        // 不可变常量
+        this.constantData = constantData;
 
         this.setWindowData({ ...this.basicData, ...JSON.parse(JSON.stringify(this.varData)) });
     }
@@ -245,19 +378,38 @@ export default class Bus{
     }
 
     /**
+     * 设置挂载属性
+     * */
+    setData(key, value) {
+        window[key] = value
+    }
+
+    /**
      * 重置模型,摄像头位置
      * */
     resetModel() {
+        // 全屏不能点击
+        currentPage = 'off';
+
+        carClass.removeCar();
+        carClass.addCar();
+
         carBodys.position.set(25, 15, -10);
         carBodys.quaternion.setFromAxisAngle(new CANNON.Vec3(0, 1, 0), 0);
 
-        // 普通画布
-        offCanvasSprite.position.set(-11.75, 78.44, 20);
-        // 分数
-        scoreCanvasSprite.position.set(-10, 82.8, 9);
-        // sharedCanvasSprite.position.set(-11.75, 78.44, 20);
-
-        camera.position.set(-16.738086885462103, 90.533387653514225, 28.513221776822927);
+        camera.position.set(-10.738086885462103, 90.533387653514225, 52.513221776822927);
         camera.rotation.set(-0.9577585082113045, -0.3257201862210706, -0.42691147594250245);
+
+        // 分数
+        scoreCanvasSprite.position.set(4, 73.8, 9);
+        // 超越好友
+        beyondCanvasSprite.position.set(0, 55, 20);
+
+        // 默认清除2d页面
+        pageClass.clear2d();
+        sharedClass.clear2d();
+
+        // 开始游戏关闭开放域帧循环
+        isSharedLoop = false;
     }
 }

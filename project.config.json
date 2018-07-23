@@ -1,14 +1,14 @@
 {
 	"description": "项目配置文件。",
 	"setting": {
-		"urlCheck": false,
+		"urlCheck": true,
 		"es6": true,
 		"postcss": true,
 		"minified": true,
 		"newFeature": true
 	},
 	"compileType": "game",
-	"libVersion": "2.1.1",
+	"libVersion": "2.2.0",
 	"appid": "wx12fdfc4be35517f2",
 	"projectname": "drift-car",
 	"isGameTourist": true,
@@ -26,7 +26,7 @@
 			"list": []
 		},
 		"game": {
-			"current": 0,
+			"current": -1,
 			"list": [
 				{
 					"id": 0,
@@ -34,10 +34,15 @@
 					"query": "",
 					"scene": "1044",
 					"shareInfo": {
-						"groupName": "测试模拟群3",
-						"shareName": "LEZBEWLYwfQoS0ybmI61YJonOnMITr4LinttnR8FDxc@cr4dev",
-						"shareKey": "uTfF4aajouav7vtdqz12cAraYEjuMblISKv2otR4EeaDd3PbiGmoTx10VC0i7Iq5LG7xw9N_aRxVoZkaUDfhQw~~"
+						"groupName": "测试模拟群2",
+						"shareName": "OgY_UkkjeDUviHYpCwEGaziam1yLsGVUkY0nvKyp7QQ@cr4dev",
+						"shareKey": "r4BRop7M81fNK1rNciT-OZj_SdrqUP972LGceaN6JTCXXOIWCRdCIZ5YnmEAN3qanVOBevI8De-4FcChpKtV_g~~"
 					}
+				},
+				{
+					"id": 1,
+					"name": "带参编译",
+					"query": "shareOpenid=o2bZr5YzKVElDaGz5l4SAigr_rc0"
 				}
 			]
 		},

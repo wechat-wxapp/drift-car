@@ -1,22 +1,20 @@
 import './libs/OBJLoader';
 
-import Music from './modules/music';
-
 import './libs/cannonDebugRenderer';
 import './libs/OrbitControls';
 
+import Music from './modules/music';
 
 import GroundBody from './modules/ground';
 import bindEvent from './modules/bind-event';
 
 import WX from './libs/wx';
+import CACHE from './libs/cache';
+import LOADER from './libs/loader';
 import UTIL from "./modules/util";
 
 // 2d画布
 import page from './modules/pages/main/index';
-// import Score from './modules/pages/score';
-// import Shared from './modules/pages/shared';
-// import pageLoading from './modules/pages/loading';
 
 /**
  * 游戏主函数
@@ -40,26 +38,20 @@ export default class Main extends UTIL {
         // 创建音乐播放器
         music = new Music();
 
+        // 实例化缓存类
+        $cache = new CACHE();
+
+        // 实例化loading类
+        $loader = new LOADER();
+
         // 实例化微信类
         $wx = new WX();
-        // 无法加载
-        // $wx.getFontFamily();
 
-        pageClass = new page();
-        // new Score();
-        // new Shared();
-        // // 创建loading页对象
-        // loadingPage = new pageLoading();
+        // 实例化主屏2d
+        pageClass = new page(renderer);
 
-        wx.login({
-            success: function(res) {
-                if (res.code) {
-                    console.log(res.code);
-                } else {
-                    console.log('登录失败！' + res.errMsg)
-                }
-            }
-        });
+        // 播放背景音乐
+        this.playBgm();
 
         // 渲染
         this.loop();
@@ -69,10 +61,12 @@ export default class Main extends UTIL {
      * 初始化3D世界
      * */
     initThree() {
-        const ctx = canvas.getContext('webgl', { antialias: true, preserveDrawingBuffer: true });
+        ctx = canvas.getContext('webgl', { antialias: true, preserveDrawingBuffer: true });
 
         scene = new THREE.Scene();
         renderer = new THREE.WebGLRenderer({ context: ctx, canvas });
+        renderer.setClearColor('#428bca', 1);
+        renderer.autoClear = false;
 
         const cameraAspect = winWidth / winHeight;
 
@@ -81,8 +75,8 @@ export default class Main extends UTIL {
 
         console.log("屏幕尺寸: " + winWidth + " x " + winHeight);
 
-        camera = new THREE.PerspectiveCamera(75, cameraAspect, .1, 10500);
-        camera.position.set(-16.738086885462103, 90.533387653514225, 28.513221776822927);
+        camera = new THREE.PerspectiveCamera(75, cameraAspect, .1, 10000);
+        camera.position.set(-10.738086885462103, 90.533387653514225, 52.513221776822927);
         camera.rotation.set(-0.9577585082113045, -0.3257201862210706, -0.42691147594250245);
 
         // 添加环境光 0x999999
@@ -95,7 +89,7 @@ export default class Main extends UTIL {
         scene.add(directionalLight);
 
         // 摄像机调试
-        controls = new THREE.OrbitControls(camera);
+        // controls = new THREE.OrbitControls(camera);
     }
 
     /**
@@ -136,7 +130,7 @@ export default class Main extends UTIL {
     }
 
     /**
-     * 直路横向模型
+     * 连续短弯道
      */
     r8() {
         roadClass.r6();
@@ -147,7 +141,7 @@ export default class Main extends UTIL {
      */
     updateRoad() {
         if (key < maxKey) {
-            // if (key < 1) {
+        //     if (key < 1) {
 
             if (key === 0) {
                 this.r7();
@@ -162,9 +156,9 @@ export default class Main extends UTIL {
 
 
             // if (key < 1) {
-            //     this.r6();
+            //     this.r7();
             // } else if (key === 1) {
-            //     this.r8();
+            //     this.r7();
             // } else if (key === 2) {
             //     this.r6();
             // } else if (key === 3) {
@@ -181,40 +175,89 @@ export default class Main extends UTIL {
         }
     }
 
+    _changeX(speed) {
+        car.position.x += speed;
+        carBodys.position.x += speed;
+        camera.position.x += speed;
+
+        // 2d canvas
+        scoreCanvasSprite.position.x += speed;
+        beyondCanvasSprite.position.x += speed;
+    }
+
+    _changeZ(speed) {
+        car.position.z -= speed;
+        carBodys.position.z -= speed;
+        camera.position.z -= speed;
+
+        // 2d canvas
+        scoreCanvasSprite.position.z -= speed;
+        beyondCanvasSprite.position.z -= speed;
+    }
     /*
      * 更新车辆和摄像机未知
      */
     updateAnimation() {
         if (startKey) {
-            if (movekey === 'x') {
-                car.position.x += speed;
-                carBodys.position.x += speed;
-                camera.position.x += speed;
 
-                speedRecord.x += speed;
-
-                // 2d canvas
-                // offCanvasSprite.position.x += speed;
-                scoreCanvasSprite.position.x += speed;
-                // sharedCanvasSprite.position.x += speed;
-            } else {
-                car.position.z -= speed;
-                carBodys.position.z -= speed;
-                camera.position.z -= speed;
-
-                speedRecord.z += speed;
-
-                // 2d canvas
-                // offCanvasSprite.position.z -= speed;
-                scoreCanvasSprite.position.z -= speed;
-                // sharedCanvasSprite.position.z -= speed;
+            if(isTurning) {
+                
+                if(!this.slowDownFlag) {
+                    currentSpeed -= speed / 48;
+                    if(currentSpeed <= (speed * 3 / 4)) this.slowDownFlag = true;
+                } 
+                if(movekey === 'z') {
+                    currentW = currentW - currentSpeed / 30;
+                    this._changeX(currentSpeed / 8);
+                    this._changeZ(currentSpeed);
+                    if(currentW <= -1.62) {
+                        isTurning = false;
+                        movekey = 'x';
+                        turnSpringback = true;
+                    }
+                } else {
+                    currentW = currentW + currentSpeed / 30;
+                    this._changeZ(currentSpeed / 8)
+                    this._changeX(currentSpeed);
+                    if(currentW >= 0.05) {
+                        isTurning = false;
+                        movekey = 'z';
+                        turnSpringback = true;
+                    }
+                }
+               
+            }else {
+                this.slowDownFlag = false;
+                if(turnSpringback) {
+                    if(currentSpeed >= speed) {
+                        currentSpeed = speed;
+                        turnSpringback = false;
+                    }else {
+                        currentSpeed += speed / 36;
+                    }
+                }else {currentSpeed = speed;}
+                
+                if (movekey === 'x') {
+                    this._changeX(currentSpeed);
+                    currentW = currentW + currentSpeed / 240;
+                    if(currentW >= -1.57) {
+                        currentW = -1.57
+                    }
+                    // beyondCanvasSprite.position.x += speed;
+                } else {
+                    this._changeZ(currentSpeed);
+                    currentW = currentW - currentSpeed / 240;
+                    if(currentW <= 0) {
+                        currentW = 0
+                    }
+                    // beyondCanvasSprite.position.z -= speed;
+                }
             }
+            
+            carBodys.quaternion.setFromAxisAngle(new CANNON.Vec3(0, 1, 0), currentW)
+            // console.log(`=======,当前speed速度${speed},当前currentSpeed速度${currentSpeed}`)
         }
-
-        cannonDebugRenderer && cannonDebugRenderer.update();
-
-        renderer.setClearColor('#428bca', 1.0);
-        renderer.render(scene, camera)
+        // cannonDebugRenderer && cannonDebugRenderer.update();
     }
 
     /**
@@ -261,15 +304,38 @@ export default class Main extends UTIL {
             const levelScore = levelSpeed[level];
             if (levelScore && speedKey >= levelScore) {
                 level++;
-                // levelSpeed.splice(0, 1);
+
                 this.updateLevelSpeed();
-                console.log(`---加速 当前区间 ${level}---`);
             }
         }
     }
 
-    // 实现帧循环
-    loop() {
+    sharedLoop() {
+        if (isSharedLoop) {
+            sharedTexture2d.needsUpdate = true;
+        }
+    }
+
+    timer(progress) {
+        if (timerArr.length <= 0) return false;
+
+        timerArr.map(v => {
+            Object.values(v)[0](progress);
+        })
+    }
+
+    /**
+     * 实现帧循环
+     * */
+    loop(progress) {
+        renderer.clear();
+
+        // 渲染3d场景
+        renderer.render(scene, camera);
+
+        // 渲染2d场景
+        (!startKey && pageClass) && pageClass.render();
+
         // 更新物理世界
         loadKey && this.updateWorld();
         // 生成路面
@@ -281,9 +347,14 @@ export default class Main extends UTIL {
         // 回收路面
         this.removeObj();
 
-        // beyondTexture2d.needsUpdate = true;
+        // 刷新开放域
+        this.sharedLoop();
+
+        // 运行计时器
+        this.timer(progress);
+
         // texture2d.needsUpdate = true;
-        // sharedTexture2d.needsUpdate = true;
+        // beyondTexture2d.needsUpdate = true;
 
         requestAnimationFrame(this.loop.bind(this));
     }

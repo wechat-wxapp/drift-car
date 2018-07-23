@@ -17,11 +17,10 @@ export default class bindEvent{
     }
 
     /**
-     * 绑定点击时间
+     * 绑定点击事件
      */
     click({ name, pageName, point, cb }) {
         this.setEventPoint(name, pageName, point);
-
         window.EVENT.click[name] = cb;
     }
 
@@ -30,10 +29,9 @@ export default class bindEvent{
      * */
     onClick(e) {
         const { pageX, pageY } = e.changedTouches[0];
-        // console.log(pageX, pageY)
         eventPoint[currentPage] && Object.entries(eventPoint[currentPage]).map(v => {
             if (pageX > v[1][0] && pageX < v[1][2] && pageY > v[1][1] && pageY < v[1][3]) {
-                typeof EVENT.click[v[0]] === 'function' && EVENT.click[v[0]]();
+                typeof EVENT.click[v[0]] === 'function' && EVENT.click[v[0]](e);
             }
         })
     }

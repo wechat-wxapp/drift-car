@@ -17,19 +17,13 @@ export default class Road extends UTIL {
      * 创建直线道路
      */
     createRoad() {
-        const material = "https://static.cdn.24haowan.com/24haowan/test/js/newroad001.png";
+        const material = "obj/nr0001.png";
+        // const material = "https://static.cdn.24haowan.com/24haowan/test/js/nr0001.png";
         const model = 'https://static.cdn.24haowan.com/24haowan/test/js/newroad001.obj';
-        // const material = "https://static.cdn.24haowan.com/24haowan/test/js/roadnnn3.png";
-        // const model = 'https://static.cdn.24haowan.com/24haowan/test/js/r.obj';
 
-        return new Promise((res, rej) => {
-            this.createObj(model, material, (obj) => {
-                road = obj;
-
-                road.scale.set(2, 2, 2);
-
-                res();
-            });
+        return new $loadModel(model, material, (obj) => {
+            road = obj;
+            road.scale.set(2, 2, 2);
         });
     }
 
@@ -42,14 +36,13 @@ export default class Road extends UTIL {
         roadObj.key = key + 1;
 
         const roadBodyShape = new CANNON.Box(new CANNON.Vec3(28, 1, 30));
-        const roadLeftShape = new CANNON.Box(new CANNON.Vec3(1, 2, 30));
-        const roadRightShape = new CANNON.Box(new CANNON.Vec3(1, 2, 30));
+        const roadLeftShape = new CANNON.Box(new CANNON.Vec3(1, 8, 30));
+        const roadRightShape = new CANNON.Box(new CANNON.Vec3(1, 8, 30));
 
         const roadBody = new CANNON.Body({ mass: 0, shape: roadBodyShape, position: new CANNON.Vec3(roadObj.position.x, 1, roadObj.position.z) });
-        const roadBoths = new CANNON.Body({ mass: 0, position: new CANNON.Vec3(roadObj.position.x, 2, roadObj.position.z) });
+        const roadBoths = new CANNON.Body({ mass: 0, position: new CANNON.Vec3(roadObj.position.x, 8, roadObj.position.z) });
         roadBoths.addShape(roadLeftShape, new CANNON.Vec3(-29, 0, 0));
         roadBoths.addShape(roadRightShape, new CANNON.Vec3(29, 0, 0));
-
 
         // 撞墙
         roadBoths.addEventListener("collide", this.collide.bind(this));
@@ -256,6 +249,9 @@ export default class Road extends UTIL {
         sceneryArr.push([scenery_1, scenery_2]);
     }
 
+    /**
+     * 连续短弯道
+     * */
     r6() {
         const { body } = turnRoadSmallClass.r3();
         const { body: body2 } = turnRoadSmallClass.r4();

@@ -1,6 +1,4 @@
 import UTIL from './util';
-import Speeder from "./speeder";
-// import pageGame from "./pages/game";
 
 /**
  * 汽车函数
@@ -8,15 +6,6 @@ import Speeder from "./speeder";
 export default class Car extends UTIL {
     constructor() {
         super();
-
-        events.click({
-            name: 'playGame',
-            pageName: 'gamePage',
-            point: [0, 0, winWidth, winHeight],
-            cb: () => {
-                this.drift();
-            }
-        });
     }
 
     build() {
@@ -27,75 +16,88 @@ export default class Car extends UTIL {
      * 创建车模型
      */
     createCar() {
-        const material = "https://static.cdn.24haowan.com/24haowan/test/js/car1.png";
-        const model = 'https://static.cdn.24haowan.com/24haowan/test/js/car1.obj';
-        // const material = "https://static.cdn.24haowan.com/24haowan/test/js/car2.png";
-        // const model = 'https://static.cdn.24haowan.com/24haowan/test/js/car4.obj';
+        return new Promise((resolve, reject) => {
+            if (carBodys && car) this.removeCar();
 
-        return new Promise((res, rej) => {
-            this.createObj(model, material, (obj) => {
-                car = obj;
+            const carCache = $cache.getGameData('car');
 
-                car.scale.set(2, 2, 2);
-                car.position.set(25, 15, -10);
+            // 设置车辆速度属性
+            this.setCarSpeed();
 
-                const boxShape = new CANNON.Box(new CANNON.Vec3(4, 6, 6));
+            if (carList.length > 0) {
+                const cacheCar = carList.find(v => v.data.id === carCache.id);
+                if (cacheCar) {
+                    const { car: carCache, physical } = cacheCar;
 
-                carBodys = new CANNON.Body({ mass: 2, shape: boxShape });
-                carBodys.position.set(car.position.x, car.position.y, car.position.z);
+                    car = carCache;
+                    carBodys = physical;
 
-                world.add(carBodys);
+                    // 添加车辆
+                    this.addCar();
+                    resolve();
+                    return false;
+                }
+            }
 
-                scene.add(car);
-
-                res();
-            });
+            // 加载汽车
+            this.loadCar(carCache)
+                .then(() => {
+                    resolve();
+                });
         });
     }
 
     /**
-     * 漂移函数
+     * 设置车辆速度属性
      * */
-    drift() {
-        if (startKey) {
-            // 播放漂移音乐
-            // music.playDrift();
+    setCarSpeed() {
+        const { speed: s, speedMax: sm, speedStep: ss, levelSpeed: ls, speedStepMax: ssm } = $cache.getCarSpeed();
+        speed = s;
+        speedMax = sm;
+        speedStep = ss;
+        levelSpeed = ls;
+        speedStepMax = ssm;
+    }
 
-            const localW = currentW;
-            if (!clickKey) {
-                Speeder((percent, status) => {
-                    currentW = localW - percent * localW;
+    /**
+     * 开始加载汽车
+     * @params {Object} 模型配置
+     * */
+    loadCar(modelData) {
+        const { model, material, modelSize, physicalSize } = modelData;
 
-                    carBodys.quaternion.setFromAxisAngle(new CANNON.Vec3(0, 1, 0), currentW);
+        return new $loadModel(model, material, (obj) => {
+            car = obj;
 
-                    if (percent >= 1) {
-                        movekey = 'z';
-                    }
+            car.scale.set(modelSize[0], modelSize[1], modelSize[2]);
+            car.position.set(25, 15, -10);
 
-                    if (status === 'done') {
-                        currentW = 0;
-                    }
-                });
-                // carBodys.quaternion.setFromAxisAngle(new CANNON.Vec3(0, 1, 0), 0);
-                // movekey = 'z';
-                clickKey = true;
-            } else {
-                Speeder((percent, status) => {
-                    currentW = localW + percent * (-1.57 - localW);
+            const boxShape = new CANNON.Box(new CANNON.Vec3(physicalSize[0], physicalSize[1], physicalSize[2]));
 
-                    carBodys.quaternion.setFromAxisAngle(new CANNON.Vec3(0, 1, 0), currentW);
-                    if (percent >= 1) {
-                        movekey = 'x';
-                    }
+            carBodys = new CANNON.Body({ mass: 2, shape: boxShape });
+            carBodys.position.set(car.position.x, car.position.y, car.position.z);
 
-                    if (status === 'done') {
-                        currentW = -1.57;
-                    }
-                });
-                // carBodys.quaternion.setFromAxisAngle(new CANNON.Vec3(0, 1, 0), -1.57);
-                // movekey = 'x';
-                clickKey = false;
-            }
-        }
+            // 缓存汽车列表
+            carList.push({ data: modelData, car, physical: carBodys });
+
+            // 添加车辆
+            this.addCar();
+        });
+    }
+
+    /**
+     * 删除车辆
+     * */
+    removeCar() {
+        world.remove(carBodys);
+        scene.remove(car);
+    }
+
+    /**
+     * 添加车辆
+     * */
+    addCar() {
+        world.add(carBodys);
+        scene.add(car);
     }
 }

@@ -16,17 +16,13 @@ export default class Road extends UTIL {
      * 创建转弯道路
      */
     createTurnRoad() {
-        const material = "https://static.cdn.24haowan.com/24haowan/test/js/newroad0002.png";
+        // const material = "https://static.cdn.24haowan.com/24haowan/test/js/nr0003.png";
+        const material = "obj/nr0003.png";
         const model = 'https://static.cdn.24haowan.com/24haowan/test/js/newroad0002.obj';
-        // const model = 'https://static.cdn.24haowan.com/24haowan/test/js/newroad002.obj';
 
-        return new Promise((res, rej) => {
-            this.createObj(model, material, (obj) => {
-                turnRoadSmall = obj;
-                turnRoadSmall.scale.set(2, 2, 2);
-
-                res();
-            });
+        return new $loadModel(model, material, (obj) => {
+            turnRoadSmall = obj;
+            turnRoadSmall.scale.set(2, 2, 2);
         });
     }
 
@@ -41,13 +37,13 @@ export default class Road extends UTIL {
         const roadBody1Shape = new CANNON.Box(new CANNON.Vec3(28, 1, 45));
         const roadBody2Shape = new CANNON.Box(new CANNON.Vec3(30, 1, 16));
 
-        const collide1Shape = new CANNON.Box(new CANNON.Vec3(1, 2, 45));
-        const collide2Shape = new CANNON.Box(new CANNON.Vec3(1, 2, 15));
-        const collide3Shape = new CANNON.Box(new CANNON.Vec3(1, 2, 45));
-        const collide4Shape = new CANNON.Box(new CANNON.Vec3(1, 2, 15));
+        const collide1Shape = new CANNON.Box(new CANNON.Vec3(1, 8, 45));
+        const collide2Shape = new CANNON.Box(new CANNON.Vec3(1, 8, 15));
+        const collide3Shape = new CANNON.Box(new CANNON.Vec3(1, 8, 45));
+        const collide4Shape = new CANNON.Box(new CANNON.Vec3(1, 8, 15));
 
         const roadBody = new CANNON.Body({ mass: 0, position: new CANNON.Vec3(0, 1, 0) });
-        const roadBoths = new CANNON.Body({ mass: 0, position: new CANNON.Vec3(0, 2, roadObj.position.z - .5) });
+        const roadBoths = new CANNON.Body({ mass: 0, position: new CANNON.Vec3(0, 8, roadObj.position.z - .5) });
 
         const rotating = new CANNON.Quaternion();
         rotating.setFromAxisAngle(new CANNON.Vec3(0, 1, 0), -1.57);
@@ -100,6 +96,7 @@ export default class Road extends UTIL {
         const z = body.rang.z + body.size.height + position.z - rang.z - size.height - body.size.height;
 
         boxType === 'r4' && (x +=  size.width - size.width2);
+        boxType === 'r1' && (x += .8);
 
         body.position.set(x, 0, z);
         floor.position.set(x, floor.position.y, z);

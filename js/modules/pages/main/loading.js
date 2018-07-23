@@ -4,21 +4,32 @@ import Road from '../../road';
 import TurnRoad from "../../turn-road";
 import TurnRoadSmall from "../../turn-road-small";
 
+import UTIL from "../../util";
+
 import Score from '../score/index';
 
 import pageStart from './start';
+import pageCarport from "./carport";
+import pageGame from "./game";
 
 /**
  * 开始页函数
  */
-export default class Loader {
+export default class Loader extends UTIL {
     constructor() {
+        super();
+
         this.setTexture('正在加载...');
-        // $wx.sendMessage('loading', '正在加载...');
 
         const loader = [{
             text: '正在抽取图片...',
             load: this.loadImg
+        }, {
+            text: '正在检查身份证...',
+            load: this.wxLogin
+        }, {
+            text: '正在加载排行榜...',
+            load: this.loadWorldRank
         }, {
             text: '正在挖地基...',
             load: this.buildScenery
@@ -32,18 +43,29 @@ export default class Loader {
             text: '正在给路涂色...',
             load: this.buildTurnRoad
         }, {
-            text: '正在给路涂色...',
+            text: '正在帮太阳充气...',
             load: this.buildTurnRoadSmall
         }];
 
         this.loading(loader);
     }
 
-    initCanvas2d() {
+    loaded() {
+        loadKey = true;
+
         // 初始化其他2d画布
         scoreClass = new Score();
 
+        // 实例化车库
+        carportPage = new pageCarport();
+
+        // 实例化游戏页面
+        gamePage = new pageGame();
+
         startPage = new pageStart();
+
+        // 进入是否显示群排行榜
+        sharedClass.showGroupRankPage();
     }
 
     /**
@@ -56,17 +78,17 @@ export default class Loader {
         offCanvas2d.fillRect(0, 0, winWidth, winHeight);
 
         if (this.imgKey) {
-            const bg = imgList.loadingBg;
+            const bg = imgList.indexBg;
             const logo = imgList.logo;
 
-            offCanvas2d.drawImage(bg, 0, 0, bg.width, bg.height, 0, 0, winWidth, winHeight);
-            offCanvas2d.drawImage(logo, 0, 0, logo.width, logo.height, winWidth / 2 - logo.width / 4, winHeight / 2 - logo.height / 2 - 20, logo.width / 2, logo.height / 2);
+            this.bgCover(offCanvas2d, bg);
+            offCanvas2d.drawImage(logo, 0, 0, logo.width, logo.height, winWidth / 2 - this.computedSizeW(logo.width / 8), winHeight / 2 - this.computedSizeH(logo.height / 2) - 20, this.computedSizeW(logo.width / 4), this.computedSizeW(logo.height / 4));
         }
 
         offCanvas2d.fillStyle = "#fff";
         // offCanvas2d.font = "bold 40px Arial";
         offCanvas2d.textAlign = "center";
-        offCanvas2d.fillText(text, winWidth / 2, winHeight / 2);
+        offCanvas2d.fillText(text, winWidth / 2, winHeight / 2 - this.computedSizeH(55));
 
         texture2d.needsUpdate = true;
     }
@@ -82,8 +104,7 @@ export default class Loader {
             if (loader.length > 0) {
                 this.loading(loader);
             } else {
-                loadKey = true;
-                this.initCanvas2d();
+                this.loaded();
             }
         })
     }
@@ -94,9 +115,7 @@ export default class Loader {
     buildScenery() {
         scenery = new Scenery();
 
-        return new Promise((res, rej) => {
-            scenery.build().then(() => res());
-        })
+        return scenery.build();
     }
 
     /**
@@ -105,9 +124,7 @@ export default class Loader {
     buildCar() {
         carClass = new Car();
 
-        return new Promise((res, rej) => {
-            carClass.build().then(() => res());
-        })
+        return carClass.build();
     }
 
     /**
@@ -116,9 +133,7 @@ export default class Loader {
     buildRoad() {
         roadClass = new Road();
 
-        return new Promise((res, rej) => {
-            roadClass.build().then(() => res());
-        })
+        return roadClass.build();
     }
 
     /**
@@ -127,9 +142,7 @@ export default class Loader {
     buildTurnRoad() {
         turnRoadClass = new TurnRoad();
 
-        return new Promise((res, rej) => {
-            turnRoadClass.build().then(() => res());
-        })
+        return turnRoadClass.build();
     }
 
     /**
@@ -138,9 +151,7 @@ export default class Loader {
     buildTurnRoadSmall() {
         turnRoadSmallClass = new TurnRoadSmall();
 
-        return new Promise((res, rej) => {
-            turnRoadSmallClass.build().then(() => res());
-        })
+        return turnRoadSmallClass.build();
     }
 
     imgloading(img) {
@@ -152,6 +163,30 @@ export default class Loader {
                 res(image);
             }
         });
+    }
+
+    /**
+     * 获取微信身份
+     * */
+    wxLogin() {
+        return $wx.checkLogin();
+    }
+
+    /**
+     * 预加载排行榜
+     * */
+    loadWorldRank() {
+        console.log('开始缓存世界排行榜...');
+        return $io.getWorldRank()
+            .then(({ payload: { ranks, user } }) =>{
+                const { openid } = $cache.getCache('accessToken');
+                console.log('缓存世界排行榜成功: ', { ranks, user });
+                $wx.sendMessage('initHwData', {
+                    openId: openid,
+                    shareTicket: $wx.shareTicket,
+                    worldRank: { list: ranks, self: user }
+                });
+            });
     }
 
     /**
