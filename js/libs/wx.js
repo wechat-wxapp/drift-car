@@ -89,7 +89,7 @@ export default class WX extends UTIL {
     createStartBtn() {
         this.startBtn = wx.createUserInfoButton({
             type: 'image',
-            image: 'https://static.cdn.24haowan.com/24haowan/test/js/start-btn.png?v=123',
+            image: 'https://img.suv666.com/ui/24haowan/pyds/common/start-btn.png',
             style: {
                 left: this.computedSizeW(102),
                 top: this.computedSizeH(525),
