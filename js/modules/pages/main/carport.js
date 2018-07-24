@@ -201,8 +201,6 @@ export default class Carport extends UTIL {
                 $loader.hideToast();
 
                 if (unlock) {
-                    $loader.show('正在加载车辆...');
-
                     const model = {
                         id: carId,
                         model: modelUrl,
@@ -221,8 +219,6 @@ export default class Carport extends UTIL {
 
                     carClass.createCar()
                         .then(() => {
-                            $loader.hide();
-
                             this.setTexture();
                         });
 
