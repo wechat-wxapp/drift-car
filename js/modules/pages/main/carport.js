@@ -283,7 +283,7 @@ export default class Carport extends UTIL {
             pageName: 'carportSharePage',
             point: [x1, y1, x2, y2],
             cb: (e) => {
-                const carSharePng = 'https://static.cdn.24haowan.com/24haowan/test/js/car-share.png';
+                const carSharePng = 'images/car-share.png';
                 const { name } = this.list[this.index];
                 $wx.shareAppMessage(`我解锁了新车: ${name}，快来围观一下`, carSharePng);
             }

@@ -21,7 +21,7 @@ export default class EndPage extends Init {
 
         // 炫耀一下
         this.endShare = wx.createImage();
-        this.endShare.src = 'images/end-share.png';
+        this.endShare.src = 'images/end-share-btn.png';
 
         // 名次背景
         this.rankBg = wx.createImage();
