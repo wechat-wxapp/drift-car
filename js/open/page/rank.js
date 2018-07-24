@@ -85,7 +85,9 @@ export default class Rank extends Init {
         this.cvs.fillStyle = "#808080";
         this.cvs.font = `${this.computedSizeW(20)}px Yahei`;
         this.cvs.textAlign = "center";
-        this.cvs.fillText('排行榜：每周一凌晨更新',this.winWidth / 2, this.relativeSizeH(152)); //324
+        
+        // 只有世界排行榜才提示文案
+        type === 'worldRank' && this.cvs.fillText('排行榜：每周一凌晨更新',this.winWidth / 2, this.relativeSizeH(152)); //324
 
         //中央空白背景板
         this.cvs.fillStyle = "#fff";
