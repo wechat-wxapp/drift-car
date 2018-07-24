@@ -153,7 +153,7 @@ export default class Shared extends UTIL {
             point: [x1, y1, x2, y2],
             cb: () => {
                 const shareTitle = `想成为车神，超过我再说。刚刚我又突破了${score}分`;
-                const shareImg = 'https://static.cdn.24haowan.com/24haowan/test/js/end-share.png';
+                const shareImg = 'images/end-share.png';
                 $wx.shareAppMessage(shareTitle, shareImg);
             }
         })
@@ -534,7 +534,7 @@ export default class Shared extends UTIL {
      * */
     groupRankPage() {
         const shareTitle = '戳我，决战秋名山，我等你！';
-        const shareImg = 'https://static.cdn.24haowan.com/24haowan/test/js/group-share.png';
+        const shareImg = 'images/group-share.png';
 
         $wx.shareAppMessage(shareTitle, shareImg);
     }
