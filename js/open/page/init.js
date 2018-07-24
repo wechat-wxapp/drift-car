@@ -162,6 +162,11 @@ export default class Init {
      * */
     initWorldRankData({ list, self }) {
         const rankData = list;
+
+        const selfUser = this.getHWData('self');
+        const { score } = self;
+        const { avatarUrl, nickName, avatarObj } = selfUser;
+
         rankData.map(e =>{
             e['KVDataList'] = [];
             e['KVDataList'].push({ key: 'score', value: e.score });
@@ -169,12 +174,12 @@ export default class Init {
             delete e.score;
         });
 
-        const { score, headimgurl } = self;
-
         const selfData = self;
         selfData['KVDataList'] = [];
-        selfData['KVDataList'].push({ key: 'score', value: score });
-        selfData.avatarUrl = headimgurl;
+        selfData['KVDataList'].push({ key: 'score', value: String(score) });
+        selfData.avatarUrl = avatarUrl;
+        selfData.nickname = nickName;
+        selfData.avatarObj = avatarObj;
         delete selfData.score;
 
         return { rank: rankData, self: selfData }
