@@ -39,9 +39,12 @@ export default class Car extends UTIL {
                 }
             }
 
+            $loader.show('正在加载车辆...');
             // 加载汽车
             this.loadCar(carCache)
                 .then(() => {
+                    $loader.hide();
+
                     resolve();
                 });
         });

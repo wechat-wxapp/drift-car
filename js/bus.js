@@ -216,7 +216,7 @@ const basicData = {
         endHeader: 'images/end-header.png',
         endAgain: 'images/end-again.png',
         endBack: 'images/end-back.png',
-        endShare: 'images/end-share.png',
+        endShare: 'images/end-share-btn.png',
         endRankBg: 'images/end-rank-bg.png',
         newRecord: 'images/newrecord.png',
 
