@@ -167,6 +167,9 @@ const basicData = {
     // 车库对象
     carportPage: '',
 
+    //视频广告对象
+    videoAd: '',
+    
     // 微信公开域画布
     isSharedLoop: false,
     openDataContext: '',
@@ -222,6 +225,7 @@ const basicData = {
 
         // 复活页
         reseurRePlay: 'images/reseur-rePlay.png',
+        seeAdReplay: 'images/see-ad-replay.png',
 
         // 公众号
         point: 'images/point.png',

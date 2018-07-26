@@ -171,8 +171,14 @@ export default class Shared extends UTIL {
             pageName: 'reseurPage',
             point: [x1, y1, x2, y2],
             cb: () => {
-                this.clear2d();
-                this.restart(true);
+                music.pusedMusic();
+                videoAd.showVideoAd().then(() => {
+                        this.clear2d();
+                        this.restart(true);
+                        music.playBgm();
+                    },() => {
+                        music.playBgm();
+                    });
             }
         });
     }
@@ -191,7 +197,7 @@ export default class Shared extends UTIL {
             cb: () => {
                 this.clear2d();
                 isSharedLoop = true;
-
+                
                 this.endPage();
             }
         });

@@ -14,7 +14,8 @@ export default class Resurgence extends Init {
         this.rankOne.src = 'images/rankOne.png';
 
         this.rePlay = wx.createImage();
-        this.rePlay.src = 'images/reseur-rePlay.png';
+        // this.rePlay.src = 'images/reseur-rePlay.png';
+        this.rePlay.src = 'images/see-ad-replay.png'
 
         //默认头像图片
         this.staticAvater = wx.createImage();
