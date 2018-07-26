@@ -21,6 +21,8 @@ import page from './modules/pages/main/index';
  */
 export default class Main extends UTIL {
     constructor() {
+        const a=+new Date();
+        window.a=a;
         super();
 
         // 初始化3D世界
@@ -38,6 +40,7 @@ export default class Main extends UTIL {
         // 创建音乐播放器
         music = new Music();
 
+
         // 实例化缓存类
         $cache = new CACHE();
 
@@ -47,6 +50,7 @@ export default class Main extends UTIL {
         // 实例化微信类
         $wx = new WX();
 
+        console.log('耗费时间',+new Date()-a)
         // 实例化主屏2d
         pageClass = new page(renderer);
 

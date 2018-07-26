@@ -18,6 +18,7 @@ import pageGame from "./game";
 export default class Loader extends UTIL {
     constructor() {
         super();
+        console.log('window1',+new Date()-window.a)
 
         this.setTexture('正在加载...');
 

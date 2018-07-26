@@ -101,13 +101,14 @@ export default class HWData extends Init {
 
         this.setRankUserCache(key, data);
 
-        this.loadRankImg(list)
-            .then((e) => {
-                const { self: newSelf } = this.getHWData(key);
+        // 暂时放到本地
+        // this.loadRankImg(list)
+        //     .then((e) => {
+        //         const { self: newSelf } = this.getHWData(key);
 
-                this.setRankUserCache(key, { list: e, self: newSelf});
-                this.checkLoading();
-            });
+        //         this.setRankUserCache(key, { list: e, self: newSelf});
+        //         this.checkLoading();
+        //     });
     }
 
     /**

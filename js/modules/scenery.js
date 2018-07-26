@@ -1,4 +1,5 @@
 import UTIL from './util';
+import b001 from '../../obj/js/b001.js';
 
 /**
  * 风景函数
@@ -29,8 +30,7 @@ export default class Scenery extends UTIL {
     s1() {
         // const material = "https://static.cdn.24haowan.com/24haowan/test/js/nb01.png";
         const material = "obj/nb01.png";
-        const model = 'https://static.cdn.24haowan.com/24haowan/test/js/b001.obj';
-
+        const model = b001;
         return new $loadModel(model, material, (obj) => {
             const scenery = obj;
             scenery.scale.set(1.2, 1.2, 1.2);
@@ -101,7 +101,7 @@ export default class Scenery extends UTIL {
     s5() {
         // const material = "https://static.cdn.24haowan.com/24haowan/test/js/nb05.png";
         const material = "obj/nb05.png";
-        const model = 'https://static.cdn.24haowan.com/24haowan/test/js/b005.obj';
+        const model = 'https://res.suv666.com/24haowan/pyds/b005.obj';
 
         return new $loadModel(model, material, (obj) => {
             const scenery = obj;
@@ -119,7 +119,7 @@ export default class Scenery extends UTIL {
     s6() {
         // const material = "https://static.cdn.24haowan.com/24haowan/test/js/nb06.png";
         const material = "obj/nb06.png";
-        const model = 'https://static.cdn.24haowan.com/24haowan/test/js/b006.obj';
+        const model = 'https://res.suv666.com/24haowan/pyds/b006.obj';
 
         return new $loadModel(model, material, (obj) => {
             const scenery = obj;
@@ -137,7 +137,7 @@ export default class Scenery extends UTIL {
     s7() {
         // const material = "https://static.cdn.24haowan.com/24haowan/test/js/nb07.png";
         const material = "obj/nb07.png";
-        const model = 'https://static.cdn.24haowan.com/24haowan/test/js/b007.obj';
+        const model = 'https://res.suv666.com/24haowan/pyds/b007.obj';
 
         return new $loadModel(model, material, (obj) => {
             const scenery = obj;
@@ -155,7 +155,7 @@ export default class Scenery extends UTIL {
     s8() {
         // const material = "https://static.cdn.24haowan.com/24haowan/test/js/nb08.png";
         const material = "obj/nb08.png";
-        const model = 'https://static.cdn.24haowan.com/24haowan/test/js/b008.obj';
+        const model = 'https://res.suv666.com/24haowan/pyds/b008.obj';
 
         return new $loadModel(model, material, (obj) => {
             const scenery = obj;
@@ -173,7 +173,7 @@ export default class Scenery extends UTIL {
     s9() {
         // const material = "https://static.cdn.24haowan.com/24haowan/test/js/nb09.png";
         const material = "obj/nb09.png";
-        const model = 'https://static.cdn.24haowan.com/24haowan/test/js/b009.obj';
+        const model = 'https://res.suv666.com/24haowan/pyds/b009.obj';
 
         return new $loadModel(model, material, (obj) => {
             const scenery = obj;
