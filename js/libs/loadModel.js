@@ -41,12 +41,6 @@ export default class LoadModel {
         return new Promise((resolve, reject) => {
             const objLoader = new THREE.OBJLoader();
             objLoader.load(model, (obj) => {
-                console.log('加载成功11', obj);
-                // console.log('加载模型: ', model);
-                // var materialObj = new THREE.MeshBasicMaterial({
-                //   vertexColors: THREE.FaceColors,
-                //   overdraw: 0.5
-                // });
 
                 obj.traverse((child) => {
                     if (child instanceof THREE.Mesh) {

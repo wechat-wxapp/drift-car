@@ -1,5 +1,16 @@
 import UTIL from './util';
 import b001 from '../../obj/js/b001.js';
+import b002 from '../../obj/js/b002.js';
+import b003 from '../../obj/js/b003.js';
+import b004 from '../../obj/js/b004.js';
+import b005 from '../../obj/js/b005.js';
+import b006 from '../../obj/js/b006.js';
+import b007 from '../../obj/js/b007.js';
+import b008 from '../../obj/js/b008.js';
+import b009 from '../../obj/js/b009.js';
+import tree from '../../obj/js/tree.js';
+
+
 
 /**
  * 风景函数
@@ -30,8 +41,7 @@ export default class Scenery extends UTIL {
     s1() {
         // const material = "https://static.cdn.24haowan.com/24haowan/test/js/nb01.png";
         const material = "obj/nb01.png";
-        const model = b001;
-        return new $loadModel(model, material, (obj) => {
+        return new $loadModel(b001, material, (obj) => {
             const scenery = obj;
             scenery.scale.set(1.2, 1.2, 1.2);
             scenery.size = { width: 120, height: 120 };
@@ -47,9 +57,8 @@ export default class Scenery extends UTIL {
     s2() {
         // const material = "https://static.cdn.24haowan.com/24haowan/test/js/nb02.png";
         const material = "obj/nb02.png";
-        const model = 'https://static.cdn.24haowan.com/24haowan/test/js/b002.obj';
 
-        return new $loadModel(model, material, (obj) => {
+        return new $loadModel(b002, material, (obj) => {
             const scenery = obj;
             scenery.scale.set(1.2, 1.2, 1.2);
             scenery.size = { width: 120, height: 120 };
@@ -65,9 +74,8 @@ export default class Scenery extends UTIL {
     s3() {
         // const material = "https://static.cdn.24haowan.com/24haowan/test/js/nb03.png";
         const material = "obj/nb03.png";
-        const model = 'https://static.cdn.24haowan.com/24haowan/test/js/b003.obj';
 
-        return new $loadModel(model, material, (obj) => {
+        return new $loadModel(b003, material, (obj) => {
             const scenery = obj;
             scenery.scale.set(1.2, 1.2, 1.2);
             scenery.size = { width: 120, height: 120 };
@@ -83,9 +91,8 @@ export default class Scenery extends UTIL {
     s4() {
         // const material = "https://static.cdn.24haowan.com/24haowan/test/js/nb04.png";
         const material = "obj/nb04.png";
-        const model = 'https://static.cdn.24haowan.com/24haowan/test/js/b004.obj';
 
-        return new $loadModel(model, material, (obj) => {
+        return new $loadModel(b004, material, (obj) => {
             const scenery = obj;
             scenery.scale.set(1.2, 1.2, 1.2);
             scenery.size = { width: 120, height: 120 };
@@ -101,9 +108,8 @@ export default class Scenery extends UTIL {
     s5() {
         // const material = "https://static.cdn.24haowan.com/24haowan/test/js/nb05.png";
         const material = "obj/nb05.png";
-        const model = 'https://res.suv666.com/24haowan/pyds/b005.obj';
 
-        return new $loadModel(model, material, (obj) => {
+        return new $loadModel(b005, material, (obj) => {
             const scenery = obj;
             scenery.scale.set(1.2, 1.2, 1.2);
             scenery.size = { width: 120, height: 120 };
@@ -119,9 +125,8 @@ export default class Scenery extends UTIL {
     s6() {
         // const material = "https://static.cdn.24haowan.com/24haowan/test/js/nb06.png";
         const material = "obj/nb06.png";
-        const model = 'https://res.suv666.com/24haowan/pyds/b006.obj';
 
-        return new $loadModel(model, material, (obj) => {
+        return new $loadModel(b006, material, (obj) => {
             const scenery = obj;
             scenery.scale.set(1.2, 1.2, 1.2);
             scenery.size = { width: 120, height: 120 };
@@ -137,9 +142,8 @@ export default class Scenery extends UTIL {
     s7() {
         // const material = "https://static.cdn.24haowan.com/24haowan/test/js/nb07.png";
         const material = "obj/nb07.png";
-        const model = 'https://res.suv666.com/24haowan/pyds/b007.obj';
 
-        return new $loadModel(model, material, (obj) => {
+        return new $loadModel(b007, material, (obj) => {
             const scenery = obj;
             scenery.scale.set(1.2, 1.2, 1.2);
             scenery.size = { width: 120, height: 120 };
@@ -155,9 +159,8 @@ export default class Scenery extends UTIL {
     s8() {
         // const material = "https://static.cdn.24haowan.com/24haowan/test/js/nb08.png";
         const material = "obj/nb08.png";
-        const model = 'https://res.suv666.com/24haowan/pyds/b008.obj';
 
-        return new $loadModel(model, material, (obj) => {
+        return new $loadModel(b008, material, (obj) => {
             const scenery = obj;
             scenery.scale.set(1.2, 1.2, 1.2);
             scenery.size = { width: 120, height: 120 };
@@ -173,9 +176,8 @@ export default class Scenery extends UTIL {
     s9() {
         // const material = "https://static.cdn.24haowan.com/24haowan/test/js/nb09.png";
         const material = "obj/nb09.png";
-        const model = 'https://res.suv666.com/24haowan/pyds/b009.obj';
 
-        return new $loadModel(model, material, (obj) => {
+        return new $loadModel(b009, material, (obj) => {
             const scenery = obj;
             scenery.scale.set(1.2, 1.2, 1.2);
             scenery.size = { width: 120, height: 120 };
@@ -191,9 +193,8 @@ export default class Scenery extends UTIL {
     sTree() {
         // const material = "https://static.cdn.24haowan.com/24haowan/test/js/ntree01.png";
         const material = "obj/ntree01.png";
-        const model = 'https://static.cdn.24haowan.com/24haowan/test/js/tree.obj';
 
-        return new $loadModel(model, material, (obj) => {
+        return new $loadModel(tree, material, (obj) => {
             const scenery = obj;
             scenery.scale.set(1.2, 1.2, 1.2);
             scenery.size = { width: 120, height: 30 };

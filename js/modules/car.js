@@ -20,7 +20,6 @@ export default class Car extends UTIL {
             if (carBodys && car) this.removeCar();
 
             const carCache = $cache.getGameData('car');
-
             // 设置车辆速度属性
             this.setCarSpeed();
 
@@ -39,7 +38,7 @@ export default class Car extends UTIL {
                 }
             }
 
-            $loader.show('正在加载车辆...');
+            // $loader.show('正在加载车辆...');
             // 加载汽车
             this.loadCar(carCache)
                 .then(() => {
@@ -68,8 +67,9 @@ export default class Car extends UTIL {
      * */
     loadCar(modelData) {
         const { model, material, modelSize, physicalSize } = modelData;
+        const modelRawData = localStorage.getItem(model);
 
-        return new $loadModel(model, material, (obj) => {
+        return new $loadModel(modelRawData, material, (obj) => {
             car = obj;
 
             car.scale.set(modelSize[0], modelSize[1], modelSize[2]);

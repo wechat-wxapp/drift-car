@@ -1,4 +1,9 @@
 {
     "deviceOrientation": "portrait",
-    "openDataContext": "js/open"
+    "openDataContext": "js/open",
+    "subpackages": [
+    {
+        "name": "carAssets",
+        "root": "carAssets" 
+    }]
 }

@@ -22,6 +22,8 @@ const constantData = {
 
 // 普通变量
 const basicData = {
+    // 版本号
+    version: 0.02,
     // 3d场景
     scene: '',
     // 普通2d场景
@@ -44,6 +46,10 @@ const basicData = {
 
     // 汽车列表
     carList: [],
+    // 汽车资源是否已从分包加载完毕
+    carAssetsLoaded: false,
+    // 判断汽车分包是否加载完成的定时器
+    carInterval: '',
 
     // 车辆类
     carClass: '',

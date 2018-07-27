@@ -7,6 +7,8 @@ import Music from './modules/music';
 
 import GroundBody from './modules/ground';
 import bindEvent from './modules/bind-event';
+import CarAssets from './modules/carAssets.js';
+import Version from './modules/version.js';
 
 import WX from './libs/wx';
 import CACHE from './libs/cache';
@@ -21,9 +23,13 @@ import page from './modules/pages/main/index';
  */
 export default class Main extends UTIL {
     constructor() {
-        const a=+new Date();
-        window.a=a;
         super();
+
+        // 检查版本号，是否需要更新本地缓存
+        new Version();
+
+        // 加载分包，汽车资源
+        new CarAssets();
 
         // 初始化3D世界
         this.initThree();
@@ -50,7 +56,6 @@ export default class Main extends UTIL {
         // 实例化微信类
         $wx = new WX();
 
-        console.log('耗费时间',+new Date()-a)
         // 实例化主屏2d
         pageClass = new page(renderer);
 

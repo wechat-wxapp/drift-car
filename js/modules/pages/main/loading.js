@@ -3,6 +3,7 @@ import Car from '../../car';
 import Road from '../../road';
 import TurnRoad from "../../turn-road";
 import TurnRoadSmall from "../../turn-road-small";
+import CarAssets from '../../carAssets.js';
 
 import UTIL from "../../util";
 
@@ -18,7 +19,6 @@ import pageGame from "./game";
 export default class Loader extends UTIL {
     constructor() {
         super();
-        console.log('window1',+new Date()-window.a)
 
         this.setTexture('正在加载...');
 
@@ -34,6 +34,9 @@ export default class Loader extends UTIL {
         }, {
             text: '正在挖地基...',
             load: this.buildScenery
+        }, {
+            text: '正在加载本地汽车...',
+            load: this.checkCar
         }, {
             text: '正在查看有车以后小程序...',
             load: this.buildCar
@@ -117,6 +120,15 @@ export default class Loader extends UTIL {
         scenery = new Scenery();
 
         return scenery.build();
+    }
+
+    /**
+     * 检测分包的汽车加载回来没
+     * */
+    checkCar() {
+        const carAssets = new CarAssets();
+
+        return carAssets.build();
     }
 
     /**

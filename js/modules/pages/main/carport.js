@@ -315,6 +315,7 @@ export default class Carport extends UTIL {
     getCarListInfo() {
         const promiseList = [this.getList()];
         !this.carLockInfo && promiseList.push(this.getLockInfo());
+        console.log(promiseList)
 
         return Promise.all(promiseList);
     }

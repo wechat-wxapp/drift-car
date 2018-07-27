@@ -1,4 +1,5 @@
 import UTIL from './util';
+import road0002 from '../../obj/js/newroad0002.js';
 
 /**
  * 弯路函数
@@ -18,9 +19,8 @@ export default class Road extends UTIL {
     createTurnRoad() {
         // const material = "https://static.cdn.24haowan.com/24haowan/test/js/nr0003.png";
         const material = "obj/nr0003.png";
-        const model = 'https://static.cdn.24haowan.com/24haowan/test/js/newroad0002.obj';
 
-        return new $loadModel(model, material, (obj) => {
+        return new $loadModel(road0002, material, (obj) => {
             turnRoadSmall = obj;
             turnRoadSmall.scale.set(2, 2, 2);
         });
