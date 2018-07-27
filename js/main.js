@@ -184,7 +184,7 @@ export default class Main extends UTIL {
         car.position.x += speed;
         carBodys.position.x += speed;
         camera.position.x += speed;
-
+        
         // 2d canvas
         scoreCanvasSprite.position.x += speed;
         beyondCanvasSprite.position.x += speed;

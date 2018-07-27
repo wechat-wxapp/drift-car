@@ -171,16 +171,33 @@ export default class Shared extends UTIL {
             pageName: 'reseurPage',
             point: [x1, y1, x2, y2],
             cb: () => {
-                music.pusedMusic();
-                videoAd.showVideoAd().then(() => {
-                        this.clear2d();
-                        this.restart(true);
-                        music.playBgm();
-                    },() => {
-                        music.playBgm();
-                    });
+                // this.seeVideoAdBtn();
+                this.clear2d();
+                this.restart(true);
             }
         });
+    }
+
+    //看视频复活按钮触发
+    seeVideoAdBtn() {
+        const isPlayingMusic = $cache.getGameData('music');
+        if(isPlayingMusic) {
+            $cache.setGameData('music', !isPlayingMusic)
+            music.pusedMusic()
+        }
+        const playMusic = ()=> {
+            if(isPlayingMusic) {
+                $cache.setGameData('music', isPlayingMusic);
+                music.playBgm()
+            }
+        }
+        videoAd.showVideoAd().then(() => {
+                this.clear2d();
+                this.restart(true);
+                playMusic()
+            },() => {
+                playMusic()
+            });
     }
 
     // 复活页-跳过

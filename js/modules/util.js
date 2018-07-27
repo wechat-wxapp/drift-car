@@ -47,7 +47,7 @@ export default class UTIL {
 
         this.i = 0;
         this.shakeCamera();
-        console.log('---结束游戏---');
+        console.log(`---结束游戏---, speed为 ${speed}, currentSpeed为 ${speed}`);
     };
 
     /**
