@@ -20,7 +20,7 @@ export default class Loader extends UTIL {
     constructor() {
         super();
 
-        this.setTexture('正在加载...');
+        this.setTexture('');
 
         const loader = [{
             text: '正在抽取图片...',
@@ -29,17 +29,11 @@ export default class Loader extends UTIL {
             text: '正在检查身份证...',
             load: this.wxLogin
         }, {
-            text: '正在加载排行榜...',
-            load: this.loadWorldRank
-        }, {
             text: '正在挖地基...',
             load: this.buildScenery
         }, {
             text: '正在加载本地汽车...',
             load: this.checkCar
-        }, {
-            text: '正在查看有车以后小程序...',
-            load: this.buildCar
         }, {
             text: '正在铺路...',
             load: this.buildRoad
@@ -47,7 +41,7 @@ export default class Loader extends UTIL {
             text: '正在给路涂色...',
             load: this.buildTurnRoad
         }, {
-            text: '正在帮太阳充气...',
+            text: '正在加载汽车资源...',
             load: this.buildTurnRoadSmall
         }];
 
@@ -78,7 +72,7 @@ export default class Loader extends UTIL {
     setTexture(text) {
         offCanvas2d.clearRect(0, 0, winWidth, winHeight);
 
-        offCanvas2d.fillStyle = "#647fdc";
+        offCanvas2d.fillStyle = "#fff";
         offCanvas2d.fillRect(0, 0, winWidth, winHeight);
 
         if (this.imgKey) {
@@ -101,15 +95,33 @@ export default class Loader extends UTIL {
      * 预加载
      * */
     loading(loader) {
-        const { text, load } = loader.shift();
-        this.setTexture(text);
+        // const { text, load } = loader.shift();
+        // this.setTexture(text);
+        // console.log('加载',text,'所需时间');
+        // const a=+new Date();
+        // load.bind(this)().then((e) => {
+        //     console.log(+new Date()-a);
+        //     if (loader.length > 0) {
+        //         this.loading(loader);
+        //     } else {
+        //         this.loaded();
+        //     }
+        // })
+        // const bg = imgList.indexBg;
+        // const logo = imgList.logo;
 
-        load.bind(this)().then((e) => {
-            if (loader.length > 0) {
-                this.loading(loader);
-            } else {
+        // this.bgCover(offCanvas2d, bg);
+        // offCanvas2d.drawImage(logo, 0, 0, logo.width, logo.height, winWidth / 2 - this.computedSizeW(logo.width / 8), winHeight / 2 - this.computedSizeH(logo.height / 2) - 20, this.computedSizeW(logo.width / 4), this.computedSizeW(logo.height / 4));
+        const taskArray = [];
+        for (const task of loader) {
+            const { load, text } = task;
+            taskArray.push(load.call(this));
+        }
+        Promise.all(taskArray).then((e) => {
+            this.buildCar().then((e) => {
                 this.loaded();
-            }
+            })
+            this.loadWorldRank();
         })
     }
 
@@ -191,7 +203,7 @@ export default class Loader extends UTIL {
     loadWorldRank() {
         console.log('开始缓存世界排行榜...');
         return $io.getWorldRank()
-            .then(({ payload: { ranks, user } }) =>{
+            .then(({ payload: { ranks, user } }) => {
                 const { openid } = $cache.getCache('accessToken');
                 console.log('缓存世界排行榜成功: ', { ranks, user });
                 $wx.sendMessage('initHwData', {
@@ -220,6 +232,7 @@ export default class Loader extends UTIL {
                         if (loaded === list.length) {
                             this.imgKey = true;
                             res();
+                            // this.setTexture('正在加载汽车资源');
                         }
                     })
             })

@@ -44,7 +44,6 @@ export default class HWData extends Init {
         this.initSelf(openId)
             .then(e => {
                 // this.setHWData('self', e);
-                
                 // 预加载个人信息头像
                 this.loadSelfImg(e)
                     .then(val => {
@@ -102,13 +101,13 @@ export default class HWData extends Init {
         this.setRankUserCache(key, data);
 
         // 暂时放到本地
-        // this.loadRankImg(list)
-        //     .then((e) => {
-        //         const { self: newSelf } = this.getHWData(key);
+        this.loadRankImg(list)
+            .then((e) => {
+                const { self: newSelf } = this.getHWData(key);
 
-        //         this.setRankUserCache(key, { list: e, self: newSelf});
-        //         this.checkLoading();
-        //     });
+                this.setRankUserCache(key, { list: e, self: newSelf});
+                this.checkLoading();
+            });
     }
 
     /**
@@ -197,7 +196,7 @@ export default class HWData extends Init {
         //传过去setloadingKey的变量
         let _temp;
         try {
-            if(this.getHWData('friendRank').list.length > 0 && this.getHWData('friendRank').list[0].avatarObj) {
+            if(this.getHWData('friendRank').list.length > 0) {
                 _temp = this.shareTicket ? (this.getHWData('groupRank').list.length > 0 && this.getHWData('groupRank').list[0].avatarObj) : true
             }else {
                 _temp = false;

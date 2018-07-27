@@ -147,7 +147,8 @@ export default class Rank extends Init {
         }
         if(!data.isDriving) {
             this.setTexture(type, data)
-            this.cvs.drawImage(this.isLoading, 0, 0, this.isLoading.width, this.isLoading.height, this.computedSizeW(361) / 2, this.relativeSizeH(380), this.computedSizeW(361), this.computedSizeW(87));
+            // 隐藏正在加载
+            // this.cvs.drawImage(this.isLoading, 0, 0, this.isLoading.width, this.isLoading.height, this.computedSizeW(361) / 2, this.relativeSizeH(380), this.computedSizeW(361), this.computedSizeW(87));
         }
 
         innerMiddlewareFn()

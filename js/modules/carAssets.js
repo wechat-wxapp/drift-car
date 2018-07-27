@@ -33,6 +33,7 @@ export default class carAssets extends UTIL {
                 carInterval = setInterval(() => {
                     console.log('定时器轮询中');
                     if (carAssetsLoaded) {
+                    	console.log('分包资源加载完毕');
                         clearInterval(carInterval)
                         resolve();
                     }

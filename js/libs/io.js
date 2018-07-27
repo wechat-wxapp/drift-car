@@ -101,7 +101,7 @@ export default {
             method: 'POST',
             data: {
                 offset: 0,
-                limit: 999
+                limit: 100
              }
         });
     }
