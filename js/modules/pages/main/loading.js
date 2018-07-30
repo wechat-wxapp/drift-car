@@ -20,7 +20,7 @@ export default class Loader extends UTIL {
     constructor() {
         super();
 
-        this.setTexture('');
+        this.setTexture('加载中...');
 
         const loader = [{
             text: '正在抽取图片...',
@@ -62,8 +62,17 @@ export default class Loader extends UTIL {
 
         startPage = new pageStart();
 
+        const { openid } = $cache.getCache('accessToken');
+        $wx.sendMessage('initHwData', {
+            openId: openid,
+            shareTicket: $wx.shareTicket
+        });
+
         // 进入是否显示群排行榜
         sharedClass.showGroupRankPage();
+
+        // 加载世界排行榜
+        this.loadWorldRank();
     }
 
     /**
@@ -72,7 +81,7 @@ export default class Loader extends UTIL {
     setTexture(text) {
         offCanvas2d.clearRect(0, 0, winWidth, winHeight);
 
-        offCanvas2d.fillStyle = "#fff";
+        offCanvas2d.fillStyle = "#647fdc";
         offCanvas2d.fillRect(0, 0, winWidth, winHeight);
 
         if (this.imgKey) {
@@ -121,7 +130,6 @@ export default class Loader extends UTIL {
             this.buildCar().then((e) => {
                 this.loaded();
             })
-            this.loadWorldRank();
         })
     }
 
@@ -232,7 +240,7 @@ export default class Loader extends UTIL {
                         if (loaded === list.length) {
                             this.imgKey = true;
                             res();
-                            // this.setTexture('正在加载汽车资源');
+                            this.setTexture('正在读取汽车资源');
                         }
                     })
             })

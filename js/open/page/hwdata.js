@@ -5,6 +5,7 @@ import Init from "./init";
  */
 export default class HWData extends Init {
     constructor(data = {}) {
+        console.log(111)
         super();
 
         wx.HWData = {
@@ -39,6 +40,7 @@ export default class HWData extends Init {
      * */
     initData(data) {
         const { openId, shareTicket, worldRank } = data;
+        if (!worldRank) return;
         shareTicket !== 'noShareTicket' && (this.shareTicket = shareTicket);
         // 初始化个人数据
         this.initSelf(openId)
@@ -105,7 +107,7 @@ export default class HWData extends Init {
             .then((e) => {
                 const { self: newSelf } = this.getHWData(key);
 
-                this.setRankUserCache(key, { list: e, self: newSelf});
+                this.setRankUserCache(key, { list: e, self: newSelf });
                 this.checkLoading();
             });
     }
@@ -197,14 +199,13 @@ export default class HWData extends Init {
         let _temp;
         try {
             if(this.getHWData('friendRank').list.length > 0) {
-                _temp = this.shareTicket ? (this.getHWData('groupRank').list.length > 0 && this.getHWData('groupRank').list[0].avatarObj) : true
+                _temp = this.shareTicket ? (this.getHWData('groupRank').list.length > 0) : true
             }else {
                 _temp = false;
             }
         } catch (error) {
-            console.log('检查loadingKey改变',error)
+            console.log('检查loadingKey改变', error)
         }
         this.setHWData('loadingKey', !_temp)
     }
 }
-

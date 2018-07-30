@@ -18,6 +18,8 @@ import UTIL from "./modules/util";
 // 2d画布
 import page from './modules/pages/main/index';
 
+import VideoAd from './modules/video-ad';
+
 /**
  * 游戏主函数
  */
@@ -64,6 +66,9 @@ export default class Main extends UTIL {
 
         // 渲染
         this.loop();
+
+        //视频广告对象，初始化就会请求
+        videoAd = new VideoAd;
     }
 
     /**
@@ -188,7 +193,7 @@ export default class Main extends UTIL {
         car.position.x += speed;
         carBodys.position.x += speed;
         camera.position.x += speed;
-
+        
         // 2d canvas
         scoreCanvasSprite.position.x += speed;
         beyondCanvasSprite.position.x += speed;

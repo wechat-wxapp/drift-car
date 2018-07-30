@@ -171,10 +171,33 @@ export default class Shared extends UTIL {
             pageName: 'reseurPage',
             point: [x1, y1, x2, y2],
             cb: () => {
-                this.clear2d();
-                this.restart(true);
+                this.seeVideoAdBtn();
+                // this.clear2d();
+                // this.restart(true);
             }
         });
+    }
+
+    //看视频复活按钮触发
+    seeVideoAdBtn() {
+        const isPlayingMusic = $cache.getGameData('music');
+        if(isPlayingMusic) {
+            $cache.setGameData('music', !isPlayingMusic)
+            music.pusedMusic()
+        }
+        const playMusic = ()=> {
+            if(isPlayingMusic) {
+                $cache.setGameData('music', isPlayingMusic);
+                music.playBgm()
+            }
+        }
+        videoAd.showVideoAd().then(() => {
+                this.clear2d();
+                this.restart(true);
+                playMusic()
+            },() => {
+                playMusic()
+            });
     }
 
     // 复活页-跳过
@@ -191,7 +214,7 @@ export default class Shared extends UTIL {
             cb: () => {
                 this.clear2d();
                 isSharedLoop = true;
-
+                
                 this.endPage();
             }
         });
@@ -406,7 +429,7 @@ export default class Shared extends UTIL {
             cb: () => {
                 rankCurrentPage = 1
                 $wx.sendMessage('friendRank', { goBackKey: true });
-                $wx.sendMessage('worldRank',{ page: rankCurrentPage })
+                $wx.sendMessage('worldRank',{ noScale: true, page: rankCurrentPage })
                 currentPage = 'worldRank';
                 isSharedLoop = true;
             }
