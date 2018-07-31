@@ -38,7 +38,7 @@ export default class Init {
     clearCvs(noTransBg, noScale) {
         this.cvs.clearRect(0, 0, this.winWidth, this.winHeight);
         if(wx.HWData.hasScaled === 0 && !noScale) {
-            this.canvasScale();
+            // this.canvasScale();
             wx.HWData.hasScaled++;
         }
         if(noTransBg) return;

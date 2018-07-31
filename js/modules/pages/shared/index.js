@@ -190,13 +190,13 @@ export default class Shared extends UTIL {
                 $cache.setGameData('music', isPlayingMusic);
                 music.playBgm()
             }
-        }
+        };
         videoAd.showVideoAd().then(() => {
                 this.clear2d();
                 this.restart(true);
-                playMusic()
+                playMusic();
             },() => {
-                playMusic()
+                playMusic();
             });
     }
 

@@ -32,7 +32,7 @@ export default class Shared extends UTIL {
         const {cvs, cvs2d, texture2d, mesh} = this.createCanvas2d('3d', 'shared');
 
         this.sharedCanvas = cvs;
-        const sharedCanvas2d = this.sharedCanvas.getContext("2d");
+        // const sharedCanvas2d = this.sharedCanvas.getContext("2d");
         beyondTexture2d = texture2d;
         beyondCanvasSprite = mesh;
 
@@ -48,15 +48,12 @@ export default class Shared extends UTIL {
     beyondPage() {
         this.setCanvasSize();
 
-        // this.sharedCanvas.width = 50 * window.devicePixelRatio;
-        // this.sharedCanvas.height = 50 * window.devicePixelRatio;
-
-        // currentPage = 'beyondPage';
-
         this.showPage('beyond', { score });
     }
 
     setCanvasSize() {
+        if (currentShared === 'beyond') return false;
+
         this.sharedCanvas.width = 50 * window.devicePixelRatio;
         this.sharedCanvas.height = 50 * window.devicePixelRatio;
 

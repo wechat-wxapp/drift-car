@@ -44,33 +44,37 @@ export default class EndPage extends Init {
         this.setClassData();
         const { score } = data;
 
-        const { self: { KVDataList } } = this.getHWData('worldRank');
-
         let maxScore = score;
         let newRecord = false;
 
-        if (this.selfData) {
-            if (score > this.selfData['KVDataList'][0].value && score > KVDataList[0].value) {
+        const worldRankData = this.getHWData('worldRank');
+
+        if (!worldRankData) {
+            const { self: { KVDataList } } = worldRankData;
+
+            if (this.selfData) {
+                if (score > this.selfData['KVDataList'][0].value && score > KVDataList[0].value) {
+                    // 更新分数
+                    this.updateRankScore(score);
+                    // 显示新纪录
+                    newRecord = true;
+                } else if (score > this.selfData['KVDataList'][0].value) {
+                    this.updateRankScore(score, 'friendRank');
+                    newRecord = true;
+                } else if (score > KVDataList[0].value) {
+                    this.setRankData(score, 'worldRank');
+                } else {
+                    maxScore = this.selfData['KVDataList'][0].value;
+                }
+            } else {
                 // 更新分数
                 this.updateRankScore(score);
-                // 显示新纪录
                 newRecord = true;
-            } else if (score > this.selfData['KVDataList'][0].value) {
-                this.updateRankScore(score, 'friendRank');
-                newRecord = true;
-            } else if (score > KVDataList[0].value) {
-                this.setRankData(score, 'worldRank');
-            } else {
-                maxScore = this.selfData['KVDataList'][0].value;
             }
-        } else {
-            // 更新分数
-            this.updateRankScore(score);
-            newRecord = true;
-        }
 
-        // 重设分数
-        this.setClassData();
+            // 重设分数
+            this.setClassData();
+        }
 
         // 渲染页面
         this.setTexture({ ...data, maxScore, newRecord });
@@ -141,7 +145,7 @@ export default class EndPage extends Init {
         // 新纪录
         newRecord && this.cvs.drawImage(this.newRecord, 0, 0, this.newRecord.width, this.newRecord.height, this.computedSizeW(510), this.relativeSizeH(400), this.computedSizeW(this.newRecord.width), this.computedSizeW(this.newRecord.height));
 
-        if (this.rankData) {
+        if (this.rankData && Object.keys(this.rankData).length > 0) {
             const rank = this.selfData.rank;
 
             let { myPowerfulFri, myWeakFri } = {};

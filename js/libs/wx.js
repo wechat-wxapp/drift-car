@@ -77,6 +77,7 @@ export default class WX extends UTIL {
         const appid = 'wxd89b0def414d9163';
         wx.navigateToMiniProgram({
             appId: appid,
+            path: 'pages/news/news?page=pyds01',
             success: () => {},
             fail: (err) => {},
             complete: () => {}

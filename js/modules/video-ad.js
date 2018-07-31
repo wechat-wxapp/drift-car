@@ -24,6 +24,7 @@ export default class videoAd{
      * 广告默认隐藏，调用广告对象show()才能显示
      */
     showVideoAd() {
+        $loader.show('正在加载广告...');
         //没有就再新建一次？？？？,不知道怎么模拟一次拉广告失败
         let loadFail;
         this.vedioAd.onError(err => {
@@ -33,6 +34,7 @@ export default class videoAd{
         if(!loadFail) {
             return this.vedioAd.show()
                     .then(() => {
+                        $loader.hide();
                         console.log('激励视频 广告显示')
                         return this.onCloseVideoAd()
                     })

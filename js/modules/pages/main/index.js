@@ -5,8 +5,6 @@ import Beyond from '../shared/beyond';
 
 import pageLoading from './loading';
 
-let instance
-
 /**
  * 2d canvas函数
  */
@@ -14,17 +12,12 @@ export default class Page extends UTIL {
     constructor(renderer) {
         super();
 
-        if (instance) {
-            return instance
-        }
-        instance = this;
-
         uiScene = new THREE.Scene();
         this.renderer = renderer;
         this.camera = new THREE.OrthographicCamera(winWidth / -2, winWidth / 2, winHeight / 2, winHeight / -2, 0, 10000);
 
         this.page();
-        // console.log('window',+new Date()-window.a)
+
         sharedClass = new Shared();
         beyondClass = new Beyond();
         // 实例化加载页

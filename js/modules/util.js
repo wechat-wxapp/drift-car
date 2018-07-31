@@ -307,32 +307,38 @@ export default class UTIL {
         const cvs = block === 'shared' ? openDataContext.canvas : wx.createCanvas();
         let cvs2d, texture2d, mesh;
 
-        if (type === '3d') {
-            texture2d = new THREE.Texture(cvs);
-            texture2d.minFilter = THREE.LinearFilter;
+        texture2d = new THREE.Texture(cvs);
+        texture2d.minFilter = THREE.LinearFilter;
 
+        if (type === '3d') {
             const spriteMaterial = new THREE.SpriteMaterial({
                 map: texture2d
             });
 
             mesh = new THREE.Sprite(spriteMaterial);
         } else {
-            texture2d = new THREE.CanvasTexture(cvs);
-            texture2d.minFilter = texture2d.magFilter = THREE.LinearFilter;
-
             const geometry = new THREE.PlaneGeometry(width, height);
             const material = new THREE.MeshBasicMaterial({ map: texture2d, transparent: true });
 
             mesh = new THREE.Mesh(geometry, material);
         }
 
-        if (width && height) {
+        if (width && height && block !== 'shared') {
             cvs.width = width * window.devicePixelRatio;
             cvs.height = height * window.devicePixelRatio;
 
             cvs2d = cvs.getContext("2d");
 
             cvs2d.scale(window.devicePixelRatio, window.devicePixelRatio);
+        }
+
+        if (width && height && block === 'shared') {
+            cvs.width = width * window.devicePixelRatio;
+            cvs.height = height * window.devicePixelRatio;
+
+            // cvs2d = cvs.getContext("2d");
+            //
+            // cvs2d.scale(window.devicePixelRatio, window.devicePixelRatio);
         }
 
         return {

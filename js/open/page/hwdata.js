@@ -5,7 +5,6 @@ import Init from "./init";
  */
 export default class HWData extends Init {
     constructor(data = {}) {
-        console.log(111)
         super();
 
         wx.HWData = {
