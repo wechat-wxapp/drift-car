@@ -323,22 +323,15 @@ export default class UTIL {
             mesh = new THREE.Mesh(geometry, material);
         }
 
-        if (width && height && block !== 'shared') {
+        if (width && height) {
             cvs.width = width * window.devicePixelRatio;
             cvs.height = height * window.devicePixelRatio;
 
-            cvs2d = cvs.getContext("2d");
+            if (block !== 'shared') {
+                cvs2d = cvs.getContext("2d");
 
-            cvs2d.scale(window.devicePixelRatio, window.devicePixelRatio);
-        }
-
-        if (width && height && block === 'shared') {
-            cvs.width = width * window.devicePixelRatio;
-            cvs.height = height * window.devicePixelRatio;
-
-            // cvs2d = cvs.getContext("2d");
-            //
-            // cvs2d.scale(window.devicePixelRatio, window.devicePixelRatio);
+                cvs2d.scale(window.devicePixelRatio, window.devicePixelRatio);
+            }
         }
 
         return {
