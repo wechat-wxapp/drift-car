@@ -282,4 +282,12 @@ export default class WX extends UTIL {
             query: `shareOpenid=${openid}`
         })
     }
+
+    /**
+     * 初始化广告对象
+     * */
+    createRewardedVideoAd() {
+        const adUnitId = 'adunit-722f9ea4aab7122d';
+        return wx.createRewardedVideoAd({ adUnitId });
+    }
 }
