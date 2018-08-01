@@ -49,7 +49,7 @@ export default class EndPage extends Init {
 
         const worldRankData = this.getHWData('worldRank');
 
-        if (!worldRankData) {
+        if (worldRankData) {
             const { self: { KVDataList } } = worldRankData;
 
             if (this.selfData) {
