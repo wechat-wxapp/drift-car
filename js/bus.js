@@ -24,7 +24,7 @@ const constantData = {
 // 普通变量
 const basicData = {
     // 版本号
-    version: 1.27,
+    version: 1.30,
     // 3d场景
     scene: '',
     // 普通2d场景
