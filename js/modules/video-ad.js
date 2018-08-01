@@ -5,7 +5,7 @@
 
 export default class videoAd{
     constructor() {
-        this.createVideoAd()
+        this.createVideoAd();
     }
 
     /**

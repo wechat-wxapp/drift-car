@@ -1,7 +1,8 @@
 import * as CANNON from './libs/cannon';
 import IO from './libs/io';
 import TIMER from './libs/timer';
-import LoadModel from "./libs/loadModel";
+import LoadModel from './libs/loadModel';
+import logger from './libs/logger';
 
 // 不可变常量, 不参与全局挂载
 const constantData = {
@@ -78,6 +79,8 @@ const basicData = {
 
     // 全局变量bus对象
     $bus: '',
+    // 全局日志对象
+    $logger: logger,
     // 全局加载模型类
     $loadModel: LoadModel,
     // 全局缓存类
