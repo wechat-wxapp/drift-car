@@ -22,6 +22,7 @@ export default class WX extends UTIL {
 
         this.init();
         this.createStartBtn();
+        this.onNetworkStatusChange();
     }
 
     init() {
@@ -89,9 +90,10 @@ export default class WX extends UTIL {
      * */
     createStartBtn() {
         this.startBtn = wx.createUserInfoButton({
-            type: 'image',
-            image: 'https://img.suv666.com/ui/24haowan/pyds/common/start-btn.png',
+            type: 'text',
+            text: '',
             style: {
+                opacity: 0,
                 left: this.computedSizeW(102),
                 top: this.computedSizeH(525),
                 width: this.computedSizeW(210),
@@ -164,6 +166,13 @@ export default class WX extends UTIL {
                     resolve(e);
                 }).catch(err => {
                     console.log('提交每日次数报错: ', err);
+
+                    $loader.showInternetError({
+                        confirmCb: () => {
+                            loadingPage.init();
+                        }
+                    });
+                    reject();
                 });
                 return false;
             }
@@ -289,5 +298,21 @@ export default class WX extends UTIL {
     createRewardedVideoAd() {
         const adUnitId = 'adunit-722f9ea4aab7122d';
         return wx.createRewardedVideoAd({ adUnitId });
+    }
+
+    /**
+     * 长震动效果
+     * */
+    vibrateLong() {
+        wx.vibrateLong();
+    }
+
+    /**
+     * 获取设备目前网络情况
+     * */
+    onNetworkStatusChange() {
+        wx.onNetworkStatusChange(({ isConnected, networkType }) => {
+            connected = isConnected;
+        });
     }
 }

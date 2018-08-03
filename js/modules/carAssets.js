@@ -7,7 +7,7 @@ export default class carAssets extends UTIL {
     }
     initCarAssets() {
         // 如果存在了某辆车的缓存，说明所有车都已经在缓存里面，不需要反复加载。
-        const isCarCache = localStorage.getItem('https://res.suv666.com/24haowan/pyds/newcar3.obj')
+        const isCarCache = localStorage.getItem('https://res.suv666.com/24haowan/pyds/newcar3.obj');
         if (!isCarCache) {
             console.log('需要重新加载分包资源');
             const loadTask = wx.loadSubpackage({

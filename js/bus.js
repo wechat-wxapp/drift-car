@@ -294,7 +294,8 @@ const basicData = {
     //世界排行榜下一页启动
     worldRankNextSwitch: true,
 
-    texture: ''
+    // 网络链接状态
+    connected: true
 };
 
 // 可重置变量

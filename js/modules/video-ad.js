@@ -43,14 +43,14 @@ export default class videoAd{
                 $logger.log('广告初始化成功');
                 // 初始化视频成功
                 return this.vedioAd.show()
-                .then(() => {
-                    $loader.hide();
-                    this.onCloseVideoAd().then(e => {
-                        resolve();
-                    }).catch(err => {
-                        reject();
+                    .then(() => {
+                        $loader.hide();
+                        this.onCloseVideoAd().then(e => {
+                            resolve();
+                        }).catch(err => {
+                            reject();
+                        });
                     });
-                });
             } else {
                 // 初始化视频失败,跳过视频直接复活
                 $loader.hide();
