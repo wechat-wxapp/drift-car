@@ -45,16 +45,25 @@ export default class HWData extends Init {
         this.initSelf(openId)
             .then(e => {
                 // this.setHWData('self', e);
+
+                // @TODO 优化排行榜,不一次过缓存头像
                 // 预加载个人信息头像
                 this.loadSelfImg(e)
                     .then(val => {
                         this.setHWData('self', val);
+
+                        // 初始化世界排行榜
+                        const { rank: worldRankData, self: worldSelf } = this.initWorldRankData(worldRank);
 
                         // 初始化好友排行榜数据
                         this.friendRankData()
                             .then(({ rank, self }) => {
                                 console.log('缓存好友排行榜成功: ', { rank, self });
                                 this.setRankCache('friendRank', { list: rank, self });
+
+                                // 开始缓存世界排行榜
+                                this.setRankCache('worldRank', { list: worldRankData, self: worldSelf });
+
                                 this.checkLoading();
                             }).catch((err) => {
                                 console.log('缓存好友排行榜失败: ', err);
@@ -67,15 +76,12 @@ export default class HWData extends Init {
                             .then(({ rank, self }) => {
                                 console.log('缓存群排行榜成功: ', { rank, self });
                                 this.setRankCache('groupRank', { list: rank, self });
+
                                 this.checkLoading();
                             })
                             .catch(e => {
                                 console.log('缓存群排行榜失败: ', e);
                             });
-
-                        // 初始化世界排行榜
-                        const { rank, self } = this.initWorldRankData(worldRank);
-                        this.setRankCache('worldRank', { list: rank, self });
                     });
             });
     }
@@ -194,7 +200,7 @@ export default class HWData extends Init {
      * 判断排行榜的loading图片是否要消失
      */
     checkLoading() {
-        //传过去setloadingKey的变量
+        // 传过去setloadingKey的变量
         let _temp;
         try {
             if(this.getHWData('friendRank').list.length > 0) {

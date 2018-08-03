@@ -26,10 +26,6 @@ export default class videoAd{
      */
     showVideoAd() {
         $loader.show('正在加载广告...');
-        this.vedioAd.onError(err => {
-            this.loadStatus = false;
-            $logger.error('广告加载失败', err);
-        });
 
         return this.showVideo();
     }
@@ -40,7 +36,7 @@ export default class videoAd{
     showVideo() {
         return new Promise((resolve, reject) => {
             if(this.loadStatus) {
-                $logger.log('广告初始化成功');
+                $logger.log('广告加载成功');
                 // 初始化视频成功
                 return this.vedioAd.show()
                     .then(() => {
@@ -52,13 +48,24 @@ export default class videoAd{
                         });
                     });
             } else {
-                // 初始化视频失败,跳过视频直接复活
-                $loader.hide();
-                $loader.showToast('无法加载,跳过视频', 'error');
-                setTimeout(() => {
-                    $loader.hideToast();
-                    resolve();
-                }, 1000);
+                // 重新拉取广告
+                this.loadVideoAd().then(e => {
+                    this.loadStatus = true;
+                    this.showVideo();
+                });
+
+                // 重新拉取失败直接跳过广告复活
+                this.vedioAd.onError(err => {
+                    this.loadStatus = false;
+                    $logger.error('广告加载失败', err);
+
+                    $loader.hide();
+                    $loader.showToast('无法加载,跳过视频', 'error');
+                    setTimeout(() => {
+                        $loader.hideToast();
+                        resolve();
+                    }, 1000);
+                });
             }
         })
     }
@@ -66,10 +73,10 @@ export default class videoAd{
     /**
      * 获取失败，不会被show，需要手动重新拉取
      */
-    // loadVideoAd() {
-    //     $logger.log('重新拉取广告');
-    //     return this.vedioAd.load()
-    // }
+    loadVideoAd() {
+        $logger.log('重新拉取广告');
+        return this.vedioAd.load()
+    }
 
     /**
      * 监听关闭

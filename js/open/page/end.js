@@ -49,7 +49,7 @@ export default class EndPage extends Init {
 
         const worldRankData = this.getHWData('worldRank');
 
-        if (worldRankData) {
+        if (worldRankData && Object.keys(worldRankData).length > 0) {
             const { self: { KVDataList } } = worldRankData;
 
             if (this.selfData) {
@@ -145,7 +145,7 @@ export default class EndPage extends Init {
         // 新纪录
         newRecord && this.cvs.drawImage(this.newRecord, 0, 0, this.newRecord.width, this.newRecord.height, this.computedSizeW(510), this.relativeSizeH(400), this.computedSizeW(this.newRecord.width), this.computedSizeW(this.newRecord.height));
 
-        if (this.rankData && Object.keys(this.rankData).length > 0) {
+        if (this.rankData && Object.keys(this.rankData).length > 0 && this.selfData) {
             const rank = this.selfData.rank;
 
             let { myPowerfulFri, myWeakFri } = {};
