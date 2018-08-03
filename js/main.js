@@ -48,7 +48,6 @@ export default class Main extends UTIL {
         // 创建音乐播放器
         music = new Music();
 
-
         // 实例化缓存类
         $cache = new CACHE();
 
@@ -68,7 +67,7 @@ export default class Main extends UTIL {
         this.loop();
 
         //视频广告对象，初始化就会请求
-        videoAd = new VideoAd;
+        videoAd = new VideoAd();
     }
 
     /**

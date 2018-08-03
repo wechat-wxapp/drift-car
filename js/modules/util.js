@@ -45,6 +45,9 @@ export default class UTIL {
         // 清除超越好友
         beyondClass.clear2d();
 
+        // 添加手机震动效果
+        $wx.vibrateLong();
+
         this.i = 0;
         this.shakeCamera();
         console.log(`---结束游戏---, speed为 ${speed}, currentSpeed为 ${speed}`);
@@ -217,6 +220,9 @@ export default class UTIL {
         console.log(`---成功复活 剩余复活次数: ${reseurNum} 当前分数: ${score} 当前speed速度: ${speed} 当前currentSpeed速度: ${currentSpeed}---`);
     }
 
+    /**
+     * 更新分数和检测超越好友
+     * */
     updateScore() {
         this.scoreTimer = $timer(() => {
             // 防止非正常游戏出现刷分
@@ -323,22 +329,15 @@ export default class UTIL {
             mesh = new THREE.Mesh(geometry, material);
         }
 
-        if (width && height && block !== 'shared') {
+        if (width && height) {
             cvs.width = width * window.devicePixelRatio;
             cvs.height = height * window.devicePixelRatio;
 
-            cvs2d = cvs.getContext("2d");
+            if (block !== 'shared') {
+                cvs2d = cvs.getContext("2d");
 
-            cvs2d.scale(window.devicePixelRatio, window.devicePixelRatio);
-        }
-
-        if (width && height && block === 'shared') {
-            cvs.width = width * window.devicePixelRatio;
-            cvs.height = height * window.devicePixelRatio;
-
-            // cvs2d = cvs.getContext("2d");
-            //
-            // cvs2d.scale(window.devicePixelRatio, window.devicePixelRatio);
+                cvs2d.scale(window.devicePixelRatio, window.devicePixelRatio);
+            }
         }
 
         return {

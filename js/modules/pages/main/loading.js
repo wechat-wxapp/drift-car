@@ -17,11 +17,17 @@ import pageGame from "./game";
  * 开始页函数
  */
 export default class Loader extends UTIL {
+    loadedNum = 0;
+
     constructor() {
         super();
 
         this.setTexture('加载中...');
 
+        this.init();
+    }
+
+    init() {
         const loader = [{
             text: '正在抽取图片...',
             load: this.loadImg
@@ -219,6 +225,11 @@ export default class Loader extends UTIL {
                     shareTicket: $wx.shareTicket,
                     worldRank: { list: ranks, self: user }
                 });
+            }).catch(err => {
+                $loader.showInternetError({
+                    content: '排行榜数据缓存失败了，请检查网络再重试',
+                    confirmCb: this.loadWorldRank.bind(this)
+                });
             });
     }
 
@@ -226,24 +237,42 @@ export default class Loader extends UTIL {
      * 预加载图片
      * */
     loadImg() {
-        let loaded = 0;
         const list = Object.entries(Object.assign({}, imgList));
 
         return new Promise((res, rej) => {
-            list.map((v, k) => {
+            // 如果已经加载完直接跳过
+            if (this.checkLoadStatus(list)) {
+                res();
+                return false;
+            }
+
+            for (let v of list) {
+                if (typeof v[1] !== 'string') continue;
+
                 this.imgloading(v[1])
                     .then((e) => {
                         imgList[v[0]] = e;
-                        loaded += 1;
+                        this.loadedNum += 1;
 
                         // 图片预加载结束
-                        if (loaded === list.length) {
-                            this.imgKey = true;
-                            res();
-                            this.setTexture('正在读取汽车资源');
-                        }
-                    })
-            })
+                        if (this.checkLoadStatus(list)) res();
+                    });
+            }
         });
+    }
+
+    /**
+     * 检查图片是否加载完成
+     * @params list {Array} 图片列表
+     * @return {Boolean} true/false
+     * */
+    checkLoadStatus(list) {
+        if (this.loadedNum === list.length) {
+            this.imgKey = true;
+            this.setTexture('正在读取汽车资源');
+
+            return true;
+        }
+        return false;
     }
 }

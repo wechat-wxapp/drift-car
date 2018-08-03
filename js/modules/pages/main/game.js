@@ -37,14 +37,32 @@ export default class Game extends UTIL {
             // 增加转弯次数
             turn++;
             if((currentSpeed >= (speed * 3 / 4)) || currentSpeed > 1.9) isTurning = true;
-            
         }
+    }
+
+    /**
+     * 检测当前网络情况
+     * */
+    startGame() {
+        if (!connected) {
+            $loader.showInternetError({
+                title: '警告',
+                content: '当前网络环境不稳定，进行游戏可能会造成无法上传分数',
+                confirmText: '开始游戏',
+                confirmCb: () => {
+                    this.gameStart();
+                }
+            });
+            return false;
+        }
+
+        this.gameStart();
     }
 
     /**
      * 开始游戏
      * */
-    startGame() {
+    gameStart() {
         // 关闭按钮
         $wx.startBtn.hide();
 

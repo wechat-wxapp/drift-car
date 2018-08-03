@@ -213,6 +213,9 @@ export default class Start extends UTIL {
                 $wx.startBtn.hide();
 
                 carportPage.setTexture();
+            }).catch(e => {
+                $loader.hide();
+                $loader.showToast('出错了,请重试...', 'error');
             });
     }
 
@@ -235,9 +238,11 @@ export default class Start extends UTIL {
 
         offCanvas2d.drawImage(musicBtn, 0, 0, musicBtn.width, musicBtn.height, winWidth / 2 - this.computedSizeW(180), this.computedSizeH(24), this.computedSizeW(musicBtn.width / 2), this.computedSizeW(musicBtn.height / 2));
 
+        // 开始游戏按钮
+        offCanvas2d.drawImage(this.startBtn, 0, 0, this.startBtn.width, this.startBtn.height, winWidth / 2 - this.computedSizeW(this.startBtn.width / 4), this.computedSizeH(525), this.computedSizeW(this.startBtn.width / 2), this.computedSizeW(this.startBtn.height / 2));
+
         // 如果已经登录
         if ($wx.isLogin) {
-            offCanvas2d.drawImage(this.startBtn, 0, 0, this.startBtn.width, this.startBtn.height, winWidth / 2 - this.computedSizeW(this.startBtn.width / 4), this.computedSizeH(525), this.computedSizeW(this.startBtn.width / 2), this.computedSizeW(this.startBtn.height / 2));
             this.bindStartBtn();
         } else {
             $wx.startBtn.show();

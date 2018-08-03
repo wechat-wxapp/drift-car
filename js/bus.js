@@ -24,7 +24,7 @@ const constantData = {
 // 普通变量
 const basicData = {
     // 版本号
-    version: 1.27,
+    version: 1.30,
     // 3d场景
     scene: '',
     // 普通2d场景
@@ -294,7 +294,8 @@ const basicData = {
     //世界排行榜下一页启动
     worldRankNextSwitch: true,
 
-    texture: ''
+    // 网络链接状态
+    connected: true
 };
 
 // 可重置变量

@@ -4,20 +4,21 @@
  */
 
 export default class videoAd{
+    loadStatus = false;
+
     constructor() {
         this.createVideoAd();
     }
 
     /**
      * 提前初始化调用
-     * @param {string} adUnitId 广告位id
      */
-    createVideoAd(adUnitId = 'adunit-722f9ea4aab7122d') {
-        this.vedioAd = wx.createRewardedVideoAd({ adUnitId: adUnitId })
-        return this.vedioAd
-                .onLoad(() => {
-                    console.log('激励视频 广告加载成功')
-                })
+    createVideoAd() {
+        this.vedioAd = $wx.createRewardedVideoAd();
+
+        this.vedioAd.onLoad(() => {
+            this.loadStatus = true;
+        });
     }
 
     /**
@@ -25,38 +26,50 @@ export default class videoAd{
      */
     showVideoAd() {
         $loader.show('正在加载广告...');
-        //没有就再新建一次？？？？,不知道怎么模拟一次拉广告失败
-        let loadFail;
         this.vedioAd.onError(err => {
-            loadFail = true
-            console.log('广告加载失败', err)
-        })
-        if(!loadFail) {
-            return this.vedioAd.show()
+            this.loadStatus = false;
+            $logger.error('广告加载失败', err);
+        });
+
+        return this.showVideo();
+    }
+
+    /**
+     * 判断广告状态,执行复活
+     * */
+    showVideo() {
+        return new Promise((resolve, reject) => {
+            if(this.loadStatus) {
+                $logger.log('广告初始化成功');
+                // 初始化视频成功
+                return this.vedioAd.show()
                     .then(() => {
                         $loader.hide();
-                        console.log('激励视频 广告显示')
-                        return this.onCloseVideoAd()
-                    })
-                    // 文档用法有歧义，这个有待观察
-                    // .catch(err => {
-                    //     console.log('显示广告失败', err)
-                    //     //自动再拉,并再次试着显示广告
-                    //     this.loadVideoAd().then(this.showVideoAd())
-                    // })
-        } else {
-            console.log('loadFail')
-            this.loadVideoAd().then(() => this.showVideoAd())
-        }
+                        this.onCloseVideoAd().then(e => {
+                            resolve();
+                        }).catch(err => {
+                            reject();
+                        });
+                    });
+            } else {
+                // 初始化视频失败,跳过视频直接复活
+                $loader.hide();
+                $loader.showToast('无法加载,跳过视频', 'error');
+                setTimeout(() => {
+                    $loader.hideToast();
+                    resolve();
+                }, 1000);
+            }
+        })
     }
 
     /**
      * 获取失败，不会被show，需要手动重新拉取
      */
-    loadVideoAd() {
-        console.log('重新拉取广告');
-        return this.vedioAd.load()
-    }
+    // loadVideoAd() {
+    //     $logger.log('重新拉取广告');
+    //     return this.vedioAd.load()
+    // }
 
     /**
      * 监听关闭
@@ -69,10 +82,10 @@ export default class videoAd{
                 console.log('关闭视频广告', res)
                 if (res && res.isEnded || res === undefined) {
                     // 正常播放结束，可以下发游戏奖励
-                    resolve()
+                    resolve();
                 } else {
                     // 播放中途退出，不下发游戏奖励
-                    reject()
+                    reject();
                 }
             })
         })
