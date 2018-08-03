@@ -128,10 +128,7 @@ export default class Carport extends UTIL {
 
                 const offset = (this.page - 2) * this.limit;
 
-                this.getList({ offset })
-                    .then(e => {
-                        carportPage.setTexture();
-                    });
+                this.getListData({ offset });
             }
         });
     }
@@ -151,15 +148,27 @@ export default class Carport extends UTIL {
             point: [x1, y1, x2, y2],
             cb: () => {
                 if (!this.hasNext) return false;
-
                 const offset = this.page * this.limit;
 
-                this.getList({ offset })
-                    .then(e => {
-                        carportPage.setTexture();
-                    });
+                this.getListData({ offset });
             }
         });
+    }
+
+    /**
+     * 获取车库当前页数据
+     * */
+    getListData({ offset }) {
+        this.getList({ offset })
+            .then(e => {
+                carportPage.setTexture();
+            }).catch(err => {
+                $loader.showInternetError({
+                    confirmCb: () => {
+                        this.getListData({ offset });
+                    }
+                });
+            });
     }
 
     /**
@@ -430,7 +439,13 @@ export default class Carport extends UTIL {
                     cb && cb();
                 }
                 texture2d.needsUpdate = true;
-            }
+            };
+
+            carPane.onerror = () => {
+                $loader.showInternetError({
+                    confirmCb: this.setTexture.bind(this)
+                });
+            };
         });
 
         texture2d.needsUpdate = true;

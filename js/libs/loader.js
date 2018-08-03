@@ -57,7 +57,10 @@ export default class LOADER{
      * @params confirmCb {Function} 点击确认按钮的回调事件
      * @params cancelCb {Function} 点击取消按钮的回调事件
      * */
-    showInternetError({ title = '出错了!', content = '网络不是很稳定，请重试或重启小游戏再试', confirmText = '重试', confirmCb, cancelCb }) {
+    showInternetError({ title = '出错了!', content = '网络不是很稳定，请重试或重启小游戏再试', confirmText = '重试', confirmCb, cancelCb } = {}) {
+        // 默认关闭toast
+        this.hide();
+
         return new Promise((resolve, reject) => {
             $loader.showModal({
                 title,
