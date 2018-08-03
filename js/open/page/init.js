@@ -376,18 +376,20 @@ export default class Init {
 
             const { list, self } = data;
 
-            const index = list.findIndex(e => e.nickname === self.nickname);
-            if (index < 0) {
-                const newSelfRankData = this.setNewRankData(score);
-                list.push(newSelfRankData);
-            } else {
-                list[index].KVDataList[0].value = score;
+            if (self) {
+                const index = list.findIndex(e => e.nickname === self.nickname);
+                if (index < 0) {
+                    const newSelfRankData = this.setNewRankData(score);
+                    list.push(newSelfRankData);
+                } else {
+                    list[index].KVDataList[0].value = score;
+                }
+
+                const newList = k === 1 ? this.sort(list, 'asc', 1) : this.sort(list, 'asc');
+                const newSelf = this.normalizeSelf(newList, self.nickname);
+
+                this.setHWData(name, { list: newList, self: newSelf });
             }
-
-            const newList = k === 1 ? this.sort(list, 'asc', 1) : this.sort(list, 'asc');
-            const newSelf = this.normalizeSelf(newList, self.nickname);
-
-            this.setHWData(name, { list: newList, self: newSelf });
         }
     }
 
