@@ -8,9 +8,7 @@ const logger = {
     logInfo(type, info) {
         console.log(
             `[ ${this.config.types[type]} ] => `,
-            '------------',
-            ...info,
-            '------------'
+            ...info
         );
     },
     /**
