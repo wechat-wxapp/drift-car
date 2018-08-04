@@ -93,7 +93,7 @@ export default class WX extends UTIL {
             type: 'text',
             text: '',
             style: {
-                opacity: 0,
+                // opacity: 0,
                 left: this.computedSizeW(102),
                 top: this.computedSizeH(525),
                 width: this.computedSizeW(210),
