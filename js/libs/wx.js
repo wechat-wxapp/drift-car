@@ -315,4 +315,19 @@ export default class WX extends UTIL {
             connected = isConnected;
         });
     }
+    
+    /**
+     * 返回当前系统信息
+     * */
+    getSystemInfoSync() {
+        return wx.getSystemInfoSync();
+    }
+    
+    /**
+     * 判断是否Ios
+     * */
+    isIos() {
+        const { system } = this.getSystemInfoSync();
+        return /iOS/.test(system);
+    }
 }

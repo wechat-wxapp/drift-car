@@ -223,8 +223,11 @@ export default class Start extends UTIL {
      * 开始页
      */
     setTexture() {
+        // 关闭开放域循环
+        isSharedLoop = false;
+        
         currentPage = 'startPage';
-
+        
         const hasNew = $cache.getGameData('hasNew');
 
         offCanvas2d.clearRect(0, 0, winWidth, winHeight);

@@ -5,6 +5,8 @@ export default class Cache {
     gameData = {
         // 是否开启音乐
         music: true,
+        // 是否展示关注公众号动画
+        showWoaGuide: true,
         // 车辆配置
         car: {
             // 车辆标识

@@ -116,6 +116,9 @@ export default class Shared extends UTIL {
             cb: () => {
                 this.clear2d();
                 startPage.setTexture();
+                
+                // 展示动画帧
+                framePage.runAnimation();
             }
         });
     }

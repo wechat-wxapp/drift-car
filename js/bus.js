@@ -24,7 +24,7 @@ const constantData = {
 // 普通变量
 const basicData = {
     // 版本号
-    version: 1.33,
+    version: 1.34,
     // 3d场景
     scene: '',
     // 普通2d场景
@@ -175,6 +175,8 @@ const basicData = {
     scorePage: '',
     // 车库对象
     carportPage: '',
+    // 动画帧对象
+    framePage: '',
 
     //视频广告对象
     videoAd: '',
@@ -196,7 +198,11 @@ const basicData = {
     scoreCanvas2d: '',
     scoreTexture2d: '',
     scoreCanvasSprite: '',
-
+    // 动画帧画布
+    frameCanvas2d: '',
+    frameTexture2d: '',
+    frameCanvasSprite: '',
+    
     // 预加载图片列表
     imgList: {
         btn: 'images/btn.png',
@@ -278,7 +284,20 @@ const basicData = {
         carProgressBg: 'images/car-progress-bg.png',
         carShareBtn: 'images/car-share-btn.png',
         carUnlockShare: 'images/car-unlock-share.png',
-        carShareCloseBtn: 'images/car-share-close-btn.png'
+        carShareCloseBtn: 'images/car-share-close-btn.png',
+        
+        // 关注公众号动画帧背景
+        frameWoaBg: 'images/frame-woa-bg.png',
+        frameWoaBtn: 'images/frame-woa-btn.png'
+    },
+    
+    // 动画帧
+    frame: {
+        f1: {
+            list: {},
+            length: 60,
+            loaded: false
+        }
     },
 
     // 计时器组
