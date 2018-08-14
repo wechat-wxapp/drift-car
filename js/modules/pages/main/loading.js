@@ -13,6 +13,8 @@ import pageStart from './start';
 import pageCarport from "./carport";
 import pageGame from "./game";
 
+import Frame from "../frame/index";
+
 /**
  * 开始页函数
  */
@@ -31,6 +33,9 @@ export default class Loader extends UTIL {
         const loader = [{
             text: '正在抽取图片...',
             load: this.loadImg
+        }, {
+            text: '正在加载动画帧...',
+            load: this.loadFrame
         }, {
             text: '正在检查身份证...',
             load: this.wxLogin
@@ -66,7 +71,11 @@ export default class Loader extends UTIL {
         // 实例化游戏页面
         gamePage = new pageGame();
 
+        // 实例化开始页面
         startPage = new pageStart();
+    
+        // 实例化动画帧
+        framePage = new Frame();
 
         const { openid } = $cache.getCache('accessToken');
         $wx.sendMessage('initHwData', {
@@ -274,5 +283,51 @@ export default class Loader extends UTIL {
             return true;
         }
         return false;
+    }
+    
+    /**
+     * 加载动画帧1
+     * */
+    loadFrame() {
+        const isIos = $wx.isIos();
+        
+        const loadList = [];
+        
+        for (let k in frame) {
+            const { length, loaded } = frame[k];
+            
+            const loadPromise = new Promise((resolve, reject) => {
+                let loadNum = 0;
+                
+                // 如果已经加载过或不是IOS系统则直接跳过
+                if (loaded || !isIos) {
+                    resolve();
+                    return false;
+                }
+                
+                for (let i = 0; i < length; i++) {
+                    let prefix = Array(String(length).length).fill(0).join('');
+                    prefix = `${prefix}${i}`;
+                    prefix = prefix.substr(String(i).length, prefix.length);
+        
+                    this.imgloading(`images/frame/f1/guide_000${prefix}-min.png`)
+                        .then((e) => {
+                            frame[k].list[i] = e;
+                
+                            loadNum++;
+                
+                            if (loadNum >= length) {
+                                frame[k].loaded = true;
+                                
+                                resolve();
+                            }
+                        });
+                }
+            });
+    
+            loadList.push(loadPromise);
+        }
+        
+        return Promise.all(loadList);
     }
 }
